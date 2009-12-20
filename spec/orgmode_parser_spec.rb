@@ -30,6 +30,12 @@ describe Orgmode::Parser do
     parser.headlines[0].level.should == 1
     parser.headlines[1].level.should == 2
   end
+
+  it "should put body lines in headlines" do
+    parser = Orgmode::Parser.new("data/remember.org")
+    parser.headlines[0].should have(0).body_lines
+    parser.headlines[1].should have(6).body_lines
+  end
 end
 
 describe Orgmode::Headline do
@@ -55,5 +61,25 @@ describe Orgmode::Headline do
       h.level.should == expected
       expected += 1
     end
+  end
+
+  it "should find simple headline text" do
+    h = Orgmode::Headline.new "*** sample"
+    h.headline_text.should == "sample"
+  end
+
+  it "should understand tags" do
+    h = Orgmode::Headline.new "*** sample :tag:tag2:\n"
+    h.headline_text.should == "sample"
+    h.should have(2).tags
+    h.tags[0].should == "tag"
+    h.tags[1].should == "tag2"
+  end
+
+  it "should understand a single tag" do
+    h = Orgmode::Headline.new "*** sample :tag:\n"
+    h.headline_text.should == "sample"
+    h.should have(1).tags
+    h.tags[0].should == "tag"
   end
 end

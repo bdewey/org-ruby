@@ -15,9 +15,13 @@ module Orgmode
     def initialize(fname)
       @lines = IO.readlines(fname)
       @headlines = Array.new
+      @current_headline = nil
       @lines.each do |line|
         if (Headline.is_headline? line) then
-          @headlines << (Headline.new line)
+          @current_headline = Headline.new line
+          @headlines << @current_headline
+        else
+          @current_headline.body_lines << line if @current_headline
         end
       end
     end                           # self.new
