@@ -47,5 +47,14 @@ module Orgmode
     def self.is_headline?(line)
       line =~ LineRegex
     end
+
+    # Converts this headline and its body to textile.
+    def to_textile
+      output = "h#{@level}. #{@headline_text}\n"
+      @body_lines.each do |line|
+        output << line
+      end
+      output
+    end
   end                           # class Headline
 end                             # class Orgmode

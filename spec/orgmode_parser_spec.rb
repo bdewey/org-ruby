@@ -36,6 +36,22 @@ describe Orgmode::Parser do
     parser.headlines[0].should have(0).body_lines
     parser.headlines[1].should have(6).body_lines
   end
+
+  it "should understand lines before the first headline" do
+    parser = Orgmode::Parser.new("data/freeform.org")
+    parser.should have(19).header_lines
+  end
+
+  it "should tell comments" do
+    Orgmode::Parser.is_comment?("# hello").should_not be_nil
+    Orgmode::Parser.is_comment?(" \t# Leading whitespace").should_not be_nil
+    Orgmode::Parser.is_comment?("Not a comment").should be_nil
+  end
+
+  it "should return a textile string" do
+    parser = Orgmode::Parser.new("data/freeform.org")
+    parser.to_textile.should be_kind_of(String)
+  end
 end
 
 describe Orgmode::Headline do

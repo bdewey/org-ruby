@@ -5,3 +5,5 @@ require File.expand_path(
 
 # Put your code here
 
+parser = Orgmode::Parser.new(ARGV[0])
+puts parser.to_textile
