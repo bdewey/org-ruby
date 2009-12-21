@@ -15,8 +15,17 @@ module Orgmode
     # These are any lines before the first headline
     attr_reader :header_lines
     
-    def initialize(fname)
-      @lines = IO.readlines(fname)
+    # I can construct a parser object either with an array of lines
+    # or with a single string that I will split along \n boundaries.
+    def initialize(lines)
+      if lines.is_a? Array then
+        @lines = lines
+      elsif lines.is_a? String then
+        @lines = lines.split("\n")
+      else
+        raise "Unsupported type for +lines+: #{lines.class}"
+      end
+        
       @headlines = Array.new
       @current_headline = nil
       @header_lines = []
@@ -34,6 +43,12 @@ module Orgmode
         end
       end
     end                           # initialize
+
+    # Creates a new parser from the data in a given file
+    def self.load(fname)
+      lines = IO.readlines(fname)
+      return self.new(lines)
+    end
 
     # Saves the loaded orgmode file as a textile file.
     def to_textile
