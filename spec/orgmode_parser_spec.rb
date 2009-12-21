@@ -42,12 +42,6 @@ describe Orgmode::Parser do
     parser.should have(19).header_lines
   end
 
-  it "should tell comments" do
-    Orgmode::Parser.is_comment?("# hello").should_not be_nil
-    Orgmode::Parser.is_comment?(" \t# Leading whitespace").should_not be_nil
-    Orgmode::Parser.is_comment?("Not a comment").should be_nil
-  end
-
   it "should return a textile string" do
     parser = Orgmode::Parser.new("data/freeform.org")
     parser.to_textile.should be_kind_of(String)
@@ -98,4 +92,16 @@ describe Orgmode::Headline do
     h.should have(1).tags
     h.tags[0].should == "tag"
   end
+end
+
+describe Orgmode::Line do
+
+  it "should tell comments" do
+    comments = ["# hello", "#hello", "   #hello", "\t#hello\n"]
+    comments.each do |c|
+      line = Orgmode::Line.new c
+      line.is_comment?.should be_true
+    end
+  end
+
 end

@@ -25,6 +25,7 @@ module Orgmode
           @current_headline = Headline.new line
           @headlines << @current_headline
         else
+          line = Line.new line
           if (@current_headline) then
             @current_headline.body_lines << line
           else
@@ -34,20 +35,11 @@ module Orgmode
       end
     end                           # initialize
 
-    # Tests if a line is a comment.
-    def self.is_comment?(line)
-      line =~ /^\s*#/
-    end
-
-    # Tests if a line contains metadata instead of actual content.
-    def self.is_metadata?(line)
-    end
-
     # Saves the loaded orgmode file as a textile file.
     def to_textile
       output = ""
       @header_lines.each do |line|
-        output << line unless Parser.is_comment?(line)
+        output << line.to_s unless line.is_nonprinting?
       end
       @headlines.each do |headline|
         output << headline.to_textile

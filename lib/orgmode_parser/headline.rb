@@ -1,10 +1,9 @@
+require OrgmodeParser.libpath(*%w[orgmode_parser line])
+
 module Orgmode
 
   # Represents a headline in an orgmode file.
-  class Headline
-
-    # This is the line
-    attr_reader :line
+  class Headline < Line
 
     # This is the "level" of the headline
     attr_reader :level
@@ -26,7 +25,7 @@ module Orgmode
     TagsRegex = /\s*:[\w:]*:\s*$/
 
     def initialize(line)
-      @line = line
+      super(line)
       @body_lines = []
       @tags = []
       if (@line =~ LineRegex) then
@@ -52,7 +51,7 @@ module Orgmode
     def to_textile
       output = "h#{@level}. #{@headline_text}\n"
       @body_lines.each do |line|
-        output << line
+        output << line.to_s unless line.is_nonprinting?
       end
       output
     end
