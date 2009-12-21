@@ -43,16 +43,14 @@ module Orgmode
 
     # Determines if a line is an orgmode "headline":
     # A headline begins with one or more asterisks.
-    def self.is_headline?(line)
+    def self.headline?(line)
       line =~ LineRegex
     end
 
     # Converts this headline and its body to textile.
     def to_textile
       output = "h#{@level}. #{@headline_text}\n"
-      @body_lines.each do |line|
-        output << line.to_s unless line.is_nonprinting?
-      end
+      output << Line.to_textile(@body_lines)
       output
     end
   end                           # class Headline

@@ -51,12 +51,12 @@ end
 describe Orgmode::Headline do
 
   it "should recognize headlines that start with asterisks" do
-    Orgmode::Headline.is_headline?("*** test\n").should_not be_nil
+    Orgmode::Headline.headline?("*** test\n").should_not be_nil
   end
 
   it "should reject headlines without headlines at the start" do
-    Orgmode::Headline.is_headline?("  nope!").should be_nil
-    Orgmode::Headline.is_headline?("  tricked you!!!***").should be_nil
+    Orgmode::Headline.headline?("  nope!").should be_nil
+    Orgmode::Headline.headline?("  tricked you!!!***").should be_nil
   end
 
   it "should reject improper initialization" do
@@ -100,8 +100,35 @@ describe Orgmode::Line do
     comments = ["# hello", "#hello", "   #hello", "\t#hello\n"]
     comments.each do |c|
       line = Orgmode::Line.new c
-      line.is_comment?.should be_true
+      line.comment?.should be_true
+    end
+
+    not_comments = ["", "\n", "hello\n", "  foo ### bar\n"]
+    not_comments.each do |c|
+      line = Orgmode::Line.new c
+      line.comment?.should_not be_true
     end
   end
 
+  it "should tell blank lines" do
+    blank = ["", " ", "\t", "\n", "  \t\t\n\n"]
+    blank.each do |b|
+      line = Orgmode::Line.new b
+      line.blank?.should be_true
+    end
+  end
+
+  it "should recognize plain lists" do
+    list_formats = ["-",
+                    "+",
+                    "  *",
+                    "  -",
+                    "  +",
+                    " 1.",
+                    " 2)"]
+    list_formats.each do |list|
+      line = Orgmode::Line.new list
+      line.plain_list?.should be_true
+    end
+  end
 end

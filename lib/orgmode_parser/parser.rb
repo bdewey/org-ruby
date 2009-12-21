@@ -21,7 +21,7 @@ module Orgmode
       @current_headline = nil
       @header_lines = []
       @lines.each do |line|
-        if (Headline.is_headline? line) then
+        if (Headline.headline? line) then
           @current_headline = Headline.new line
           @headlines << @current_headline
         else
@@ -38,9 +38,7 @@ module Orgmode
     # Saves the loaded orgmode file as a textile file.
     def to_textile
       output = ""
-      @header_lines.each do |line|
-        output << line.to_s unless line.is_nonprinting?
-      end
+      Line.to_textile(@header_lines)
       @headlines.each do |headline|
         output << headline.to_textile
       end
