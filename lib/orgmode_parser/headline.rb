@@ -18,23 +18,35 @@ module Orgmode
     # These are the headline tags
     attr_reader :tags
 
+    # Optional keyword found at the beginning of the headline.
+    attr_reader :keyword
+
     # This is the regex that matches a line
-    LineRegex = /^\*+\s*/
+    LineRegexp = /^\*+\s*/
 
     # This matches the tags on a headline
-    TagsRegex = /\s*:[\w:]*:\s*$/
+    TagsRegexp = /\s*:[\w:]*:\s*$/
+
+    # Special keywords allowed at the start of a line.
+    Keywords = %w[TODO DONE]
+
+    KeywordsRegexp = Regexp.new("\\s*(#{Keywords.join('|')})\\s*")
 
     def initialize(line)
       super(line)
       @body_lines = []
       @tags = []
-      if (@line =~ LineRegex) then
+      if (@line =~ LineRegexp) then
         @level = $&.strip.length
         @headline_text = $'.strip
-        if (@headline_text =~ TagsRegex) then
+        if (@headline_text =~ TagsRegexp) then
           @tags = $&.split(/:/)              # split tag text on semicolon
           @tags.delete_at(0)                 # the first item will be empty; discard
-          @headline_text.gsub!(TagsRegex, "") # Removes the tags from the headline
+          @headline_text.gsub!(TagsRegexp, "") # Removes the tags from the headline
+        end
+        if (@headline_text =~ KeywordsRegexp) then
+          @headline_text = $'
+          @keyword = $1
         end
       else
         raise "'#{line}' is not a valid headline"
@@ -44,7 +56,7 @@ module Orgmode
     # Determines if a line is an orgmode "headline":
     # A headline begins with one or more asterisks.
     def self.headline?(line)
-      line =~ LineRegex
+      line =~ LineRegexp
     end
 
     # Converts this headline and its body to textile.

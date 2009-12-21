@@ -45,5 +45,11 @@ describe Orgmode::Headline do
     h.should have(1).tags
     h.tags[0].should eql "tag"
   end
+
+  it "should understand keywords" do
+    h = Orgmode::Headline.new "*** TODO Feed cat  :home:"
+    h.headline_text.should eql "Feed cat"
+    h.keyword.should eql "TODO"
+  end
 end
 
