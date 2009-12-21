@@ -53,7 +53,7 @@ module Orgmode
     # Saves the loaded orgmode file as a textile file.
     def to_textile
       output = ""
-      Line.to_textile(@header_lines)
+      output << Line.to_textile(@header_lines)
       @headlines.each do |headline|
         output << headline.to_textile
       end

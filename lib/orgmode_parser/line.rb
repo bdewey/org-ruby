@@ -68,6 +68,24 @@ module Orgmode
       not metadata? and not blank? and not plain_list?
     end
 
+    def table_row?
+      # for an org-mode table, the first non-whitespace character is a
+      # | (pipe).
+      @line =~ /^\s*\|/
+    end
+
+    def table_separator?
+      # an org-mode table separator has the first non-whitespace
+      # character as a | (pipe), then consists of nothing else other
+      # than pipes, hyphens, and pluses.
+
+      @line =~ /^\s*\|[-\|\+]*\s*$/
+    end
+
+    def table?
+      table_row? or table_separator?
+    end
+
     # Determines the paragraph type of the current line.
     def paragraph_type
       return :blank if blank?
@@ -75,6 +93,8 @@ module Orgmode
       return :unordered_list if unordered_list?
       return :metadata if metadata?
       return :comment if comment?
+      return :table_separator if table_separator?
+      return :table_row if table_row?
       return :paragraph
     end
 
@@ -97,37 +117,54 @@ module Orgmode
         end
         list_indent_stack = [] unless (line.paragraph_type == :ordered_list or line.paragraph_type == :unordered_list)
         case line.paragraph_type
-          when :metadata, :comment
+        when :metadata, :comment, :table_separator
 
           # IGNORE
 
-          when :blank
+        when :table_row
+
+          output << line.line.textile_substitution << "\n"
+
+        when :blank
 
           # Don't output multiple blank lines.
           output << "\n" unless current_output_type == :blank
 
-          # TODO 2009-12-20 bdewey: Handle nesting of lists
-          when :ordered_list
-
-          while (not list_indent_stack.empty? and (list_indent_stack.last > line.indent)) do
-            list_indent_stack.pop
-          end
-          list_indent_stack.push(line.indent) if list_indent_stack.empty? or list_indent_stack.last < line.indent
-          output << "#" * list_indent_stack.length << line.strip_ordered_list_tag.textile_substitution << "\n"
-
-          when :unordered_list
-
-          while (not list_indent_stack.empty? and (list_indent_stack.last > line.indent)) do
-            list_indent_stack.pop
-          end
-          list_indent_stack.push(line.indent) if list_indent_stack.empty? or list_indent_stack.last < line.indent
-          output << "*" * list_indent_stack.length << line.strip_unordered_list_tag.textile_substitution << "\n"
-
-          when :paragraph
           
-          # Strip leading & trailing whitespace for paragraphs, and don't output
-          # right away. Build up the data in current_paragraph and output only
-          # when the output type changes.
+
+          # TODO 2009-12-20 bdewey: Handle nesting of lists
+        when :ordered_list
+
+          while (not list_indent_stack.empty? \
+                 and (list_indent_stack.last > line.indent)) 
+            list_indent_stack.pop
+          end
+          if (list_indent_stack.empty? \
+              or list_indent_stack.last < line.indent)
+            list_indent_stack.push(line.indent)
+          end
+            
+          output << "#" * list_indent_stack.length <<
+            line.strip_ordered_list_tag.textile_substitution << "\n"
+          
+        when :unordered_list
+          
+          while (not list_indent_stack.empty? \
+                 and (list_indent_stack.last > line.indent)) 
+            list_indent_stack.pop
+          end
+          if (list_indent_stack.empty? or list_indent_stack.last < line.indent)
+            list_indent_stack.push(line.indent) 
+          end
+          output << "*" * list_indent_stack.length <<
+            line.strip_unordered_list_tag.textile_substitution << "\n"
+
+        when :paragraph
+          
+          # Strip leading & trailing whitespace for paragraphs, and
+          # don't output right away. Build up the data in
+          # current_paragraph and output only when the output type
+          # changes.
           current_paragraph << line.line.strip << " "
         end
         current_output_type = line.paragraph_type

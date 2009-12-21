@@ -38,6 +38,13 @@ describe Orgmode::Line do
     end
   end
 
+  it "should recognize table rows" do
+    Orgmode::Line.new("| One   | Two   | Three |").table_row?.should be_true
+    Orgmode::Line.new("  |-------+-------+-------|\n").table_separator?.should be_true
+    Orgmode::Line.new("| Four  | Five  | Six   |").table_row?.should be_true
+    Orgmode::Line.new("| Seven | Eight | Nine  |").table_row?.should be_true
+  end
+
   it "should recognize indentation" do
     Orgmode::Line.new("").indent.should eql 0
     Orgmode::Line.new(" a").indent.should eql 1

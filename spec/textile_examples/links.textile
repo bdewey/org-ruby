@@ -1,3 +1,5 @@
+LINKS 
+
 h1. Supported Link Styles
 
 * "http://www.hotmail.com":http://www.hotmail.com => Simple
