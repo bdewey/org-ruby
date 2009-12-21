@@ -131,4 +131,21 @@ describe Orgmode::Line do
       line.plain_list?.should be_true
     end
   end
+
+  it "should recognize indentation" do
+    Orgmode::Line.new("").indent.should == 0
+    Orgmode::Line.new(" a").indent.should == 1
+    Orgmode::Line.new("   ").indent.should == 0
+    Orgmode::Line.new("   \n").indent.should == 0
+    Orgmode::Line.new("   a").indent.should == 3
+  end
+
+  it "should return paragraph type" do
+    Orgmode::Line.new("").paragraph_type.should == :blank
+    Orgmode::Line.new("1. foo").paragraph_type.should == :ordered_list
+    Orgmode::Line.new("- [ ] checkbox").paragraph_type.should == :unordered_list
+    Orgmode::Line.new("hello!").paragraph_type.should == :paragraph
+  end
+
+  it "can convert an array of lines to textile"
 end
