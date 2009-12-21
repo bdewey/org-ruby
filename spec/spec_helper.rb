@@ -2,6 +2,11 @@
 require File.expand_path(
     File.join(File.dirname(__FILE__), %w[.. lib orgmode_parser]))
 
+
+RememberFile = File.join(File.dirname(__FILE__), %w[data remember.org])
+FreeformFile = File.join(File.dirname(__FILE__), %w[data freeform.org])
+
+
 Spec::Runner.configure do |config|
   # == Mock Framework
   #

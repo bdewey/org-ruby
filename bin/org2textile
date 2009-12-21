@@ -1,9 +1,0 @@
-#!/usr/bin/env ruby
-
-require File.expand_path(
-    File.join(File.dirname(__FILE__), %w[.. lib orgmode_parser]))
-
-# Put your code here
-
-parser = Orgmode::Parser.new(ARGV[0])
-puts parser.to_textile

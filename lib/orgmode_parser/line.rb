@@ -29,7 +29,7 @@ module Orgmode
 
     # Tests if a line contains metadata instead of actual content.
     def metadata?
-      @line =~ /^\s*(CLOCK|DEADLINE|START|CLOSED):/
+      @line =~ /^\s*(CLOCK|DEADLINE|START|CLOSED|SCHEDULED):/
     end
 
     def nonprinting?
@@ -113,7 +113,7 @@ module Orgmode
             list_indent_stack.pop
           end
           list_indent_stack.push(line.indent) if list_indent_stack.empty? or list_indent_stack.last < line.indent
-          output << "#" * list_indent_stack.length << line.strip_ordered_list_tag.textile_substitution
+          output << "#" * list_indent_stack.length << line.strip_ordered_list_tag.textile_substitution << "\n"
 
           when :unordered_list
 
@@ -121,7 +121,7 @@ module Orgmode
             list_indent_stack.pop
           end
           list_indent_stack.push(line.indent) if list_indent_stack.empty? or list_indent_stack.last < line.indent
-          output << "*" * list_indent_stack.length << line.strip_unordered_list_tag.textile_substitution
+          output << "*" * list_indent_stack.length << line.strip_unordered_list_tag.textile_substitution << "\n"
 
           when :paragraph
           
