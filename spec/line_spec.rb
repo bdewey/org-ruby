@@ -59,4 +59,32 @@ describe Orgmode::Line do
     Orgmode::Line.new("- [ ] checkbox").paragraph_type.should eql :unordered_list
     Orgmode::Line.new("hello!").paragraph_type.should eql :paragraph
   end
+
+  it "should recognize BEGIN and END comments" do
+    begin_examples = {
+      "#+BEGIN_SRC emacs-lisp -n -r\n" => "SRC",
+      "#+BEGIN_EXAMPLE" => "EXAMPLE",
+      "\t#+BEGIN_QUOTE  " => "QUOTE"
+    }
+
+    end_examples = {
+      "#+END_SRC" => "SRC",
+      "#+END_EXAMPLE" => "EXAMPLE",
+      "\t#+END_QUOTE  " => "QUOTE"
+    }
+
+    begin_examples.each_key do |str|
+      line = Orgmode::Line.new str
+      line.comment?.should be_true
+      line.begin_block?.should be_true
+      line.block_type.should eql(begin_examples[str])
+    end
+
+    end_examples.each_key do |str|
+      line = Orgmode::Line.new str
+      line.comment?.should be_true
+      line.end_block?.should be_true
+      line.block_type.should eql(end_examples[str])
+    end
+  end
 end

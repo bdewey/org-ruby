@@ -86,6 +86,20 @@ module Orgmode
       table_row? or table_separator?
     end
 
+    BlockRegexp = /^\s*#\+(BEGIN|END)_(\w*)/
+
+    def begin_block?
+      @line =~ BlockRegexp && $1 == "BEGIN"
+    end
+
+    def end_block?
+      @line =~ BlockRegexp && $1 == "END"
+    end
+
+    def block_type
+      $2 if @line =~ BlockRegexp
+    end
+
     # Determines the paragraph type of the current line.
     def paragraph_type
       return :blank if blank?
@@ -104,6 +118,7 @@ module Orgmode
       current_output_type = :start
       current_paragraph = ""
       list_indent_stack = []
+      paragraph_modifier = nil
       0.upto lines.length-1 do |i|
         line = lines[i]
         data = line.line
@@ -112,18 +127,24 @@ module Orgmode
         # it if we're about to switch to some other output type.
         if ((current_paragraph.length > 0) and
             (line.paragraph_type != :paragraph)) then
+          output << paragraph_modifier if paragraph_modifier
           output << current_paragraph.textile_substitution << "\n"
           current_paragraph = ""
         end
         list_indent_stack = [] unless (line.paragraph_type == :ordered_list or line.paragraph_type == :unordered_list)
         case line.paragraph_type
-        when :metadata, :comment, :table_separator
+        when :metadata, :table_separator
 
           # IGNORE
 
+        when :comment
+          
+          paragraph_modifier = "bq. " if line.begin_block? and line.block_type == "QUOTE"
+          paragraph_modifier = nil if line.end_block?
+
         when :table_row
 
-          output << line.line.textile_substitution << "\n"
+          output << line.line.lstrip.textile_substitution << "\n"
 
         when :blank
 
@@ -132,7 +153,6 @@ module Orgmode
 
           
 
-          # TODO 2009-12-20 bdewey: Handle nesting of lists
         when :ordered_list
 
           while (not list_indent_stack.empty? \

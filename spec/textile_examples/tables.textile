@@ -9,15 +9,15 @@ h1. Simple table, no header.
 
 h1. Indented table
 
-  | Cell one |
-  | Cell two |
+| Cell one |
+| Cell two |
 
 And here's some paragraph content. The line breaks will need to get removed here, but not for the tables. 
 
 h1. Table with header
 
-  | One   | Two   | Three |
-  | Four  | Five  | Six   |
-  | Seven | Eight | Nine  |
+| One   | Two   | Three |
+| Four  | Five  | Six   |
+| Seven | Eight | Nine  |
 
 The separator row should not get printed out. 
