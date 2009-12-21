@@ -1,0 +1,53 @@
+* New Ideas
+** YAML header in Webby
+
+   Make sure you don't have TABS here. Best practice: Configure your
+   editor to use spaces instaed of tabs, and if you can see whitespace,
+   even better.
+
+   In emacs, set indent-tabs-mode to NIL.
+** Ruby Gems behind Proxy
+
+   Set the following environment variable:
+
+   So, I added a User Variable for my account called http_proxy with
+   the value of http://<proxyserveraddress>:8080, rebooted, ran plan
+   old vanillia gem install rails –include-dependencies, and magically,
+   it worked
+** Hyper-V technical info
+
+http://technet.microsoft.com/en-us/dd565807.aspx
+** VirtualBox
+
+   Virtualization software from Sun. Looks like it might be more for
+   dev/test. I'm surprised this hasn't popped at
+   all. http://www.virtualbox.org/. Backed by Sun.
+** Interesting LaTeX article
+
+   http://nitens.org/taraborelli/latex -- on the virtues of LaTeX
+** XEmacs / Emacs internals
+
+   Looks like an interesting resource if I want to learn how Emacs works.
+
+   http://www.xemacs.org/Documentation/21.5/html/internals_9.html#SEC19
+** MikTeX
+
+   Get it here: http://www.miktex.org/portable/
+** Orgmode publishing tutorial
+
+   [[http://orgmode.org/worg/org-tutorials/org-publish-html-tutorial.php][Publishing Org-mode files to HTML]]
+** Git and Live Mesh
+
+   This is really helpful:
+   http://whereslou.com/2009/06/04/using-live-mesh-and-git-the-best-of-both-worlds
+** VDI deployment stats
+
+Key takeaways:
+-	74% are using VDI in production or pilot ... but 45% of those using have less than 100 users
+-	Upward of 55% of the DAC members [project] they will have up to 50% of their users using VDI in 3 years (~1/2 of those will have > 50%)
+-	No real surprises on the reasons / benefits etc
+-	Interestingly ... even if TS supported all client apps / supported user-install apps - 100% of the DAC preferred VDI over TS
+-	Most companies said a portion of their users would have VDI as the primary replacement desktop (60% < 20% of users, 32% 21-50% of users)
+** Hyper-V Scheduler Information
+
+   http://msdn.microsoft.com/en-us/library/bb969782.aspx

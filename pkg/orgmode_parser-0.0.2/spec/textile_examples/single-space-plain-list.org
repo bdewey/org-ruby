@@ -1,0 +1,13 @@
+** Anatomy of a BVP
+
+   Each BVP followed a simple, one-page template with the following
+   parts:
+   
+   - Customer Summary
+   - Storyboard
+   - Requirements
+   - Partner teams
+
+   The following sections walk through each section and give an
+   example from one of our BVPs, [[http://windows/hyper-v/initiatives/Value Propositions/DynamicDatacenter-ValueProp.docx][Resource-Smart Virtualization
+   Infrastructure]] (also called /Dynamic Datacenter/).

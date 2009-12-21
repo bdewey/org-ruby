@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: String</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">String</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../files/lib/orgmode_parser/string_extend_rb.html">
+                lib/orgmode_parser/string_extend.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                Object
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000001">textile_substitution</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">LinkRegexp</td>
+          <td>=</td>
+          <td class="context-item-value">/\[\[([^\]]*)\]\[([^\]]*)\]\]/</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+I think this is the most beautiful regexp I&#8216;ve ever written.
+
+</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000001" class="method-detail">
+        <a name="M000001"></a>
+
+        <div class="method-heading">
+          <a href="#M000001" class="method-signature">
+          <span class="method-name">textile_substitution</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Extend the <a href="String.html">String</a> class to make it easy to do the
+simple substitutions from one markup format to another.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000001-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000001-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/orgmode_parser/string_extend.rb, line 9</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">textile_substitution</span>
+    <span class="ruby-identifier">str</span> = <span class="ruby-constant">StringIO</span>.<span class="ruby-identifier">new</span>
+    <span class="ruby-identifier">mode</span> = <span class="ruby-identifier">:normal</span>
+    <span class="ruby-identifier">i</span> = <span class="ruby-value">0</span>
+    <span class="ruby-identifier">link_url</span> = <span class="ruby-value str">&quot;&quot;</span>
+    <span class="ruby-identifier">link_text</span> = <span class="ruby-value str">&quot;&quot;</span>
+    <span class="ruby-keyword kw">while</span> (<span class="ruby-identifier">i</span> <span class="ruby-operator">&lt;</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">length</span>) <span class="ruby-keyword kw">do</span>
+      <span class="ruby-identifier">ch</span> = <span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">i</span>, <span class="ruby-value">1</span>]
+
+      <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">mode</span>
+
+      <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:normal</span>
+        
+        <span class="ruby-comment cmt"># Do simple text substitution</span>
+        <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">ch</span>
+        <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'/'</span>
+          <span class="ruby-identifier">ch</span> = <span class="ruby-value str">'_'</span>
+
+        <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'['</span>
+          
+          <span class="ruby-comment cmt"># If the next character is '[', we enter link mode.</span>
+          <span class="ruby-keyword kw">if</span> ((<span class="ruby-identifier">i</span> <span class="ruby-operator">&lt;</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>) <span class="ruby-operator">&amp;&amp;</span> (<span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">i</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>, <span class="ruby-value">1</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;[&quot;</span>)) <span class="ruby-keyword kw">then</span>
+            <span class="ruby-identifier">i</span> <span class="ruby-operator">+=</span> <span class="ruby-value">2</span>
+            <span class="ruby-identifier">mode</span> = <span class="ruby-identifier">:link_url</span>
+            <span class="ruby-keyword kw">next</span>
+          <span class="ruby-keyword kw">end</span>
+        <span class="ruby-keyword kw">end</span>
+        <span class="ruby-identifier">str</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">ch</span>
+
+      <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:link_url</span>
+        
+        <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">ch</span>
+        <span class="ruby-keyword kw">when</span> <span class="ruby-value str">']'</span>
+
+          <span class="ruby-comment cmt"># We've read in the whole link URL. Now see if there's link</span>
+          <span class="ruby-comment cmt"># text, or if this is the short form.</span>
+          <span class="ruby-keyword kw">if</span> ((<span class="ruby-identifier">i</span> <span class="ruby-operator">&lt;</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>) <span class="ruby-operator">&amp;&amp;</span> (<span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">i</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>, <span class="ruby-value">1</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;[&quot;</span>)) <span class="ruby-keyword kw">then</span>
+
+            <span class="ruby-comment cmt"># Long form! Expect to get link text.</span>
+            <span class="ruby-identifier">mode</span> = <span class="ruby-identifier">:link_text</span>
+            <span class="ruby-identifier">i</span> <span class="ruby-operator">+=</span> <span class="ruby-value">2</span>
+            <span class="ruby-keyword kw">next</span>
+
+          <span class="ruby-keyword kw">else</span>
+
+            <span class="ruby-comment cmt"># Short form! We can output the link now.</span>
+            <span class="ruby-identifier">i</span> <span class="ruby-operator">+=</span> <span class="ruby-value">2</span>
+            <span class="ruby-identifier">str</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;\&quot;#{link_url}\&quot;:#{link_url.gsub(/ /, &quot;%20&quot;)}&quot;</span>
+            <span class="ruby-identifier">link_url</span> = <span class="ruby-value str">&quot;&quot;</span>
+            <span class="ruby-identifier">mode</span> = <span class="ruby-identifier">:normal</span>
+            <span class="ruby-keyword kw">next</span>
+
+          <span class="ruby-keyword kw">end</span>
+
+        <span class="ruby-keyword kw">else</span>
+
+          <span class="ruby-identifier">link_url</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">ch</span>
+        <span class="ruby-keyword kw">end</span>
+
+      <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:link_text</span>
+
+        <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">ch</span>
+
+        <span class="ruby-keyword kw">when</span> <span class="ruby-value str">']'</span>
+
+          <span class="ruby-identifier">link_url</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/ /</span>, <span class="ruby-value str">&quot;%20&quot;</span>)
+          <span class="ruby-identifier">str</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;\&quot;#{link_text}\&quot;:#{link_url}&quot;</span>
+          <span class="ruby-identifier">link_url</span> = <span class="ruby-value str">&quot;&quot;</span>
+          <span class="ruby-identifier">link_text</span> = <span class="ruby-value str">&quot;&quot;</span>
+          <span class="ruby-identifier">i</span> <span class="ruby-operator">+=</span> <span class="ruby-value">2</span>
+          <span class="ruby-identifier">mode</span> = <span class="ruby-identifier">:normal</span>
+          <span class="ruby-keyword kw">next</span>
+
+        <span class="ruby-keyword kw">else</span>
+          <span class="ruby-identifier">link_text</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">ch</span>
+        <span class="ruby-keyword kw">end</span>
+        
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-identifier">i</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-identifier">str</span>.<span class="ruby-identifier">string</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

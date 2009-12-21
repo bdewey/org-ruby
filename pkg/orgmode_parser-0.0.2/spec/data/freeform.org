@@ -1,0 +1,111 @@
+#+TITLE:     Freeform
+#+AUTHOR:    
+#+EMAIL:     bdewey@gmail.com
+#+DATE:      2009-12-20 Sun
+#+DESCRIPTION: 
+#+KEYWORDS: 
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:t toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:nil skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+Freeform
+
+This is my todo list, research file, and log record from working on
+the Freeform project.
+
+* Future ideas						:someday:
+  - Add *posts*
+  - Enforce uniqueness of url_token
+  - Add FeedSync support
+  - Auto-recognize URLs
+  - Edit in place
+  - Import/export of content. I want it to be safe to store real content on the site.
+  - Page reordering.
+  - AtomPub support.
+  - Organization:
+    - Move pages around
+    - Add tags and navigation by tags
+    - Add a breadcrumb bar
+
+* TODO Add versioning support			:current:feature:
+
+** DONE UI rough-in
+   CLOSED: [2009-11-26 Thu]
+
+** DONE Author logging
+   CLOSED: [2009-11-27 Fri]
+
+** DONE Version table and model updates
+   CLOSED: [2009-11-28 Sat 22:40]
+   CLOCK: [2009-11-28 Sat 21:35]--[2009-11-28 Sat 22:40] =>  1:05
+   CLOCK: [2009-11-28 Sat 21:01]--[2009-11-28 Sat 21:25] =>  0:24
+   CLOCK: [2009-11-28 Sat 19:46]--[2009-11-28 Sat 20:54] =>  1:08
+   CLOCK: [2009-11-28 Sat 14:38]--[2009-11-28 Sat 15:08] =>  0:30
+   CLOCK: [2009-11-28 Sat 13:21]--[2009-11-28 Sat 14:37] =>  1:16
+
+   OK, my current thinking is to have each idea have many Changes. A
+   change has many change records. A change record is a list of
+   specific attributes that change, and includes the old and the new
+   values. I'll use callbacks on the Idea model to maintain the
+   changes.
+
+
+*** DONE Create version method
+    CLOSED: [2009-11-28 Sat 22:40]
+
+*** DONE Make current method
+    CLOSED: [2009-11-28 Sat 22:40]
+
+** Update pages controller
+
+*** DONE Show versions
+    CLOSED: [2009-11-30 Mon 00:34]
+    CLOCK: [2009-11-29 Sun 21:27]--[2009-11-29 Sun 21:54] =>  0:27
+    CLOCK: [2009-11-29 Sun 15:40]--[2009-11-29 Sun 15:44] =>  0:04
+    CLOCK: [2009-11-28 Sat 22:44]--[2009-11-28 Sat 23:50] =>  1:06
+
+    I'm now at the point where I *list* versions, but I can't show
+    them. 
+
+    - [X] I currently suspect that I broke my version recovery code
+      when I switched the order of the idea_changes. I need to
+      investigate why nothing's failing in the tests; I expected
+      failures. Possible addition to test: start looking at those
+      version numbers.
+
+	  OK, here's what was going on: In the test, you need to
+          reload the idea_changes array from the database to get the
+          database sort order. I also make sure I do this inside the
+          Idea methods.
+
+**** DONE Write a test for Idea::attributes_for_change
+     CLOSED: [2009-11-29 Sun 23:59]
+     CLOCK: [2009-11-29 Sun 23:47]--[2009-11-29 Sun 23:58] =>  0:11
+     CLOCK: [2009-11-29 Sun 22:02]--[2009-11-29 Sun 23:42] =>  1:40
+     CLOCK: [2009-11-29 Sun 21:54]--[2009-11-29 Sun 21:56] =>  0:02
+
+*** DONE Write integration tests that cover versions.
+    CLOSED: [2009-12-11 Fri 23:25]
+    CLOCK: [2009-12-11 Fri 20:27]--[2009-12-11 Fri 23:25] =>  2:58
+
+*** DONE Recover versions
+    CLOSED: [2009-12-12 Sat 22:09]
+    CLOCK: [2009-12-12 Sat 21:02]--[2009-12-12 Sat 22:09] =>  1:07
+    CLOCK: [2009-12-12 Sat 20:13]--[2009-12-12 Sat 21:00] =>  0:47
+
+*** DONE Move to recycle bin
+    CLOSED: [2009-12-12 Sat 22:59]
+    CLOCK: [2009-12-12 Sat 22:23]--[2009-12-12 Sat 22:59] =>  0:36
+
+    Note I'm avoiding logging delete operations because I'm presuming
+    there will be a recycle bin, and therefore the *pages* controller
+    will never actually delete files. At some point, when I want to
+    support full FeedSync, I'll need to tackle this.
+
+    The other timebomb: I don't know how well my logging scheme will
+    work when pages move. I don't yet know if I will address this in
+    the current sprint.

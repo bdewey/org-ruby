@@ -1,0 +1,13 @@
+KEYWORDS
+
+By default, I don't want keywords exported to textile.
+
+* DONE Recognize standard keywords
+  CLOSED: [2009-12-21 Mon 15:23]
+
+  The standard =orgmode= keywords are TODO and DONE. Recognize those.
+
+* TODO Recongize buffer-specific keywords
+
+  There's a way to define a custom keyword list in a buffer. Research
+  that and handle it.

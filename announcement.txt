@@ -1,0 +1,17 @@
+orgmode_parser version 0.0.2
+    by Brian Dewey
+    http://bdewey.com
+
+== DESCRIPTION
+
+Helpful Ruby routines for parsing orgmode files. The most significant
+thing this library does today is convert orgmode files to
+textile. Currently, you cannot do much to customize the
+conversion. The supplied textile conversion is optimized for
+extracting "content" from the orgfile as opposed to "metadata."
+
+== CHANGES
+
+* Initial version. Handles tables (but not headers), headlines,
+  paragraphs, block quotes, strong & emphasis formatting.
+
