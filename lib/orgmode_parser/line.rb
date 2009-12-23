@@ -112,113 +112,51 @@ module Orgmode
       return :paragraph
     end
 
-    # Tests if the current line should be accumulated in the current
-    # output buffer.  (Extraneous line breaks in the orgmode buffer
-    # are removed by accumulating lines in the output buffer without
-    # line breaks.)
-    def self.should_accumulate_output?(line)
-      
-      # Currently only "paragraphs" get accumulated with previous output.
-      return false unless line.paragraph_type == :paragraph
-      if ((@previous_output_type == :ordered_list) or
-          (@previous_output_type == :unordered_list)) then
-
-        # If the previous output type was a list item, then we only put a paragraph in it
-        # if its indent level is greater than the list indent level.
-
-        return false unless line.indent > @list_indent_stack.last
-      end
-      true
-    end
-
     # Converts an array of lines to textile format.
     def self.to_textile(lines)
-      @output = ""
-      @previous_output_type = :start
-      @output_buffer = ""
-      @list_indent_stack = []
-      @paragraph_modifier = nil
-      0.upto lines.length-1 do |i|
-        line = lines[i]
-        data = line.line
+      output = ""
+      output_buffer = OutputBuffer.new(output)
+      lines.each do |line|
 
         # See if we're carrying paragraph payload, and output
         # it if we're about to switch to some other output type.
-        if not should_accumulate_output?(line) then
-          flush_output_buffer
-        end
-        @list_indent_stack = [] unless (line.paragraph_type == :ordered_list or line.paragraph_type == :unordered_list)
+        output_buffer.prepare(line)
+
         case line.paragraph_type
-        when :metadata, :table_separator
+        when :metadata, :table_separator, :blank
 
           # IGNORE
 
         when :comment
           
-          @paragraph_modifier = "bq. " if line.begin_block? and line.block_type == "QUOTE"
-          @paragraph_modifier = nil if line.end_block?
+          output_buffer.paragraph_modifier = "bq. " if line.begin_block? and line.block_type == "QUOTE"
+          output_buffer.paragraph_modifier = nil if line.end_block?
 
         when :table_row
 
-          @output << line.line.lstrip.textile_substitution << "\n"
-
-        when :blank
-
-          # Don't output multiple blank lines.
-          @output << "\n" unless @previous_output_type == :blank
-
-          
+          output_buffer << line.line.lstrip
 
         when :ordered_list
-
-          while (not @list_indent_stack.empty? \
-                 and (@list_indent_stack.last > line.indent)) 
-            @list_indent_stack.pop
-          end
-          if (@list_indent_stack.empty? \
-              or @list_indent_stack.last < line.indent)
-            @list_indent_stack.push(line.indent)
-          end
             
-          @output_buffer << "#" * @list_indent_stack.length <<
+          output_buffer << "#" * output_buffer.list_indent_level <<
             line.strip_ordered_list_tag << " "
           
         when :unordered_list
           
-          while (not @list_indent_stack.empty? \
-                 and (@list_indent_stack.last > line.indent)) 
-            @list_indent_stack.pop
-          end
-          if (@list_indent_stack.empty? or @list_indent_stack.last < line.indent)
-            @list_indent_stack.push(line.indent) 
-          end
-          @output_buffer << "*" * @list_indent_stack.length <<
+          output_buffer << "*" * output_buffer.list_indent_level <<
             line.strip_unordered_list_tag << " "
 
         when :paragraph
           
           # Strip leading & trailing whitespace for paragraphs, and
           # don't output right away. Build up the data in
-          # @output_buffer and output only when the output type
+          # output_buffer and output only when the output type
           # changes.
-          @output_buffer << line.line.strip << " "
+          output_buffer << line.line.strip << " "
         end
-        @previous_output_type = line.paragraph_type
       end
-      flush_output_buffer
-      @output
+      output_buffer.flush!
+      output
     end
-
-    ######################################################################
-    private
-
-    def self.flush_output_buffer
-      if (@output_buffer.length > 0) then
-        @output << @paragraph_modifier if @paragraph_modifier
-        @output << @output_buffer.textile_substitution << "\n"
-        @output_buffer = ""
-      end
-    end
-    
   end                           # class Line
 end                             # module Orgmode
