@@ -21,35 +21,35 @@ describe Orgmode::Headline do
     expected = 1
     samples.each do |sample|
       h = Orgmode::Headline.new sample
-      h.level.should eql expected
+      h.level.should eql(expected)
       expected += 1
     end
   end
 
   it "should find simple headline text" do
     h = Orgmode::Headline.new "*** sample"
-    h.headline_text.should eql "sample"
+    h.headline_text.should eql("sample")
   end
 
   it "should understand tags" do
     h = Orgmode::Headline.new "*** sample :tag:tag2:\n"
-    h.headline_text.should eql "sample"
+    h.headline_text.should eql("sample")
     h.should have(2).tags
-    h.tags[0].should eql "tag"
-    h.tags[1].should eql "tag2"
+    h.tags[0].should eql("tag")
+    h.tags[1].should eql("tag2")
   end
 
   it "should understand a single tag" do
     h = Orgmode::Headline.new "*** sample :tag:\n"
-    h.headline_text.should eql "sample"
+    h.headline_text.should eql("sample")
     h.should have(1).tags
-    h.tags[0].should eql "tag"
+    h.tags[0].should eql("tag")
   end
 
   it "should understand keywords" do
     h = Orgmode::Headline.new "*** TODO Feed cat  :home:"
-    h.headline_text.should eql "Feed cat"
-    h.keyword.should eql "TODO"
+    h.headline_text.should eql("Feed cat")
+    h.keyword.should eql("TODO")
   end
 end
 

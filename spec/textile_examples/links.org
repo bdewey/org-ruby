@@ -1,5 +1,7 @@
 LINKS
 
+[[http://www.bing.com]]
+
 * Supported Link Styles
 
   - [[http://www.hotmail.com]] => Simple

@@ -46,18 +46,18 @@ describe Orgmode::Line do
   end
 
   it "should recognize indentation" do
-    Orgmode::Line.new("").indent.should eql 0
-    Orgmode::Line.new(" a").indent.should eql 1
-    Orgmode::Line.new("   ").indent.should eql 0
-    Orgmode::Line.new("   \n").indent.should eql 0
-    Orgmode::Line.new("   a").indent.should eql 3
+    Orgmode::Line.new("").indent.should eql(0)
+    Orgmode::Line.new(" a").indent.should eql(1)
+    Orgmode::Line.new("   ").indent.should eql(0)
+    Orgmode::Line.new("   \n").indent.should eql(0)
+    Orgmode::Line.new("   a").indent.should eql(3)
   end
 
   it "should return paragraph type" do
-    Orgmode::Line.new("").paragraph_type.should eql :blank
-    Orgmode::Line.new("1. foo").paragraph_type.should eql :ordered_list
-    Orgmode::Line.new("- [ ] checkbox").paragraph_type.should eql :unordered_list
-    Orgmode::Line.new("hello!").paragraph_type.should eql :paragraph
+    Orgmode::Line.new("").paragraph_type.should eql(:blank)
+    Orgmode::Line.new("1. foo").paragraph_type.should eql(:ordered_list)
+    Orgmode::Line.new("- [ ] checkbox").paragraph_type.should eql(:unordered_list)
+    Orgmode::Line.new("hello!").paragraph_type.should eql(:paragraph)
   end
 
   it "should recognize BEGIN and END comments" do

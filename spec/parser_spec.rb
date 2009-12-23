@@ -12,7 +12,7 @@ describe Orgmode::Parser do
 
   it "should load all of the lines" do
     parser = Orgmode::Parser.load(RememberFile)
-    parser.lines.length.should eql 53
+    parser.lines.length.should eql(53)
   end
 
   it "should find all headlines" do
@@ -22,13 +22,13 @@ describe Orgmode::Parser do
 
   it "can find a headline by index" do
     parser = Orgmode::Parser.load(RememberFile)
-    parser.headlines[1].line.should eql "** YAML header in Webby\n"
+    parser.headlines[1].line.should eql("** YAML header in Webby\n")
   end
 
   it "should determine headline levels" do
     parser = Orgmode::Parser.load(RememberFile)
-    parser.headlines[0].level.should eql 1
-    parser.headlines[1].level.should eql 2
+    parser.headlines[0].level.should eql(1)
+    parser.headlines[1].level.should eql(2)
   end
 
   it "should put body lines in headlines" do
