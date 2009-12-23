@@ -1,3 +1,5 @@
+require 'logger'
+
 module Orgmode
 
   # The OutputBuffer is used to accumulate multiple lines of orgmode
@@ -23,11 +25,16 @@ module Orgmode
       @buffer = ""
       @output_type = :start
       @list_indent_stack = []
+      @paragraph_modifier = nil
+
+      @logger = Logger.new(STDERR)
+      @logger.level = Logger::WARN
     end
 
     # Prepares the output buffer to receive content from a line.
     # As a side effect, this may flush the current accumulated text.
     def prepare(line)
+      @logger.debug "Looking at #{line.paragraph_type}: #{line.to_s}"
       if not should_accumulate_output?(line) then
         flush!
       end
@@ -42,8 +49,9 @@ module Orgmode
 
     # Flushes the current buffer
     def flush!
+      @logger.debug "FLUSH ==========> #{@output_type}"
       if (@output_type == :blank) then
-        @output << "\n\n"
+        @output << "\n"
       elsif (@buffer.length > 0) then
         @output << @paragraph_modifier if @paragraph_modifier
         @output << @buffer.textile_substitution << "\n"
@@ -93,6 +101,12 @@ module Orgmode
 
         return false unless line.indent > @list_indent_stack.last
       end
+
+      # Only accumulate paragraphs with lists & paragraphs.
+      return false unless
+        ((@output_type == :paragraph) or
+         (@output_type == :ordered_list) or
+         (@output_type == :unordered_list))
       true
     end
   end                           # class OutputBuffer
