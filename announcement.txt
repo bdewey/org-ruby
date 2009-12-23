@@ -1,4 +1,4 @@
-orgmode_parser version 0.0.2
+orgmode_parser version 0.1.0
     by Brian Dewey
     http://bdewey.com
 
@@ -12,6 +12,8 @@ extracting "content" from the orgfile as opposed to "metadata."
 
 == CHANGES
 
-* Initial version. Handles tables (but not headers), headlines,
-  paragraphs, block quotes, strong & emphasis formatting.
+* Added support for block code
+* Added support for list items that wrap in the org source
+* Major code cleanup:
+  Added +OutputBuffer+ class that should make the code more maintainable.
 

@@ -1,0 +1,33 @@
+#!/usr/bin/env ruby
+
+require File.expand_path(
+    File.join(File.dirname(__FILE__), %w[.. lib orgmode_parser]))
+require 'optparse'
+
+# Put your code here
+
+options = {}
+options_parser = OptionParser.new do |opts|
+  options[:help] = false
+  
+  opts.banner = "Usage: orgparse <file> [options]"
+
+  opts.on("-h", "--help", "Show this message") do |v|
+    options[:help] = true
+  end
+end
+
+begin
+  options_parser.parse!
+  if (ARGV.length == 0) then
+    puts options_parser
+  else
+    data = IO.read(ARGV[0])
+    p = Orgmode::Parser.new(data)
+    puts p.to_textile
+  end
+rescue OptionParser::ParseError
+  puts options_parser
+end
+
+
