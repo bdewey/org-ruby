@@ -129,9 +129,10 @@ module Orgmode
 
         when :comment
           
-          output_buffer.paragraph_modifier = "bq. " if line.begin_block? and line.block_type == "QUOTE"
-          output_buffer.paragraph_modifier = "bc.. " if line.begin_block? and line.block_type == "EXAMPLE"
-          output_buffer.paragraph_modifier = nil if line.end_block?
+          output_buffer.push_mode(:blockquote) if line.begin_block? and line.block_type == "QUOTE"
+          output_buffer.push_mode(:code) if line.begin_block? and line.block_type == "EXAMPLE"
+          output_buffer.pop_mode(:blockquote) if line.end_block? and line.block_type == "QUOTE"
+          output_buffer.pop_mode(:code) if line.end_block? and line.block_type == "EXAMPLE"
 
         when :table_row
 

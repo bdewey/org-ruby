@@ -14,22 +14,6 @@ module Orgmode
     # This is the current type of output being accumulated. 
     attr_accessor :output_type
 
-    # This is an optional string that will get emitted when the buffer
-    # is flushed.
-    def paragraph_modifier
-      @paragraph_modifier
-    end
-
-    def paragraph_modifier=(modifier)
-      # If we currently have a sticky modifier, we need to remember to
-      # cancel it on our next flush.
-      @cancel_modifier = true if sticky_modifier?
-      @paragraph_modifier = modifier
-      if sticky_modifier?
-        @output << @paragraph_modifier
-      end
-    end
-
     # Creates a new OutputBuffer object that is bound to an output object.
     # The output will get flushed to =output=.
     def initialize(output)
@@ -39,9 +23,30 @@ module Orgmode
       @list_indent_stack = []
       @paragraph_modifier = nil
       @cancel_modifier = false
+      @mode_stack = []
+      @add_paragraph = false
+      push_mode(:normal)
 
       @logger = Logger.new(STDERR)
       @logger.level = Logger::WARN
+    end
+
+    Modes = [:normal, :ordered_list, :unordered_list, :blockquote, :code]
+
+    def current_mode
+      @mode_stack.last
+    end
+
+    def push_mode(mode)
+      raise "Not a recognized mode: #{mode}" unless Modes.include?(mode)
+      @mode_stack.push(mode)
+      @output << "bc.. " if mode == :code
+    end
+
+    def pop_mode(mode)
+      m = @mode_stack.pop
+      @logger.warn "Modes don't match. Expected to pop #{mode}, but popped #{m}" if mode != m
+      @add_paragraph = (mode == :code)
     end
 
     # Prepares the output buffer to receive content from a line.
@@ -66,11 +71,11 @@ module Orgmode
       if (@output_type == :blank) then
         @output << "\n"
       elsif (@buffer.length > 0) then
-        if @cancel_modifier then
+        if @add_paragraph then
           @output << "p. " if @output_type == :paragraph
-          @cancel_modifier = false
+          @add_paragraph = false
         end
-        @output << @paragraph_modifier if (@paragraph_modifier and not sticky_modifier?)
+        @output << "bq. " if current_mode == :blockquote
         @output << @buffer.textile_substitution << "\n"
       end
       @buffer = ""
@@ -83,17 +88,11 @@ module Orgmode
 
     # Test if we're in an output mode in which whitespace is significant.
     def preserve_whitespace?
-      return @paragraph_modifier == "bc.. "
+      return current_mode == :code
     end
 
     ######################################################################
     private
-
-    # True if we have a "sticky" paragraph modifier... you only have
-    # to output it once.
-    def sticky_modifier?
-      return @paragraph_modifier && @paragraph_modifier =~ /\.\./
-    end
 
     def maintain_list_indent_stack(line)
       if (line.plain_list?) then
