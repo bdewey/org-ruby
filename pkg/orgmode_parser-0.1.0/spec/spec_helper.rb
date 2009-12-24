@@ -1,6 +1,6 @@
 
 require File.expand_path(
-    File.join(File.dirname(__FILE__), %w[.. lib orgmode_parser]))
+    File.join(File.dirname(__FILE__), %w[.. lib org-ruby]))
 
 
 RememberFile = File.join(File.dirname(__FILE__), %w[data remember.org])

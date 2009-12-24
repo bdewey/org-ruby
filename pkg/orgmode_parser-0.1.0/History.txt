@@ -1,3 +1,7 @@
+== 0.2.0 / 2009-12-24
+
+* Renamed the gem to org-ruby
+
 == 0.1.0 / 2009-12-23
 
 * Added support for block code

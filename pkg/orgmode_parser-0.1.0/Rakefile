@@ -6,17 +6,17 @@ rescue LoadError
 end
 
 ensure_in_path 'lib'
-require 'orgmode_parser'
+require 'org-ruby'
 
 task :default => 'test:run'
 task 'gem:release' => 'test:run'
 
 Bones {
-  name  'orgmode_parser'
+  name  'org-ruby'
   authors  'Brian Dewey'
   email  'bdewey@gmail.com'
   url  'http://bdewey.com'
-  version  OrgmodeParser::VERSION
+  version  OrgRuby::VERSION
 }
 
 # EOF

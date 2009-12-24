@@ -1,8 +1,8 @@
 
-module OrgmodeParser
+module OrgRuby
 
   # :stopdoc:
-  VERSION = '0.1.0'
+  VERSION = '0.2.0'
   LIBPATH = ::File.expand_path(::File.dirname(__FILE__)) + ::File::SEPARATOR
   PATH = ::File.dirname(LIBPATH) + ::File::SEPARATOR
   # :startdoc:
@@ -44,5 +44,5 @@ module OrgmodeParser
 
 end  # module OrgmodeParser
 
-OrgmodeParser.require_all_libs_relative_to(__FILE__)
+OrgRuby.require_all_libs_relative_to(__FILE__)
 

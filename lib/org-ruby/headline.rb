@@ -1,4 +1,4 @@
-require OrgRuby.libpath(*%w[orgmode_parser line])
+require OrgRuby.libpath(*%w[org-ruby line])
 
 module Orgmode
 
