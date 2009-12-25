@@ -37,15 +37,19 @@ module Orgmode
       @mode_stack.last
     end
 
+    def current_mode_list?
+      (current_mode == :ordered_list) or (current_mode == :unordered_list)
+    end
+
     def push_mode(mode)
       raise "Not a recognized mode: #{mode}" unless Modes.include?(mode)
       @mode_stack.push(mode)
       @output << "bc.. " if mode == :code
     end
 
-    def pop_mode(mode)
+    def pop_mode(mode = nil)
       m = @mode_stack.pop
-      @logger.warn "Modes don't match. Expected to pop #{mode}, but popped #{m}" if mode != m
+      @logger.warn "Modes don't match. Expected to pop #{mode}, but popped #{m}" if mode && mode != m
       @add_paragraph = (mode == :code)
     end
 
@@ -55,9 +59,9 @@ module Orgmode
       @logger.debug "Looking at #{line.paragraph_type}: #{line.to_s}"
       if not should_accumulate_output?(line) then
         flush!
+        maintain_list_indent_stack(line)
+        @output_type = line.paragraph_type 
       end
-      @output_type = line.paragraph_type
-      maintain_list_indent_stack(line)
     end
 
     # Accumulate the string @str@.
@@ -76,6 +80,8 @@ module Orgmode
           @add_paragraph = false
         end
         @output << "bq. " if current_mode == :blockquote
+        @output << "#" * @list_indent_stack.length << " " if @output_type == :ordered_list
+        @output << "*" * @list_indent_stack.length << " " if @output_type == :unordered_list
         @output << @buffer.textile_substitution << "\n"
       end
       @buffer = ""
@@ -99,13 +105,19 @@ module Orgmode
         while (not @list_indent_stack.empty? \
                and (@list_indent_stack.last > line.indent)) 
           @list_indent_stack.pop
+          pop_mode
         end
         if (@list_indent_stack.empty? \
             or @list_indent_stack.last < line.indent)
           @list_indent_stack.push(line.indent)
+          push_mode line.paragraph_type
         end
       else
         @list_indent_stack = []
+        while ((current_mode == :ordered_list) or
+               (current_mode == :unordered_list))
+          pop_mode
+        end
       end
     end
 

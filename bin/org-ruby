@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 require File.expand_path(
-    File.join(File.dirname(__FILE__), %w[.. lib orgmode_parser]))
+    File.join(File.dirname(__FILE__), %w[.. lib org-ruby]))
 require 'optparse'
 
 # Put your code here
