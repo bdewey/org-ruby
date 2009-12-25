@@ -115,7 +115,7 @@ module Orgmode
     # Converts an array of lines to textile format.
     def self.to_textile(lines)
       output = ""
-      output_buffer = OutputBuffer.new(output)
+      output_buffer = TextileOutputBuffer.new(output)
       lines.each do |line|
 
         # See if we're carrying paragraph payload, and output
