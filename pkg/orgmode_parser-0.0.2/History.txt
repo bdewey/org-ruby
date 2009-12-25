@@ -1,4 +1,0 @@
-== 0.0.2 / 2009-12-21
-
-* Initial version. Handles tables (but not headers), headlines,
-  paragraphs, block quotes, strong & emphasis formatting.
