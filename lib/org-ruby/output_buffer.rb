@@ -39,7 +39,7 @@ module Orgmode
       @emphasis = Emphasis.new
     end
 
-    Modes = [:normal, :ordered_list, :unordered_list, :blockquote, :code]
+    Modes = [:normal, :ordered_list, :unordered_list, :blockquote, :code, :table]
 
     def current_mode
       @mode_stack.last
@@ -71,6 +71,20 @@ module Orgmode
         maintain_list_indent_stack(line)
         @output_type = line.paragraph_type 
       end
+      push_mode(:table) if enter_table?
+      pop_mode(:table) if exit_table?
+    end
+
+    # Tests if we are entering a table mode.
+    def enter_table?
+      ((@output_type == :table_row) || (@output_type == :table_separator)) &&
+        (current_mode != :table)
+    end
+
+    # Tests if we are existing a table mode.
+    def exit_table?
+      ((@output_type != :table_row) && (@output_type != :table_separator)) &&
+        (current_mode == :table)
     end
 
     # Accumulate the string @str@.

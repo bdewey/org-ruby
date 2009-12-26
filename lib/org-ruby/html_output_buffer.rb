@@ -7,19 +7,22 @@ module Orgmode
     HtmlBlockTag = {
       :paragraph => "p",
       :ordered_list => "li",
-      :unordered_list => "li"
+      :unordered_list => "li",
+      :table_row => "tr"
     }
 
     def push_mode(mode)
       super(mode)
       @output << "<ul>\n" if mode == :unordered_list
       @output << "<ol>\n" if mode == :ordered_list
+      @output << "<table>\n" if mode == :table
     end
 
     def pop_mode(mode = nil)
       m = super(mode)
       @output << "</ul>\n" if m == :unordered_list
       @output << "</ol>\n" if m == :ordered_list
+      @output << "</table>\n" if m == :table
     end
 
     def flush!
@@ -47,6 +50,11 @@ module Orgmode
     # Applies inline formatting rules to a string.
     def inline_formatting(str)
       str.rstrip!
+      if (@output_type == :table_row) then
+        str.gsub!(/^\|\s*/, "<td>")
+        str.gsub!(/\s*\|$/, "</td>")
+        str.gsub!(/\s*\|\s*/, "</td><td>")
+      end
       str = @emphasis.replace_all(str) do |marker, s|
         "#{Tags[marker][:open]}#{s}#{Tags[marker][:close]}"
       end
