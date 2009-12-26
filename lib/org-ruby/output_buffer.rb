@@ -54,6 +54,7 @@ module Orgmode
       m = @mode_stack.pop
       @logger.warn "Modes don't match. Expected to pop #{mode}, but popped #{m}" if mode && mode != m
       @add_paragraph = (mode == :code)
+      m
     end
 
     # Prepares the output buffer to receive content from a line.

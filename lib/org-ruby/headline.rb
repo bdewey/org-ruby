@@ -67,7 +67,7 @@ module Orgmode
     end
 
     def to_html
-      output = "<h#{@level}>#{@headline_text}</h#{@level}>"
+      output = "<h#{@level}>#{@headline_text}</h#{@level}>\n"
       output << Line.to_html(@body_lines)
       output
     end
