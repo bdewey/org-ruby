@@ -13,7 +13,8 @@ module Orgmode
     def flush!
       @logger.debug "FLUSH ==========> #{@output_type}"
       if (@buffer.length > 0) then
-        @output << "<#{HtmlBlockTag[@output_type]}>" << @buffer << "</#{HtmlBlockTag[@output_type]}>\n"
+        @output << "<#{HtmlBlockTag[@output_type]}>" << @buffer.rstrip \
+          << "</#{HtmlBlockTag[@output_type]}>\n"
       end
       @buffer = ""
     end
