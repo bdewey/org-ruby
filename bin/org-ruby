@@ -9,11 +9,17 @@ require 'optparse'
 options = {}
 options_parser = OptionParser.new do |opts|
   options[:help] = false
+  options[:format] = :html
   
   opts.banner = "Usage: orgparse <file> [options]"
 
   opts.on("-h", "--help", "Show this message") do |v|
     options[:help] = true
+  end
+
+  opts.on("-t", "--translate FORMAT", [:html, :textile],
+          "Translate the ORG file to the specified format.") do |v|
+    options[:format] = v
   end
 end
 
@@ -24,7 +30,8 @@ begin
   else
     data = IO.read(ARGV[0])
     p = Orgmode::Parser.new(data)
-    puts p.to_textile
+    puts p.to_html if options[:format] == :html
+    puts p.to_textile if options[:format] == :textile
   end
 rescue OptionParser::ParseError
   puts options_parser

@@ -65,5 +65,11 @@ module Orgmode
       output << Line.to_textile(@body_lines)
       output
     end
+
+    def to_html
+      output = "<h#{@level}>#{@headline_text}</h#{@level}>"
+      output << Line.to_html(@body_lines)
+      output
+    end
   end                           # class Headline
 end                             # class Orgmode

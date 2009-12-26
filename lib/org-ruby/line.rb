@@ -112,10 +112,20 @@ module Orgmode
       return :paragraph
     end
 
-    # Converts an array of lines to textile format.
     def self.to_textile(lines)
       output = ""
       output_buffer = TextileOutputBuffer.new(output)
+      translate(lines, output_buffer)
+    end
+
+    def self.to_html(lines)
+      output = ""
+      output_buffer = HtmlOutputBuffer.new(output)
+      translate(lines, output_buffer)
+    end
+
+    # Converts an array of lines to textile format.
+    def self.translate(lines, output_buffer)
       lines.each do |line|
 
         # See if we're carrying paragraph payload, and output
@@ -156,7 +166,7 @@ module Orgmode
         end
       end
       output_buffer.flush!
-      output
+      output_buffer.output
     end
   end                           # class Line
 end                             # module Orgmode

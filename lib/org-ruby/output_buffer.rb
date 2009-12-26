@@ -8,8 +8,11 @@ module Orgmode
   # add a newline character prior emitting the output.
   class OutputBuffer
 
-    # This is the buffer that we accumulate into.
+    # This is the temporary buffer that we accumulate into.
     attr_reader :buffer
+
+    # This is the overall output buffer
+    attr_reader :output
 
     # This is the current type of output being accumulated. 
     attr_accessor :output_type

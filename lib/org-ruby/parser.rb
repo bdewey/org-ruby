@@ -59,5 +59,14 @@ module Orgmode
       end
       output
     end
+
+    def to_html
+      output = ""
+      output << Line.to_html(@header_lines)
+      @headlines.each do |headline|
+        output << headline.to_html
+      end
+      output
+    end
   end                             # class Parser
 end                               # module Orgmode

@@ -64,5 +64,23 @@ describe Orgmode::Parser do
       actual.should eql(expected)
     end
   end
+
+  it "can translate to html" do
+    data_directory = File.join(File.dirname(__FILE__), "html_examples")
+    org_files = File.expand_path(File.join(data_directory, "*.org" ))
+    files = Dir.glob(org_files)
+    files.each do |file|
+      basename = File.basename(file, ".org")
+      textile_name = File.join(data_directory, basename + ".html")
+      textile_name = File.expand_path(textile_name)
+
+      expected = IO.read(textile_name)
+      expected.should be_kind_of(String)
+      parser = Orgmode::Parser.new(IO.read(file))
+      actual = parser.to_html
+      actual.should be_kind_of(String)
+      actual.should eql(expected)
+    end
+  end
 end
 
