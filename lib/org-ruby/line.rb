@@ -44,7 +44,7 @@ module Orgmode
       ordered_list? or unordered_list?
     end
 
-    UnorderedListRegexp = /^\s*(-|\+|\*)\s*/
+    UnorderedListRegexp = /^\s*(-|\+)\s*/
 
     def unordered_list?
       @line =~ UnorderedListRegexp

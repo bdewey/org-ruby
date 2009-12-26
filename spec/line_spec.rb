@@ -27,7 +27,6 @@ describe Orgmode::Line do
   it "should recognize plain lists" do
     list_formats = ["-",
                     "+",
-                    "  *",
                     "  -",
                     "  +",
                     " 1.",

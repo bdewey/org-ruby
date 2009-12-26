@@ -61,7 +61,7 @@ describe Orgmode::Parser do
       parser = Orgmode::Parser.new(IO.read(file))
       actual = parser.to_textile
       actual.should be_kind_of(String)
-      actual.should eql(expected)
+      actual.should == expected
     end
   end
 
@@ -79,7 +79,7 @@ describe Orgmode::Parser do
       parser = Orgmode::Parser.new(IO.read(file))
       actual = parser.to_html
       actual.should be_kind_of(String)
-      actual.should eql(expected)
+      actual.should == expected
     end
   end
 end

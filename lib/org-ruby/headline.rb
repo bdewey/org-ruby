@@ -22,7 +22,7 @@ module Orgmode
     attr_reader :keyword
 
     # This is the regex that matches a line
-    LineRegexp = /^\*+\s*/
+    LineRegexp = /^\*+\s+/
 
     # This matches the tags on a headline
     TagsRegexp = /\s*:[\w:]*:\s*$/

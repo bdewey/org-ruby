@@ -17,7 +17,7 @@ describe Orgmode::Headline do
   end
 
   it "should properly determine headline level" do
-    samples = %w[*one **two ***three ****four]
+    samples = ["* one", "** two", "*** three", "**** four"]
     expected = 1
     samples.each do |sample|
       h = Orgmode::Headline.new sample

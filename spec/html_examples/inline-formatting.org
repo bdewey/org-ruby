@@ -1,0 +1,17 @@
+Inline Formatting
+
+I want to make sure I handle all inline formatting. I need to handle
+*bold*, /italic/, =code=, ~verbatim~, _underline_, +strikethrough+. 
+
+In addition, I need to make sure I can handle links. We've got simple
+links, like this:
+
+- [[http://www.bing.com]]
+- [[http://www.google.com]]
+- http://www.gmail.com
+
+Note the last one *is not* a link, as the source doesn't include it in
+double-brackets and I don't auto-recognize URLs.
+
+I should also handle links with [[http://www.xkcd.com][helpful text]].
+
