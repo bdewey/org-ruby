@@ -45,6 +45,7 @@ module Orgmode
       @logger = Logger.new(STDERR)
       @logger.level = Logger::WARN
       build_org_emphasis_regexp
+      build_org_link_regexp
     end
 
     # Finds all emphasis matches in a string.
@@ -65,6 +66,17 @@ module Orgmode
       end
     end
 
+    # Give this a block that expect the link and optional friendly
+    # text. Return how that link should get formatted.
+    def rewrite_links(str)
+      i = str.gsub(@org_link_regexp) do |match|
+        yield $1, nil
+      end
+      i.gsub(@org_link_text_regexp) do |match|
+        yield $1, $2
+      end
+    end
+
     private
 
     def build_org_emphasis_regexp
@@ -75,6 +87,17 @@ module Orgmode
                                         "\\2\n" +
                                         "([#{@post_emphasis}]|$)\n", Regexp::EXTENDED)
       @logger.debug "Just created regexp: #{@org_emphasis_regexp}"
+    end
+
+    def build_org_link_regexp
+      @org_link_regexp = /\[\[
+                             ([^\]]*) # This is the URL
+                          \]\]/x
+      @org_link_text_regexp = /\[\[
+                                 ([^\]]*) # This is the URL
+                               \]\[
+                                 ([^\]]*) # This is the friendly text
+                               \]\]/x
     end
   end                           # class Emphasis
 end                             # module Orgmode

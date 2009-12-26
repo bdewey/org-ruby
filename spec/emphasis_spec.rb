@@ -45,4 +45,13 @@ describe Orgmode::Emphasis do
     end
     n.should eql("This string contains <strong>bold</strong>, <i>italic</i>, and <pre>verbatim</pre> text.")
   end
+
+  it "should allow link rewriting" do
+    e = Orgmode::Emphasis.new
+    str = e.rewrite_links("[[http://www.bing.com]]") do |link,text|
+      text ||= link
+      "\"#{text}\":#{link}"
+    end
+    str.should eql("\"http://www.bing.com\":http://www.bing.com")
+  end
 end                             # describe Orgmode::Emphasis
