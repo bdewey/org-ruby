@@ -32,6 +32,7 @@ module Orgmode
 
       @logger = Logger.new(STDERR)
       @logger.level = Logger::WARN
+
     end
 
     Modes = [:normal, :ordered_list, :unordered_list, :blockquote, :code]
