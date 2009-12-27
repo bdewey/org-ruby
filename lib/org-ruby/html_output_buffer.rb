@@ -66,10 +66,10 @@ module Orgmode
         str.gsub!(/\s*\|$/, "</td>")
         str.gsub!(/\s*\|\s*/, "</td><td>")
       end
-      str = @emphasis.replace_all(str) do |marker, s|
+      str = @re_help.rewrite_emphasis(str) do |marker, s|
         "#{Tags[marker][:open]}#{s}#{Tags[marker][:close]}"
       end
-      str = @emphasis.rewrite_links(str) do |link, text|
+      str = @re_help.rewrite_links(str) do |link, text|
         text ||= link
         "<a href=\"#{link}\">#{text}</a>"
       end

@@ -1,8 +1,8 @@
 require File.join(File.dirname(__FILE__), %w[spec_helper])
 
-describe Orgmode::Emphasis do
+describe Orgmode::RegexpHelper do
   it "should recognize simple markup" do
-    e = Orgmode::Emphasis.new
+    e = Orgmode::RegexpHelper.new
     total = 0
     e.match_all("/italic/") do |border, string|
       border.should eql("/")
@@ -24,7 +24,7 @@ describe Orgmode::Emphasis do
   end
 
   it "should not get confused by links" do
-    e = Orgmode::Emphasis.new
+    e = Orgmode::RegexpHelper.new
     total = 0
     # Make sure the slashes in these links aren't treated as italics
     e.match_all("[[http://www.bing.com/twitter]]") do |border, str|
@@ -34,24 +34,24 @@ describe Orgmode::Emphasis do
   end
 
   it "should correctly perform substitutions" do
-    e = Orgmode::Emphasis.new
+    e = Orgmode::RegexpHelper.new
     map = {
       "*" => "strong",
       "/" => "i",
       "~" => "pre"
     }
-    n = e.replace_all("This string contains *bold*, /italic/, and ~verbatim~ text.") do |border, str|
+    n = e.rewrite_emphasis("This string contains *bold*, /italic/, and ~verbatim~ text.") do |border, str|
       "<#{map[border]}>#{str}</#{map[border]}>"
     end
     n.should eql("This string contains <strong>bold</strong>, <i>italic</i>, and <pre>verbatim</pre> text.")
   end
 
   it "should allow link rewriting" do
-    e = Orgmode::Emphasis.new
+    e = Orgmode::RegexpHelper.new
     str = e.rewrite_links("[[http://www.bing.com]]") do |link,text|
       text ||= link
       "\"#{text}\":#{link}"
     end
     str.should eql("\"http://www.bing.com\":http://www.bing.com")
   end
-end                             # describe Orgmode::Emphasis
+end                             # describe Orgmode::RegexpHelper

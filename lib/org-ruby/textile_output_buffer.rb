@@ -32,11 +32,11 @@ module Orgmode
 
     # Handles inline formatting for textile.
     def inline_formatting(input)
-      input = @emphasis.replace_all(input) do |marker, body|
+      input = @re_help.rewrite_emphasis(input) do |marker, body|
         m = TextileMap[marker]
         "#{m}#{body}#{m}"
       end
-      input = @emphasis.rewrite_links(input) do |link, text|
+      input = @re_help.rewrite_links(input) do |link, text|
         text ||= link
         link = link.gsub(/ /, "%20")
         "\"#{text}\":#{link}"

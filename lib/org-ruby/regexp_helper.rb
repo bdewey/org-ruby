@@ -2,7 +2,19 @@ require 'logger'
 
 module Orgmode
 
-  class Emphasis
+  # = Summary
+  # 
+  # This class contains helper routines to deal with the Regexp "black
+  # magic" you need to properly parse org-mode files.
+  #
+  # = Key methods
+  #
+  # * Use +rewrite_emphasis+ to replace org-mode emphasis strings (e.g.,
+  #   \/italic/) with the suitable markup for the output.
+  #
+  # * Use +rewrite_links+ to get a chance to rewrite all org-mode
+  #   links with suitable markup for the output.
+  class RegexpHelper
 
     ######################################################################
     # EMPHASIS
@@ -59,15 +71,56 @@ module Orgmode
     # Compute replacements for all matching emphasized phrases.
     # Supply a block that will get the marker and body as parameters;
     # return the replacement string from your block.
-    def replace_all(str)
+    #
+    # = Example
+    #
+    #   re = RegexpHelper.new
+    #   result = re.rewrite_emphasis("*bold*, /italic/, =code=") do |marker, body|
+    #       "<#{map[marker]}>#{body}</#{map[marker]}>"
+    #   end
+    #
+    # In this example, the block body will get called three times:
+    #
+    # 1. Marker: "*", body: "bold"
+    # 2. Marker: "/", body: "italic"
+    # 3. Marker: "=", body: "code"
+    #
+    # The return from this block is a string that will be used to
+    # replace "*bold*", "/italic/", and "=code=",
+    # respectively. (Clearly this sample string will use HTML-like
+    # syntax, assuming +map+ is defined appropriately.)
+    def rewrite_emphasis(str)
       str.gsub(@org_emphasis_regexp) do |match|
         inner = yield $2, $3
         "#{$1}#{inner}#{$4}"
       end
     end
 
+    # = Summary
+    #
+    # Rewrite org-mode links in a string to markup suitable to the
+    # output format.
+    #
+    # = Usage
+    # 
     # Give this a block that expect the link and optional friendly
     # text. Return how that link should get formatted.
+    #
+    # = Example
+    #
+    #   re = RegexpHelper.new
+    #   result = re.rewrite_links("[[http://www.bing.com]] and [[http://www.hotmail.com][Hotmail]]") do |link, text}
+    #       text ||= link
+    #       "<a href=\"#{link}\">#{text}</a>"
+    #    end
+    #
+    # In this example, the block body will get called two times. In the
+    # first instance, +text+ will be nil (the org-mode markup gives no
+    # friendly text for the link +http://www.bing.com+. In the second
+    # instance, the block will get text of *Hotmail* and the link
+    # +http://www.hotmail.com+. In both cases, the block returns an
+    # HTML-style link, and that is how things will get recorded in
+    # +result+.
     def rewrite_links(str)
       i = str.gsub(@org_link_regexp) do |match|
         yield $1, nil

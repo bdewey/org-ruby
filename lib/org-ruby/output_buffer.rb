@@ -17,9 +17,6 @@ module Orgmode
     # This is the current type of output being accumulated. 
     attr_accessor :output_type
 
-    # This is the emphasis helper
-    attr_reader :emphasis
-
     # Creates a new OutputBuffer object that is bound to an output object.
     # The output will get flushed to =output=.
     def initialize(output)
@@ -35,7 +32,7 @@ module Orgmode
       @logger = Logger.new(STDERR)
       @logger.level = Logger::WARN
 
-      @emphasis = Emphasis.new
+      @re_help = RegexpHelper.new
     end
 
     Modes = [:normal, :ordered_list, :unordered_list, :blockquote, :code, :table]
