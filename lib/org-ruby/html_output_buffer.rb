@@ -15,7 +15,8 @@ module Orgmode
       :unordered_list => "ul",
       :ordered_list => "ol",
       :table => "table",
-      :blockquote => "blockquote"
+      :blockquote => "blockquote",
+      :code => "pre"
     }
 
     def push_mode(mode)
@@ -30,9 +31,16 @@ module Orgmode
 
     def flush!
       @logger.debug "FLUSH ==========> #{@output_type}"
-      if (@buffer.length > 0) then
-        @output << "<#{HtmlBlockTag[@output_type]}>" << inline_formatting(@buffer) \
-          << "</#{HtmlBlockTag[@output_type]}>\n"
+      if current_mode == :code then
+        # Whitespace is significant in :code mode. Always output the buffer
+        # and do not do any additional translation.
+        @output << @buffer << "\n"
+      else
+        if (@buffer.length > 0) then
+          @output << "<#{HtmlBlockTag[@output_type]}>" \
+            << inline_formatting(@buffer) \
+            << "</#{HtmlBlockTag[@output_type]}>\n"
+        end
       end
       @buffer = ""
     end

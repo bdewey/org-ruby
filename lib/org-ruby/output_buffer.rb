@@ -30,7 +30,6 @@ module Orgmode
       @paragraph_modifier = nil
       @cancel_modifier = false
       @mode_stack = []
-      @add_paragraph = false
       push_mode(:normal)
 
       @logger = Logger.new(STDERR)
@@ -52,13 +51,11 @@ module Orgmode
     def push_mode(mode)
       raise "Not a recognized mode: #{mode}" unless Modes.include?(mode)
       @mode_stack.push(mode)
-      @output << "bc.. " if mode == :code
     end
 
     def pop_mode(mode = nil)
       m = @mode_stack.pop
       @logger.warn "Modes don't match. Expected to pop #{mode}, but popped #{m}" if mode && mode != m
-      @add_paragraph = (mode == :code)
       m
     end
 

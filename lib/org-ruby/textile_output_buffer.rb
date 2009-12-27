@@ -4,6 +4,22 @@ module Orgmode
 
   class TextileOutputBuffer < OutputBuffer
 
+    def initialize(output)
+      super(output)
+      @add_paragraph = false
+    end
+
+    def push_mode(mode)
+      super(mode)
+      @output << "bc.. " if mode == :code
+    end
+
+    def pop_mode(mode = nil)
+      m = super(mode)
+      @add_paragraph = (m == :code)
+      m
+    end
+
     # Maps org markup to textile markup.
     TextileMap = {
       "*" => "*",

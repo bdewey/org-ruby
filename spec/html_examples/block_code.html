@@ -1,0 +1,29 @@
+<h1>Block Code</h1>
+<p>I need to get block code examples working. In <code>orgmode</code>, they look like this:</p>
+<pre>
+
+
+    def initialize(output)
+      @output = output
+      @buffer = ""
+      @output_type = :start
+      @list_indent_stack = []
+      @paragraph_modifier = nil
+
+      @logger = Logger.new(STDERR)
+      @logger.level = Logger::WARN
+    end
+
+</pre>
+<p>And now I should be back to normal text.</p>
+<p>Putting in another paragraph for good measure.</p>
+<p>Code should also get cancelled by a list, thus:</p>
+<pre>
+
+This is my code!
+
+Another line!
+</pre>
+<ul>
+<li>My list should cancel this.</li>
+<li>Another list line.</li>
