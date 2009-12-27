@@ -11,18 +11,21 @@ module Orgmode
       :table_row => "tr"
     }
 
+    ModeTag = {
+      :unordered_list => "ul",
+      :ordered_list => "ol",
+      :table => "table",
+      :blockquote => "blockquote"
+    }
+
     def push_mode(mode)
       super(mode)
-      @output << "<ul>\n" if mode == :unordered_list
-      @output << "<ol>\n" if mode == :ordered_list
-      @output << "<table>\n" if mode == :table
+      @output << "<#{ModeTag[mode]}>\n" if ModeTag[mode]
     end
 
     def pop_mode(mode = nil)
       m = super(mode)
-      @output << "</ul>\n" if m == :unordered_list
-      @output << "</ol>\n" if m == :ordered_list
-      @output << "</table>\n" if m == :table
+      @output << "</#{ModeTag[m]}>\n" if ModeTag[m]
     end
 
     def flush!
