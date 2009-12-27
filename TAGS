@@ -3,11 +3,11 @@
 
 ./spec/headline_spec.rb,0
 
-./spec/emphasis_spec.rb,0
-
 ./spec/line_spec.rb,0
 
 ./spec/spec_helper.rb,0
+
+./spec/regexp_helper_spec.rb,0
 
 ./spec/textile_output_buffer_spec.rb,0
 
@@ -26,26 +26,25 @@ module Orgmode::Orgmode3,54
     def flush!::Orgmode::HtmlOutputBuffer#flush!32,647
     def inline_formatting::Orgmode::HtmlOutputBuffer#inline_formatting62,1689
 
-./lib/org-ruby/output_buffer.rb,1261
+./lib/org-ruby/output_buffer.rb,1195
 module Orgmode::Orgmode3,18
   class OutputBuffer::Orgmode::OutputBuffer9,297
     attr_reader :buffer::Orgmode::OutputBuffer#buffer12,381
     attr_reader :output::Orgmode::OutputBuffer#output15,446
     attr_accessor :output_type::Orgmode::OutputBuffer#output_type18,532
-    attr_reader :emphasis::Orgmode::OutputBuffer#emphasis21,598
-    def initialize::Orgmode::OutputBuffer#Orgmode::OutputBuffer.new25,747
-    def current_mode::Orgmode::OutputBuffer#current_mode43,1196
-    def current_mode_list?::Orgmode::OutputBuffer#current_mode_list?47,1255
-    def push_mode::Orgmode::OutputBuffer#push_mode51,1344
-    def pop_mode::Orgmode::OutputBuffer#pop_mode56,1479
-    def prepare::Orgmode::OutputBuffer#prepare64,1787
-    def enter_table?::Orgmode::OutputBuffer#enter_table?76,2187
-    def exit_table?::Orgmode::OutputBuffer#exit_table?82,2372
-    def <<::Orgmode::OutputBuffer#<<88,2538
-    def list_indent_level::Orgmode::OutputBuffer#list_indent_level93,2643
-    def preserve_whitespace?::Orgmode::OutputBuffer#preserve_whitespace?98,2787
-    def maintain_list_indent_stack::Orgmode::OutputBuffer#maintain_list_indent_stack105,2924
-    def should_accumulate_output?::Orgmode::OutputBuffer#should_accumulate_output?130,3782
+    def initialize::Orgmode::OutputBuffer#Orgmode::OutputBuffer.new22,686
+    def current_mode::Orgmode::OutputBuffer#current_mode40,1138
+    def current_mode_list?::Orgmode::OutputBuffer#current_mode_list?44,1197
+    def push_mode::Orgmode::OutputBuffer#push_mode48,1286
+    def pop_mode::Orgmode::OutputBuffer#pop_mode53,1421
+    def prepare::Orgmode::OutputBuffer#prepare61,1729
+    def enter_table?::Orgmode::OutputBuffer#enter_table?73,2129
+    def exit_table?::Orgmode::OutputBuffer#exit_table?79,2314
+    def <<::Orgmode::OutputBuffer#<<85,2480
+    def list_indent_level::Orgmode::OutputBuffer#list_indent_level90,2585
+    def preserve_whitespace?::Orgmode::OutputBuffer#preserve_whitespace?95,2729
+    def maintain_list_indent_stack::Orgmode::OutputBuffer#maintain_list_indent_stack102,2866
+    def should_accumulate_output?::Orgmode::OutputBuffer#should_accumulate_output?127,3724
 
 ./lib/org-ruby/headline.rb,619
 module Orgmode::Orgmode3,45
@@ -60,21 +59,21 @@ module Orgmode::Orgmode3,45
     def to_textile::Orgmode::Headline#to_textile63,1818
     def to_html::Orgmode::Headline#to_html69,1950
 
-./lib/org-ruby/regexp_helper.rb,1004
+./lib/org-ruby/regexp_helper.rb,1014
 module Orgmode::Orgmode3,18
-  class RegexpHelper::Orgmode::RegexpHelper17,451
-    attr_reader   :pre_emphasis::Orgmode::RegexpHelper#pre_emphasis42,1780
-    attr_reader   :post_emphasis::Orgmode::RegexpHelper#post_emphasis43,1812
-    attr_reader   :border_forbidden::Orgmode::RegexpHelper#border_forbidden44,1845
-    attr_reader   :body_regexp::Orgmode::RegexpHelper#body_regexp45,1881
-    attr_reader   :markers::Orgmode::RegexpHelper#markers46,1912
-    attr_reader   :org_emphasis_regexp::Orgmode::RegexpHelper#org_emphasis_regexp48,1940
-    def initialize::Orgmode::RegexpHelper#Orgmode::RegexpHelper.new50,1994
-    def match_all::Orgmode::RegexpHelper#match_all65,2471
-    def replace_all::Orgmode::RegexpHelper#replace_all92,3403
-    def rewrite_links::Orgmode::RegexpHelper#rewrite_links124,4508
-    def build_org_emphasis_regexp::Orgmode::RegexpHelper#build_org_emphasis_regexp135,4744
-    def build_org_link_regexp::Orgmode::RegexpHelper#build_org_link_regexp145,5311
+  class RegexpHelper::Orgmode::RegexpHelper17,456
+    attr_reader   :pre_emphasis::Orgmode::RegexpHelper#pre_emphasis42,1785
+    attr_reader   :post_emphasis::Orgmode::RegexpHelper#post_emphasis43,1817
+    attr_reader   :border_forbidden::Orgmode::RegexpHelper#border_forbidden44,1850
+    attr_reader   :body_regexp::Orgmode::RegexpHelper#body_regexp45,1886
+    attr_reader   :markers::Orgmode::RegexpHelper#markers46,1917
+    attr_reader   :org_emphasis_regexp::Orgmode::RegexpHelper#org_emphasis_regexp48,1945
+    def initialize::Orgmode::RegexpHelper#Orgmode::RegexpHelper.new50,1999
+    def match_all::Orgmode::RegexpHelper#match_all65,2476
+    def rewrite_emphasis::Orgmode::RegexpHelper#rewrite_emphasis92,3413
+    def rewrite_links::Orgmode::RegexpHelper#rewrite_links124,4523
+    def build_org_emphasis_regexp::Orgmode::RegexpHelper#build_org_emphasis_regexp135,4759
+    def build_org_link_regexp::Orgmode::RegexpHelper#build_org_link_regexp145,5326
 
 ./lib/org-ruby/textile_output_buffer.rb,454
 module Orgmode::Orgmode3,20
@@ -83,7 +82,7 @@ module Orgmode::Orgmode3,20
     def push_mode::Orgmode::TextileOutputBuffer#push_mode12,169
     def pop_mode::Orgmode::TextileOutputBuffer#pop_mode17,262
     def inline_formatting::Orgmode::TextileOutputBuffer#inline_formatting34,585
-    def flush!::Orgmode::TextileOutputBuffer#flush!48,970
+    def flush!::Orgmode::TextileOutputBuffer#flush!48,973
 
 ./lib/org-ruby/parser.rb,471
 module Orgmode::Orgmode5,61
