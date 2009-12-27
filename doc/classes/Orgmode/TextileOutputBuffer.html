@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: Orgmode::TextileOutputBuffer</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">Orgmode::TextileOutputBuffer</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../files/lib/org-ruby/textile_output_buffer_rb.html">
+                lib/org-ruby/textile_output_buffer.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                <a href="OutputBuffer.html">
+                OutputBuffer
+               </a>
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000005">flush!</a>&nbsp;&nbsp;
+      <a href="#M000004">inline_formatting</a>&nbsp;&nbsp;
+      <a href="#M000001">new</a>&nbsp;&nbsp;
+      <a href="#M000003">pop_mode</a>&nbsp;&nbsp;
+      <a href="#M000002">push_mode</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">TextileMap</td>
+          <td>=</td>
+          <td class="context-item-value">{       &quot;*&quot; =&gt; &quot;*&quot;,       &quot;/&quot; =&gt; &quot;_&quot;,       &quot;_&quot; =&gt; &quot;_&quot;,       &quot;=&quot; =&gt; &quot;@&quot;,       &quot;~&quot; =&gt; &quot;@&quot;,       &quot;+&quot; =&gt; &quot;+&quot;</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+Maps org markup to textile markup.
+
+</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000001" class="method-detail">
+        <a name="M000001"></a>
+
+        <div class="method-heading">
+          <a href="#M000001" class="method-signature">
+          <span class="method-name">new</span><span class="method-args">(output)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000001-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000001-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/org-ruby/textile_output_buffer.rb, line 7</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">output</span>)
+      <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">output</span>)
+      <span class="ruby-ivar">@add_paragraph</span> = <span class="ruby-keyword kw">false</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000005" class="method-detail">
+        <a name="M000005"></a>
+
+        <div class="method-heading">
+          <a href="#M000005" class="method-signature">
+          <span class="method-name">flush!</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Flushes the current buffer
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000005-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000005-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/org-ruby/textile_output_buffer.rb, line 48</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">flush!</span>
+      <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;FLUSH ==========&gt; #{@output_type}&quot;</span>
+      <span class="ruby-keyword kw">if</span> (<span class="ruby-ivar">@output_type</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:blank</span>) <span class="ruby-keyword kw">then</span>
+        <span class="ruby-ivar">@output</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;\n&quot;</span>
+      <span class="ruby-keyword kw">elsif</span> (<span class="ruby-ivar">@buffer</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>) <span class="ruby-keyword kw">then</span>
+        <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@add_paragraph</span> <span class="ruby-keyword kw">then</span>
+          <span class="ruby-ivar">@output</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;p. &quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@output_type</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:paragraph</span>
+          <span class="ruby-ivar">@add_paragraph</span> = <span class="ruby-keyword kw">false</span>
+        <span class="ruby-keyword kw">end</span>
+        <span class="ruby-ivar">@output</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;bq. &quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">current_mode</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:blockquote</span>
+        <span class="ruby-ivar">@output</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;#&quot;</span> <span class="ruby-operator">*</span> <span class="ruby-ivar">@list_indent_stack</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot; &quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@output_type</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:ordered_list</span>
+        <span class="ruby-ivar">@output</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;*&quot;</span> <span class="ruby-operator">*</span> <span class="ruby-ivar">@list_indent_stack</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot; &quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@output_type</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:unordered_list</span>
+        <span class="ruby-ivar">@output</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">inline_formatting</span>(<span class="ruby-ivar">@buffer</span>) <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;\n&quot;</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-ivar">@buffer</span> = <span class="ruby-value str">&quot;&quot;</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000004" class="method-detail">
+        <a name="M000004"></a>
+
+        <div class="method-heading">
+          <a href="#M000004" class="method-signature">
+          <span class="method-name">inline_formatting</span><span class="method-args">(input)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Handles inline formatting for textile.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000004-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000004-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/org-ruby/textile_output_buffer.rb, line 34</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">inline_formatting</span>(<span class="ruby-identifier">input</span>)
+      <span class="ruby-identifier">input</span> = <span class="ruby-ivar">@re_help</span>.<span class="ruby-identifier">rewrite_emphasis</span>(<span class="ruby-identifier">input</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">marker</span>, <span class="ruby-identifier">body</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">m</span> = <span class="ruby-constant">TextileMap</span>[<span class="ruby-identifier">marker</span>]
+        <span class="ruby-node">&quot;#{m}#{body}#{m}&quot;</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-identifier">input</span> = <span class="ruby-ivar">@re_help</span>.<span class="ruby-identifier">rewrite_links</span>(<span class="ruby-identifier">input</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">link</span>, <span class="ruby-identifier">text</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">text</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">link</span>
+        <span class="ruby-identifier">link</span> = <span class="ruby-identifier">link</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/ /</span>, <span class="ruby-value str">&quot;%20&quot;</span>)
+        <span class="ruby-node">&quot;\&quot;#{text}\&quot;:#{link}&quot;</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-identifier">input</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000003" class="method-detail">
+        <a name="M000003"></a>
+
+        <div class="method-heading">
+          <a href="#M000003" class="method-signature">
+          <span class="method-name">pop_mode</span><span class="method-args">(mode = nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000003-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000003-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/org-ruby/textile_output_buffer.rb, line 17</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">pop_mode</span>(<span class="ruby-identifier">mode</span> = <span class="ruby-keyword kw">nil</span>)
+      <span class="ruby-identifier">m</span> = <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">mode</span>)
+      <span class="ruby-ivar">@add_paragraph</span> = (<span class="ruby-identifier">m</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:code</span>)
+      <span class="ruby-identifier">m</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000002" class="method-detail">
+        <a name="M000002"></a>
+
+        <div class="method-heading">
+          <a href="#M000002" class="method-signature">
+          <span class="method-name">push_mode</span><span class="method-args">(mode)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000002-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000002-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/org-ruby/textile_output_buffer.rb, line 12</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">push_mode</span>(<span class="ruby-identifier">mode</span>)
+      <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">mode</span>)
+      <span class="ruby-ivar">@output</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;bc.. &quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">mode</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:code</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

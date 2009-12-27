@@ -1,37 +1,44 @@
-orgmode_parser
+org-ruby
     by Brian Dewey
     http://www.bdewey.com
 
 == DESCRIPTION:
 
-Helpful Ruby routines for parsing orgmode files. The most significant
-thing this library does today is convert orgmode files to
-textile. Currently, you cannot do much to customize the
+This gem contains Ruby routines for parsing org-mode files.The most
+significant thing this library does today is convert org-mode files to
+HTML or textile. Currently, you cannot do much to customize the
 conversion. The supplied textile conversion is optimized for
-extracting "content" from the orgfile as opposed to "metadata."
+extracting "content" from the orgfile as opposed to "metadata." 
 
 == FEATURES/PROBLEMS:
 
+* Converts org-mode files to HTML or Textile
+* Supports tables, block quotes, and block code
+* Supports bold, italic, underline, strikethrough, and code inline formatting.
+* Supports hyperlinks that are in double-brackets
 * Upcoming: Handle export options specified in the org buffer.
-* Bug: Currently doesn't handle orgmode inline code or block code syntax.
 
 == SYNOPSIS:
 
 From the command line:
 
-     orgparser sample.org
+     org-ruby sample.org
 
-...will output a textile version of @sample.org@. 
+...will output a HTML version of sample.org.
+
+     org-ruby --translate textile sample.org
+
+...will output a textile version of sample.org.
 
 From Ruby code:
 
      Orgmode::Parser.new(data)
 
-...will construct a new @Parser@ object. 
+...will construct a new +Parser+ object. 
 
 == INSTALL:
 
-sudo gem install orgmode_parser
+sudo gem install org-ruby
 
 == LICENSE:
 

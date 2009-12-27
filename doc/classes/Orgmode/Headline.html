@@ -55,8 +55,8 @@
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
-                <a href="../../files/lib/orgmode_parser/headline_rb.html">
-                lib/orgmode_parser/headline.rb
+                <a href="../../files/lib/org-ruby/headline_rb.html">
+                lib/org-ruby/headline.rb
                 </a>
         <br />
             </td>
@@ -94,9 +94,10 @@ Represents a headline in an orgmode file.
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000038">headline?</a>&nbsp;&nbsp;
-      <a href="#M000037">new</a>&nbsp;&nbsp;
-      <a href="#M000039">to_textile</a>&nbsp;&nbsp;
+      <a href="#M000051">headline?</a>&nbsp;&nbsp;
+      <a href="#M000050">new</a>&nbsp;&nbsp;
+      <a href="#M000053">to_html</a>&nbsp;&nbsp;
+      <a href="#M000052">to_textile</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -116,7 +117,7 @@ Represents a headline in an orgmode file.
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">LineRegexp</td>
           <td>=</td>
-          <td class="context-item-value">/^\*+\s*/</td>
+          <td class="context-item-value">/^\*+\s+/</td>
           <td width="3em">&nbsp;</td>
           <td class="context-item-desc">
 This is the regex that matches a line
@@ -210,11 +211,11 @@ These are the headline tags
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000038" class="method-detail">
-        <a name="M000038"></a>
+      <div id="method-M000051" class="method-detail">
+        <a name="M000051"></a>
 
         <div class="method-heading">
-          <a href="#M000038" class="method-signature">
+          <a href="#M000051" class="method-signature">
           <span class="method-name">headline?</span><span class="method-args">(line)</span>
           </a>
         </div>
@@ -225,10 +226,10 @@ Determines if a line is an orgmode &quot;headline&quot;: A headline begins
 with one or more asterisks.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000038-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000038-source">
+            onclick="toggleCode('M000051-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000051-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/orgmode_parser/headline.rb, line 58</span>
+<span class="ruby-comment cmt"># File lib/org-ruby/headline.rb, line 58</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">headline?</span>(<span class="ruby-identifier">line</span>)
       <span class="ruby-identifier">line</span> <span class="ruby-operator">=~</span> <span class="ruby-constant">LineRegexp</span>
     <span class="ruby-keyword kw">end</span>
@@ -237,21 +238,21 @@ with one or more asterisks.
         </div>
       </div>
 
-      <div id="method-M000037" class="method-detail">
-        <a name="M000037"></a>
+      <div id="method-M000050" class="method-detail">
+        <a name="M000050"></a>
 
         <div class="method-heading">
-          <a href="#M000037" class="method-signature">
+          <a href="#M000050" class="method-signature">
           <span class="method-name">new</span><span class="method-args">(line)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000037-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000037-source">
+            onclick="toggleCode('M000050-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000050-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/orgmode_parser/headline.rb, line 35</span>
+<span class="ruby-comment cmt"># File lib/org-ruby/headline.rb, line 35</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">line</span>)
       <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">line</span>)
       <span class="ruby-ivar">@body_lines</span> = []
@@ -279,11 +280,36 @@ with one or more asterisks.
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000039" class="method-detail">
-        <a name="M000039"></a>
+      <div id="method-M000053" class="method-detail">
+        <a name="M000053"></a>
 
         <div class="method-heading">
-          <a href="#M000039" class="method-signature">
+          <a href="#M000053" class="method-signature">
+          <span class="method-name">to_html</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000053-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000053-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/org-ruby/headline.rb, line 69</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_html</span>
+      <span class="ruby-identifier">output</span> = <span class="ruby-node">&quot;&lt;h#{@level}&gt;#{@headline_text}&lt;/h#{@level}&gt;\n&quot;</span>
+      <span class="ruby-identifier">output</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Line</span>.<span class="ruby-identifier">to_html</span>(<span class="ruby-ivar">@body_lines</span>)
+      <span class="ruby-identifier">output</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000052" class="method-detail">
+        <a name="M000052"></a>
+
+        <div class="method-heading">
+          <a href="#M000052" class="method-signature">
           <span class="method-name">to_textile</span><span class="method-args">()</span>
           </a>
         </div>
@@ -293,10 +319,10 @@ with one or more asterisks.
 Converts this headline and its body to textile.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000039-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000039-source">
+            onclick="toggleCode('M000052-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000052-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/orgmode_parser/headline.rb, line 63</span>
+<span class="ruby-comment cmt"># File lib/org-ruby/headline.rb, line 63</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_textile</span>
       <span class="ruby-identifier">output</span> = <span class="ruby-node">&quot;h#{@level}. #{@headline_text}\n&quot;</span>
       <span class="ruby-identifier">output</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Line</span>.<span class="ruby-identifier">to_textile</span>(<span class="ruby-ivar">@body_lines</span>)

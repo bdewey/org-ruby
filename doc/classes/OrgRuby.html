@@ -5,7 +5,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>Module: OrgmodeParser</title>
+  <title>Module: OrgRuby</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
   <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
@@ -50,13 +50,13 @@
         <table class="header-table">
         <tr class="top-aligned-row">
           <td><strong>Module</strong></td>
-          <td class="class-name-in-header">OrgmodeParser</td>
+          <td class="class-name-in-header">OrgRuby</td>
         </tr>
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
-                <a href="../files/lib/orgmode_parser_rb.html">
-                lib/orgmode_parser.rb
+                <a href="../files/lib/org-ruby_rb.html">
+                lib/org-ruby.rb
                 </a>
         <br />
             </td>
@@ -80,10 +80,10 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000003">libpath</a>&nbsp;&nbsp;
-      <a href="#M000004">path</a>&nbsp;&nbsp;
-      <a href="#M000005">require_all_libs_relative_to</a>&nbsp;&nbsp;
-      <a href="#M000002">version</a>&nbsp;&nbsp;
+      <a href="#M000055">libpath</a>&nbsp;&nbsp;
+      <a href="#M000056">path</a>&nbsp;&nbsp;
+      <a href="#M000057">require_all_libs_relative_to</a>&nbsp;&nbsp;
+      <a href="#M000054">version</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -105,27 +105,26 @@
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000003" class="method-detail">
-        <a name="M000003"></a>
+      <div id="method-M000055" class="method-detail">
+        <a name="M000055"></a>
 
         <div class="method-heading">
-          <a href="#M000003" class="method-signature">
+          <a href="#M000055" class="method-signature">
           <span class="method-name">libpath</span><span class="method-args">( *args )</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Returns the library <a href="OrgmodeParser.html#M000004">path</a> for the
-module. If any arguments are given, they will be joined to the end of the
-libray <a href="OrgmodeParser.html#M000004">path</a> using
-<tt>File.join</tt>.
+Returns the library <a href="OrgRuby.html#M000056">path</a> for the module.
+If any arguments are given, they will be joined to the end of the libray <a
+href="OrgRuby.html#M000056">path</a> using <tt>File.join</tt>.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000003-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000003-source">
+            onclick="toggleCode('M000055-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000055-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/orgmode_parser.rb, line 20</span>
+<span class="ruby-comment cmt"># File lib/org-ruby.rb, line 20</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">libpath</span>( <span class="ruby-operator">*</span><span class="ruby-identifier">args</span> )
     <span class="ruby-identifier">args</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-value">? </span><span class="ruby-constant">LIBPATH</span> <span class="ruby-operator">:</span> <span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">LIBPATH</span>, <span class="ruby-identifier">args</span>.<span class="ruby-identifier">flatten</span>)
   <span class="ruby-keyword kw">end</span>
@@ -134,11 +133,11 @@ libray <a href="OrgmodeParser.html#M000004">path</a> using
         </div>
       </div>
 
-      <div id="method-M000004" class="method-detail">
-        <a name="M000004"></a>
+      <div id="method-M000056" class="method-detail">
+        <a name="M000056"></a>
 
         <div class="method-heading">
-          <a href="#M000004" class="method-signature">
+          <a href="#M000056" class="method-signature">
           <span class="method-name">path</span><span class="method-args">( *args )</span>
           </a>
         </div>
@@ -146,14 +145,14 @@ libray <a href="OrgmodeParser.html#M000004">path</a> using
         <div class="method-description">
           <p>
 Returns the lpath for the module. If any arguments are given, they will be
-joined to the end of the <a href="OrgmodeParser.html#M000004">path</a>
-using <tt>File.join</tt>.
+joined to the end of the <a href="OrgRuby.html#M000056">path</a> using
+<tt>File.join</tt>.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000004-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000004-source">
+            onclick="toggleCode('M000056-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000056-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/orgmode_parser.rb, line 28</span>
+<span class="ruby-comment cmt"># File lib/org-ruby.rb, line 28</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">path</span>( <span class="ruby-operator">*</span><span class="ruby-identifier">args</span> )
     <span class="ruby-identifier">args</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-value">? </span><span class="ruby-constant">PATH</span> <span class="ruby-operator">:</span> <span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">PATH</span>, <span class="ruby-identifier">args</span>.<span class="ruby-identifier">flatten</span>)
   <span class="ruby-keyword kw">end</span>
@@ -162,11 +161,11 @@ using <tt>File.join</tt>.
         </div>
       </div>
 
-      <div id="method-M000005" class="method-detail">
-        <a name="M000005"></a>
+      <div id="method-M000057" class="method-detail">
+        <a name="M000057"></a>
 
         <div class="method-heading">
-          <a href="#M000005" class="method-signature">
+          <a href="#M000057" class="method-signature">
           <span class="method-name">require_all_libs_relative_to</span><span class="method-args">( fname, dir = nil )</span>
           </a>
         </div>
@@ -179,10 +178,10 @@ Optionally, a specific <em>directory</em> name can be passed in such that
 the <em>filename</em> does not have to be equivalent to the directory.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000005-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000005-source">
+            onclick="toggleCode('M000057-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000057-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/orgmode_parser.rb, line 37</span>
+<span class="ruby-comment cmt"># File lib/org-ruby.rb, line 37</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">require_all_libs_relative_to</span>( <span class="ruby-identifier">fname</span>, <span class="ruby-identifier">dir</span> = <span class="ruby-keyword kw">nil</span> )
     <span class="ruby-identifier">dir</span> <span class="ruby-operator">||=</span> <span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">fname</span>, <span class="ruby-value str">'.*'</span>)
     <span class="ruby-identifier">search_me</span> = <span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(
@@ -195,25 +194,25 @@ the <em>filename</em> does not have to be equivalent to the directory.
         </div>
       </div>
 
-      <div id="method-M000002" class="method-detail">
-        <a name="M000002"></a>
+      <div id="method-M000054" class="method-detail">
+        <a name="M000054"></a>
 
         <div class="method-heading">
-          <a href="#M000002" class="method-signature">
+          <a href="#M000054" class="method-signature">
           <span class="method-name">version</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Returns the <a href="OrgmodeParser.html#M000002">version</a> string for the
+Returns the <a href="OrgRuby.html#M000054">version</a> string for the
 library.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000002-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000002-source">
+            onclick="toggleCode('M000054-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000054-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/orgmode_parser.rb, line 12</span>
+<span class="ruby-comment cmt"># File lib/org-ruby.rb, line 12</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">version</span>
     <span class="ruby-constant">VERSION</span>
   <span class="ruby-keyword kw">end</span>

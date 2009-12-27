@@ -1,6 +1,15 @@
-== 0.2.0 / 2009-12-24
+== 0.2.0 / 2009-12-26
 
 * Renamed the gem to org-ruby
+* Added +to_html+ for HTML output
+* Now supports the following inline markup: 
+  * bold
+  * italic
+  * code
+  * verbatim
+  * underline
+  * strikethrough
+* Continued code cleanup and refactoring
 
 == 0.1.0 / 2009-12-23
 

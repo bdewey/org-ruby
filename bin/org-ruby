@@ -11,7 +11,7 @@ options_parser = OptionParser.new do |opts|
   options[:help] = false
   options[:format] = :html
   
-  opts.banner = "Usage: orgparse <file> [options]"
+  opts.banner = "Usage: org-ruby <file> [options]"
 
   opts.on("-h", "--help", "Show this message") do |v|
     options[:help] = true

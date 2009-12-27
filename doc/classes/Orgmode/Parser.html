@@ -55,8 +55,8 @@
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
-                <a href="../../files/lib/orgmode_parser/parser_rb.html">
-                lib/orgmode_parser/parser.rb
+                <a href="../../files/lib/org-ruby/parser_rb.html">
+                lib/org-ruby/parser.rb
                 </a>
         <br />
             </td>
@@ -88,6 +88,7 @@
       <div class="name-list">
       <a href="#M000007">load</a>&nbsp;&nbsp;
       <a href="#M000006">new</a>&nbsp;&nbsp;
+      <a href="#M000009">to_html</a>&nbsp;&nbsp;
       <a href="#M000008">to_textile</a>&nbsp;&nbsp;
       </div>
     </div>
@@ -160,7 +161,7 @@ given file
             onclick="toggleCode('M000007-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000007-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/orgmode_parser/parser.rb, line 48</span>
+<span class="ruby-comment cmt"># File lib/org-ruby/parser.rb, line 48</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">load</span>(<span class="ruby-identifier">fname</span>)
       <span class="ruby-identifier">lines</span> = <span class="ruby-constant">IO</span>.<span class="ruby-identifier">readlines</span>(<span class="ruby-identifier">fname</span>)
       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">lines</span>)
@@ -188,7 +189,7 @@ single string that I will split along \n boundaries.
             onclick="toggleCode('M000006-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000006-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/orgmode_parser/parser.rb, line 20</span>
+<span class="ruby-comment cmt"># File lib/org-ruby/parser.rb, line 20</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">lines</span>)
       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">lines</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">Array</span> <span class="ruby-keyword kw">then</span>
         <span class="ruby-ivar">@lines</span> = <span class="ruby-identifier">lines</span>
@@ -222,6 +223,34 @@ single string that I will split along \n boundaries.
 
       <h3 class="section-bar">Public Instance methods</h3>
 
+      <div id="method-M000009" class="method-detail">
+        <a name="M000009"></a>
+
+        <div class="method-heading">
+          <a href="#M000009" class="method-signature">
+          <span class="method-name">to_html</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000009-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000009-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/org-ruby/parser.rb, line 63</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_html</span>
+      <span class="ruby-identifier">output</span> = <span class="ruby-value str">&quot;&quot;</span>
+      <span class="ruby-identifier">output</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Line</span>.<span class="ruby-identifier">to_html</span>(<span class="ruby-ivar">@header_lines</span>)
+      <span class="ruby-ivar">@headlines</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">headline</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">output</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">headline</span>.<span class="ruby-identifier">to_html</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-identifier">output</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
       <div id="method-M000008" class="method-detail">
         <a name="M000008"></a>
 
@@ -239,7 +268,7 @@ Saves the loaded orgmode file as a textile file.
             onclick="toggleCode('M000008-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000008-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/orgmode_parser/parser.rb, line 54</span>
+<span class="ruby-comment cmt"># File lib/org-ruby/parser.rb, line 54</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_textile</span>
       <span class="ruby-identifier">output</span> = <span class="ruby-value str">&quot;&quot;</span>
       <span class="ruby-identifier">output</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Line</span>.<span class="ruby-identifier">to_textile</span>(<span class="ruby-ivar">@header_lines</span>)

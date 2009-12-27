@@ -56,7 +56,7 @@
     </tr>
     <tr class="top-aligned-row">
       <td><strong>Last Update:</strong></td>
-      <td>Mon Dec 21 15:56:58 -0800 2009</td>
+      <td>Sat Dec 26 22:06:34 -0800 2009</td>
     </tr>
     </table>
   </div>
@@ -70,7 +70,7 @@
 
     <div id="description">
       <p>
-orgmode_parser
+org-ruby
 </p>
 <pre>
     by Brian Dewey
@@ -78,19 +78,28 @@ orgmode_parser
 </pre>
 <h2>DESCRIPTION:</h2>
 <p>
-Helpful Ruby routines for parsing orgmode files. The most significant thing
-this library does today is convert orgmode files to textile. Currently, you
-cannot do much to customize the conversion. The supplied textile conversion
-is optimized for extracting &quot;content&quot; from the orgfile as opposed
-to &quot;metadata.&quot;
+This gem contains Ruby routines for parsing org-mode files.The most
+significant thing this library does today is convert org-mode files to HTML
+or textile. Currently, you cannot do much to customize the conversion. The
+supplied textile conversion is optimized for extracting &quot;content&quot;
+from the orgfile as opposed to &quot;metadata.&quot;
 </p>
 <h2>FEATURES/PROBLEMS:</h2>
 <ul>
-<li>Upcoming: Handle export options specified in the org buffer.
+<li>Converts org-mode files to HTML or Textile
 
 </li>
-<li>Bug: Currently doesn&#8216;t handle orgmode inline code or block code
-syntax.
+<li>Supports tables, block quotes, and block code
+
+</li>
+<li>Supports bold, italic, underline, strikethrough, and code inline
+formatting.
+
+</li>
+<li>Supports hyperlinks that are in double-brackets
+
+</li>
+<li>Upcoming: Handle export options specified in the org buffer.
 
 </li>
 </ul>
@@ -99,10 +108,16 @@ syntax.
 From the command line:
 </p>
 <pre>
-     orgparser sample.org
+     org-ruby sample.org
 </pre>
 <p>
-&#8230;will output a textile version of @sample.org@.
+&#8230;will output a HTML version of &lt;pre&gt;sample.org&lt;/pre&gt;.
+</p>
+<pre>
+     org-ruby --translate textile sample.org
+</pre>
+<p>
+&#8230;will output a textile version of +sample.org+.
 </p>
 <p>
 From Ruby code:
@@ -111,11 +126,11 @@ From Ruby code:
      Orgmode::Parser.new(data)
 </pre>
 <p>
-&#8230;will construct a new @Parser@ object.
+&#8230;will construct a new <tt>Parser</tt> object.
 </p>
 <h2>INSTALL:</h2>
 <p>
-sudo gem install orgmode_parser
+sudo gem install org-ruby
 </p>
 <h2>LICENSE:</h2>
 <p>

@@ -55,8 +55,8 @@
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
-                <a href="../../files/lib/orgmode_parser/line_rb.html">
-                lib/orgmode_parser/line.rb
+                <a href="../../files/lib/org-ruby/line_rb.html">
+                lib/org-ruby/line.rb
                 </a>
         <br />
             </td>
@@ -92,26 +92,28 @@ Represents a single line of an orgmode file.
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000032">begin_block?</a>&nbsp;&nbsp;
-      <a href="#M000022">blank?</a>&nbsp;&nbsp;
-      <a href="#M000034">block_type</a>&nbsp;&nbsp;
-      <a href="#M000019">comment?</a>&nbsp;&nbsp;
-      <a href="#M000033">end_block?</a>&nbsp;&nbsp;
-      <a href="#M000020">metadata?</a>&nbsp;&nbsp;
-      <a href="#M000017">new</a>&nbsp;&nbsp;
-      <a href="#M000021">nonprinting?</a>&nbsp;&nbsp;
-      <a href="#M000026">ordered_list?</a>&nbsp;&nbsp;
-      <a href="#M000035">paragraph_type</a>&nbsp;&nbsp;
-      <a href="#M000023">plain_list?</a>&nbsp;&nbsp;
-      <a href="#M000028">plain_text?</a>&nbsp;&nbsp;
-      <a href="#M000027">strip_ordered_list_tag</a>&nbsp;&nbsp;
-      <a href="#M000025">strip_unordered_list_tag</a>&nbsp;&nbsp;
-      <a href="#M000031">table?</a>&nbsp;&nbsp;
-      <a href="#M000029">table_row?</a>&nbsp;&nbsp;
-      <a href="#M000030">table_separator?</a>&nbsp;&nbsp;
-      <a href="#M000018">to_s</a>&nbsp;&nbsp;
-      <a href="#M000036">to_textile</a>&nbsp;&nbsp;
-      <a href="#M000024">unordered_list?</a>&nbsp;&nbsp;
+      <a href="#M000043">begin_block?</a>&nbsp;&nbsp;
+      <a href="#M000033">blank?</a>&nbsp;&nbsp;
+      <a href="#M000045">block_type</a>&nbsp;&nbsp;
+      <a href="#M000030">comment?</a>&nbsp;&nbsp;
+      <a href="#M000044">end_block?</a>&nbsp;&nbsp;
+      <a href="#M000031">metadata?</a>&nbsp;&nbsp;
+      <a href="#M000028">new</a>&nbsp;&nbsp;
+      <a href="#M000032">nonprinting?</a>&nbsp;&nbsp;
+      <a href="#M000037">ordered_list?</a>&nbsp;&nbsp;
+      <a href="#M000046">paragraph_type</a>&nbsp;&nbsp;
+      <a href="#M000034">plain_list?</a>&nbsp;&nbsp;
+      <a href="#M000039">plain_text?</a>&nbsp;&nbsp;
+      <a href="#M000038">strip_ordered_list_tag</a>&nbsp;&nbsp;
+      <a href="#M000036">strip_unordered_list_tag</a>&nbsp;&nbsp;
+      <a href="#M000042">table?</a>&nbsp;&nbsp;
+      <a href="#M000040">table_row?</a>&nbsp;&nbsp;
+      <a href="#M000041">table_separator?</a>&nbsp;&nbsp;
+      <a href="#M000048">to_html</a>&nbsp;&nbsp;
+      <a href="#M000029">to_s</a>&nbsp;&nbsp;
+      <a href="#M000047">to_textile</a>&nbsp;&nbsp;
+      <a href="#M000049">translate</a>&nbsp;&nbsp;
+      <a href="#M000035">unordered_list?</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -131,12 +133,12 @@ Represents a single line of an orgmode file.
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">UnorderedListRegexp</td>
           <td>=</td>
-          <td class="context-item-value">/^\s*(-|\+|\*)/</td>
+          <td class="context-item-value">/^\s*(-|\+)\s*/</td>
         </tr>
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">OrderedListRegexp</td>
           <td>=</td>
-          <td class="context-item-value">/^\s*\d+(\.|\))/</td>
+          <td class="context-item-value">/^\s*\d+(\.|\))\s*/</td>
         </tr>
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">BlockRegexp</td>
@@ -158,8 +160,9 @@ Represents a single line of an orgmode file.
           <td class="context-item-name">indent</td>
           <td class="context-item-value">&nbsp;[R]&nbsp;</td>
           <td class="context-item-desc">
-The indent level of this line. this is important to properly translate
-nested lists from orgmode to textile. TODO 2009-12-20 bdewey: Handle tabs
+The indent level of this line. this is important to properly <a
+href="Line.html#M000049">translate</a> nested lists from orgmode to
+textile. TODO 2009-12-20 bdewey: Handle tabs
 
 </td>
         </tr>
@@ -181,21 +184,21 @@ This is the line itself.
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000017" class="method-detail">
-        <a name="M000017"></a>
+      <div id="method-M000028" class="method-detail">
+        <a name="M000028"></a>
 
         <div class="method-heading">
-          <a href="#M000017" class="method-signature">
+          <a href="#M000028" class="method-signature">
           <span class="method-name">new</span><span class="method-args">(line)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000017-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000017-source">
+            onclick="toggleCode('M000028-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000028-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/orgmode_parser/line.rb, line 14</span>
+<span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 14</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">line</span>)
       <span class="ruby-ivar">@line</span> = <span class="ruby-identifier">line</span>
       <span class="ruby-ivar">@indent</span> = <span class="ruby-value">0</span>
@@ -207,12 +210,62 @@ This is the line itself.
         </div>
       </div>
 
-      <div id="method-M000036" class="method-detail">
-        <a name="M000036"></a>
+      <div id="method-M000048" class="method-detail">
+        <a name="M000048"></a>
 
         <div class="method-heading">
-          <a href="#M000036" class="method-signature">
+          <a href="#M000048" class="method-signature">
+          <span class="method-name">to_html</span><span class="method-args">(lines)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000048-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000048-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 121</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">to_html</span>(<span class="ruby-identifier">lines</span>)
+      <span class="ruby-identifier">output</span> = <span class="ruby-value str">&quot;&quot;</span>
+      <span class="ruby-identifier">output_buffer</span> = <span class="ruby-constant">HtmlOutputBuffer</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">output</span>)
+      <span class="ruby-identifier">translate</span>(<span class="ruby-identifier">lines</span>, <span class="ruby-identifier">output_buffer</span>)
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000047" class="method-detail">
+        <a name="M000047"></a>
+
+        <div class="method-heading">
+          <a href="#M000047" class="method-signature">
           <span class="method-name">to_textile</span><span class="method-args">(lines)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000047-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000047-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 115</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">to_textile</span>(<span class="ruby-identifier">lines</span>)
+      <span class="ruby-identifier">output</span> = <span class="ruby-value str">&quot;&quot;</span>
+      <span class="ruby-identifier">output_buffer</span> = <span class="ruby-constant">TextileOutputBuffer</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">output</span>)
+      <span class="ruby-identifier">translate</span>(<span class="ruby-identifier">lines</span>, <span class="ruby-identifier">output_buffer</span>)
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000049" class="method-detail">
+        <a name="M000049"></a>
+
+        <div class="method-heading">
+          <a href="#M000049" class="method-signature">
+          <span class="method-name">translate</span><span class="method-args">(lines, output_buffer)</span>
           </a>
         </div>
       
@@ -221,13 +274,11 @@ This is the line itself.
 Converts an array of lines to textile format.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000036-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000036-source">
+            onclick="toggleCode('M000049-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000049-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/orgmode_parser/line.rb, line 116</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">to_textile</span>(<span class="ruby-identifier">lines</span>)
-      <span class="ruby-identifier">output</span> = <span class="ruby-value str">&quot;&quot;</span>
-      <span class="ruby-identifier">output_buffer</span> = <span class="ruby-constant">OutputBuffer</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">output</span>)
+<span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 128</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">translate</span>(<span class="ruby-identifier">lines</span>, <span class="ruby-identifier">output_buffer</span>)
       <span class="ruby-identifier">lines</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span>
 
         <span class="ruby-comment cmt"># See if we're carrying paragraph payload, and output</span>
@@ -241,9 +292,10 @@ Converts an array of lines to textile format.
 
         <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:comment</span>
           
-          <span class="ruby-identifier">output_buffer</span>.<span class="ruby-identifier">paragraph_modifier</span> = <span class="ruby-value str">&quot;bq. &quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">begin_block?</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">block_type</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;QUOTE&quot;</span>
-          <span class="ruby-identifier">output_buffer</span>.<span class="ruby-identifier">paragraph_modifier</span> = <span class="ruby-value str">&quot;bc.. &quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">begin_block?</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">block_type</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;EXAMPLE&quot;</span>
-          <span class="ruby-identifier">output_buffer</span>.<span class="ruby-identifier">paragraph_modifier</span> = <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">end_block?</span>
+          <span class="ruby-identifier">output_buffer</span>.<span class="ruby-identifier">push_mode</span>(<span class="ruby-identifier">:blockquote</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">begin_block?</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">block_type</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;QUOTE&quot;</span>
+          <span class="ruby-identifier">output_buffer</span>.<span class="ruby-identifier">push_mode</span>(<span class="ruby-identifier">:code</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">begin_block?</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">block_type</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;EXAMPLE&quot;</span>
+          <span class="ruby-identifier">output_buffer</span>.<span class="ruby-identifier">pop_mode</span>(<span class="ruby-identifier">:blockquote</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">end_block?</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">block_type</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;QUOTE&quot;</span>
+          <span class="ruby-identifier">output_buffer</span>.<span class="ruby-identifier">pop_mode</span>(<span class="ruby-identifier">:code</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">end_block?</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">block_type</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;EXAMPLE&quot;</span>
 
         <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:table_row</span>
 
@@ -251,13 +303,11 @@ Converts an array of lines to textile format.
 
         <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:ordered_list</span>
             
-          <span class="ruby-identifier">output_buffer</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;#&quot;</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">output_buffer</span>.<span class="ruby-identifier">list_indent_level</span> <span class="ruby-operator">&lt;&lt;</span>
-            <span class="ruby-identifier">line</span>.<span class="ruby-identifier">strip_ordered_list_tag</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot; &quot;</span>
+          <span class="ruby-identifier">output_buffer</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">strip_ordered_list_tag</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot; &quot;</span>
           
         <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:unordered_list</span>
           
-          <span class="ruby-identifier">output_buffer</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;*&quot;</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">output_buffer</span>.<span class="ruby-identifier">list_indent_level</span> <span class="ruby-operator">&lt;&lt;</span>
-            <span class="ruby-identifier">line</span>.<span class="ruby-identifier">strip_unordered_list_tag</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot; &quot;</span>
+          <span class="ruby-identifier">output_buffer</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">strip_unordered_list_tag</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot; &quot;</span>
 
         <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:paragraph</span>
 
@@ -269,7 +319,7 @@ Converts an array of lines to textile format.
         <span class="ruby-keyword kw">end</span>
       <span class="ruby-keyword kw">end</span>
       <span class="ruby-identifier">output_buffer</span>.<span class="ruby-identifier">flush!</span>
-      <span class="ruby-identifier">output</span>
+      <span class="ruby-identifier">output_buffer</span>.<span class="ruby-identifier">output</span>
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
@@ -278,95 +328,23 @@ Converts an array of lines to textile format.
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000032" class="method-detail">
-        <a name="M000032"></a>
+      <div id="method-M000043" class="method-detail">
+        <a name="M000043"></a>
 
         <div class="method-heading">
-          <a href="#M000032" class="method-signature">
+          <a href="#M000043" class="method-signature">
           <span class="method-name">begin_block?</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000032-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000032-source">
+            onclick="toggleCode('M000043-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000043-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/orgmode_parser/line.rb, line 91</span>
+<span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 91</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">begin_block?</span>
       <span class="ruby-ivar">@line</span> <span class="ruby-operator">=~</span> <span class="ruby-constant">BlockRegexp</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">$1</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;BEGIN&quot;</span>
-    <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000022" class="method-detail">
-        <a name="M000022"></a>
-
-        <div class="method-heading">
-          <a href="#M000022" class="method-signature">
-          <span class="method-name">blank?</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000022-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000022-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/orgmode_parser/line.rb, line 39</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">blank?</span>
-      <span class="ruby-ivar">@line</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^\s*$/</span>
-    <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000034" class="method-detail">
-        <a name="M000034"></a>
-
-        <div class="method-heading">
-          <a href="#M000034" class="method-signature">
-          <span class="method-name">block_type</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000034-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000034-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/orgmode_parser/line.rb, line 99</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">block_type</span>
-      <span class="ruby-identifier">$2</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@line</span> <span class="ruby-operator">=~</span> <span class="ruby-constant">BlockRegexp</span>
-    <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000019" class="method-detail">
-        <a name="M000019"></a>
-
-        <div class="method-heading">
-          <a href="#M000019" class="method-signature">
-          <span class="method-name">comment?</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-Tests if a line is a comment.
-</p>
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000019-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000019-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/orgmode_parser/line.rb, line 26</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">comment?</span>
-      <span class="ruby-ivar">@line</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^\s*#/</span>
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
@@ -378,7 +356,7 @@ Tests if a line is a comment.
 
         <div class="method-heading">
           <a href="#M000033" class="method-signature">
-          <span class="method-name">end_block?</span><span class="method-args">()</span>
+          <span class="method-name">blank?</span><span class="method-args">()</span>
           </a>
         </div>
       
@@ -387,7 +365,79 @@ Tests if a line is a comment.
             onclick="toggleCode('M000033-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000033-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/orgmode_parser/line.rb, line 95</span>
+<span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 39</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">blank?</span>
+      <span class="ruby-ivar">@line</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^\s*$/</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000045" class="method-detail">
+        <a name="M000045"></a>
+
+        <div class="method-heading">
+          <a href="#M000045" class="method-signature">
+          <span class="method-name">block_type</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000045-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000045-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 99</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">block_type</span>
+      <span class="ruby-identifier">$2</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@line</span> <span class="ruby-operator">=~</span> <span class="ruby-constant">BlockRegexp</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000030" class="method-detail">
+        <a name="M000030"></a>
+
+        <div class="method-heading">
+          <a href="#M000030" class="method-signature">
+          <span class="method-name">comment?</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Tests if a line is a comment.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000030-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000030-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 26</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">comment?</span>
+      <span class="ruby-ivar">@line</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^\s*#/</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000044" class="method-detail">
+        <a name="M000044"></a>
+
+        <div class="method-heading">
+          <a href="#M000044" class="method-signature">
+          <span class="method-name">end_block?</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000044-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000044-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 95</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">end_block?</span>
       <span class="ruby-ivar">@line</span> <span class="ruby-operator">=~</span> <span class="ruby-constant">BlockRegexp</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">$1</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;END&quot;</span>
     <span class="ruby-keyword kw">end</span>
@@ -396,11 +446,11 @@ Tests if a line is a comment.
         </div>
       </div>
 
-      <div id="method-M000020" class="method-detail">
-        <a name="M000020"></a>
+      <div id="method-M000031" class="method-detail">
+        <a name="M000031"></a>
 
         <div class="method-heading">
-          <a href="#M000020" class="method-signature">
+          <a href="#M000031" class="method-signature">
           <span class="method-name">metadata?</span><span class="method-args">()</span>
           </a>
         </div>
@@ -410,10 +460,10 @@ Tests if a line is a comment.
 Tests if a line contains metadata instead of actual content.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000020-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000020-source">
+            onclick="toggleCode('M000031-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000031-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/orgmode_parser/line.rb, line 31</span>
+<span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 31</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">metadata?</span>
       <span class="ruby-ivar">@line</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^\s*(CLOCK|DEADLINE|START|CLOSED|SCHEDULED):/</span>
     <span class="ruby-keyword kw">end</span>
@@ -422,21 +472,21 @@ Tests if a line contains metadata instead of actual content.
         </div>
       </div>
 
-      <div id="method-M000021" class="method-detail">
-        <a name="M000021"></a>
+      <div id="method-M000032" class="method-detail">
+        <a name="M000032"></a>
 
         <div class="method-heading">
-          <a href="#M000021" class="method-signature">
+          <a href="#M000032" class="method-signature">
           <span class="method-name">nonprinting?</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000021-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000021-source">
+            onclick="toggleCode('M000032-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000032-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/orgmode_parser/line.rb, line 35</span>
+<span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 35</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">nonprinting?</span>
       <span class="ruby-identifier">comment?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">metadata?</span>
     <span class="ruby-keyword kw">end</span>
@@ -445,21 +495,21 @@ Tests if a line contains metadata instead of actual content.
         </div>
       </div>
 
-      <div id="method-M000026" class="method-detail">
-        <a name="M000026"></a>
+      <div id="method-M000037" class="method-detail">
+        <a name="M000037"></a>
 
         <div class="method-heading">
-          <a href="#M000026" class="method-signature">
+          <a href="#M000037" class="method-signature">
           <span class="method-name">ordered_list?</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000026-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000026-source">
+            onclick="toggleCode('M000037-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000037-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/orgmode_parser/line.rb, line 59</span>
+<span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 59</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ordered_list?</span>
       <span class="ruby-ivar">@line</span> <span class="ruby-operator">=~</span> <span class="ruby-constant">OrderedListRegexp</span>
     <span class="ruby-keyword kw">end</span>
@@ -468,11 +518,11 @@ Tests if a line contains metadata instead of actual content.
         </div>
       </div>
 
-      <div id="method-M000035" class="method-detail">
-        <a name="M000035"></a>
+      <div id="method-M000046" class="method-detail">
+        <a name="M000046"></a>
 
         <div class="method-heading">
-          <a href="#M000035" class="method-signature">
+          <a href="#M000046" class="method-signature">
           <span class="method-name">paragraph_type</span><span class="method-args">()</span>
           </a>
         </div>
@@ -482,10 +532,10 @@ Tests if a line contains metadata instead of actual content.
 Determines the paragraph type of the current line.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000035-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000035-source">
+            onclick="toggleCode('M000046-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000046-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/orgmode_parser/line.rb, line 104</span>
+<span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 104</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">paragraph_type</span>
       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">:blank</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">blank?</span>
       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">:ordered_list</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ordered_list?</span>
@@ -501,21 +551,21 @@ Determines the paragraph type of the current line.
         </div>
       </div>
 
-      <div id="method-M000023" class="method-detail">
-        <a name="M000023"></a>
+      <div id="method-M000034" class="method-detail">
+        <a name="M000034"></a>
 
         <div class="method-heading">
-          <a href="#M000023" class="method-signature">
+          <a href="#M000034" class="method-signature">
           <span class="method-name">plain_list?</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000023-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000023-source">
+            onclick="toggleCode('M000034-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000034-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/orgmode_parser/line.rb, line 43</span>
+<span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 43</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">plain_list?</span>
       <span class="ruby-identifier">ordered_list?</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">unordered_list?</span>
     <span class="ruby-keyword kw">end</span>
@@ -524,21 +574,21 @@ Determines the paragraph type of the current line.
         </div>
       </div>
 
-      <div id="method-M000028" class="method-detail">
-        <a name="M000028"></a>
+      <div id="method-M000039" class="method-detail">
+        <a name="M000039"></a>
 
         <div class="method-heading">
-          <a href="#M000028" class="method-signature">
+          <a href="#M000039" class="method-signature">
           <span class="method-name">plain_text?</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000028-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000028-source">
+            onclick="toggleCode('M000039-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000039-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/orgmode_parser/line.rb, line 67</span>
+<span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 67</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">plain_text?</span>
       <span class="ruby-keyword kw">not</span> <span class="ruby-identifier">metadata?</span> <span class="ruby-keyword kw">and</span> <span class="ruby-keyword kw">not</span> <span class="ruby-identifier">blank?</span> <span class="ruby-keyword kw">and</span> <span class="ruby-keyword kw">not</span> <span class="ruby-identifier">plain_list?</span>
     <span class="ruby-keyword kw">end</span>
@@ -547,21 +597,21 @@ Determines the paragraph type of the current line.
         </div>
       </div>
 
-      <div id="method-M000027" class="method-detail">
-        <a name="M000027"></a>
+      <div id="method-M000038" class="method-detail">
+        <a name="M000038"></a>
 
         <div class="method-heading">
-          <a href="#M000027" class="method-signature">
+          <a href="#M000038" class="method-signature">
           <span class="method-name">strip_ordered_list_tag</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000027-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000027-source">
+            onclick="toggleCode('M000038-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000038-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/orgmode_parser/line.rb, line 63</span>
+<span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 63</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">strip_ordered_list_tag</span>
       <span class="ruby-ivar">@line</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-constant">OrderedListRegexp</span>, <span class="ruby-value str">&quot;&quot;</span>)
     <span class="ruby-keyword kw">end</span>
@@ -570,21 +620,21 @@ Determines the paragraph type of the current line.
         </div>
       </div>
 
-      <div id="method-M000025" class="method-detail">
-        <a name="M000025"></a>
+      <div id="method-M000036" class="method-detail">
+        <a name="M000036"></a>
 
         <div class="method-heading">
-          <a href="#M000025" class="method-signature">
+          <a href="#M000036" class="method-signature">
           <span class="method-name">strip_unordered_list_tag</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000025-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000025-source">
+            onclick="toggleCode('M000036-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000036-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/orgmode_parser/line.rb, line 53</span>
+<span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 53</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">strip_unordered_list_tag</span>
       <span class="ruby-ivar">@line</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-constant">UnorderedListRegexp</span>, <span class="ruby-value str">&quot;&quot;</span>)
     <span class="ruby-keyword kw">end</span>
@@ -593,21 +643,21 @@ Determines the paragraph type of the current line.
         </div>
       </div>
 
-      <div id="method-M000031" class="method-detail">
-        <a name="M000031"></a>
+      <div id="method-M000042" class="method-detail">
+        <a name="M000042"></a>
 
         <div class="method-heading">
-          <a href="#M000031" class="method-signature">
+          <a href="#M000042" class="method-signature">
           <span class="method-name">table?</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000031-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000031-source">
+            onclick="toggleCode('M000042-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000042-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/orgmode_parser/line.rb, line 85</span>
+<span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 85</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">table?</span>
       <span class="ruby-identifier">table_row?</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">table_separator?</span>
     <span class="ruby-keyword kw">end</span>
@@ -616,21 +666,21 @@ Determines the paragraph type of the current line.
         </div>
       </div>
 
-      <div id="method-M000029" class="method-detail">
-        <a name="M000029"></a>
+      <div id="method-M000040" class="method-detail">
+        <a name="M000040"></a>
 
         <div class="method-heading">
-          <a href="#M000029" class="method-signature">
+          <a href="#M000040" class="method-signature">
           <span class="method-name">table_row?</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000029-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000029-source">
+            onclick="toggleCode('M000040-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000040-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/orgmode_parser/line.rb, line 71</span>
+<span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 71</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">table_row?</span>
       <span class="ruby-comment cmt"># for an org-mode table, the first non-whitespace character is a</span>
       <span class="ruby-comment cmt"># | (pipe).</span>
@@ -641,21 +691,21 @@ Determines the paragraph type of the current line.
         </div>
       </div>
 
-      <div id="method-M000030" class="method-detail">
-        <a name="M000030"></a>
+      <div id="method-M000041" class="method-detail">
+        <a name="M000041"></a>
 
         <div class="method-heading">
-          <a href="#M000030" class="method-signature">
+          <a href="#M000041" class="method-signature">
           <span class="method-name">table_separator?</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000030-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000030-source">
+            onclick="toggleCode('M000041-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000041-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/orgmode_parser/line.rb, line 77</span>
+<span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 77</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">table_separator?</span>
       <span class="ruby-comment cmt"># an org-mode table separator has the first non-whitespace</span>
       <span class="ruby-comment cmt"># character as a | (pipe), then consists of nothing else other</span>
@@ -668,21 +718,21 @@ Determines the paragraph type of the current line.
         </div>
       </div>
 
-      <div id="method-M000018" class="method-detail">
-        <a name="M000018"></a>
+      <div id="method-M000029" class="method-detail">
+        <a name="M000029"></a>
 
         <div class="method-heading">
-          <a href="#M000018" class="method-signature">
+          <a href="#M000029" class="method-signature">
           <span class="method-name">to_s</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000018-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000018-source">
+            onclick="toggleCode('M000029-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000029-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/orgmode_parser/line.rb, line 21</span>
+<span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 21</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_s</span>
       <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@line</span>
     <span class="ruby-keyword kw">end</span>
@@ -691,21 +741,21 @@ Determines the paragraph type of the current line.
         </div>
       </div>
 
-      <div id="method-M000024" class="method-detail">
-        <a name="M000024"></a>
+      <div id="method-M000035" class="method-detail">
+        <a name="M000035"></a>
 
         <div class="method-heading">
-          <a href="#M000024" class="method-signature">
+          <a href="#M000035" class="method-signature">
           <span class="method-name">unordered_list?</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000024-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000024-source">
+            onclick="toggleCode('M000035-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000035-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/orgmode_parser/line.rb, line 49</span>
+<span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 49</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">unordered_list?</span>
       <span class="ruby-ivar">@line</span> <span class="ruby-operator">=~</span> <span class="ruby-constant">UnorderedListRegexp</span>
     <span class="ruby-keyword kw">end</span>
