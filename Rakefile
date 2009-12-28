@@ -18,6 +18,9 @@ Bones {
   url  'http://github.com/bdewey/org-ruby'
   version  OrgRuby::VERSION
   colorize false                # Windows consoles won't colorize
+  gem.need_tar false            # Can't TAR from Windows
+  depend_on 'rubypants'
 }
+
 
 # EOF
