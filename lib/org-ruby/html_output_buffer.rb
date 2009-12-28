@@ -61,17 +61,17 @@ module Orgmode
     # Applies inline formatting rules to a string.
     def inline_formatting(str)
       str.rstrip!
-      if (@output_type == :table_row) then
-        str.gsub!(/^\|\s*/, "<td>")
-        str.gsub!(/\s*\|$/, "</td>")
-        str.gsub!(/\s*\|\s*/, "</td><td>")
-      end
       str = @re_help.rewrite_emphasis(str) do |marker, s|
         "#{Tags[marker][:open]}#{s}#{Tags[marker][:close]}"
       end
       str = @re_help.rewrite_links(str) do |link, text|
         text ||= link
         "<a href=\"#{link}\">#{text}</a>"
+      end
+      if (@output_type == :table_row) then
+        str.gsub!(/^\|\s*/, "<td>")
+        str.gsub!(/\s*\|$/, "</td>")
+        str.gsub!(/\s*\|\s*/, "</td><td>")
       end
       str
     end

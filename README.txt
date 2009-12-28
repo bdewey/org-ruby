@@ -1,6 +1,6 @@
 org-ruby
     by Brian Dewey
-    http://www.bdewey.com
+    http://github.com/bdewey/org-ruby
 
 == DESCRIPTION:
 

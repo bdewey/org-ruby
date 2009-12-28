@@ -166,6 +166,7 @@ module Orgmode
         end
       end
       output_buffer.flush!
+      output_buffer.pop_mode until output_buffer.current_mode == :normal
       output_buffer.output
     end
   end                           # class Line
