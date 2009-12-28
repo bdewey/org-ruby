@@ -2,6 +2,8 @@
 
 * HTML output is now indented
 * Proper support for multi-paragraph list items.
+* Fixed bugs:
+  * "rake spec" wouldn't work on Linux. Needed "require 'rubygems'".
 
 == 0.3.0 / 2009-12-27
 

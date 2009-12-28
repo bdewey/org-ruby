@@ -118,6 +118,17 @@ module Orgmode
           @list_indent_stack.push(line.indent)
           push_mode line.paragraph_type
         end
+      elsif line.blank? then
+
+        # Nothing
+
+      elsif ((line.paragraph_type == :paragraph) and
+             (not @list_indent_stack.empty? and
+              line.indent > @list_indent_stack.last))
+
+        # Nothing -- output this paragraph inside
+        # the list block (ul/ol)
+
       else
         @list_indent_stack = []
         while ((current_mode == :ordered_list) or
