@@ -21,13 +21,19 @@ module Orgmode
     }
 
     def push_mode(mode)
+      if ModeTag[mode] then
+        output_indentation
+        @output << "<#{ModeTag[mode]}>\n" 
+      end
       super(mode)
-      @output << "<#{ModeTag[mode]}>\n" if ModeTag[mode]
     end
 
     def pop_mode(mode = nil)
       m = super(mode)
-      @output << "</#{ModeTag[m]}>\n" if ModeTag[m]
+      if ModeTag[m] then
+        output_indentation
+        @output << "</#{ModeTag[m]}>\n"
+      end
     end
 
     def flush!
@@ -38,6 +44,7 @@ module Orgmode
         @output << CGI.escapeHTML(@buffer) << "\n"
       else
         if (@buffer.length > 0) then
+          output_indentation
           @output << "<#{HtmlBlockTag[@output_type]}>" \
             << inline_formatting(@buffer) \
             << "</#{HtmlBlockTag[@output_type]}>\n"
@@ -48,6 +55,11 @@ module Orgmode
 
     ######################################################################
     private
+
+    def output_indentation
+      indent = "  " * (@mode_stack.length - 1)
+      @output << indent
+    end
 
     Tags = {
       "*" => { :open => "<b>", :close => "</b>" },

@@ -99,6 +99,13 @@ module Orgmode
     ######################################################################
     private
 
+    # call-seq:
+    #     continue_current_list?  => boolean
+    #
+    # Tests if the line should continue the current list.
+    def continue_current_list?(line)
+    end
+
     def maintain_list_indent_stack(line)
       if (line.plain_list?) then
         while (not @list_indent_stack.empty? \
