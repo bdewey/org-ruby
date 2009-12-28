@@ -15,7 +15,7 @@ Bones {
   name  'org-ruby'
   authors  'Brian Dewey'
   email  'bdewey@gmail.com'
-  url  'http://bdewey.com'
+  url  'http://github.com/bdewey/org-ruby'
   version  OrgRuby::VERSION
 }
 

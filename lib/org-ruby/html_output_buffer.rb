@@ -1,4 +1,5 @@
 require OrgRuby.libpath(*%w[org-ruby output_buffer])
+require 'cgi'
 
 module Orgmode
 
@@ -34,7 +35,7 @@ module Orgmode
       if current_mode == :code then
         # Whitespace is significant in :code mode. Always output the buffer
         # and do not do any additional translation.
-        @output << @buffer << "\n"
+        @output << CGI.escapeHTML(@buffer) << "\n"
       else
         if (@buffer.length > 0) then
           @output << "<#{HtmlBlockTag[@output_type]}>" \

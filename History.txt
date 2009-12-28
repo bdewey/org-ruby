@@ -3,6 +3,7 @@
 * Fixed bugs:
   * Tables and lists did not get properly closed at the end of file
   * You couldn't do inline formatting inside table cells
+  * Characters in PRE blocks were not HTML escaped.
 
 == 0.2.0 / 2009-12-26
 
