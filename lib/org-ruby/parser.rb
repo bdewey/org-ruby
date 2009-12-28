@@ -66,9 +66,12 @@ module Orgmode
     # Converts the loaded org-mode file to HTML.
     def to_html
       output = ""
-      output << Line.to_html(@header_lines)
+      decorate = true
+      output << Line.to_html(@header_lines, :decorate_title => decorate)
+      decorate = (output.length == 0)
       @headlines.each do |headline|
-        output << headline.to_html
+        output << headline.to_html(:decorate_title => decorate)
+        decorate = (output.length == 0)
       end
       rp = RubyPants.new(output)
       rp.to_html

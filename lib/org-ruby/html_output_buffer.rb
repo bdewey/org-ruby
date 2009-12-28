@@ -20,10 +20,21 @@ module Orgmode
       :code => "pre"
     }
 
+    def initialize(output, opts = {})
+      super(output)
+      if opts[:decorate_title] then
+        @title_decoration = " class=\"title\""
+      else
+        @title_decoration = ""
+      end
+    end
+
     def push_mode(mode)
       if ModeTag[mode] then
         output_indentation
         @output << "<#{ModeTag[mode]}>\n" 
+        # Entering a new mode obliterates the title decoration
+        @title_decoration = ""
       end
       super(mode)
     end
@@ -45,9 +56,10 @@ module Orgmode
       else
         if (@buffer.length > 0) then
           output_indentation
-          @output << "<#{HtmlBlockTag[@output_type]}>" \
+          @output << "<#{HtmlBlockTag[@output_type]}#{@title_decoration}>" \
             << inline_formatting(@buffer) \
             << "</#{HtmlBlockTag[@output_type]}>\n"
+          @title_decoration = ""
         end
       end
       @buffer = ""

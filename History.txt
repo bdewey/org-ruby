@@ -1,5 +1,6 @@
 == 0.4.0 / 2009-12-28
 
+* The first thing output in HTML gets the class "title"
 * HTML output is now indented
 * Proper support for multi-paragraph list items.
 * Fixed bugs:

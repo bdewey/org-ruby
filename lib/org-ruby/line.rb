@@ -118,9 +118,9 @@ module Orgmode
       translate(lines, output_buffer)
     end
 
-    def self.to_html(lines)
+    def self.to_html(lines, opts = { })
       output = ""
-      output_buffer = HtmlOutputBuffer.new(output)
+      output_buffer = HtmlOutputBuffer.new(output, opts)
       translate(lines, output_buffer)
     end
 

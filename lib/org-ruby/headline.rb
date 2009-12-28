@@ -66,8 +66,13 @@ module Orgmode
       output
     end
 
-    def to_html
-      output = "<h#{@level}>#{@headline_text}</h#{@level}>\n"
+    def to_html(opts = {})
+      if opts[:decorate_title]
+        decoration = " class=\"title\""
+      else
+        decoration = ""
+      end
+      output = "<h#{@level}#{decoration}>#{@headline_text}</h#{@level}>\n"
       output << Line.to_html(@body_lines)
       output
     end
