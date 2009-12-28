@@ -17,6 +17,7 @@ Bones {
   email  'bdewey@gmail.com'
   url  'http://github.com/bdewey/org-ruby'
   version  OrgRuby::VERSION
+  colorize false                # Windows consoles won't colorize
 }
 
 # EOF
