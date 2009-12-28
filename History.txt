@@ -1,5 +1,6 @@
 == 0.3.0 / 2009-12-27
 
+* Uses rubypants to get better typography (smart quotes, elipses, etc.).
 * Fixed bugs:
   * Tables and lists did not get properly closed at the end of file
   * You couldn't do inline formatting inside table cells

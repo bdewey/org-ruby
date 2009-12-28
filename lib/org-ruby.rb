@@ -1,3 +1,4 @@
+unless defined? ::OrgRuby
 
 module OrgRuby
 
@@ -46,3 +47,4 @@ end  # module OrgmodeParser
 
 OrgRuby.require_all_libs_relative_to(__FILE__)
 
+end                             # unless defined?

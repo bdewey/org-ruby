@@ -1,8 +1,10 @@
-##
-##  Simple routines for loading / saving an ORG file.
-##
+require 'rubypants'
 
 module Orgmode
+
+  ##
+  ##  Simple routines for loading / saving an ORG file.
+  ##
 
   class Parser
 
@@ -60,13 +62,15 @@ module Orgmode
       output
     end
 
+    # Converts the loaded org-mode file to HTML.
     def to_html
       output = ""
       output << Line.to_html(@header_lines)
       @headlines.each do |headline|
         output << headline.to_html
       end
-      output
+      rp = RubyPants.new(output)
+      rp.to_html
     end
   end                             # class Parser
 end                               # module Orgmode
