@@ -12,6 +12,7 @@ task :default => 'test:run'
 task 'gem:release' => 'test:run'
 
 Bones {
+  readme_file 'README.rdoc'
   name  'org-ruby'
   authors  'Brian Dewey'
   email  'bdewey@gmail.com'
