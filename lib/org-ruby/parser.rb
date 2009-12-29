@@ -32,20 +32,42 @@ module Orgmode
       @headlines = Array.new
       @current_headline = nil
       @header_lines = []
+      mode = :normal
       @lines.each do |line|
-        if (Headline.headline? line) then
-          @current_headline = Headline.new line
-          @headlines << @current_headline
-        else
+        case mode
+        when :normal
+
+          if (Headline.headline? line) then
+            @current_headline = Headline.new line
+            @headlines << @current_headline
+          else
+            line = Line.new line
+            mode = :code if line.begin_block? and line.block_type == "EXAMPLE"
+            if (@current_headline) then
+              @current_headline.body_lines << line
+            else
+              @header_lines << line
+            end
+          end
+
+        when :code
+
+          # As long as we stay in code mode, force lines to be either blank or paragraphs.
+          # Don't try to interpret structural items, like headings and tables.
           line = Line.new line
+          if line.end_block? and line.block_type == "EXAMPLE"
+            mode = :normal
+          else
+            line.assigned_paragraph_type = :paragraph unless line.blank?
+          end
           if (@current_headline) then
             @current_headline.body_lines << line
           else
             @header_lines << line
           end
-        end
+        end                     # case
       end
-    end                           # initialize
+    end                         # initialize
 
     # Creates a new parser from the data in a given file
     def self.load(fname)
