@@ -49,10 +49,11 @@ module Orgmode
 
     def flush!
       @logger.debug "FLUSH ==========> #{@output_type}"
+      escape_buffer!
       if current_mode == :code then
         # Whitespace is significant in :code mode. Always output the buffer
         # and do not do any additional translation.
-        @output << CGI.escapeHTML(@buffer) << "\n"
+        @output << @buffer << "\n"
       else
         if (@buffer.length > 0) then
           output_indentation
@@ -67,6 +68,11 @@ module Orgmode
 
     ######################################################################
     private
+
+    # Escapes any HTML content in the output accumulation buffer @buffer.
+    def escape_buffer!
+      @buffer = CGI.escapeHTML(@buffer)
+    end
 
     def output_indentation
       indent = "  " * (@mode_stack.length - 1)

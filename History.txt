@@ -1,3 +1,7 @@
+== 0.4.1 / 2009-12-29
+
+* HTML is now escaped by default.
+
 == 0.4.0 / 2009-12-28
 
 * The first thing output in HTML gets the class "title"
