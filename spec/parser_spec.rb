@@ -42,6 +42,19 @@ describe Orgmode::Parser do
     parser.should have(19).header_lines
   end
 
+  it "should load in-buffer settings" do
+    parser = Orgmode::Parser.load(FreeformFile)
+    parser.should have(13).in_buffer_settings
+    parser.in_buffer_settings["TITLE"].should eql("Freeform")
+    parser.in_buffer_settings["EMAIL"].should eql("bdewey@gmail.com")
+    parser.in_buffer_settings["LANGUAGE"].should eql("en")
+  end
+
+  it "should skip in-buffer settings inside EXAMPLE blocks" do
+    parser = Orgmode::Parser.load(FreeformExampleFile)
+    parser.should have(0).in_buffer_settings
+  end
+
   it "should return a textile string" do
     parser = Orgmode::Parser.load(FreeformFile)
     parser.to_textile.should be_kind_of(String)

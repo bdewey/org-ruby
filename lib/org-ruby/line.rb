@@ -108,6 +108,27 @@ module Orgmode
       $2 if @line =~ BlockRegexp
     end
 
+    InBufferSettingRegexp = /^#\+(\w+):\s*(.*)$/
+
+    # call-seq:
+    #     line.in_buffer_setting?         => boolean
+    #     line.in_buffer_setting? { |key, value| ... }
+    #
+    # Called without a block, this method determines if the line
+    # contains an in-buffer setting. Called with a block, the block
+    # will get called if the line contains an in-buffer setting with
+    # the key and value for the setting.
+    def in_buffer_setting?
+      return false if @assigned_paragraph_type && @assigned_paragraph_type != :comment
+      if block_given? then
+        if @line =~ InBufferSettingRegexp
+          yield $1, $2
+        end
+      else
+        @line =~ InBufferSettingRegexp
+      end
+    end
+
     # Determines the paragraph type of the current line.
     def paragraph_type
       return :blank if blank?

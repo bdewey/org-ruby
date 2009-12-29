@@ -17,6 +17,10 @@ module Orgmode
 
     # These are any lines before the first headline
     attr_reader :header_lines
+
+    # This contains any in-buffer settings from the org-mode file.
+    # See http://orgmode.org/manual/In_002dbuffer-settings.html#In_002dbuffer-settings
+    attr_reader :in_buffer_settings
     
     # I can construct a parser object either with an array of lines
     # or with a single string that I will split along \n boundaries.
@@ -32,6 +36,7 @@ module Orgmode
       @headlines = Array.new
       @current_headline = nil
       @header_lines = []
+      @in_buffer_settings = { }
       mode = :normal
       @lines.each do |line|
         case mode
@@ -42,6 +47,10 @@ module Orgmode
             @headlines << @current_headline
           else
             line = Line.new line
+            # If there is a setting on this line, remember it.
+            line.in_buffer_setting? do |key, value|
+              @in_buffer_settings[key] = value
+            end
             mode = :code if line.begin_block? and line.block_type == "EXAMPLE"
             if (@current_headline) then
               @current_headline.body_lines << line

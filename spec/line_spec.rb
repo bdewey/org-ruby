@@ -106,4 +106,39 @@ describe Orgmode::Line do
       l.paragraph_type.should eql(value)
     end
   end
+
+  it "should parse in-buffer settings" do
+    cases = {
+      "#+ARCHIVE: %s_done" => { :key => "ARCHIVE", :value => "%s_done" },
+      "#+CATEGORY: foo" => { :key => "CATEGORY", :value => "foo"},
+      "#+BEGIN_EXAMPLE:" => { :key => "BEGIN_EXAMPLE", :value => "" },
+      "#+A:" => { :key => "A", :value => "" } # Boundary: Smallest keyword is one letter
+    }
+    cases.each_pair do |key, value|
+      l = Orgmode::Line.new key
+      l.in_buffer_setting?.should be_true
+      called = nil
+      l.in_buffer_setting? do |k, v|
+        k.should eql(value[:key])
+        v.should eql(value[:value])
+        called = true
+      end
+      called.should be_true
+    end
+  end
+
+  it "should reject ill-formed settings" do
+    cases = [
+             "##+ARCHIVE: blah",
+             "#CATEGORY: foo",
+             "",
+             "\n",
+             "   #+BEGIN_EXAMPLE:\n"
+            ]
+
+    cases.each do |c|
+      l = Orgmode::Line.new c
+      l.in_buffer_setting?.should be_nil
+    end
+  end
 end

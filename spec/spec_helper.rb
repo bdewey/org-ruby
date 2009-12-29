@@ -5,6 +5,7 @@ require File.expand_path(
 
 RememberFile = File.join(File.dirname(__FILE__), %w[data remember.org])
 FreeformFile = File.join(File.dirname(__FILE__), %w[data freeform.org])
+FreeformExampleFile = File.join(File.dirname(__FILE__), %w[data freeform-example.org])
 
 
 Spec::Runner.configure do |config|

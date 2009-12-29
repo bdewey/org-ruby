@@ -1,3 +1,7 @@
+== X.X.X / 2009-12-XX
+
+* Parse in-buffer settings.
+
 == 0.4.2 / 2009-12-29
 
 * Got rid of the extraneous newline at the start of code blocks.
