@@ -1,5 +1,6 @@
 == X.X.X / 2009-12-29
 
+* Got rid of the extraneous newline at the start of code blocks.
 * Everything now shows up in code blocks, even org-mode metadata.
 * Fixed bugs:
   * Regressed smart double quotes with HTML escaping. Added a test

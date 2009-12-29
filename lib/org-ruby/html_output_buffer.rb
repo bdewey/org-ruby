@@ -50,7 +50,7 @@ module Orgmode
 
     def flush!
       escape_buffer!
-      if current_mode == :code then
+      if @buffer_mode == :code then
         # Whitespace is significant in :code mode. Always output the buffer
         # and do not do any additional translation.
         # 
@@ -69,6 +69,7 @@ module Orgmode
         end
       end
       @buffer = ""
+      @buffer_mode = nil
     end
 
     ######################################################################

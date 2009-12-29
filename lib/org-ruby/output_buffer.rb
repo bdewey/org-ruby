@@ -8,8 +8,13 @@ module Orgmode
   # add a newline character prior emitting the output.
   class OutputBuffer
 
-    # This is the temporary buffer that we accumulate into.
+    # This is the accumulation buffer. It's a holding pen so
+    # consecutive lines of the right type can get stuck together
+    # without intervening newlines.
     attr_reader :buffer
+
+    # This is the output mode of the accumulation buffer.
+    attr_reader :buffer_mode
 
     # This is the overall output buffer
     attr_reader :output
@@ -22,17 +27,22 @@ module Orgmode
     def initialize(output)
       @output = output
       @buffer = ""
+      @buffer_mode = nil
       @output_type = :start
       @list_indent_stack = []
       @paragraph_modifier = nil
       @cancel_modifier = false
       @mode_stack = []
-      push_mode(:normal)
 
       @logger = Logger.new(STDERR)
-      @logger.level = Logger::WARN
+      if ENV['DEBUG']
+        @logger.level = Logger::DEBUG
+      else
+        @logger.level = Logger::WARN
+      end
 
       @re_help = RegexpHelper.new
+      push_mode(:normal)
     end
 
     Modes = [:normal, :ordered_list, :unordered_list, :blockquote, :code, :table]
@@ -83,6 +93,11 @@ module Orgmode
 
     # Accumulate the string @str@.
     def << (str)
+      if @buffer_mode && @buffer_mode != current_mode then
+        raise "Accumulation buffer is mixing modes: @buffer_mode == #{@buffer_mode}, current_mode == #{current_mode}"
+      else
+        @buffer_mode = current_mode
+      end
       @buffer << str
     end
 

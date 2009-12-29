@@ -60,6 +60,7 @@ module Orgmode
         @output << inline_formatting(@buffer) << "\n"
       end
       @buffer = ""
+      @buffer_mode = nil
     end
 
 
