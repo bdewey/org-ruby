@@ -86,4 +86,24 @@ describe Orgmode::Line do
       line.block_type.should eql(end_examples[str])
     end
   end
+
+  it "should accept assigned types" do
+    cases = {
+      "# this looks like a comment" => :comment,
+      "  1. This looks like an ordered list" => :ordered_list,
+      "       - this looks like an # unordered list" => :unordered_list,
+      " | one | two | table! |  \n" => :table_row,
+      "\n" => :blank,
+      " |-----+-----+--------|  \n" => :table_separator
+    }
+
+    cases.each_pair do |key, value|
+      l = Orgmode::Line.new key
+      l.paragraph_type.should eql(value)
+      l.assigned_paragraph_type = :paragraph
+      l.paragraph_type.should eql(:paragraph) 
+      l.assigned_paragraph_type = nil
+      l.paragraph_type.should eql(value)
+    end
+  end
 end

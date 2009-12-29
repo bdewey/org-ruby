@@ -11,11 +11,19 @@ module Orgmode
     # TODO 2009-12-20 bdewey: Handle tabs
     attr_reader :indent
 
+    # A line can have its type assigned instead of inferred from its
+    # content. For example, something that parses as a "table" on its
+    # own ("| one | two|\n") may just be a paragraph if it's inside
+    # #+BEGIN_EXAMPLE. Set this property on the line to assign its type. This
+    # will then affect the value of +paragraph_type+.
+    attr_accessor :assigned_paragraph_type
+
     def initialize(line)
       @line = line
       @indent = 0
       @line =~ /\s*/
       @indent = $&.length unless blank?
+      @assigned_paragraph_type = nil
     end
 
     def to_s
@@ -102,6 +110,7 @@ module Orgmode
 
     # Determines the paragraph type of the current line.
     def paragraph_type
+      return @assigned_paragraph_type if @assigned_paragraph_type
       return :blank if blank?
       return :ordered_list if ordered_list?
       return :unordered_list if unordered_list?
