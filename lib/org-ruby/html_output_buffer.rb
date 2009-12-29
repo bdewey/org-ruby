@@ -32,6 +32,7 @@ module Orgmode
     def push_mode(mode)
       if ModeTag[mode] then
         output_indentation
+        @logger.debug "<#{ModeTag[mode]}>\n" 
         @output << "<#{ModeTag[mode]}>\n" 
         # Entering a new mode obliterates the title decoration
         @title_decoration = ""
@@ -43,19 +44,24 @@ module Orgmode
       m = super(mode)
       if ModeTag[m] then
         output_indentation
+        @logger.debug "</#{ModeTag[m]}>\n"
         @output << "</#{ModeTag[m]}>\n"
       end
     end
 
     def flush!
-      @logger.debug "FLUSH ==========> #{@output_type}"
       escape_buffer!
       if current_mode == :code then
         # Whitespace is significant in :code mode. Always output the buffer
         # and do not do any additional translation.
+        # 
+        # FIXME 2009-12-29 bdewey: It looks like I'll always get an extraneous
+        # newline at the start of code blocks. Find a way to fix this.
+        @logger.debug "FLUSH CODE ==========> #{@buffer.inspect}"
         @output << @buffer << "\n"
       else
         if (@buffer.length > 0) then
+          @logger.debug "FLUSH      ==========> #{@output_type}"
           output_indentation
           @output << "<#{HtmlBlockTag[@output_type]}#{@title_decoration}>" \
             << inline_formatting(@buffer) \

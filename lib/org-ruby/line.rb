@@ -135,14 +135,19 @@ module Orgmode
         case line.paragraph_type
         when :metadata, :table_separator, :blank
 
-          # IGNORE
+          output_buffer << line.line if output_buffer.preserve_whitespace?          
 
         when :comment
           
-          output_buffer.push_mode(:blockquote) if line.begin_block? and line.block_type == "QUOTE"
-          output_buffer.push_mode(:code) if line.begin_block? and line.block_type == "EXAMPLE"
-          output_buffer.pop_mode(:blockquote) if line.end_block? and line.block_type == "QUOTE"
-          output_buffer.pop_mode(:code) if line.end_block? and line.block_type == "EXAMPLE"
+          if line.begin_block?
+            output_buffer.push_mode(:blockquote) if line.block_type == "QUOTE"
+            output_buffer.push_mode(:code) if line.block_type == "EXAMPLE"
+          elsif line.end_block?
+            output_buffer.pop_mode(:blockquote) if line.block_type == "QUOTE"
+            output_buffer.pop_mode(:code) if line.block_type == "EXAMPLE"
+          else
+            output_buffer << line.line if output_buffer.preserve_whitespace?
+          end
 
         when :table_row
 
