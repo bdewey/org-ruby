@@ -21,6 +21,9 @@ module Orgmode
     # This contains any in-buffer settings from the org-mode file.
     # See http://orgmode.org/manual/In_002dbuffer-settings.html#In_002dbuffer-settings
     attr_reader :in_buffer_settings
+
+    # This contains in-buffer options; a special case of in-buffer settings.
+    attr_reader :options
     
     # I can construct a parser object either with an array of lines
     # or with a single string that I will split along \n boundaries.
@@ -37,6 +40,7 @@ module Orgmode
       @current_headline = nil
       @header_lines = []
       @in_buffer_settings = { }
+      @options = { }
       mode = :normal
       @lines.each do |line|
         case mode
@@ -49,7 +53,7 @@ module Orgmode
             line = Line.new line
             # If there is a setting on this line, remember it.
             line.in_buffer_setting? do |key, value|
-              @in_buffer_settings[key] = value
+              store_in_buffer_setting key, value
             end
             mode = :code if line.begin_block? and line.block_type == "EXAMPLE"
             if (@current_headline) then
@@ -106,6 +110,27 @@ module Orgmode
       end
       rp = RubyPants.new(output)
       rp.to_html
+    end
+
+    ######################################################################
+    private
+
+    # Stores an in-buffer setting.
+    def store_in_buffer_setting(key, value)
+      if key == "OPTIONS" then
+
+        # Options are stored in a hash. Special-case.
+
+        value.split.each do |opt|
+          if opt =~ /^(.*):(.*?)$/ then
+            @options[$1] = $2
+          else
+            raise "Unexpected option: #{opt}"
+          end
+        end
+      else
+        @in_buffer_settings[key] = value
+      end
     end
   end                             # class Parser
 end                               # module Orgmode

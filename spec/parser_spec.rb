@@ -44,10 +44,18 @@ describe Orgmode::Parser do
 
   it "should load in-buffer settings" do
     parser = Orgmode::Parser.load(FreeformFile)
-    parser.should have(13).in_buffer_settings
+    parser.should have(12).in_buffer_settings
     parser.in_buffer_settings["TITLE"].should eql("Freeform")
     parser.in_buffer_settings["EMAIL"].should eql("bdewey@gmail.com")
     parser.in_buffer_settings["LANGUAGE"].should eql("en")
+  end
+
+  it "should understand OPTIONS" do
+    parser = Orgmode::Parser.load(FreeformFile)
+    parser.should have(19).options
+    parser.options["TeX"].should eql("t")
+    parser.options["todo"].should eql("t")
+    parser.options["\\n"].should eql("nil")
   end
 
   it "should skip in-buffer settings inside EXAMPLE blocks" do
