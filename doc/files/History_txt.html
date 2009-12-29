@@ -56,7 +56,7 @@
     </tr>
     <tr class="top-aligned-row">
       <td><strong>Last Update:</strong></td>
-      <td>Sat Dec 26 22:03:48 -0800 2009</td>
+      <td>Tue Dec 29 12:12:30 -0800 2009</td>
     </tr>
     </table>
   </div>
@@ -69,7 +69,75 @@
   <div id="contextContent">
 
     <div id="description">
-      <h2>0.2.0 / 2009-12-26</h2>
+      <h2>0.4.2 / 2009-12-29</h2>
+<ul>
+<li>Got rid of the extraneous newline at the start of code blocks.
+
+</li>
+<li>Everything now shows up in code blocks, even org-mode metadata.
+
+</li>
+<li>Fixed bugs:
+
+<ul>
+<li>Regressed smart double quotes with HTML escaping. Added a test case and
+fixed the regression.
+
+</li>
+</ul>
+</li>
+</ul>
+<h2>0.4.1 / 2009-12-29</h2>
+<ul>
+<li>HTML is now escaped by default
+
+</li>
+<li>org-mode comments will show up in a code block.
+
+</li>
+</ul>
+<h2>0.4.0 / 2009-12-28</h2>
+<ul>
+<li>The first thing output in HTML gets the class &quot;title&quot;
+
+</li>
+<li>HTML output is now indented
+
+</li>
+<li>Proper support for multi-paragraph list items.
+
+</li>
+<li>Fixed bugs:
+
+<ul>
+<li>&quot;rake spec&quot; wouldn&#8216;t work on Linux. Needed &quot;require
+&#8216;rubygems&#8217;&quot;.
+
+</li>
+</ul>
+</li>
+</ul>
+<h2>0.3.0 / 2009-12-27</h2>
+<ul>
+<li>Uses rubypants to get better typography (smart quotes, elipses, etc.).
+
+</li>
+<li>Fixed bugs:
+
+<ul>
+<li>Tables and lists did not get properly closed at the end of file
+
+</li>
+<li>You couldn&#8216;t do inline formatting inside table cells
+
+</li>
+<li>Characters in PRE blocks were not HTML escaped.
+
+</li>
+</ul>
+</li>
+</ul>
+<h2>0.2.0 / 2009-12-26</h2>
 <ul>
 <li>Renamed the gem to org-ruby
 

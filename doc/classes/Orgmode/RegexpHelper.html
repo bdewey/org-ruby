@@ -86,12 +86,12 @@ magic&quot; you need to properly parse org-mode files.
 </p>
 <h1>Key methods</h1>
 <ul>
-<li>Use <tt><a href="RegexpHelper.html#M000015">rewrite_emphasis</a></tt> to
+<li>Use <tt><a href="RegexpHelper.html#M000008">rewrite_emphasis</a></tt> to
 replace org-mode emphasis strings (e.g., \/italic/) with the suitable
 markup for the output.
 
 </li>
-<li>Use <tt><a href="RegexpHelper.html#M000016">rewrite_links</a></tt> to get a
+<li>Use <tt><a href="RegexpHelper.html#M000009">rewrite_links</a></tt> to get a
 chance to rewrite all org-mode links with suitable markup for the output.
 
 </li>
@@ -106,10 +106,10 @@ chance to rewrite all org-mode links with suitable markup for the output.
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000014">match_all</a>&nbsp;&nbsp;
-      <a href="#M000013">new</a>&nbsp;&nbsp;
-      <a href="#M000015">rewrite_emphasis</a>&nbsp;&nbsp;
-      <a href="#M000016">rewrite_links</a>&nbsp;&nbsp;
+      <a href="#M000007">match_all</a>&nbsp;&nbsp;
+      <a href="#M000006">new</a>&nbsp;&nbsp;
+      <a href="#M000008">rewrite_emphasis</a>&nbsp;&nbsp;
+      <a href="#M000009">rewrite_links</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -202,19 +202,19 @@ information away by this point in the code. TODO &#8212; revisit?
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000013" class="method-detail">
-        <a name="M000013"></a>
+      <div id="method-M000006" class="method-detail">
+        <a name="M000006"></a>
 
         <div class="method-heading">
-          <a href="#M000013" class="method-signature">
+          <a href="#M000006" class="method-signature">
           <span class="method-name">new</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000013-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000013-source">
+            onclick="toggleCode('M000006-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000006-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/org-ruby/regexp_helper.rb, line 50</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>
@@ -236,11 +236,11 @@ information away by this point in the code. TODO &#8212; revisit?
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000014" class="method-detail">
-        <a name="M000014"></a>
+      <div id="method-M000007" class="method-detail">
+        <a name="M000007"></a>
 
         <div class="method-heading">
-          <a href="#M000014" class="method-signature">
+          <a href="#M000007" class="method-signature">
           <span class="method-name">match_all</span><span class="method-args">(str) {|$2, $3| ...}</span>
           </a>
         </div>
@@ -251,8 +251,8 @@ Finds all emphasis matches in a string. Supply a block that will get the
 marker and body as parameters.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000014-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000014-source">
+            onclick="toggleCode('M000007-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000007-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/org-ruby/regexp_helper.rb, line 65</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">match_all</span>(<span class="ruby-identifier">str</span>)
@@ -265,11 +265,11 @@ marker and body as parameters.
         </div>
       </div>
 
-      <div id="method-M000015" class="method-detail">
-        <a name="M000015"></a>
+      <div id="method-M000008" class="method-detail">
+        <a name="M000008"></a>
 
         <div class="method-heading">
-          <a href="#M000015" class="method-signature">
+          <a href="#M000008" class="method-signature">
           <span class="method-name">rewrite_emphasis</span><span class="method-args">(str) {|$2, $3| ...}</span>
           </a>
         </div>
@@ -308,8 +308,8 @@ respectively. (Clearly this sample string will use HTML-like syntax,
 assuming <tt>map</tt> is defined appropriately.)
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000015-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000015-source">
+            onclick="toggleCode('M000008-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000008-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/org-ruby/regexp_helper.rb, line 92</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rewrite_emphasis</span>(<span class="ruby-identifier">str</span>)
@@ -323,11 +323,11 @@ assuming <tt>map</tt> is defined appropriately.)
         </div>
       </div>
 
-      <div id="method-M000016" class="method-detail">
-        <a name="M000016"></a>
+      <div id="method-M000009" class="method-detail">
+        <a name="M000009"></a>
 
         <div class="method-heading">
-          <a href="#M000016" class="method-signature">
+          <a href="#M000009" class="method-signature">
           <span class="method-name">rewrite_links</span><span class="method-args">(str) {|$1, nil| ...}</span>
           </a>
         </div>
@@ -360,8 +360,8 @@ block returns an HTML-style link, and that is how things will get recorded
 in <tt>result</tt>.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000016-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000016-source">
+            onclick="toggleCode('M000009-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000009-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/org-ruby/regexp_helper.rb, line 124</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rewrite_links</span>(<span class="ruby-identifier">str</span>)

@@ -1,6 +1,6 @@
-org-ruby version 0.2.0
+org-ruby version 0.4.2
     by Brian Dewey
-    http://bdewey.com
+    http://github.com/bdewey/org-ruby
 
 == DESCRIPTION
 
@@ -12,14 +12,9 @@ extracting "content" from the orgfile as opposed to "metadata."
 
 == CHANGES
 
-* Renamed the gem to org-ruby
-* Added +to_html+ for HTML output
-* Now supports the following inline markup: 
-  * bold
-  * italic
-  * code
-  * verbatim
-  * underline
-  * strikethrough
-* Continued code cleanup and refactoring
+* Got rid of the extraneous newline at the start of code blocks.
+* Everything now shows up in code blocks, even org-mode metadata.
+* Fixed bugs:
+  * Regressed smart double quotes with HTML escaping. Added a test
+    case and fixed the regression.
 

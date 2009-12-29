@@ -95,17 +95,17 @@ and add a newline character prior emitting the output.
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000025">&lt;&lt;</a>&nbsp;&nbsp;
-      <a href="#M000018">current_mode</a>&nbsp;&nbsp;
-      <a href="#M000019">current_mode_list?</a>&nbsp;&nbsp;
-      <a href="#M000023">enter_table?</a>&nbsp;&nbsp;
-      <a href="#M000024">exit_table?</a>&nbsp;&nbsp;
-      <a href="#M000026">list_indent_level</a>&nbsp;&nbsp;
-      <a href="#M000017">new</a>&nbsp;&nbsp;
-      <a href="#M000021">pop_mode</a>&nbsp;&nbsp;
-      <a href="#M000022">prepare</a>&nbsp;&nbsp;
-      <a href="#M000027">preserve_whitespace?</a>&nbsp;&nbsp;
-      <a href="#M000020">push_mode</a>&nbsp;&nbsp;
+      <a href="#M000026">&lt;&lt;</a>&nbsp;&nbsp;
+      <a href="#M000019">current_mode</a>&nbsp;&nbsp;
+      <a href="#M000020">current_mode_list?</a>&nbsp;&nbsp;
+      <a href="#M000024">enter_table?</a>&nbsp;&nbsp;
+      <a href="#M000025">exit_table?</a>&nbsp;&nbsp;
+      <a href="#M000027">list_indent_level</a>&nbsp;&nbsp;
+      <a href="#M000018">new</a>&nbsp;&nbsp;
+      <a href="#M000022">pop_mode</a>&nbsp;&nbsp;
+      <a href="#M000023">prepare</a>&nbsp;&nbsp;
+      <a href="#M000028">preserve_whitespace?</a>&nbsp;&nbsp;
+      <a href="#M000021">push_mode</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -142,7 +142,17 @@ and add a newline character prior emitting the output.
           <td class="context-item-name">buffer</td>
           <td class="context-item-value">&nbsp;[R]&nbsp;</td>
           <td class="context-item-desc">
-This is the temporary buffer that we accumulate into.
+This is the accumulation buffer. It&#8216;s a holding pen so consecutive
+lines of the right type can get stuck together without intervening
+newlines.
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">buffer_mode</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc">
+This is the output mode of the accumulation buffer.
 
 </td>
         </tr>
@@ -172,40 +182,45 @@ This is the current type of output being accumulated.
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000017" class="method-detail">
-        <a name="M000017"></a>
+      <div id="method-M000018" class="method-detail">
+        <a name="M000018"></a>
 
         <div class="method-heading">
-          <a href="#M000017" class="method-signature">
+          <a href="#M000018" class="method-signature">
           <span class="method-name">new</span><span class="method-args">(output)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Creates a <a href="OutputBuffer.html#M000017">new</a> <a
+Creates a <a href="OutputBuffer.html#M000018">new</a> <a
 href="OutputBuffer.html">OutputBuffer</a> object that is bound to an output
 object. The output will get flushed to =output=.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000017-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000017-source">
+            onclick="toggleCode('M000018-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000018-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/org-ruby/output_buffer.rb, line 22</span>
+<span class="ruby-comment cmt"># File lib/org-ruby/output_buffer.rb, line 27</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">output</span>)
       <span class="ruby-ivar">@output</span> = <span class="ruby-identifier">output</span>
       <span class="ruby-ivar">@buffer</span> = <span class="ruby-value str">&quot;&quot;</span>
+      <span class="ruby-ivar">@buffer_mode</span> = <span class="ruby-keyword kw">nil</span>
       <span class="ruby-ivar">@output_type</span> = <span class="ruby-identifier">:start</span>
       <span class="ruby-ivar">@list_indent_stack</span> = []
       <span class="ruby-ivar">@paragraph_modifier</span> = <span class="ruby-keyword kw">nil</span>
       <span class="ruby-ivar">@cancel_modifier</span> = <span class="ruby-keyword kw">false</span>
       <span class="ruby-ivar">@mode_stack</span> = []
-      <span class="ruby-identifier">push_mode</span>(<span class="ruby-identifier">:normal</span>)
 
       <span class="ruby-ivar">@logger</span> = <span class="ruby-constant">Logger</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">STDERR</span>)
-      <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">level</span> = <span class="ruby-constant">Logger</span><span class="ruby-operator">::</span><span class="ruby-constant">WARN</span>
+      <span class="ruby-keyword kw">if</span> <span class="ruby-constant">ENV</span>[<span class="ruby-value str">'DEBUG'</span>]
+        <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">level</span> = <span class="ruby-constant">Logger</span><span class="ruby-operator">::</span><span class="ruby-constant">DEBUG</span>
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">level</span> = <span class="ruby-constant">Logger</span><span class="ruby-operator">::</span><span class="ruby-constant">WARN</span>
+      <span class="ruby-keyword kw">end</span>
 
       <span class="ruby-ivar">@re_help</span> = <span class="ruby-constant">RegexpHelper</span>.<span class="ruby-identifier">new</span>
+      <span class="ruby-identifier">push_mode</span>(<span class="ruby-identifier">:normal</span>)
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
@@ -214,11 +229,11 @@ object. The output will get flushed to =output=.
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000025" class="method-detail">
-        <a name="M000025"></a>
+      <div id="method-M000026" class="method-detail">
+        <a name="M000026"></a>
 
         <div class="method-heading">
-          <a href="#M000025" class="method-signature">
+          <a href="#M000026" class="method-signature">
           <span class="method-name">&lt;&lt;</span><span class="method-args">(str)</span>
           </a>
         </div>
@@ -228,35 +243,17 @@ object. The output will get flushed to =output=.
 Accumulate the string @str@.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000025-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000025-source">
+            onclick="toggleCode('M000026-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000026-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/org-ruby/output_buffer.rb, line 85</span>
+<span class="ruby-comment cmt"># File lib/org-ruby/output_buffer.rb, line 95</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-operator">&lt;&lt;</span> (<span class="ruby-identifier">str</span>)
+      <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@buffer_mode</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@buffer_mode</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">current_mode</span> <span class="ruby-keyword kw">then</span>
+        <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Accumulation buffer is mixing modes: @buffer_mode == #{@buffer_mode}, current_mode == #{current_mode}&quot;</span>
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-ivar">@buffer_mode</span> = <span class="ruby-identifier">current_mode</span>
+      <span class="ruby-keyword kw">end</span>
       <span class="ruby-ivar">@buffer</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">str</span>
-    <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000018" class="method-detail">
-        <a name="M000018"></a>
-
-        <div class="method-heading">
-          <a href="#M000018" class="method-signature">
-          <span class="method-name">current_mode</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000018-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000018-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/org-ruby/output_buffer.rb, line 40</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">current_mode</span>
-      <span class="ruby-ivar">@mode_stack</span>.<span class="ruby-identifier">last</span>
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
@@ -268,7 +265,7 @@ Accumulate the string @str@.
 
         <div class="method-heading">
           <a href="#M000019" class="method-signature">
-          <span class="method-name">current_mode_list?</span><span class="method-args">()</span>
+          <span class="method-name">current_mode</span><span class="method-args">()</span>
           </a>
         </div>
       
@@ -277,36 +274,32 @@ Accumulate the string @str@.
             onclick="toggleCode('M000019-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000019-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/org-ruby/output_buffer.rb, line 44</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">current_mode_list?</span>
-      (<span class="ruby-identifier">current_mode</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:ordered_list</span>) <span class="ruby-keyword kw">or</span> (<span class="ruby-identifier">current_mode</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:unordered_list</span>)
+<span class="ruby-comment cmt"># File lib/org-ruby/output_buffer.rb, line 50</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">current_mode</span>
+      <span class="ruby-ivar">@mode_stack</span>.<span class="ruby-identifier">last</span>
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000023" class="method-detail">
-        <a name="M000023"></a>
+      <div id="method-M000020" class="method-detail">
+        <a name="M000020"></a>
 
         <div class="method-heading">
-          <a href="#M000023" class="method-signature">
-          <span class="method-name">enter_table?</span><span class="method-args">()</span>
+          <a href="#M000020" class="method-signature">
+          <span class="method-name">current_mode_list?</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
-          <p>
-Tests if we are entering a table mode.
-</p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000023-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000023-source">
+            onclick="toggleCode('M000020-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000020-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/org-ruby/output_buffer.rb, line 73</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">enter_table?</span>
-      ((<span class="ruby-ivar">@output_type</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:table_row</span>) <span class="ruby-operator">||</span> (<span class="ruby-ivar">@output_type</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:table_separator</span>)) <span class="ruby-operator">&amp;&amp;</span>
-        (<span class="ruby-identifier">current_mode</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">:table</span>)
+<span class="ruby-comment cmt"># File lib/org-ruby/output_buffer.rb, line 54</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">current_mode_list?</span>
+      (<span class="ruby-identifier">current_mode</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:ordered_list</span>) <span class="ruby-keyword kw">or</span> (<span class="ruby-identifier">current_mode</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:unordered_list</span>)
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
@@ -318,6 +311,33 @@ Tests if we are entering a table mode.
 
         <div class="method-heading">
           <a href="#M000024" class="method-signature">
+          <span class="method-name">enter_table?</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Tests if we are entering a table mode.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000024-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000024-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/org-ruby/output_buffer.rb, line 83</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">enter_table?</span>
+      ((<span class="ruby-ivar">@output_type</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:table_row</span>) <span class="ruby-operator">||</span> (<span class="ruby-ivar">@output_type</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:table_separator</span>)) <span class="ruby-operator">&amp;&amp;</span>
+        (<span class="ruby-identifier">current_mode</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">:table</span>)
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000025" class="method-detail">
+        <a name="M000025"></a>
+
+        <div class="method-heading">
+          <a href="#M000025" class="method-signature">
           <span class="method-name">exit_table?</span><span class="method-args">()</span>
           </a>
         </div>
@@ -327,10 +347,10 @@ Tests if we are entering a table mode.
 Tests if we are existing a table mode.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000024-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000024-source">
+            onclick="toggleCode('M000025-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000025-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/org-ruby/output_buffer.rb, line 79</span>
+<span class="ruby-comment cmt"># File lib/org-ruby/output_buffer.rb, line 89</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">exit_table?</span>
       ((<span class="ruby-ivar">@output_type</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">:table_row</span>) <span class="ruby-operator">&amp;&amp;</span> (<span class="ruby-ivar">@output_type</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">:table_separator</span>)) <span class="ruby-operator">&amp;&amp;</span>
         (<span class="ruby-identifier">current_mode</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:table</span>)
@@ -340,11 +360,11 @@ Tests if we are existing a table mode.
         </div>
       </div>
 
-      <div id="method-M000026" class="method-detail">
-        <a name="M000026"></a>
+      <div id="method-M000027" class="method-detail">
+        <a name="M000027"></a>
 
         <div class="method-heading">
-          <a href="#M000026" class="method-signature">
+          <a href="#M000027" class="method-signature">
           <span class="method-name">list_indent_level</span><span class="method-args">()</span>
           </a>
         </div>
@@ -354,37 +374,12 @@ Tests if we are existing a table mode.
 Gets the current list indent level.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000026-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000026-source">
+            onclick="toggleCode('M000027-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000027-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/org-ruby/output_buffer.rb, line 90</span>
+<span class="ruby-comment cmt"># File lib/org-ruby/output_buffer.rb, line 105</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">list_indent_level</span>
       <span class="ruby-ivar">@list_indent_stack</span>.<span class="ruby-identifier">length</span>
-    <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000021" class="method-detail">
-        <a name="M000021"></a>
-
-        <div class="method-heading">
-          <a href="#M000021" class="method-signature">
-          <span class="method-name">pop_mode</span><span class="method-args">(mode = nil)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000021-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000021-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/org-ruby/output_buffer.rb, line 53</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">pop_mode</span>(<span class="ruby-identifier">mode</span> = <span class="ruby-keyword kw">nil</span>)
-      <span class="ruby-identifier">m</span> = <span class="ruby-ivar">@mode_stack</span>.<span class="ruby-identifier">pop</span>
-      <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">warn</span> <span class="ruby-node">&quot;Modes don't match. Expected to pop #{mode}, but popped #{m}&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">mode</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">mode</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">m</span>
-      <span class="ruby-identifier">m</span>
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
@@ -396,6 +391,31 @@ Gets the current list indent level.
 
         <div class="method-heading">
           <a href="#M000022" class="method-signature">
+          <span class="method-name">pop_mode</span><span class="method-args">(mode = nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000022-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000022-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/org-ruby/output_buffer.rb, line 63</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">pop_mode</span>(<span class="ruby-identifier">mode</span> = <span class="ruby-keyword kw">nil</span>)
+      <span class="ruby-identifier">m</span> = <span class="ruby-ivar">@mode_stack</span>.<span class="ruby-identifier">pop</span>
+      <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">warn</span> <span class="ruby-node">&quot;Modes don't match. Expected to pop #{mode}, but popped #{m}&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">mode</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">mode</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">m</span>
+      <span class="ruby-identifier">m</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000023" class="method-detail">
+        <a name="M000023"></a>
+
+        <div class="method-heading">
+          <a href="#M000023" class="method-signature">
           <span class="method-name">prepare</span><span class="method-args">(line)</span>
           </a>
         </div>
@@ -406,10 +426,10 @@ Prepares the output buffer to receive content from a line. As a side
 effect, this may flush the current accumulated text.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000022-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000022-source">
+            onclick="toggleCode('M000023-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000023-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/org-ruby/output_buffer.rb, line 61</span>
+<span class="ruby-comment cmt"># File lib/org-ruby/output_buffer.rb, line 71</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">prepare</span>(<span class="ruby-identifier">line</span>)
       <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;Looking at #{line.paragraph_type}: #{line.to_s}&quot;</span>
       <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">not</span> <span class="ruby-identifier">should_accumulate_output?</span>(<span class="ruby-identifier">line</span>) <span class="ruby-keyword kw">then</span>
@@ -425,11 +445,11 @@ effect, this may flush the current accumulated text.
         </div>
       </div>
 
-      <div id="method-M000027" class="method-detail">
-        <a name="M000027"></a>
+      <div id="method-M000028" class="method-detail">
+        <a name="M000028"></a>
 
         <div class="method-heading">
-          <a href="#M000027" class="method-signature">
+          <a href="#M000028" class="method-signature">
           <span class="method-name">preserve_whitespace?</span><span class="method-args">()</span>
           </a>
         </div>
@@ -439,10 +459,10 @@ effect, this may flush the current accumulated text.
 Test if we&#8216;re in an output mode in which whitespace is significant.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000027-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000027-source">
+            onclick="toggleCode('M000028-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000028-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/org-ruby/output_buffer.rb, line 95</span>
+<span class="ruby-comment cmt"># File lib/org-ruby/output_buffer.rb, line 110</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">preserve_whitespace?</span>
       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">current_mode</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:code</span>
     <span class="ruby-keyword kw">end</span>
@@ -451,21 +471,21 @@ Test if we&#8216;re in an output mode in which whitespace is significant.
         </div>
       </div>
 
-      <div id="method-M000020" class="method-detail">
-        <a name="M000020"></a>
+      <div id="method-M000021" class="method-detail">
+        <a name="M000021"></a>
 
         <div class="method-heading">
-          <a href="#M000020" class="method-signature">
+          <a href="#M000021" class="method-signature">
           <span class="method-name">push_mode</span><span class="method-args">(mode)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000020-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000020-source">
+            onclick="toggleCode('M000021-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000021-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/org-ruby/output_buffer.rb, line 48</span>
+<span class="ruby-comment cmt"># File lib/org-ruby/output_buffer.rb, line 58</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">push_mode</span>(<span class="ruby-identifier">mode</span>)
       <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Not a recognized mode: #{mode}&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">Modes</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">mode</span>)
       <span class="ruby-ivar">@mode_stack</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">mode</span>)
