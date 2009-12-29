@@ -1,3 +1,9 @@
+== X.X.X / 2009-12-29
+
+* Fixed bugs:
+  * Regressed smart double quotes with HTML escaping. Added a test
+    case and fixed the regression.
+
 == 0.4.1 / 2009-12-29
 
 * HTML is now escaped by default

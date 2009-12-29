@@ -1,5 +1,4 @@
 require OrgRuby.libpath(*%w[org-ruby output_buffer])
-require 'cgi'
 
 module Orgmode
 
@@ -77,7 +76,9 @@ module Orgmode
 
     # Escapes any HTML content in the output accumulation buffer @buffer.
     def escape_buffer!
-      @buffer = CGI.escapeHTML(@buffer)
+      @buffer.gsub!(/&/, "&amp;")
+      @buffer.gsub!(/</, "&lt;")
+      @buffer.gsub!(/>/, "&gt;")
     end
 
     def output_indentation

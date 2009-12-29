@@ -1,0 +1,8 @@
+ENTITIES
+
+=Org-ruby= supports "smart double quotes," 'smart single quotes,'
+apostrophes for contractions like won't and can't, and other
+things... like elipses. Oh -- and dashes.
+
+Question: What does org-mode do for ampersands, like R&R? or &lt;?
+Answer: Those get escaped, too.
