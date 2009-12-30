@@ -92,61 +92,65 @@ describe Orgmode::Parser do
     p.export_tables?.should be_false
   end
 
-  # Custom keywords -- dynamic test cases
-  fname = File.join(File.dirname(__FILE__), %w[html_examples custom-todo.org])
-  p = Orgmode::Parser.load(fname)
-  puts p.custom_keyword_regexp.to_s
-  valid_keywords = %w[TODO INPROGRESS WAITING DONE CANCELED]
-  invalid_keywords = %w[TODOX todo inprogress Waiting done cANCELED NEXT |]
-  valid_keywords.each do |kw|
-    it "should match custom keyword #{kw}" do
-      (kw =~ p.custom_keyword_regexp).should be_true
+  describe "Custom keyword parser" do
+    fname = File.join(File.dirname(__FILE__), %w[html_examples custom-todo.org])
+    p = Orgmode::Parser.load(fname)
+    valid_keywords = %w[TODO INPROGRESS WAITING DONE CANCELED]
+    invalid_keywords = %w[TODOX todo inprogress Waiting done cANCELED NEXT |]
+    valid_keywords.each do |kw|
+      it "should match custom keyword #{kw}" do
+        (kw =~ p.custom_keyword_regexp).should be_true
+      end
     end
-  end
-  invalid_keywords.each do |kw|
-    it "should not match custom keyword #{kw}" do
-      (kw =~ p.custom_keyword_regexp).should be_nil
+    invalid_keywords.each do |kw|
+      it "should not match custom keyword #{kw}" do
+        (kw =~ p.custom_keyword_regexp).should be_nil
+      end
     end
-  end
-  it "should not match blank as a custom keyword" do
-    ("" =~ p.custom_keyword_regexp).should be_nil
-  end
-
-  data_directory = File.join(File.dirname(__FILE__), "textile_examples")
-  org_files = File.expand_path(File.join(data_directory, "*.org" ))
-  files = Dir.glob(org_files)
-  files.each do |file|
-    basename = File.basename(file, ".org")
-    textile_name = File.join(data_directory, basename + ".textile")
-    textile_name = File.expand_path(textile_name)
-
-    it "should convert #{basename}.org to Textile" do
-      expected = IO.read(textile_name)
-      expected.should be_kind_of(String)
-      parser = Orgmode::Parser.new(IO.read(file))
-      actual = parser.to_textile
-      actual.should be_kind_of(String)
-      actual.should == expected
+    it "should not match blank as a custom keyword" do
+      ("" =~ p.custom_keyword_regexp).should be_nil
     end
   end
 
-  # Dynamic generation of examples from each *.org file in html_examples.
-  # Each of these files is convertable to HTML.
-  data_directory = File.join(File.dirname(__FILE__), "html_examples")
-  org_files = File.expand_path(File.join(data_directory, "*.org" ))
-  files = Dir.glob(org_files)
-  files.each do |file|
-    basename = File.basename(file, ".org")
-    textile_name = File.join(data_directory, basename + ".html")
-    textile_name = File.expand_path(textile_name)
+  describe "Export to Textile test cases" do
+    data_directory = File.join(File.dirname(__FILE__), "textile_examples")
+    org_files = File.expand_path(File.join(data_directory, "*.org" ))
+    files = Dir.glob(org_files)
+    files.each do |file|
+      basename = File.basename(file, ".org")
+      textile_name = File.join(data_directory, basename + ".textile")
+      textile_name = File.expand_path(textile_name)
 
-    it "should convert #{basename}.org to HTML" do
-      expected = IO.read(textile_name)
-      expected.should be_kind_of(String)
-      parser = Orgmode::Parser.new(IO.read(file))
-      actual = parser.to_html
-      actual.should be_kind_of(String)
-      actual.should == expected
+      it "should convert #{basename}.org to Textile" do
+        expected = IO.read(textile_name)
+        expected.should be_kind_of(String)
+        parser = Orgmode::Parser.new(IO.read(file))
+        actual = parser.to_textile
+        actual.should be_kind_of(String)
+        actual.should == expected
+      end
+    end
+  end
+
+  describe "Export to HTML test cases" do
+    # Dynamic generation of examples from each *.org file in html_examples.
+    # Each of these files is convertable to HTML.
+    data_directory = File.join(File.dirname(__FILE__), "html_examples")
+    org_files = File.expand_path(File.join(data_directory, "*.org" ))
+    files = Dir.glob(org_files)
+    files.each do |file|
+      basename = File.basename(file, ".org")
+      textile_name = File.join(data_directory, basename + ".html")
+      textile_name = File.expand_path(textile_name)
+
+      it "should convert #{basename}.org to HTML" do
+        expected = IO.read(textile_name)
+        expected.should be_kind_of(String)
+        parser = Orgmode::Parser.new(IO.read(file))
+        actual = parser.to_html
+        actual.should be_kind_of(String)
+        actual.should == expected
+      end
     end
   end
 end

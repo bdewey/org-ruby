@@ -79,13 +79,21 @@ module Orgmode
       if @parser and @parser.export_todo? and @keyword then
         output << "<span class=\"todo-keyword #{@keyword}\">#{@keyword} </span>"
       end
-      output << "#{@headline_text}</h#{@level}>\n"
+      output << "#{escape(@headline_text)}</h#{@level}>\n"
       output << Line.to_html(@body_lines, opts)
       output
     end
 
     ######################################################################
     private
+
+    # TODO 2009-12-29 This duplicates escape_buffer! in html_output_buffer. DRY.
+    def escape(str)
+      str = str.gsub(/&/, "&amp;")
+      str = str.gsub(/</, "&lt;")
+      str = str.gsub(/>/, "&gt;")
+      str
+    end
 
     def parse_keywords
       re = @parser.custom_keyword_regexp if @parser

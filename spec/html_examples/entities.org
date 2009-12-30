@@ -6,3 +6,6 @@ things... like elipses. Oh -- and dashes.
 
 Question: What does org-mode do for ampersands, like R&R? or &lt;?
 Answer: Those get escaped, too.
+
+* <Even in headlines! funner & funner!>
+

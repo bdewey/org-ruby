@@ -7,9 +7,12 @@
   * Numbering headlines (option num:t)
   * Skipping text before the first headline (option skip:t)
   * Skipping tables (option |:nil)
+  * Custom todo keywords
 * Rewrite "file:(blah).org" links to "http:(blah).html" links. This
   makes the inter-links to other org-mode files work.
 * Uses <th> tags inside table rows that precede table separators.
+* Bugfixes:
+  * Headings now have HTML escaped.
 
 == 0.4.2 / 2009-12-29
 
