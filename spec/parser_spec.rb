@@ -85,6 +85,13 @@ describe Orgmode::Parser do
     parser.to_textile.should be_kind_of(String)
   end
 
+  it "should understand export table option" do
+    fname = File.join(File.dirname(__FILE__), %w[html_examples skip-table.org])
+    data = IO.read(fname)
+    p = Orgmode::Parser.new(data)
+    p.export_tables?.should be_false
+  end
+
   data_directory = File.join(File.dirname(__FILE__), "textile_examples")
   org_files = File.expand_path(File.join(data_directory, "*.org" ))
   files = Dir.glob(org_files)

@@ -20,6 +20,8 @@ module Orgmode
       :code => "pre"
     }
 
+    attr_reader :options
+
     def initialize(output, opts = {})
       super(output)
       if opts[:decorate_title] then
@@ -27,13 +29,15 @@ module Orgmode
       else
         @title_decoration = ""
       end
+      @options = opts
+      @logger.debug "HTML export options: #{@options.inspect}"
     end
 
     def push_mode(mode)
       if ModeTag[mode] then
         output_indentation
         @logger.debug "<#{ModeTag[mode]}>\n" 
-        @output << "<#{ModeTag[mode]}>\n" 
+        @output << "<#{ModeTag[mode]}>\n" unless mode == :table and skip_tables?
         # Entering a new mode obliterates the title decoration
         @title_decoration = ""
       end
@@ -45,7 +49,7 @@ module Orgmode
       if ModeTag[m] then
         output_indentation
         @logger.debug "</#{ModeTag[m]}>\n"
-        @output << "</#{ModeTag[m]}>\n"
+        @output << "</#{ModeTag[m]}>\n" unless mode == :table and skip_tables?
       end
     end
 
@@ -61,12 +65,16 @@ module Orgmode
         @output << @buffer << "\n"
       else
         if (@buffer.length > 0) then
-          @logger.debug "FLUSH      ==========> #{@output_type}"
-          output_indentation
-          @output << "<#{HtmlBlockTag[@output_type]}#{@title_decoration}>" \
+          unless buffer_mode_is_table? and skip_tables?
+            @logger.debug "FLUSH      ==========> #{@buffer_mode}"
+            output_indentation
+            @output << "<#{HtmlBlockTag[@output_type]}#{@title_decoration}>" \
             << inline_formatting(@buffer) \
             << "</#{HtmlBlockTag[@output_type]}>\n"
-          @title_decoration = ""
+            @title_decoration = ""
+          else
+            @logger.debug "SKIP       ==========> #{@buffer_mode}"
+          end
         end
       end
       @buffer = ""
@@ -75,6 +83,14 @@ module Orgmode
 
     ######################################################################
     private
+
+    def skip_tables?
+      @options[:skip_tables]
+    end
+
+    def buffer_mode_is_table?
+      @buffer_mode == :table
+    end
 
     # Escapes any HTML content in the output accumulation buffer @buffer.
     def escape_buffer!

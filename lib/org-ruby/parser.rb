@@ -43,6 +43,12 @@ module Orgmode
       "t" == @options["skip"]
     end
 
+    # Should we export tables? Defaults to true, must be overridden
+    # with an explicit "nil"
+    def export_tables?
+      "nil" != @options["|"]
+    end
+
     # Gets the next headline number for a given level. The intent is
     # this function is called sequentially for each headline that
     # needs to get numbered. It does standard outline numbering.
@@ -141,18 +147,21 @@ module Orgmode
     # Converts the loaded org-mode file to HTML.
     def to_html
       @headline_number_stack = []
+      export_options = { }
+      export_options[:skip_tables] = true if not export_tables?
       output = ""
       if @in_buffer_settings["TITLE"] then
         output << "<p class=\"title\">#{@in_buffer_settings["TITLE"]}</p>\n"
-        decorate = false
       else
-        decorate = true
+        export_options[:decorate_title] = true
       end
-      output << Line.to_html(@header_lines, :decorate_title => decorate) unless skip_header_lines?
-      decorate = (output.length == 0)
+      output << Line.to_html(@header_lines, export_options) unless skip_header_lines?
+      
+      # If we've output anything at all, remove the :decorate_title option.
+      export_options.delete(:decorate_title) if (output.length > 0)
       @headlines.each do |headline|
-        output << headline.to_html(:decorate_title => decorate)
-        decorate = (output.length == 0)
+        output << headline.to_html(export_options)
+        export_options.delete(:decorate_title) if (output.length > 0)
       end
       rp = RubyPants.new(output)
       rp.to_html

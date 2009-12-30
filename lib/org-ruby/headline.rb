@@ -70,6 +70,7 @@ module Orgmode
     def to_html(opts = {})
       if opts[:decorate_title]
         decoration = " class=\"title\""
+        opts.delete(:decorate_title)
       else
         decoration = ""
       end
@@ -82,7 +83,7 @@ module Orgmode
         output << "<span class=\"todo-keyword #{@keyword}\">#{@keyword} </span>"
       end
       output << "#{@headline_text}</h#{@level}>\n"
-      output << Line.to_html(@body_lines)
+      output << Line.to_html(@body_lines, opts)
       output
     end
   end                           # class Headline
