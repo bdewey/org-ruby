@@ -56,7 +56,7 @@
     </tr>
     <tr class="top-aligned-row">
       <td><strong>Last Update:</strong></td>
-      <td>Tue Dec 29 12:12:30 -0800 2009</td>
+      <td>Wed Dec 30 01:16:08 -0800 2009</td>
     </tr>
     </table>
   </div>
@@ -69,7 +69,54 @@
   <div id="contextContent">
 
     <div id="description">
-      <h2>0.4.2 / 2009-12-29</h2>
+      <h2>0.5.0 / 2009-12-29</h2>
+<ul>
+<li>Parse (but not necessarily <b>use</b>) in-buffer settings. The following
+in-buffer settings <b>are</b> used:
+
+<ul>
+<li>Understand the #+TITLE: directive.
+
+</li>
+<li>Exporting todo keywords (option todo:t)
+
+</li>
+<li>Numbering headlines (option num:t)
+
+</li>
+<li>Skipping text before the first headline (option skip:t)
+
+</li>
+<li>Skipping tables (option |:nil)
+
+</li>
+<li>Custom todo keywords
+
+</li>
+<li>EXPORT_SELECT_TAGS and EXPORT_EXLUDE_TAGS for controlling parts of the tree
+to export
+
+</li>
+</ul>
+</li>
+<li>Rewrite &quot;file:(blah).org&quot; links to &quot;<a
+href="http:(blah).html">(blah).html</a>&quot; links. This makes the
+inter-links to other org-mode files work.
+
+</li>
+<li>Uses &lt;th&gt; tags inside table rows that precede table separators.
+
+</li>
+<li>Bugfixes:
+
+<ul>
+<li>Headings now have HTML escaped.
+
+</li>
+</ul>
+</li>
+</ul>
+<h2>0.4.2 / 2009-12-29</h2>
 <ul>
 <li>Got rid of the extraneous newline at the start of code blocks.
 
