@@ -44,6 +44,7 @@ module Orgmode
           @tags.delete_at(0)                 # the first item will be empty; discard
           @headline_text.gsub!(TagsRegexp, "") # Removes the tags from the headline
         end
+        @keyword = nil
         if (@headline_text =~ KeywordsRegexp) then
           @headline_text = $'
           @keyword = $1
@@ -77,7 +78,7 @@ module Orgmode
         heading_number = @parser.get_next_headline_number(@level)
         output << "<span class=\"heading-number heading-number-#{@level}\">#{heading_number} </span>"
       end
-      if @parser and @parser.export_todo? then
+      if @parser and @parser.export_todo? and @keyword then
         output << "<span class=\"todo-keyword #{@keyword}\">#{@keyword} </span>"
       end
       output << "#{@headline_text}</h#{@level}>\n"

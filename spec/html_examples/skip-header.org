@@ -1,0 +1,28 @@
+#+TITLE:     skip-header.org
+#+AUTHOR:    
+#+EMAIL:     brian@BRIAN-DESK
+#+DATE:      2009-12-29 Tue
+#+DESCRIPTION: 
+#+KEYWORDS: 
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:t toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:nil skip:t d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+This is header text.
+It exists in the org-file, but shouldn't show up in the HTML output.
+
+- Same with this list
+- Nope, shouldn't be in the output.
+
+#+BEGIN_EXAMPLE
+Even this code snippet shouldn't be there.
+Like a ninja. You can't see me.
+#+END_EXAMPLE
+
+* First heading
+
+  This should be the first text in the output.

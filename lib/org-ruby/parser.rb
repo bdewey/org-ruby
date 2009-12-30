@@ -38,6 +38,11 @@ module Orgmode
       "t" == @options["num"]
     end
 
+    # Should we skip exporting text before the first heading?
+    def skip_header_lines?
+      "t" == @options["skip"]
+    end
+
     # Gets the next headline number for a given level. The intent is
     # this function is called sequentially for each headline that
     # needs to get numbered. It does standard outline numbering.
@@ -143,7 +148,7 @@ module Orgmode
       else
         decorate = true
       end
-      output << Line.to_html(@header_lines, :decorate_title => decorate)
+      output << Line.to_html(@header_lines, :decorate_title => decorate) unless skip_header_lines?
       decorate = (output.length == 0)
       @headlines.each do |headline|
         output << headline.to_html(:decorate_title => decorate)
