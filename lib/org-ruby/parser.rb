@@ -68,8 +68,8 @@ module Orgmode
       @headlines = Array.new
       @current_headline = nil
       @header_lines = []
-      @headline_number_stack = []
       @in_buffer_settings = { }
+      @headline_number_stack = []
       @options = { }
       mode = :normal
       @lines.each do |line|
@@ -130,6 +130,7 @@ module Orgmode
 
     # Converts the loaded org-mode file to HTML.
     def to_html
+      @headline_number_stack = []
       output = ""
       if @in_buffer_settings["TITLE"] then
         output << "<p class=\"title\">#{@in_buffer_settings["TITLE"]}</p>\n"
