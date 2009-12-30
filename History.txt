@@ -1,6 +1,9 @@
 == X.X.X / 2009-12-XX
 
-* Parse in-buffer settings.
+* Parse (but not necessarily *use*) in-buffer settings.
+* Understand the #+TITLE: directive.
+* Rewrite "file:(blah).org" links to "http:(blah).html" links. This
+  makes the inter-links to other org-mode files work.
 
 == 0.4.2 / 2009-12-29
 

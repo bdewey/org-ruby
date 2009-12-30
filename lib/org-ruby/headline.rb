@@ -32,8 +32,8 @@ module Orgmode
 
     KeywordsRegexp = Regexp.new("\\s*(#{Keywords.join('|')})\\s*")
 
-    def initialize(line)
-      super(line)
+    def initialize(line, parser = nil)
+      super(line, parser)
       @body_lines = []
       @tags = []
       if (@line =~ LineRegexp) then

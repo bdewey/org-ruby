@@ -47,10 +47,10 @@ module Orgmode
         when :normal
 
           if (Headline.headline? line) then
-            @current_headline = Headline.new line
+            @current_headline = Headline.new line, self
             @headlines << @current_headline
           else
-            line = Line.new line
+            line = Line.new line, self
             # If there is a setting on this line, remember it.
             line.in_buffer_setting? do |key, value|
               store_in_buffer_setting key, value
@@ -101,7 +101,12 @@ module Orgmode
     # Converts the loaded org-mode file to HTML.
     def to_html
       output = ""
-      decorate = true
+      if @in_buffer_settings["TITLE"] then
+        output << "<p class=\"title\">#{@in_buffer_settings["TITLE"]}</p>\n"
+        decorate = false
+      else
+        decorate = true
+      end
       output << Line.to_html(@header_lines, :decorate_title => decorate)
       decorate = (output.length == 0)
       @headlines.each do |headline|

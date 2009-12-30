@@ -11,6 +11,9 @@ module Orgmode
     # TODO 2009-12-20 bdewey: Handle tabs
     attr_reader :indent
 
+    # Backpointer to the parser that owns this line.
+    attr_reader :parser
+
     # A line can have its type assigned instead of inferred from its
     # content. For example, something that parses as a "table" on its
     # own ("| one | two|\n") may just be a paragraph if it's inside
@@ -18,7 +21,8 @@ module Orgmode
     # type. This will then affect the value of +paragraph_type+.
     attr_accessor :assigned_paragraph_type
 
-    def initialize(line)
+    def initialize(line, parser = nil)
+      @parser = parser
       @line = line
       @indent = 0
       @line =~ /\s*/
