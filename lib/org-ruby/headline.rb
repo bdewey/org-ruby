@@ -73,8 +73,12 @@ module Orgmode
         decoration = ""
       end
       output = "<h#{@level}#{decoration}>"
+      if @parser and @parser.export_heading_number? then
+        heading_number = @parser.get_next_headline_number(@level)
+        output << "<span class=\"heading-number heading-number-#{@level}\">#{heading_number} </span>"
+      end
       if @parser and @parser.export_todo? then
-        output << "<span class=\"#{@keyword}\">#{@keyword} </span>"
+        output << "<span class=\"todo-keyword #{@keyword}\">#{@keyword} </span>"
       end
       output << "#{@headline_text}</h#{@level}>\n"
       output << Line.to_html(@body_lines)

@@ -61,6 +61,20 @@ describe Orgmode::Parser do
     parser.export_todo?.should be_false
   end
 
+  it "computes outline level numbering" do
+    parser = Orgmode::Parser.new ""
+    parser.get_next_headline_number(1).should eql("1")
+    parser.get_next_headline_number(1).should eql("2")
+    parser.get_next_headline_number(1).should eql("3")
+    parser.get_next_headline_number(1).should eql("4")
+    parser.get_next_headline_number(2).should eql("4.1")
+    parser.get_next_headline_number(2).should eql("4.2")
+    parser.get_next_headline_number(1).should eql("5")
+    parser.get_next_headline_number(2).should eql("5.1")
+    parser.get_next_headline_number(2).should eql("5.2")
+    parser.get_next_headline_number(4).should eql("5.2.0.1")
+  end
+
   it "should skip in-buffer settings inside EXAMPLE blocks" do
     parser = Orgmode::Parser.load(FreeformExampleFile)
     parser.should have(0).in_buffer_settings

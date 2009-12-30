@@ -25,8 +25,33 @@ module Orgmode
     # This contains in-buffer options; a special case of in-buffer settings.
     attr_reader :options
 
+    # Returns true if we are to export todo keywords on headings.
     def export_todo?
       "t" == @options["todo"]
+    end
+
+    # This stack is used to do proper outline numbering of headlines.
+    attr_accessor :headline_number_stack
+
+    # Returns true if we are to export heading numbers.
+    def export_heading_number?
+      "t" == @options["num"]
+    end
+
+    # Gets the next headline number for a given level. The intent is
+    # this function is called sequentially for each headline that
+    # needs to get numbered. It does standard outline numbering.
+    def get_next_headline_number(level)
+      raise "Headline level not valid: #{level}" if level <= 0
+      while level > @headline_number_stack.length do
+        @headline_number_stack.push 0
+      end
+      while level < @headline_number_stack.length do
+        @headline_number_stack.pop
+      end
+      raise "Oops, shouldn't happen" unless level == @headline_number_stack.length
+      @headline_number_stack[@headline_number_stack.length - 1] += 1
+      @headline_number_stack.join(".")
     end
 
     # I can construct a parser object either with an array of lines
@@ -43,6 +68,7 @@ module Orgmode
       @headlines = Array.new
       @current_headline = nil
       @header_lines = []
+      @headline_number_stack = []
       @in_buffer_settings = { }
       @options = { }
       mode = :normal

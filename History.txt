@@ -1,9 +1,11 @@
-== X.X.X / 2009-12-XX
+== 0.5.0 / 2009-12-29
 
 * Parse (but not necessarily *use*) in-buffer settings.
 * Understand the #+TITLE: directive.
 * Rewrite "file:(blah).org" links to "http:(blah).html" links. This
   makes the inter-links to other org-mode files work.
+* Supports the in-buffer setting for exporting todo keywords.
+* Supports the in-buffer setting for numbering headlines.
 
 == 0.4.2 / 2009-12-29
 
