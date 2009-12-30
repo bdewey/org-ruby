@@ -72,7 +72,11 @@ module Orgmode
       else
         decoration = ""
       end
-      output = "<h#{@level}#{decoration}>#{@headline_text}</h#{@level}>\n"
+      output = "<h#{@level}#{decoration}>"
+      if @parser and @parser.export_todo? then
+        output << "<span class=\"#{@keyword}\">#{@keyword} </span>"
+      end
+      output << "#{@headline_text}</h#{@level}>\n"
       output << Line.to_html(@body_lines)
       output
     end

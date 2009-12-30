@@ -24,7 +24,11 @@ module Orgmode
 
     # This contains in-buffer options; a special case of in-buffer settings.
     attr_reader :options
-    
+
+    def export_todo?
+      "t" == @options["todo"]
+    end
+
     # I can construct a parser object either with an array of lines
     # or with a single string that I will split along \n boundaries.
     def initialize(lines)

@@ -56,6 +56,9 @@ describe Orgmode::Parser do
     parser.options["TeX"].should eql("t")
     parser.options["todo"].should eql("t")
     parser.options["\\n"].should eql("nil")
+    parser.export_todo?.should be_true
+    parser.options.delete("todo")
+    parser.export_todo?.should be_false
   end
 
   it "should skip in-buffer settings inside EXAMPLE blocks" do
