@@ -1,4 +1,4 @@
-== 0.5.0 / 2009-12-29
+== 0.5.0 / 2009-12-30
 
 * Parse (but not necessarily *use*) in-buffer settings. The following
   in-buffer settings *are* used:
