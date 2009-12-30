@@ -25,6 +25,15 @@ module Orgmode
     # This contains in-buffer options; a special case of in-buffer settings.
     attr_reader :options
 
+    # Array of custom keywords.
+    attr_reader :custom_keywords
+
+    # Regexp that recognizes words in custom_keywords.
+    def custom_keyword_regexp
+      return nil if @custom_keywords.empty?
+      Regexp.new("^(#{@custom_keywords.join('|')})\$")
+    end
+
     # Returns true if we are to export todo keywords on headings.
     def export_todo?
       "t" == @options["todo"]
@@ -75,7 +84,8 @@ module Orgmode
       else
         raise "Unsupported type for +lines+: #{lines.class}"
       end
-        
+
+      @custom_keywords = []
       @headlines = Array.new
       @current_headline = nil
       @header_lines = []
@@ -182,6 +192,14 @@ module Orgmode
           else
             raise "Unexpected option: #{opt}"
           end
+        end
+      elsif key =~ /^(TODO|SEQ_TODO|TYP_TODO)$/ then
+        # Handle todo keywords specially.
+        value.split.each do |keyword|
+          keyword.gsub!(/\(.*\)/, "") # Get rid of any parenthetical notes
+          keyword = Regexp.escape(keyword)
+          next if keyword == "\\|"      # Special character in the todo format, not really a keyword
+          @custom_keywords << keyword
         end
       else
         @in_buffer_settings[key] = value

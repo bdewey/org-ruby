@@ -30,7 +30,7 @@ module Orgmode
     # Special keywords allowed at the start of a line.
     Keywords = %w[TODO DONE]
 
-    KeywordsRegexp = Regexp.new("\\s*(#{Keywords.join('|')})\\s*")
+    KeywordsRegexp = Regexp.new("^(#{Keywords.join('|')})\$")
 
     def initialize(line, parser = nil)
       super(line, parser)
@@ -45,10 +45,7 @@ module Orgmode
           @headline_text.gsub!(TagsRegexp, "") # Removes the tags from the headline
         end
         @keyword = nil
-        if (@headline_text =~ KeywordsRegexp) then
-          @headline_text = $'
-          @keyword = $1
-        end
+        parse_keywords
       else
         raise "'#{line}' is not a valid headline"
       end
@@ -85,6 +82,19 @@ module Orgmode
       output << "#{@headline_text}</h#{@level}>\n"
       output << Line.to_html(@body_lines, opts)
       output
+    end
+
+    ######################################################################
+    private
+
+    def parse_keywords
+      re = @parser.custom_keyword_regexp if @parser
+      re ||= KeywordsRegexp
+      words = @headline_text.split
+      if words.length > 0 && words[0] =~ re then
+        @keyword = words[0]
+        @headline_text.sub!(Regexp.new("^#{@keyword}\s*"), "")
+      end
     end
   end                           # class Headline
 end                             # class Orgmode

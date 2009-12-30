@@ -92,6 +92,26 @@ describe Orgmode::Parser do
     p.export_tables?.should be_false
   end
 
+  # Custom keywords -- dynamic test cases
+  fname = File.join(File.dirname(__FILE__), %w[html_examples custom-todo.org])
+  p = Orgmode::Parser.load(fname)
+  puts p.custom_keyword_regexp.to_s
+  valid_keywords = %w[TODO INPROGRESS WAITING DONE CANCELED]
+  invalid_keywords = %w[TODOX todo inprogress Waiting done cANCELED NEXT |]
+  valid_keywords.each do |kw|
+    it "should match custom keyword #{kw}" do
+      (kw =~ p.custom_keyword_regexp).should be_true
+    end
+  end
+  invalid_keywords.each do |kw|
+    it "should not match custom keyword #{kw}" do
+      (kw =~ p.custom_keyword_regexp).should be_nil
+    end
+  end
+  it "should not match blank as a custom keyword" do
+    ("" =~ p.custom_keyword_regexp).should be_nil
+  end
+
   data_directory = File.join(File.dirname(__FILE__), "textile_examples")
   org_files = File.expand_path(File.join(data_directory, "*.org" ))
   files = Dir.glob(org_files)
