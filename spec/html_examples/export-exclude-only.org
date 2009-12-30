@@ -1,0 +1,81 @@
+#+TITLE:     export-headline-levels.org
+#+AUTHOR:    
+#+EMAIL:     bdewey@gmail.com
+#+DATE:      2009-12-29 Tue
+#+DESCRIPTION: 
+#+KEYWORDS: 
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:t toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:nil skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_EXCLUDE_TAGS: exclude noexport
+#+TAGS: export noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+
+What happens when you exceed the number of headline levels to export?
+
+* Shouldn't export                                     :noexport:
+
+  This text shouldn't be exported, right?
+
+** Nor this subheading?
+
+   Or its text?
+
+* Exlude me, too!                                       :exclude:
+
+* Headline 1                                        :READING:DVD:
+
+** Headline 2
+
+   This bit of body *should* get exported.
+
+*** Headline 3                                           :export:
+
+    This bit of body gets exported.
+
+**** Headline 4 (include)
+
+     Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+     nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+     erat, sed diam voluptua. At vero eos et accusam et justo duo
+     dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
+     sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
+     amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+     invidunt ut labore et dolore magna aliquyam erat, sed diam
+     voluptua. At vero eos et accusam et justo duo dolores et ea
+     rebum. Stet clita kasd gubergren, no sea takimata sanctus est
+     Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet,
+     consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+     invidunt ut labore et dolore magna aliquyam erat, sed diam
+     voluptua. At vero eos et accusam et justo duo dolores et ea
+     rebum. Stet clita kasd gubergren, no sea takimata sanctus est
+     Lorem ipsum dolor sit amet.
+
+**** Headline 4 (exclude)                              :noexport:
+
+     Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+     nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+     erat, sed diam voluptua. At vero eos et accusam et justo duo
+     dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
+     sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
+     amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+     invidunt ut labore et dolore magna aliquyam erat, sed diam
+     voluptua. At vero eos et accusam et justo duo dolores et ea
+     rebum. Stet clita kasd gubergren, no sea takimata sanctus est
+     Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet,
+     consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+     invidunt ut labore et dolore magna aliquyam erat, sed diam
+     voluptua. At vero eos et accusam et justo duo dolores et ea
+     rebum. Stet clita kasd gubergren, no sea takimata sanctus est
+     Lorem ipsum dolor sit amet.
+
+
+*** Another headline 3
+
+    This one *should not* get exported!!
+
+**** Another headline 4
+
+     This also *cannot* get exported!!

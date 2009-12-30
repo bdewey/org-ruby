@@ -112,6 +112,15 @@ describe Orgmode::Parser do
     end
   end
 
+  describe "Custom include/exclude parser" do
+    fname = File.join(File.dirname(__FILE__), %w[html_examples export-tags.org])
+    p = Orgmode::Parser.load(fname)
+    it "should load tags" do
+      p.should have(2).export_exclude_tags
+      p.should have(1).export_select_tags
+    end
+  end
+
   describe "Export to Textile test cases" do
     data_directory = File.join(File.dirname(__FILE__), "textile_examples")
     org_files = File.expand_path(File.join(data_directory, "*.org" ))

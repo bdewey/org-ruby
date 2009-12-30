@@ -34,6 +34,20 @@ module Orgmode
       Regexp.new("^(#{@custom_keywords.join('|')})\$")
     end
 
+    # A set of tags that, if present on any headlines in the org-file, means
+    # only those headings will get exported.
+    def export_select_tags
+      return Array.new unless @in_buffer_settings["EXPORT_SELECT_TAGS"]
+      @in_buffer_settings["EXPORT_SELECT_TAGS"].split
+    end
+
+    # A set of tags that, if present on any headlines in the org-file, means
+    # that subtree will not get exported.
+    def export_exclude_tags
+      return Array.new unless @in_buffer_settings["EXPORT_EXCLUDE_TAGS"]
+      @in_buffer_settings["EXPORT_EXCLUDE_TAGS"].split
+    end
+
     # Returns true if we are to export todo keywords on headings.
     def export_todo?
       "t" == @options["todo"]
@@ -156,6 +170,7 @@ module Orgmode
 
     # Converts the loaded org-mode file to HTML.
     def to_html
+      mark_trees_for_export
       @headline_number_stack = []
       export_options = { }
       export_options[:skip_tables] = true if not export_tables?
@@ -179,6 +194,54 @@ module Orgmode
 
     ######################################################################
     private
+
+    # Uses export_select_tags and export_exclude_tags to determine
+    # which parts of the org-file to export.
+    def mark_trees_for_export
+      marked_any = false
+      # cache the tags
+      select = export_select_tags
+      exclude = export_exclude_tags
+      inherit_export_level = nil
+      ancestor_stack = []
+
+      # First pass: See if any headlines are explicitly selected
+      @headlines.each do |headline|
+        ancestor_stack.pop while not ancestor_stack.empty? and headline.level <= ancestor_stack.last.level
+        if inherit_export_level and headline.level > inherit_export_level
+          headline.export_state = :all
+        else
+          inherit_export_level = nil
+          headline.tags.each do |tag|
+            if (select.include? tag) then
+              marked_any = true
+              headline.export_state = :all
+              ancestor_stack.each { |a| a.export_state = :headline_only unless a.export_state == :all }
+              inherit_export_level = headline.level
+            end
+          end
+        end
+        ancestor_stack.push headline
+      end
+
+      # If nothing was selected, then EVERYTHING is selected.
+      @headlines.each { |h| h.export_state = :all } unless marked_any
+
+      # Second pass. Look for things that should be excluded, and get rid of them.
+      @headlines.each do |headline|
+        if inherit_export_level and headline.level > inherit_export_level
+          headline.export_state = :exclude
+        else
+          inherit_export_level = nil
+          headline.tags.each do |tag|
+            if (exclude.include? tag) then
+              headline.export_state = :exclude
+              inherit_export_level = headline.level
+            end
+          end
+        end
+      end
+    end
 
     # Stores an in-buffer setting.
     def store_in_buffer_setting(key, value)

@@ -21,6 +21,15 @@ module Orgmode
     # Optional keyword found at the beginning of the headline.
     attr_reader :keyword
 
+    # Valid states for partial export.
+    # exclude::       The entire subtree from this heading should be excluded.
+    # headline_only:: The headline should be exported, but not the body.
+    # all::           Everything should be exported, headline/body/children.
+    ValidExportStates = [:exclude, :headline_only, :all]
+
+    # The export state of this headline. See +ValidExportStates+.
+    attr_accessor :export_state
+
     # This is the regex that matches a line
     LineRegexp = /^\*+\s+/
 
@@ -36,6 +45,7 @@ module Orgmode
       super(line, parser)
       @body_lines = []
       @tags = []
+      @export_state = :exclude
       if (@line =~ LineRegexp) then
         @level = $&.strip.length
         @headline_text = $'.strip
@@ -65,6 +75,7 @@ module Orgmode
     end
 
     def to_html(opts = {})
+      return "" if @export_state == :exclude
       if opts[:decorate_title]
         decoration = " class=\"title\""
         opts.delete(:decorate_title)
@@ -80,6 +91,7 @@ module Orgmode
         output << "<span class=\"todo-keyword #{@keyword}\">#{@keyword} </span>"
       end
       output << "#{escape(@headline_text)}</h#{@level}>\n"
+      return output if @export_state == :headline_only
       output << Line.to_html(@body_lines, opts)
       output
     end
