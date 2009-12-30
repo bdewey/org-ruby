@@ -1,4 +1,4 @@
-org-ruby version 0.4.2
+org-ruby version 0.5.0
     by Brian Dewey
     http://github.com/bdewey/org-ruby
 
@@ -12,9 +12,19 @@ extracting "content" from the orgfile as opposed to "metadata."
 
 == CHANGES
 
-* Got rid of the extraneous newline at the start of code blocks.
-* Everything now shows up in code blocks, even org-mode metadata.
-* Fixed bugs:
-  * Regressed smart double quotes with HTML escaping. Added a test
-    case and fixed the regression.
+* Parse (but not necessarily *use*) in-buffer settings. The following
+  in-buffer settings *are* used:
+  * Understand the #+TITLE: directive.
+  * Exporting todo keywords (option todo:t)
+  * Numbering headlines (option num:t)
+  * Skipping text before the first headline (option skip:t)
+  * Skipping tables (option |:nil)
+  * Custom todo keywords
+  * EXPORT_SELECT_TAGS and EXPORT_EXLUDE_TAGS for controlling parts of
+    the tree to export
+* Rewrite "file:(blah).org" links to "http:(blah).html" links. This
+  makes the inter-links to other org-mode files work.
+* Uses <th> tags inside table rows that precede table separators.
+* Bugfixes:
+  * Headings now have HTML escaped.
 
