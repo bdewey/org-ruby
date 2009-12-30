@@ -3,7 +3,7 @@ unless defined? ::OrgRuby
 module OrgRuby
 
   # :stopdoc:
-  VERSION = '1.0.0'
+  VERSION = '0.5.0'
   LIBPATH = ::File.expand_path(::File.dirname(__FILE__)) + ::File::SEPARATOR
   PATH = ::File.dirname(LIBPATH) + ::File::SEPARATOR
   # :startdoc:
