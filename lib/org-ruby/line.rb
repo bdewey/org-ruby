@@ -94,8 +94,13 @@ module Orgmode
       check_assignment_or_regexp(:table_separator, /^\s*\|[-\|\+]*\s*$/)
     end
 
+    # Checks if this line is a table header. 
+    def table_header?
+      @assigned_paragraph_type == :table_header
+    end
+
     def table?
-      table_row? or table_separator?
+      table_row? or table_separator? or table_header?
     end
 
     BlockRegexp = /^\s*#\+(BEGIN|END)_(\w*)/
@@ -142,6 +147,7 @@ module Orgmode
       return :comment if comment?
       return :table_separator if table_separator?
       return :table_row if table_row?
+      return :table_header if table_header?
       return :paragraph
     end
 
@@ -182,7 +188,7 @@ module Orgmode
             output_buffer << line.line if output_buffer.preserve_whitespace?
           end
 
-        when :table_row
+        when :table_row, :table_header
 
           output_buffer << line.line.lstrip
 

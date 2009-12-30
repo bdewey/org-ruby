@@ -8,7 +8,8 @@ module Orgmode
       :paragraph => "p",
       :ordered_list => "li",
       :unordered_list => "li",
-      :table_row => "tr"
+      :table_row => "tr",
+      :table_header => "tr"
     }
 
     ModeTag = {
@@ -119,6 +120,11 @@ module Orgmode
         str.gsub!(/^\|\s*/, "<td>")
         str.gsub!(/\s*\|$/, "</td>")
         str.gsub!(/\s*\|\s*/, "</td><td>")
+      end
+      if (@output_type == :table_header) then
+        str.gsub!(/^\|\s*/, "<th>")
+        str.gsub!(/\s*\|$/, "</th>")
+        str.gsub!(/\s*\|\s*/, "</th><th>")
       end
       str
     end

@@ -72,6 +72,7 @@ module Orgmode
       @headline_number_stack = []
       @options = { }
       mode = :normal
+      previous_line = nil
       @lines.each do |line|
         case mode
         when :normal
@@ -84,6 +85,9 @@ module Orgmode
             # If there is a setting on this line, remember it.
             line.in_buffer_setting? do |key, value|
               store_in_buffer_setting key, value
+            end
+            if line.table_separator? then
+              previous_line.assigned_paragraph_type = :table_header if previous_line and previous_line.paragraph_type == :table_row
             end
             mode = :code if line.begin_block? and line.block_type == "EXAMPLE"
             if (@current_headline) then
@@ -109,7 +113,8 @@ module Orgmode
             @header_lines << line
           end
         end                     # case
-      end
+        previous_line = line
+      end                       # @lines.each
     end                         # initialize
 
     # Creates a new parser from the data in a given file

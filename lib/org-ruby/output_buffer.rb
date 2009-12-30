@@ -81,13 +81,13 @@ module Orgmode
 
     # Tests if we are entering a table mode.
     def enter_table?
-      ((@output_type == :table_row) || (@output_type == :table_separator)) &&
+      ((@output_type == :table_row) || (@output_type == :table_header) || (@output_type == :table_separator)) &&
         (current_mode != :table)
     end
 
     # Tests if we are existing a table mode.
     def exit_table?
-      ((@output_type != :table_row) && (@output_type != :table_separator)) &&
+      ((@output_type != :table_row) && (@output_type != :table_header) && (@output_type != :table_separator)) &&
         (current_mode == :table)
     end
 
