@@ -12,19 +12,7 @@ extracting "content" from the orgfile as opposed to "metadata."
 
 == CHANGES
 
-* Parse (but not necessarily *use*) in-buffer settings. The following
-  in-buffer settings *are* used:
-  * Understand the #+TITLE: directive.
-  * Exporting todo keywords (option todo:t)
-  * Numbering headlines (option num:t)
-  * Skipping text before the first headline (option skip:t)
-  * Skipping tables (option |:nil)
-  * Custom todo keywords
-  * EXPORT_SELECT_TAGS and EXPORT_EXLUDE_TAGS for controlling parts of
-    the tree to export
-* Rewrite "file:(blah).org" links to "http:(blah).html" links. This
-  makes the inter-links to other org-mode files work.
-* Uses <th> tags inside table rows that precede table separators.
-* Bugfixes:
-  * Headings now have HTML escaped.
+* Minor enhancement: Recognize lines starting with ":" as examples.
+* Minor enhancement: Recognize #+BEGIN_SRC as source blocks
+* Minor enhancement: Add "src" and "example" classes to <pre> blocks.
 
