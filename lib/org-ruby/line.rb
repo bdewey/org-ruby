@@ -117,6 +117,14 @@ module Orgmode
       $2 if @line =~ BlockRegexp
     end
 
+    InlineExampleRegexp = /^\s*:/
+
+    # Test if the line matches the "inline example" case:
+    # the first character on the line is a colon.
+    def inline_example?
+      check_assignment_or_regexp(:inline_example, InlineExampleRegexp)
+    end
+
     InBufferSettingRegexp = /^#\+(\w+):\s*(.*)$/
 
     # call-seq:
@@ -148,6 +156,7 @@ module Orgmode
       return :table_separator if table_separator?
       return :table_row if table_row?
       return :table_header if table_header?
+      return :inline_example if inline_example?
       return :paragraph
     end
 
@@ -200,6 +209,10 @@ module Orgmode
           
           output_buffer << line.strip_unordered_list_tag << " "
 
+        when :inline_example
+
+          output_buffer << line.line.sub(InlineExampleRegexp, "")
+          
         when :paragraph
 
           if output_buffer.preserve_whitespace? then

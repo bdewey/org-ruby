@@ -17,7 +17,8 @@ module Orgmode
       :ordered_list => "ol",
       :table => "table",
       :blockquote => "blockquote",
-      :code => "pre"
+      :code => "pre",
+      :inline_example => "pre"
     }
 
     attr_reader :options
@@ -55,12 +56,9 @@ module Orgmode
 
     def flush!
       escape_buffer!
-      if @buffer_mode == :code then
+      if (@buffer_mode == :code or @buffer_mode == :inline_example)then
         # Whitespace is significant in :code mode. Always output the buffer
         # and do not do any additional translation.
-        # 
-        # FIXME 2009-12-29 bdewey: It looks like I'll always get an extraneous
-        # newline at the start of code blocks. Find a way to fix this.
         @logger.debug "FLUSH CODE ==========> #{@buffer.inspect}"
         @output << @buffer << "\n"
       else

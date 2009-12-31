@@ -45,7 +45,7 @@ module Orgmode
       push_mode(:normal)
     end
 
-    Modes = [:normal, :ordered_list, :unordered_list, :blockquote, :code, :table]
+    Modes = [:normal, :ordered_list, :unordered_list, :blockquote, :code, :table, :inline_example]
 
     def current_mode
       @mode_stack.last
@@ -75,6 +75,8 @@ module Orgmode
         maintain_list_indent_stack(line)
         @output_type = line.paragraph_type 
       end
+      push_mode(:inline_example) if line.inline_example? and current_mode != :inline_example
+      pop_mode(:inline_example) if current_mode == :inline_example && !line.inline_example?
       push_mode(:table) if enter_table?
       pop_mode(:table) if exit_table?
     end
@@ -108,7 +110,7 @@ module Orgmode
 
     # Test if we're in an output mode in which whitespace is significant.
     def preserve_whitespace?
-      return current_mode == :code
+      return current_mode == :code || current_mode == :inline_example
     end
 
     ######################################################################
