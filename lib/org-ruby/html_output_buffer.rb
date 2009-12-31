@@ -17,7 +17,8 @@ module Orgmode
       :ordered_list => "ol",
       :table => "table",
       :blockquote => "blockquote",
-      :code => "pre",
+      :example => "pre",
+      :src => "pre",
       :inline_example => "pre"
     }
 
@@ -34,17 +35,25 @@ module Orgmode
       @logger.debug "HTML export options: #{@options.inspect}"
     end
 
+    # Output buffer is entering a new mode. Use this opportunity to
+    # write out one of the block tags in the ModeTag constant to put
+    # this information in the HTML stream.
     def push_mode(mode)
       if ModeTag[mode] then
         output_indentation
-        @logger.debug "<#{ModeTag[mode]}>\n" 
-        @output << "<#{ModeTag[mode]}>\n" unless mode == :table and skip_tables?
+        css_class = ""
+        css_class = " class=\"src\"" if mode == :src
+        css_class = " class=\"example\"" if (mode == :example || mode == :inline_example)
+        @logger.debug "#{mode}: <#{ModeTag[mode]}#{css_class}>\n" 
+        @output << "<#{ModeTag[mode]}#{css_class}>\n" unless mode == :table and skip_tables?
         # Entering a new mode obliterates the title decoration
         @title_decoration = ""
       end
       super(mode)
     end
 
+    # We are leaving a mode. Close any tags that were opened when
+    # entering this mode.
     def pop_mode(mode = nil)
       m = super(mode)
       if ModeTag[m] then
@@ -56,7 +65,7 @@ module Orgmode
 
     def flush!
       escape_buffer!
-      if (@buffer_mode == :code or @buffer_mode == :inline_example)then
+      if mode_is_code(@buffer_mode) then
         # Whitespace is significant in :code mode. Always output the buffer
         # and do not do any additional translation.
         @logger.debug "FLUSH CODE ==========> #{@buffer.inspect}"

@@ -117,6 +117,10 @@ module Orgmode
       $2 if @line =~ BlockRegexp
     end
 
+    def code_block_type?
+      block_type =~ /^(EXAMPLE|SRC)$/
+    end
+
     InlineExampleRegexp = /^\s*:/
 
     # Test if the line matches the "inline example" case:
@@ -189,10 +193,12 @@ module Orgmode
           
           if line.begin_block?
             output_buffer.push_mode(:blockquote) if line.block_type == "QUOTE"
-            output_buffer.push_mode(:code) if line.block_type == "EXAMPLE"
+            output_buffer.push_mode(:src) if line.block_type == "SRC"
+            output_buffer.push_mode(:example) if line.block_type == "EXAMPLE"
           elsif line.end_block?
             output_buffer.pop_mode(:blockquote) if line.block_type == "QUOTE"
-            output_buffer.pop_mode(:code) if line.block_type == "EXAMPLE"
+            output_buffer.pop_mode(:src) if line.block_type == "SRC"
+            output_buffer.pop_mode(:example) if line.block_type == "EXAMPLE"
           else
             output_buffer << line.line if output_buffer.preserve_whitespace?
           end

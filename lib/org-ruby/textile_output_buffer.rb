@@ -11,12 +11,12 @@ module Orgmode
 
     def push_mode(mode)
       super(mode)
-      @output << "bc.. " if mode == :code
+      @output << "bc.. " if mode_is_code(mode)
     end
 
     def pop_mode(mode = nil)
       m = super(mode)
-      @add_paragraph = (m == :code)
+      @add_paragraph = (mode_is_code(m))
       m
     end
 
