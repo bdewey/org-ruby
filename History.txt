@@ -1,3 +1,7 @@
+== 0.5.2 / 2010-01-05
+
+* Refactored to improve layering.
+
 == 0.5.1 / 2009-12-30
 
 * Minor enhancement: Recognize lines starting with ":" as examples.

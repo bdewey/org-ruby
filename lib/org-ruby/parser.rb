@@ -180,7 +180,8 @@ module Orgmode
       else
         export_options[:decorate_title] = true
       end
-      output << Line.to_html(@header_lines, export_options) unless skip_header_lines?
+      output_buffer = HtmlOutputBuffer.new(output, export_options)
+      output << translate(@header_lines, output_buffer) unless skip_header_lines?
       
       # If we've output anything at all, remove the :decorate_title option.
       export_options.delete(:decorate_title) if (output.length > 0)
@@ -194,6 +195,63 @@ module Orgmode
 
     ######################################################################
     private
+
+    # Converts an array of lines to the appropriate format.
+    def translate(lines, output_buffer)
+      lines.each do |line|
+
+        # See if we're carrying paragraph payload, and output
+        # it if we're about to switch to some other output type.
+        output_buffer.prepare(line)
+
+        case line.paragraph_type
+        when :metadata, :table_separator, :blank
+
+          output_buffer << line.line if output_buffer.preserve_whitespace?          
+
+        when :comment
+          
+          if line.begin_block?
+            output_buffer.push_mode(:blockquote) if line.block_type == "QUOTE"
+            output_buffer.push_mode(:src) if line.block_type == "SRC"
+            output_buffer.push_mode(:example) if line.block_type == "EXAMPLE"
+          elsif line.end_block?
+            output_buffer.pop_mode(:blockquote) if line.block_type == "QUOTE"
+            output_buffer.pop_mode(:src) if line.block_type == "SRC"
+            output_buffer.pop_mode(:example) if line.block_type == "EXAMPLE"
+          else
+            output_buffer << line.line if output_buffer.preserve_whitespace?
+          end
+
+        when :table_row, :table_header
+
+          output_buffer << line.line.lstrip
+
+        when :ordered_list
+            
+          output_buffer << line.strip_ordered_list_tag << " "
+          
+        when :unordered_list
+          
+          output_buffer << line.strip_unordered_list_tag << " "
+
+        when :inline_example
+
+          output_buffer << line.line.sub(InlineExampleRegexp, "")
+          
+        when :paragraph
+
+          if output_buffer.preserve_whitespace? then
+            output_buffer << line.line
+          else
+            output_buffer << line.line.strip << " "
+          end
+        end
+      end
+      output_buffer.flush!
+      output_buffer.pop_mode until output_buffer.current_mode == :normal
+      output_buffer.output
+    end
 
     # Uses export_select_tags and export_exclude_tags to determine
     # which parts of the org-file to export.
