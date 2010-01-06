@@ -44,6 +44,7 @@ module Orgmode
     def initialize(line, parser = nil)
       super(line, parser)
       @body_lines = []
+      @body_lines << self       # Make @body_lines contain the headline?
       @tags = []
       @export_state = :exclude
       if (@line =~ LineRegexp) then
@@ -61,51 +62,32 @@ module Orgmode
       end
     end
 
+    # Override Line.output_text. For a heading, @headline_text
+    # is what we should output.
+    def output_text
+      return @headline_text
+    end
+
     # Determines if a line is an orgmode "headline":
     # A headline begins with one or more asterisks.
     def self.headline?(line)
       line =~ LineRegexp
     end
 
+    # Overrides Line.paragraph_type.
+    def paragraph_type
+      :"heading#{@level}"
+    end
+
     # Converts this headline and its body to textile.
     def to_textile
       output = "h#{@level}. #{@headline_text}\n"
-      output << Line.to_textile(@body_lines)
-      output
-    end
-
-    def to_html(opts = {})
-      return "" if @export_state == :exclude
-      if opts[:decorate_title]
-        decoration = " class=\"title\""
-        opts.delete(:decorate_title)
-      else
-        decoration = ""
-      end
-      output = "<h#{@level}#{decoration}>"
-      if @parser and @parser.export_heading_number? then
-        heading_number = @parser.get_next_headline_number(@level)
-        output << "<span class=\"heading-number heading-number-#{@level}\">#{heading_number} </span>"
-      end
-      if @parser and @parser.export_todo? and @keyword then
-        output << "<span class=\"todo-keyword #{@keyword}\">#{@keyword} </span>"
-      end
-      output << "#{escape(@headline_text)}</h#{@level}>\n"
-      return output if @export_state == :headline_only
-      output << Line.to_html(@body_lines, opts)
+      output << Line.to_textile(@body_lines[1..-1])
       output
     end
 
     ######################################################################
     private
-
-    # TODO 2009-12-29 This duplicates escape_buffer! in html_output_buffer. DRY.
-    def escape(str)
-      str = str.gsub(/&/, "&amp;")
-      str = str.gsub(/</, "&lt;")
-      str = str.gsub(/>/, "&gt;")
-      str
-    end
 
     def parse_keywords
       re = @parser.custom_keyword_regexp if @parser

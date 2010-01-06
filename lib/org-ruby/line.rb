@@ -76,6 +76,15 @@ module Orgmode
       @line.sub(OrderedListRegexp, "")
     end
 
+    # Extracts meaningful text and excludes org-mode markup,
+    # like identifiers for lists or headings.
+    def output_text
+      return strip_ordered_list_tag if ordered_list?
+      return strip_unordered_list_tag if unordered_list?
+      return @line.sub(InlineExampleRegexp, "") if inline_example?
+      return line
+    end
+
     def plain_text?
       not metadata? and not blank? and not plain_list?
     end
@@ -167,7 +176,7 @@ module Orgmode
     def self.to_textile(lines)
       output = ""
       output_buffer = TextileOutputBuffer.new(output)
-      translate(lines, output_buffer)
+      Parser.translate(lines, output_buffer)
     end
 
     ######################################################################

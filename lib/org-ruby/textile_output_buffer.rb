@@ -59,8 +59,7 @@ module Orgmode
         @output << "*" * @list_indent_stack.length << " " if @output_type == :unordered_list
         @output << inline_formatting(@buffer) << "\n"
       end
-      @buffer = ""
-      @buffer_mode = nil
+      clear_accumulation_buffer!
     end
 
 

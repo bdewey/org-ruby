@@ -13,6 +13,10 @@ module Orgmode
     # without intervening newlines.
     attr_reader :buffer
 
+    # These are the Line objects that are currently in the accumulation
+    # buffer.
+    attr_reader :buffered_lines
+
     # This is the output mode of the accumulation buffer.
     attr_reader :buffer_mode
 
@@ -22,17 +26,22 @@ module Orgmode
     # This is the current type of output being accumulated. 
     attr_accessor :output_type
 
+    # This stack is used to do proper outline numbering of headlines.
+    attr_accessor :headline_number_stack
+
     # Creates a new OutputBuffer object that is bound to an output object.
     # The output will get flushed to =output=.
     def initialize(output)
       @output = output
       @buffer = ""
+      @buffered_lines = []
       @buffer_mode = nil
       @output_type = :start
       @list_indent_stack = []
       @paragraph_modifier = nil
       @cancel_modifier = false
       @mode_stack = []
+      @headline_number_stack = []
 
       @logger = Logger.new(STDERR)
       if ENV['DEBUG']
@@ -79,6 +88,33 @@ module Orgmode
       pop_mode(:inline_example) if current_mode == :inline_example && !line.inline_example?
       push_mode(:table) if enter_table?
       pop_mode(:table) if exit_table?
+      @buffered_lines.push(line)
+    end
+
+    # Flushes everything currently in the accumulation buffer into the 
+    # output buffer. Derived classes must override this to actually move
+    # content into the output buffer with the appropriate markup. This
+    # method just does common bookkeeping cleanup.
+    def clear_accumulation_buffer!
+      @buffer = ""
+      @buffer_mode = nil
+      @buffered_lines = []
+    end
+
+    # Gets the next headline number for a given level. The intent is
+    # this function is called sequentially for each headline that
+    # needs to get numbered. It does standard outline numbering.
+    def get_next_headline_number(level)
+      raise "Headline level not valid: #{level}" if level <= 0
+      while level > @headline_number_stack.length do
+        @headline_number_stack.push 0
+      end
+      while level < @headline_number_stack.length do
+        @headline_number_stack.pop
+      end
+      raise "Oops, shouldn't happen" unless level == @headline_number_stack.length
+      @headline_number_stack[@headline_number_stack.length - 1] += 1
+      @headline_number_stack.join(".")
     end
 
     # Tests if we are entering a table mode.

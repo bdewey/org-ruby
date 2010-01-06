@@ -53,9 +53,6 @@ module Orgmode
       "t" == @options["todo"]
     end
 
-    # This stack is used to do proper outline numbering of headlines.
-    attr_accessor :headline_number_stack
-
     # Returns true if we are to export heading numbers.
     def export_heading_number?
       "t" == @options["num"]
@@ -70,22 +67,6 @@ module Orgmode
     # with an explicit "nil"
     def export_tables?
       "nil" != @options["|"]
-    end
-
-    # Gets the next headline number for a given level. The intent is
-    # this function is called sequentially for each headline that
-    # needs to get numbered. It does standard outline numbering.
-    def get_next_headline_number(level)
-      raise "Headline level not valid: #{level}" if level <= 0
-      while level > @headline_number_stack.length do
-        @headline_number_stack.push 0
-      end
-      while level < @headline_number_stack.length do
-        @headline_number_stack.pop
-      end
-      raise "Oops, shouldn't happen" unless level == @headline_number_stack.length
-      @headline_number_stack[@headline_number_stack.length - 1] += 1
-      @headline_number_stack.join(".")
     end
 
     # I can construct a parser object either with an array of lines
@@ -104,7 +85,6 @@ module Orgmode
       @current_headline = nil
       @header_lines = []
       @in_buffer_settings = { }
-      @headline_number_stack = []
       @options = { }
       mode = :normal
       previous_line = nil
@@ -136,7 +116,7 @@ module Orgmode
 
           # As long as we stay in code mode, force lines to be either blank or paragraphs.
           # Don't try to interpret structural items, like headings and tables.
-          line = Line.new line
+          line = Line.new line, self
           if line.end_block? and line.block_type == "EXAMPLE"
             mode = :normal
           else
@@ -171,23 +151,36 @@ module Orgmode
     # Converts the loaded org-mode file to HTML.
     def to_html
       mark_trees_for_export
-      @headline_number_stack = []
-      export_options = { }
+      export_options = {
+        :decorate_title => true,
+        :export_heading_number => export_heading_number?,
+        :export_todo => export_todo?
+      }
       export_options[:skip_tables] = true if not export_tables?
       output = ""
-      if @in_buffer_settings["TITLE"] then
-        output << "<p class=\"title\">#{@in_buffer_settings["TITLE"]}</p>\n"
-      else
-        export_options[:decorate_title] = true
-      end
       output_buffer = HtmlOutputBuffer.new(output, export_options)
-      output << translate(@header_lines, output_buffer) unless skip_header_lines?
+      
+      if @in_buffer_settings["TITLE"] then
+
+        # If we're given a new title, then just create a new line
+        # for that title.
+        title = Line.new(@in_buffer_settings["TITLE"], self)
+        Parser.translate([title], output_buffer)
+      end
+      Parser.translate(@header_lines, output_buffer) unless skip_header_lines?
       
       # If we've output anything at all, remove the :decorate_title option.
       export_options.delete(:decorate_title) if (output.length > 0)
       @headlines.each do |headline|
-        output << headline.to_html(export_options)
-        export_options.delete(:decorate_title) if (output.length > 0)
+        next if headline.export_state == :exclude
+        case headline.export_state
+        when :exclude
+          # NOTHING
+        when :headline_only
+          Parser.translate(headline.body_lines[0, 1], output_buffer)
+        when :all
+          Parser.translate(headline.body_lines, output_buffer)
+        end
       end
       rp = RubyPants.new(output)
       rp.to_html
@@ -197,7 +190,8 @@ module Orgmode
     private
 
     # Converts an array of lines to the appropriate format.
-    def translate(lines, output_buffer)
+    # Writes the output to +output_buffer+.
+    def self.translate(lines, output_buffer)
       lines.each do |line|
 
         # See if we're carrying paragraph payload, and output
@@ -227,24 +221,20 @@ module Orgmode
 
           output_buffer << line.line.lstrip
 
-        when :ordered_list
-            
-          output_buffer << line.strip_ordered_list_tag << " "
+        when :unordered_list, :ordered_list
           
-        when :unordered_list
-          
-          output_buffer << line.strip_unordered_list_tag << " "
+          output_buffer << line.output_text << " "
 
         when :inline_example
 
-          output_buffer << line.line.sub(InlineExampleRegexp, "")
-          
-        when :paragraph
+          output_buffer << line.output_text
+
+        else
 
           if output_buffer.preserve_whitespace? then
-            output_buffer << line.line
+            output_buffer << line.output_text
           else
-            output_buffer << line.line.strip << " "
+            output_buffer << line.output_text.strip << " "
           end
         end
       end

@@ -9,7 +9,13 @@ module Orgmode
       :ordered_list => "li",
       :unordered_list => "li",
       :table_row => "tr",
-      :table_header => "tr"
+      :table_header => "tr",
+      :heading1 => "h1",
+      :heading2 => "h2",
+      :heading3 => "h3",
+      :heading4 => "h4",
+      :heading5 => "h5",
+      :heading6 => "h6"
     }
 
     ModeTag = {
@@ -75,17 +81,29 @@ module Orgmode
           unless buffer_mode_is_table? and skip_tables?
             @logger.debug "FLUSH      ==========> #{@buffer_mode}"
             output_indentation
-            @output << "<#{HtmlBlockTag[@output_type]}#{@title_decoration}>" \
-            << inline_formatting(@buffer) \
-            << "</#{HtmlBlockTag[@output_type]}>\n"
+            @output << "<#{HtmlBlockTag[@output_type]}#{@title_decoration}>" 
+            if (@buffered_lines[0].kind_of?(Headline)) then
+              headline = @buffered_lines[0]
+              raise "Cannot be more than one headline!" if @buffered_lines.length > 1
+              if @options[:export_heading_number] then
+                level = headline.level
+                heading_number = get_next_headline_number(level)
+                output << "<span class=\"heading-number heading-number-#{level}\">#{heading_number} </span>"
+              end
+              if @options[:export_todo] and headline.keyword then
+                keyword = headline.keyword
+                output << "<span class=\"todo-keyword #{keyword}\">#{keyword} </span>"
+              end
+            end
+            @output << inline_formatting(@buffer) 
+            @output << "</#{HtmlBlockTag[@output_type]}>\n"
             @title_decoration = ""
           else
             @logger.debug "SKIP       ==========> #{@buffer_mode}"
           end
         end
       end
-      @buffer = ""
-      @buffer_mode = nil
+      clear_accumulation_buffer!
     end
 
     ######################################################################
