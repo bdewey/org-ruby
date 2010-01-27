@@ -17,6 +17,10 @@ options_parser = OptionParser.new do |opts|
     options[:help] = true
   end
 
+  opts.on("-d", "--debug", "Run with $DEBUG true") do |v|
+    options[:debug] = true
+  end
+
   opts.on("-t", "--translate FORMAT", [:html, :textile],
           "Translate the ORG file to the specified format.") do |v|
     options[:format] = v
@@ -30,6 +34,7 @@ begin
   else
     data = IO.read(ARGV[0])
     p = Orgmode::Parser.new(data)
+    $DEBUG = true if options[:debug]
     puts p.to_html if options[:format] == :html
     puts p.to_textile if options[:format] == :textile
   end

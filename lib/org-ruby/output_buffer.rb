@@ -44,7 +44,7 @@ module Orgmode
       @headline_number_stack = []
 
       @logger = Logger.new(STDERR)
-      if ENV['DEBUG']
+      if ENV['DEBUG'] or $DEBUG
         @logger.level = Logger::DEBUG
       else
         @logger.level = Logger::WARN
