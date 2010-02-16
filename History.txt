@@ -1,3 +1,7 @@
+== 0.5.3 / 2010-02-15
+
+* Minor enhancement: Displays inline images
+
 == 0.5.2 / 2010-01-05
 
 * Refactored to improve layering.
