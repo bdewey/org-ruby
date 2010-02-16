@@ -145,6 +145,9 @@ module Orgmode
       str = @re_help.rewrite_emphasis(str) do |marker, s|
         "#{Tags[marker][:open]}#{s}#{Tags[marker][:close]}"
       end
+      str = @re_help.rewrite_images(str) do |link|
+        "<img src=\"#{link}\" />"
+      end
       str = @re_help.rewrite_links(str) do |link, text|
         text ||= link
         link = link.sub(/^file:(.*)::(.*?)$/) do

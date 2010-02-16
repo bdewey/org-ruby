@@ -14,6 +14,9 @@ module Orgmode
   #
   # * Use +rewrite_links+ to get a chance to rewrite all org-mode
   #   links with suitable markup for the output.
+  #
+  # * Use +rewrite_images+ to rewrite all inline image links with suitable
+  #   markup for the output.
   class RegexpHelper
 
     ######################################################################
@@ -121,12 +124,19 @@ module Orgmode
     # +http://www.hotmail.com+. In both cases, the block returns an
     # HTML-style link, and that is how things will get recorded in
     # +result+.
-    def rewrite_links(str)
+    def rewrite_links(str) #  :yields: link, text
       i = str.gsub(@org_link_regexp) do |match|
         yield $1, nil
       end
       i.gsub(@org_link_text_regexp) do |match|
         yield $1, $2
+      end
+    end
+    
+    # Rewrites all of the inline image tags.
+    def rewrite_images(str) #  :yields: image_link
+      str.gsub(@org_img_regexp) do |match|
+        yield $1
       end
     end
 
@@ -146,6 +156,9 @@ module Orgmode
       @org_link_regexp = /\[\[
                              ([^\]]*) # This is the URL
                           \]\]/x
+      @org_img_regexp = /\[\[
+          ([^\]]*\.(jpg|jpeg|gif|png)) # Like a normal URL, but must end with a specified extension
+        \]\]/xi
       @org_link_text_regexp = /\[\[
                                  ([^\]]*) # This is the URL
                                \]\[
