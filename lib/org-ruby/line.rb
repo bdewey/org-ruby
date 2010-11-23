@@ -112,14 +112,14 @@ module Orgmode
       table_row? or table_separator? or table_header?
     end
 
-    BlockRegexp = /^\s*#\+(BEGIN|END)_(\w*)/
+    BlockRegexp = /^\s*#\+(BEGIN|END)_(\w*)/i
 
     def begin_block?
-      @line =~ BlockRegexp && $1 == "BEGIN"
+      @line =~ BlockRegexp && $1 =~ /BEGIN/i
     end
 
     def end_block?
-      @line =~ BlockRegexp && $1 == "END"
+      @line =~ BlockRegexp && $1 =~ /END/i
     end
 
     def block_type
@@ -127,7 +127,7 @@ module Orgmode
     end
 
     def code_block_type?
-      block_type =~ /^(EXAMPLE|SRC)$/
+      block_type =~ /^(EXAMPLE|SRC)$/i
     end
 
     InlineExampleRegexp = /^\s*:/

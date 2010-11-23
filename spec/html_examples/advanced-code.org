@@ -51,3 +51,16 @@ And this:
       end
     end
 #+END_SRC
+
+Now let's test case-insensitive code blocks.
+
+#+begin_src ruby
+    # Finds all emphasis matches in a string.
+    # Supply a block that will get the marker and body as parameters.
+    def match_all(str)
+      str.scan(@org_emphasis_regexp) do |match|
+        yield $2, $3
+      end
+    end
+#+end_src
+

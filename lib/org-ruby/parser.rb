@@ -206,13 +206,13 @@ module Orgmode
         when :comment
           
           if line.begin_block?
-            output_buffer.push_mode(:blockquote) if line.block_type == "QUOTE"
-            output_buffer.push_mode(:src) if line.block_type == "SRC"
-            output_buffer.push_mode(:example) if line.block_type == "EXAMPLE"
+            output_buffer.push_mode(:blockquote) if line.block_type.casecmp("QUOTE") == 0
+            output_buffer.push_mode(:src) if line.block_type.casecmp("SRC") == 0
+            output_buffer.push_mode(:example) if line.block_type.casecmp("EXAMPLE") == 0
           elsif line.end_block?
-            output_buffer.pop_mode(:blockquote) if line.block_type == "QUOTE"
-            output_buffer.pop_mode(:src) if line.block_type == "SRC"
-            output_buffer.pop_mode(:example) if line.block_type == "EXAMPLE"
+            output_buffer.pop_mode(:blockquote) if line.block_type.casecmp("QUOTE")==0
+            output_buffer.pop_mode(:src) if line.block_type.casecmp("SRC")==0
+            output_buffer.pop_mode(:example) if line.block_type.casecmp("EXAMPLE")==0
           else
             output_buffer << line.line if output_buffer.preserve_whitespace?
           end
