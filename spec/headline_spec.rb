@@ -26,6 +26,11 @@ describe Orgmode::Headline do
     end
   end
 
+  it "should properly determine headline level with offset" do
+    h = Orgmode::Headline.new("* one", nil, 1)
+    h.level.should eql(2)
+  end
+
   it "should find simple headline text" do
     h = Orgmode::Headline.new "*** sample"
     h.headline_text.should eql("sample")
