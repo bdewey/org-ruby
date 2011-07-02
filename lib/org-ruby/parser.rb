@@ -82,7 +82,7 @@ module Orgmode
 
     # I can construct a parser object either with an array of lines
     # or with a single string that I will split along \n boundaries.
-    def initialize(lines)
+    def initialize(lines, offset=0)
       if lines.is_a? Array then
         @lines = lines
       elsif lines.is_a? String then
@@ -105,7 +105,7 @@ module Orgmode
         when :normal
 
           if (Headline.headline? line) then
-            @current_headline = Headline.new line, self
+            @current_headline = Headline.new line, self, offset
             @headlines << @current_headline
           else
             line = Line.new line, self

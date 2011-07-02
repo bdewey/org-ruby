@@ -41,14 +41,14 @@ module Orgmode
 
     KeywordsRegexp = Regexp.new("^(#{Keywords.join('|')})\$")
 
-    def initialize(line, parser = nil)
+    def initialize(line, parser = nil, offset=0)
       super(line, parser)
       @body_lines = []
       @body_lines << self       # Make @body_lines contain the headline?
       @tags = []
       @export_state = :exclude
       if (@line =~ LineRegexp) then
-        @level = $&.strip.length
+        @level = $&.strip.length + offset
         @headline_text = $'.strip
         if (@headline_text =~ TagsRegexp) then
           @tags = $&.split(/:/)              # split tag text on semicolon
