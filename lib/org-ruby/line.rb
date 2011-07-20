@@ -36,7 +36,9 @@ module Orgmode
 
     # Tests if a line is a comment.
     def comment?
-      check_assignment_or_regexp(:comment, /^#/) and not begin_block? and not end_block?
+      return @assigned_paragraph_type == :comment if @assigned_paragraph_type
+      return block_type.casecmp("COMMENT") if begin_block? or end_block?
+      return @line =~ /^#/
     end
 
     # Tests if a line contains metadata instead of actual content.

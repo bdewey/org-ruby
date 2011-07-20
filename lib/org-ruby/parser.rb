@@ -105,11 +105,20 @@ module Orgmode
               previous_line.assigned_paragraph_type = :table_header if previous_line and previous_line.paragraph_type == :table_row
             end
             mode = :code if line.begin_block? and line.block_type == "EXAMPLE"
+            mode = :block_comment if line.begin_block? and line.block_type == "COMMENT"
             if (@current_headline) then
               @current_headline.body_lines << line
             else
               @header_lines << line
             end
+          end
+
+        when :block_comment
+          line = Line.new line, self
+          if line.end_block? and line.block_type == "COMMENT"
+            mode = :normal
+          else
+            line.assigned_paragraph_type = :comment
           end
 
         when :code
