@@ -145,11 +145,13 @@ module Orgmode
       str = @re_help.rewrite_emphasis(str) do |marker, s|
         "#{Tags[marker][:open]}#{s}#{Tags[marker][:close]}"
       end
-      str = @re_help.rewrite_subp(str) do |type, text|
-        if type == "_" then
-          "<sub>#{text}</sub>"
-        elsif type == "^" then
-          "<sup>#{text}</sup>"
+      if @options[:use_sub_superscripts] then
+        str = @re_help.rewrite_subp(str) do |type, text|
+          if type == "_" then
+            "<sub>#{text}</sub>"
+          elsif type == "^" then
+            "<sup>#{text}</sup>"
+          end
         end
       end
       str = @re_help.rewrite_images(str) do |link|

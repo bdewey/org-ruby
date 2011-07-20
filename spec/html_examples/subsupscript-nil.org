@@ -1,0 +1,6 @@
+#+OPTIONS: ^:nil
+SUBSUPSCRIPT
+
+a^{b}
+
+a_{b}
