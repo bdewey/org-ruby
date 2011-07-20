@@ -36,6 +36,13 @@ module Orgmode
         m = TextileMap[marker]
         "#{m}#{body}#{m}"
       end
+      input = @re_help.rewrite_subp(input) do |type, text|
+        if type == "_" then
+          "~#{text}~"
+        elsif type == "^" then
+          "^#{text}^"
+        end
+      end
       input = @re_help.rewrite_links(input) do |link, text|
         text ||= link
         link = link.gsub(/ /, "%20")
