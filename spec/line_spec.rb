@@ -3,7 +3,7 @@ require File.join(File.dirname(__FILE__), %w[spec_helper])
 describe Orgmode::Line do
 
   it "should tell comments" do
-    comments = ["# hello", "#hello", "   #hello", "\t#hello\n"]
+    comments = ["# hello", "#hello" ]
     comments.each do |c|
       line = Orgmode::Line.new c
       line.comment?.should be_true
@@ -81,14 +81,12 @@ describe Orgmode::Line do
 
     begin_examples.each_key do |str|
       line = Orgmode::Line.new str
-      line.comment?.should be_true
       line.begin_block?.should be_true
       line.block_type.should eql(begin_examples[str])
     end
 
     end_examples.each_key do |str|
       line = Orgmode::Line.new str
-      line.comment?.should be_true
       line.end_block?.should be_true
       line.block_type.should eql(end_examples[str])
     end

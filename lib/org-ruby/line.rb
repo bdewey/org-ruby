@@ -36,7 +36,7 @@ module Orgmode
 
     # Tests if a line is a comment.
     def comment?
-      check_assignment_or_regexp(:comment, /^\s*#/)
+      check_assignment_or_regexp(:comment, /^#/) and not begin_block? and not end_block?
     end
 
     # Tests if a line contains metadata instead of actual content.
@@ -45,7 +45,7 @@ module Orgmode
     end
 
     def nonprinting?
-      comment? || metadata?
+      comment? || metadata? || begin_block? || end_block?
     end
 
     def blank?
@@ -165,6 +165,8 @@ module Orgmode
       return :ordered_list if ordered_list?
       return :unordered_list if unordered_list?
       return :metadata if metadata?
+      return :begin_block if begin_block?
+      return :end_block if end_block?
       return :comment if comment?
       return :table_separator if table_separator?
       return :table_row if table_row?

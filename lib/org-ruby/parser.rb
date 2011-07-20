@@ -199,23 +199,21 @@ module Orgmode
         output_buffer.prepare(line)
 
         case line.paragraph_type
-        when :metadata, :table_separator, :blank
+        when :metadata, :table_separator, :blank, :comment
 
           output_buffer << line.line if output_buffer.preserve_whitespace?          
 
-        when :comment
-          
-          if line.begin_block?
-            output_buffer.push_mode(:blockquote) if line.block_type.casecmp("QUOTE") == 0
-            output_buffer.push_mode(:src) if line.block_type.casecmp("SRC") == 0
-            output_buffer.push_mode(:example) if line.block_type.casecmp("EXAMPLE") == 0
-          elsif line.end_block?
-            output_buffer.pop_mode(:blockquote) if line.block_type.casecmp("QUOTE")==0
-            output_buffer.pop_mode(:src) if line.block_type.casecmp("SRC")==0
-            output_buffer.pop_mode(:example) if line.block_type.casecmp("EXAMPLE")==0
-          else
-            output_buffer << line.line if output_buffer.preserve_whitespace?
-          end
+        when :begin_block
+
+          output_buffer.push_mode(:blockquote) if line.block_type.casecmp("QUOTE") == 0
+          output_buffer.push_mode(:src) if line.block_type.casecmp("SRC") == 0
+          output_buffer.push_mode(:example) if line.block_type.casecmp("EXAMPLE") == 0
+
+        when :end_block
+
+          output_buffer.pop_mode(:blockquote) if line.block_type.casecmp("QUOTE") == 0
+          output_buffer.pop_mode(:src) if line.block_type.casecmp("SRC") == 0
+          output_buffer.pop_mode(:example) if line.block_type.casecmp("EXAMPLE") == 0
 
         when :table_row, :table_header
 
