@@ -8,6 +8,8 @@ module Orgmode
       :paragraph => "p",
       :ordered_list => "li",
       :unordered_list => "li",
+      :definition_term => "dt",
+      :definition_descr => "dd",
       :table_row => "tr",
       :table_header => "tr",
       :heading1 => "h1",
@@ -21,6 +23,7 @@ module Orgmode
     ModeTag = {
       :unordered_list => "ul",
       :ordered_list => "ol",
+      :definition_list => "dl",
       :table => "table",
       :blockquote => "blockquote",
       :example => "pre",
@@ -77,11 +80,25 @@ module Orgmode
         @logger.debug "FLUSH CODE ==========> #{@buffer.inspect}"
         @output << @buffer << "\n"
       else
-        if (@buffer.length > 0) then
+        if @buffer.length > 0 and @output_type == :definition_list then
+          unless buffer_mode_is_table? and skip_tables?
+            output_indentation
+            d = @buffer.split("::", 2)
+            @output << "<#{HtmlBlockTag[:definition_term]}#{@title_decoration}>" << inline_formatting(d[0].strip) \
+                    << "</#{HtmlBlockTag[:definition_term]}>"
+            if d.length > 1 then
+              @output << "<#{HtmlBlockTag[:definition_descr]}#{@title_decoration}>" << inline_formatting(d[1].strip) \
+                      << "</#{HtmlBlockTag[:definition_descr]}>\n"
+            else
+              @output << "\n"
+            end
+            @title_decoration = ""
+          end
+        elsif @buffer.length > 0 then
           unless buffer_mode_is_table? and skip_tables?
             @logger.debug "FLUSH      ==========> #{@buffer_mode}"
             output_indentation
-            @output << "<#{HtmlBlockTag[@output_type]}#{@title_decoration}>" 
+            @output << "<#{HtmlBlockTag[@output_type]}#{@title_decoration}>"
             if (@buffered_lines[0].kind_of?(Headline)) then
               headline = @buffered_lines[0]
               raise "Cannot be more than one headline!" if @buffered_lines.length > 1

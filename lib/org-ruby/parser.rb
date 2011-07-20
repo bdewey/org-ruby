@@ -235,7 +235,7 @@ module Orgmode
 
           output_buffer << line.line.lstrip
 
-        when :unordered_list, :ordered_list
+        when :unordered_list, :ordered_list, :definition_list
           
           output_buffer << line.output_text << " "
 

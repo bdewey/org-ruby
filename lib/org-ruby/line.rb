@@ -55,7 +55,7 @@ module Orgmode
     end
 
     def plain_list?
-      ordered_list? or unordered_list?
+      ordered_list? or unordered_list? or definition_list?
     end
 
     UnorderedListRegexp = /^\s*(-|\+)\s*/
@@ -66,6 +66,12 @@ module Orgmode
 
     def strip_unordered_list_tag
       @line.sub(UnorderedListRegexp, "")
+    end
+
+    DefinitionListRegexp = /^\s*(-|\+)\s*(.*?)::/
+
+    def definition_list?
+      check_assignment_or_regexp(:definition_list, DefinitionListRegexp)
     end
 
     OrderedListRegexp = /^\s*\d+(\.|\))\s*/
@@ -164,6 +170,7 @@ module Orgmode
     # Determines the paragraph type of the current line.
     def paragraph_type
       return :blank if blank?
+      return :definition_list if definition_list? # order is important! A definition_list is also an unordered_list!
       return :ordered_list if ordered_list?
       return :unordered_list if unordered_list?
       return :metadata if metadata?

@@ -63,7 +63,7 @@ module Orgmode
         end
         @output << "bq. " if current_mode == :blockquote
         @output << "#" * @list_indent_stack.length << " " if @output_type == :ordered_list
-        @output << "*" * @list_indent_stack.length << " " if @output_type == :unordered_list
+        @output << "*" * @list_indent_stack.length << " " if @output_type == :unordered_list or @output_type == :definition_list
         @output << inline_formatting(@buffer) << "\n"
       end
       clear_accumulation_buffer!
