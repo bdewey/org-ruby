@@ -7,6 +7,7 @@ module Orgmode
     def initialize(output)
       super(output)
       @add_paragraph = false
+      @support_definition_list = true # TODO this should be an option
     end
 
     def push_mode(mode)
@@ -64,8 +65,15 @@ module Orgmode
           @add_paragraph = false
         end
         @output << "bq. " if current_mode == :blockquote
-        @output << "#" * @list_indent_stack.length << " " if @output_type == :ordered_list
-        @output << "*" * @list_indent_stack.length << " " if @output_type == :unordered_list or @output_type == :definition_list
+        if @output_type == :definition_list and @support_definition_list then
+          @output << "-" * @list_indent_stack.length << " "
+          @buffer.sub!("::", ":=")
+        elsif @output_type == :ordered_list then
+          @output << "#" * @list_indent_stack.length << " "
+        elsif @output_type == :unordered_list or \
+            (@output_type == :definition_list and not @support_definition_list) then
+          @output << "*" * @list_indent_stack.length << " "
+        end
         @output << inline_formatting(@buffer) << "\n"
       end
       clear_accumulation_buffer!
