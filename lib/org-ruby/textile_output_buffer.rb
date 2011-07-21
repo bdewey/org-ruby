@@ -12,11 +12,13 @@ module Orgmode
     def push_mode(mode)
       super(mode)
       @output << "bc.. " if mode_is_code(mode)
+      @output << "\np=. " if mode == :center
     end
 
     def pop_mode(mode = nil)
       m = super(mode)
       @add_paragraph = (mode_is_code(m))
+      @output << "\n" if mode == :center
       m
     end
 

@@ -224,12 +224,14 @@ module Orgmode
           output_buffer.push_mode(:blockquote) if line.block_type.casecmp("QUOTE") == 0
           output_buffer.push_mode(:src) if line.block_type.casecmp("SRC") == 0
           output_buffer.push_mode(:example) if line.block_type.casecmp("EXAMPLE") == 0
+          output_buffer.push_mode(:center) if line.block_type.casecmp("CENTER") == 0
 
         when :end_block
 
           output_buffer.pop_mode(:blockquote) if line.block_type.casecmp("QUOTE") == 0
           output_buffer.pop_mode(:src) if line.block_type.casecmp("SRC") == 0
           output_buffer.pop_mode(:example) if line.block_type.casecmp("EXAMPLE") == 0
+          output_buffer.pop_mode(:center) if line.block_type.casecmp("CENTER") == 0
 
         when :table_row, :table_header
 

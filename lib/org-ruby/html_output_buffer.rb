@@ -28,7 +28,8 @@ module Orgmode
       :blockquote => "blockquote",
       :example => "pre",
       :src => "pre",
-      :inline_example => "pre"
+      :inline_example => "pre",
+      :center => "div"
     }
 
     attr_reader :options
@@ -53,6 +54,7 @@ module Orgmode
         css_class = ""
         css_class = " class=\"src\"" if mode == :src
         css_class = " class=\"example\"" if (mode == :example || mode == :inline_example)
+        css_class = " style=\"text-align: center\"" if mode == :center
         @logger.debug "#{mode}: <#{ModeTag[mode]}#{css_class}>\n" 
         @output << "<#{ModeTag[mode]}#{css_class}>\n" unless mode == :table and skip_tables?
         # Entering a new mode obliterates the title decoration

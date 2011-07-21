@@ -54,7 +54,7 @@ module Orgmode
       push_mode(:normal)
     end
 
-    Modes = [:normal, :ordered_list, :unordered_list, :definition_list, :blockquote, :src, :example, :table, :inline_example]
+    Modes = [:normal, :ordered_list, :unordered_list, :definition_list, :blockquote, :src, :example, :table, :inline_example, :center]
 
     def current_mode
       @mode_stack.last
