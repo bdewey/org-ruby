@@ -170,7 +170,8 @@ module Orgmode
         :decorate_title => true,
         :export_heading_number => export_heading_number?,
         :export_todo => export_todo?,
-        :use_sub_superscripts =>  use_sub_superscripts?
+        :use_sub_superscripts =>  use_sub_superscripts?,
+        :export_footnotes => true
       }
       export_options[:skip_tables] = true if not export_tables?
       output = ""
@@ -256,6 +257,7 @@ module Orgmode
       end
       output_buffer.flush!
       output_buffer.pop_mode until output_buffer.current_mode == :normal
+      output_buffer.output_footnotes!
       output_buffer.output
     end
 

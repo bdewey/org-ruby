@@ -194,6 +194,10 @@ module Orgmode
       end
     end
 
+    def output_footnotes!
+      return false
+    end
+
     # Tests if the current line should be accumulated in the current
     # output buffer.  (Extraneous line breaks in the orgmode buffer
     # are removed by accumulating lines in the output buffer without

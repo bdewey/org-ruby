@@ -42,6 +42,7 @@ module Orgmode
         @title_decoration = ""
       end
       @options = opts
+      @footnotes = {}
       @logger.debug "HTML export options: #{@options.inspect}"
     end
 
@@ -125,6 +126,23 @@ module Orgmode
       clear_accumulation_buffer!
     end
 
+    def output_footnotes!
+      return false unless @options[:export_footnotes] and not @footnotes.empty?
+
+      @output << "<div id=\"footnotes\">\n<h2 class=\"footnotes\">Footnotes: </h2>\n<div id=\"text-footnotes\">\n"
+
+      @footnotes.each do |name, defi|
+        @output << "<p class=\"footnote\"><sup><a class=\"footnum\" name=\"fn.#{name}\" href=\"#fnr.#{name}\">#{name}</a></sup>" \
+                << inline_formatting(defi) \
+                << "</p>\n"
+      end
+
+      @output << "</div>\n</div>\n"
+
+      return true
+    end
+
+
     ######################################################################
     private
 
@@ -198,8 +216,14 @@ module Orgmode
         str.gsub!(/\s*\|$/, "</th>")
         str.gsub!(/\s*\|\s*/, "</th><th>")
       end
+      if @options[:export_footnotes] then
+        str = @re_help.rewrite_footnote(str) do |name, defi|
+          # TODO escape name for url?
+          @footnotes[name] = defi if defi
+          "<sup><a class=\"footref\" name=\"fnr.#{name}\" href=\"#fn.#{name}\">#{name}</a></sup>"
+        end
+      end
       str
     end
-
   end                           # class HtmlOutputBuffer
 end                             # module Orgmode

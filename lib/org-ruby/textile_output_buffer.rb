@@ -8,6 +8,7 @@ module Orgmode
       super(output)
       @add_paragraph = false
       @support_definition_list = true # TODO this should be an option
+      @footnotes = {}
     end
 
     def push_mode(mode)
@@ -51,7 +52,23 @@ module Orgmode
         link = link.gsub(/ /, "%20")
         "\"#{text}\":#{link}"
       end
+      input = @re_help.rewrite_footnote(input) do |name, defi|
+        # textile only support numerical names! Use hash as a workarround
+        name = name.hash.to_s unless name.to_i.to_s == name # check if number
+        @footnotes[name] = defi if defi
+        "[#{name}]"
+      end
       input
+    end
+
+    def output_footnotes!
+      return false if @footnotes.empty?
+
+      @footnotes.each do |name, defi|
+        @output << "\nfn#{name}. #{defi}\n"
+      end
+
+      return true
     end
 
     # Flushes the current buffer
