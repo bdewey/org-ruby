@@ -53,6 +53,11 @@ module Orgmode
       "t" == @options["todo"]
     end
 
+    # Returns true if we are to export footnotes
+    def export_footnotes?
+      "t" == @options["f"]
+    end
+
     # Returns true if we are to export heading numbers.
     def export_heading_number?
       "t" == @options["num"]
@@ -171,7 +176,7 @@ module Orgmode
         :export_heading_number => export_heading_number?,
         :export_todo => export_todo?,
         :use_sub_superscripts =>  use_sub_superscripts?,
-        :export_footnotes => true
+        :export_footnotes => export_footnotes?
       }
       export_options[:skip_tables] = true if not export_tables?
       output = ""
