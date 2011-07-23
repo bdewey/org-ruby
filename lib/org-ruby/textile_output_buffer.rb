@@ -58,6 +58,7 @@ module Orgmode
         @footnotes[name] = defi if defi
         "[#{name}]"
       end
+      Orgmode.special_symbols_to_textile(input)
       input
     end
 

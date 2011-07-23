@@ -1,3 +1,4 @@
+require OrgRuby.libpath(*%w[org-ruby html_symbol_replace])
 require OrgRuby.libpath(*%w[org-ruby output_buffer])
 
 module Orgmode
@@ -223,6 +224,7 @@ module Orgmode
           "<sup><a class=\"footref\" name=\"fnr.#{name}\" href=\"#fn.#{name}\">#{name}</a></sup>"
         end
       end
+      Orgmode.special_symbols_to_html(str)
       str
     end
   end                           # class HtmlOutputBuffer
