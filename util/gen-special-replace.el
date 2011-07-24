@@ -17,7 +17,7 @@
         (let ((symb (nth to entity)))
           (when (or (string= symb "\"") (string= symb "\\"))
             (setq symb (concat "\\" symb)))
-          (insert "    str.gsub!(/\\\\" (car entity) "((\\{\\})|\\s|$)/, \"" symb "\")\n"))))
+          (insert "    str.gsub!(/\\\\" (car entity) "((\\{\\})|(\\s|$))/, \"" symb "\\\\3\")\n"))))
     (insert "  end\n")))
 
 (defun generate-replace (file-name what)
