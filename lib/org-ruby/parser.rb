@@ -88,6 +88,7 @@ module Orgmode
       @options = { }
       mode = :normal
       previous_line = nil
+      table_header_set = false
       @lines.each do |line|
         case mode
         when :normal
@@ -102,8 +103,12 @@ module Orgmode
               store_in_buffer_setting key, value
             end
             if line.table_separator? then
-              previous_line.assigned_paragraph_type = :table_header if previous_line and previous_line.paragraph_type == :table_row
+              if previous_line and previous_line.paragraph_type == :table_row and !table_header_set
+                previous_line.assigned_paragraph_type = :table_header
+                table_header_set = true
+              end
             end
+            table_header_set = false if !line.table?
             mode = :code if line.begin_block? and line.block_type == "EXAMPLE"
             if (@current_headline) then
               @current_headline.body_lines << line

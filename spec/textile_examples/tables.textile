@@ -21,3 +21,20 @@ h1. Table with header
 | Seven | Eight | Nine  |
 
 The separator row should not get printed out. 
+
+h1. Table with complete box
+
+| One   | Two   | Three |
+| Four  | Five  | Six   |
+| Seven | Eight | Nine  |
+
+Only the first row should be a header row. 
+
+h1. Table with extra lines
+
+| One   | Two    | Three  |
+| Four  | Five   | Six    |
+| Seven | Eight  | Nine   |
+| Ten   | Eleven | Twelve |
+
+Only the first row should be a header row. 
