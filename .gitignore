@@ -1,1 +1,4 @@
-*.tmproj
+*.gem
+.bundle
+Gemfile.lock
+pkg/*
