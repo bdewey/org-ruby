@@ -158,8 +158,8 @@ module Orgmode
         end
         link = link.sub(/^file:/i, "") # will default to HTTP
         link = link.sub(/\.org$/i, ".html")
-        text = text.gsub(/([^\]]*\.(jpg|jpeg|gif|png))/xi) do |link|
-          "<img src=\"#{link}\" />"
+        text = text.gsub(/([^\]]*\.(jpg|jpeg|gif|png))/xi) do |img_link|
+          "<img src=\"#{img_link}\" />"
         end
         "<a href=\"#{link}\">#{text}</a>"
       end

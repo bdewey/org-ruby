@@ -21,3 +21,7 @@ image, like this:
 
 - [[http://farm7.static.flickr.com/6078/6084185195_552aa270b2.jpg]]
 
+Also, if you make the descriptive text be an image, then it will get formatted
+with an image tag, like so:
+
+- [[http://www.xkcd.com][http://imgs.xkcd.com/comics/t_cells.png]]
