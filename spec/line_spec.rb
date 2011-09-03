@@ -29,18 +29,24 @@ describe Orgmode::Line do
       Orgmode::Line.new(inline_example).inline_example?.should be_true
     end
   end
-    
 
-  it "should recognize plain lists" do
-    list_formats = ["-",
-                    "+",
-                    "  -",
-                    "  +",
-                    " 1.",
-                    " 2)"]
-    list_formats.each do |list|
+  list_formats = ["- ",
+                  "+ ",
+                  "  - ",
+                  "  + ",
+                  " 1. ",
+                  " 2) "]
+  list_formats.each do |list|
+    it "should recognize this list format: '#{list}'" do
       line = Orgmode::Line.new list
       line.plain_list?.should be_true
+    end
+  end
+  
+  ["-foo", "+foo", "1.foo", "2.foo"].each do |invalid_list|
+    it "should not recognize this invalid list: '#{invalid_list}'" do
+      line = Orgmode::Line.new invalid_list
+      line.plain_list?.should_not be_true
     end
   end
 
