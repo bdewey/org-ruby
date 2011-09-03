@@ -146,7 +146,7 @@ module Orgmode
         "#{Tags[marker][:open]}#{s}#{Tags[marker][:close]}"
       end
       str = @re_help.rewrite_images(str) do |link|
-        "<img src=\"#{link}\" />"
+        "<a href=\"#{link}\"><img src=\"#{link}\" /></a>"
       end
       str = @re_help.rewrite_links(str) do |link, text|
         text ||= link

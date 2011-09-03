@@ -15,3 +15,9 @@ double-brackets and I don't auto-recognize URLs.
 
 I should also handle links with [[http://www.xkcd.com][helpful text]].
 
+Helpful addition from [[https://github.com/punchagan][punchagan]], we now
+recognize when the link goes to an image and make the link anchor be the
+image, like this:
+
+- [[http://farm7.static.flickr.com/6078/6084185195_552aa270b2.jpg]]
+

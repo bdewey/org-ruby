@@ -8,8 +8,8 @@ end
 ensure_in_path 'lib'
 require 'org-ruby'
 
-task :default => 'test:run'
-task 'gem:release' => 'test:run'
+task :default => 'spec:run'
+task 'gem:release' => 'spec:run'
 
 Bones {
   readme_file 'README.rdoc'
@@ -18,10 +18,8 @@ Bones {
   email  'bdewey@gmail.com'
   url  'http://github.com/bdewey/org-ruby'
   version  OrgRuby::VERSION
-  colorize false                # Windows consoles won't colorize
-  gem.need_tar false            # Can't TAR from Windows
   depend_on 'rubypants'
-  spec.opts ['-D', '--color']
+  spec.opts ['--color']
 }
 
 
