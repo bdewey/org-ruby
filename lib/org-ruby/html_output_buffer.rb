@@ -1,3 +1,4 @@
+require OrgRuby.libpath(*%w[org-ruby html_symbol_replace])
 require OrgRuby.libpath(*%w[org-ruby output_buffer])
 
 module Orgmode
@@ -8,6 +9,8 @@ module Orgmode
       :paragraph => "p",
       :ordered_list => "li",
       :unordered_list => "li",
+      :definition_term => "dt",
+      :definition_descr => "dd",
       :table_row => "tr",
       :table_header => "tr",
       :heading1 => "h1",
@@ -21,11 +24,13 @@ module Orgmode
     ModeTag = {
       :unordered_list => "ul",
       :ordered_list => "ol",
+      :definition_list => "dl",
       :table => "table",
       :blockquote => "blockquote",
       :example => "pre",
       :src => "pre",
-      :inline_example => "pre"
+      :inline_example => "pre",
+      :center => "div"
     }
 
     attr_reader :options
@@ -38,6 +43,7 @@ module Orgmode
         @title_decoration = ""
       end
       @options = opts
+      @footnotes = {}
       @logger.debug "HTML export options: #{@options.inspect}"
     end
 
@@ -50,6 +56,7 @@ module Orgmode
         css_class = ""
         css_class = " class=\"src\"" if mode == :src
         css_class = " class=\"example\"" if (mode == :example || mode == :inline_example)
+        css_class = " style=\"text-align: center\"" if mode == :center
         @logger.debug "#{mode}: <#{ModeTag[mode]}#{css_class}>\n" 
         @output << "<#{ModeTag[mode]}#{css_class}>\n" unless mode == :table and skip_tables?
         # Entering a new mode obliterates the title decoration
@@ -77,11 +84,25 @@ module Orgmode
         @logger.debug "FLUSH CODE ==========> #{@buffer.inspect}"
         @output << @buffer << "\n"
       else
-        if (@buffer.length > 0) then
+        if @buffer.length > 0 and @output_type == :definition_list then
+          unless buffer_mode_is_table? and skip_tables?
+            output_indentation
+            d = @buffer.split("::", 2)
+            @output << "<#{HtmlBlockTag[:definition_term]}#{@title_decoration}>" << inline_formatting(d[0].strip) \
+                    << "</#{HtmlBlockTag[:definition_term]}>"
+            if d.length > 1 then
+              @output << "<#{HtmlBlockTag[:definition_descr]}#{@title_decoration}>" << inline_formatting(d[1].strip) \
+                      << "</#{HtmlBlockTag[:definition_descr]}>\n"
+            else
+              @output << "\n"
+            end
+            @title_decoration = ""
+          end
+        elsif @buffer.length > 0 then
           unless buffer_mode_is_table? and skip_tables?
             @logger.debug "FLUSH      ==========> #{@buffer_mode}"
             output_indentation
-            @output << "<#{HtmlBlockTag[@output_type]}#{@title_decoration}>" 
+            @output << "<#{HtmlBlockTag[@output_type]}#{@title_decoration}>"
             if (@buffered_lines[0].kind_of?(Headline)) then
               headline = @buffered_lines[0]
               raise "Cannot be more than one headline!" if @buffered_lines.length > 1
@@ -105,6 +126,23 @@ module Orgmode
       end
       clear_accumulation_buffer!
     end
+
+    def output_footnotes!
+      return false unless @options[:export_footnotes] and not @footnotes.empty?
+
+      @output << "<div id=\"footnotes\">\n<h2 class=\"footnotes\">Footnotes: </h2>\n<div id=\"text-footnotes\">\n"
+
+      @footnotes.each do |name, defi|
+        @output << "<p class=\"footnote\"><sup><a class=\"footnum\" name=\"fn.#{name}\" href=\"#fnr.#{name}\">#{name}</a></sup>" \
+                << inline_formatting(defi) \
+                << "</p>\n"
+      end
+
+      @output << "</div>\n</div>\n"
+
+      return true
+    end
+
 
     ######################################################################
     private
@@ -145,6 +183,15 @@ module Orgmode
       str = @re_help.rewrite_emphasis(str) do |marker, s|
         "#{Tags[marker][:open]}#{s}#{Tags[marker][:close]}"
       end
+      if @options[:use_sub_superscripts] then
+        str = @re_help.rewrite_subp(str) do |type, text|
+          if type == "_" then
+            "<sub>#{text}</sub>"
+          elsif type == "^" then
+            "<sup>#{text}</sup>"
+          end
+        end
+      end
       str = @re_help.rewrite_images(str) do |link|
         "<a href=\"#{link}\"><img src=\"#{link}\" /></a>"
       end
@@ -173,8 +220,15 @@ module Orgmode
         str.gsub!(/\s*\|$/, "</th>")
         str.gsub!(/\s*\|\s*/, "</th><th>")
       end
+      if @options[:export_footnotes] then
+        str = @re_help.rewrite_footnote(str) do |name, defi|
+          # TODO escape name for url?
+          @footnotes[name] = defi if defi
+          "<sup><a class=\"footref\" name=\"fnr.#{name}\" href=\"#fn.#{name}\">#{name}</a></sup>"
+        end
+      end
+      Orgmode.special_symbols_to_html(str)
       str
     end
-
   end                           # class HtmlOutputBuffer
 end                             # module Orgmode

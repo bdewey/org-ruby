@@ -36,7 +36,9 @@ module Orgmode
 
     # Tests if a line is a comment.
     def comment?
-      check_assignment_or_regexp(:comment, /^\s*#/)
+      return @assigned_paragraph_type == :comment if @assigned_paragraph_type
+      return block_type.casecmp("COMMENT") if begin_block? or end_block?
+      return @line =~ /^#/
     end
 
     # Tests if a line contains metadata instead of actual content.
@@ -45,7 +47,7 @@ module Orgmode
     end
 
     def nonprinting?
-      comment? || metadata?
+      comment? || metadata? || begin_block? || end_block?
     end
 
     def blank?
@@ -53,7 +55,7 @@ module Orgmode
     end
 
     def plain_list?
-      ordered_list? or unordered_list?
+      ordered_list? or unordered_list? or definition_list?
     end
 
     UnorderedListRegexp = /^\s*(-|\+)\s+/
@@ -64,6 +66,12 @@ module Orgmode
 
     def strip_unordered_list_tag
       @line.sub(UnorderedListRegexp, "")
+    end
+
+    DefinitionListRegexp = /^\s*(-|\+)\s*(.*?)::/
+
+    def definition_list?
+      check_assignment_or_regexp(:definition_list, DefinitionListRegexp)
     end
 
     OrderedListRegexp = /^\s*\d+(\.|\))\s+/
@@ -162,9 +170,12 @@ module Orgmode
     # Determines the paragraph type of the current line.
     def paragraph_type
       return :blank if blank?
+      return :definition_list if definition_list? # order is important! A definition_list is also an unordered_list!
       return :ordered_list if ordered_list?
       return :unordered_list if unordered_list?
       return :metadata if metadata?
+      return :begin_block if begin_block?
+      return :end_block if end_block?
       return :comment if comment?
       return :table_separator if table_separator?
       return :table_row if table_row?

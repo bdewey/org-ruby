@@ -54,7 +54,7 @@ module Orgmode
       push_mode(:normal)
     end
 
-    Modes = [:normal, :ordered_list, :unordered_list, :blockquote, :src, :example, :table, :inline_example]
+    Modes = [:normal, :ordered_list, :unordered_list, :definition_list, :blockquote, :src, :example, :table, :inline_example, :center]
 
     def current_mode
       @mode_stack.last
@@ -187,10 +187,15 @@ module Orgmode
       else
         @list_indent_stack = []
         while ((current_mode == :ordered_list) or
+               (current_mode == :definition_list) or
                (current_mode == :unordered_list))
           pop_mode
         end
       end
+    end
+
+    def output_footnotes!
+      return false
     end
 
     # Tests if the current line should be accumulated in the current
@@ -208,6 +213,7 @@ module Orgmode
       # Currently only "paragraphs" get accumulated with previous output.
       return false unless line.paragraph_type == :paragraph
       if ((@output_type == :ordered_list) or
+          (@output_type == :definition_list) or
           (@output_type == :unordered_list)) then
 
         # If the previous output type was a list item, then we only put a paragraph in it
@@ -220,6 +226,7 @@ module Orgmode
       return false unless
         ((@output_type == :paragraph) or
          (@output_type == :ordered_list) or
+         (@output_type == :definition_list) or
          (@output_type == :unordered_list))
       true
     end

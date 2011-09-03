@@ -53,6 +53,11 @@ module Orgmode
       "t" == @options["todo"]
     end
 
+    # Returns true if we are to export footnotes
+    def export_footnotes?
+      "t" == @options["f"]
+    end
+
     # Returns true if we are to export heading numbers.
     def export_heading_number?
       "t" == @options["num"]
@@ -67,6 +72,12 @@ module Orgmode
     # with an explicit "nil"
     def export_tables?
       "nil" != @options["|"]
+    end
+
+    # Should we export sub/superscripts? (_{foo}/^{foo})
+    # only {} mode is currently supported.
+    def use_sub_superscripts?
+      @options["^"] != "nil" 
     end
 
     # I can construct a parser object either with an array of lines
@@ -110,11 +121,20 @@ module Orgmode
             end
             table_header_set = false if !line.table?
             mode = :code if line.begin_block? and line.block_type == "EXAMPLE"
+            mode = :block_comment if line.begin_block? and line.block_type == "COMMENT"
             if (@current_headline) then
               @current_headline.body_lines << line
             else
               @header_lines << line
             end
+          end
+
+        when :block_comment
+          line = Line.new line, self
+          if line.end_block? and line.block_type == "COMMENT"
+            mode = :normal
+          else
+            line.assigned_paragraph_type = :comment
           end
 
         when :code
@@ -159,7 +179,9 @@ module Orgmode
       export_options = {
         :decorate_title => true,
         :export_heading_number => export_heading_number?,
-        :export_todo => export_todo?
+        :export_todo => export_todo?,
+        :use_sub_superscripts =>  use_sub_superscripts?,
+        :export_footnotes => export_footnotes?
       }
       export_options[:skip_tables] = true if not export_tables?
       output = ""
@@ -204,29 +226,29 @@ module Orgmode
         output_buffer.prepare(line)
 
         case line.paragraph_type
-        when :metadata, :table_separator, :blank
+        when :metadata, :table_separator, :blank, :comment
 
           output_buffer << line.line if output_buffer.preserve_whitespace?          
 
-        when :comment
-          
-          if line.begin_block?
-            output_buffer.push_mode(:blockquote) if line.block_type.casecmp("QUOTE") == 0
-            output_buffer.push_mode(:src) if line.block_type.casecmp("SRC") == 0
-            output_buffer.push_mode(:example) if line.block_type.casecmp("EXAMPLE") == 0
-          elsif line.end_block?
-            output_buffer.pop_mode(:blockquote) if line.block_type.casecmp("QUOTE")==0
-            output_buffer.pop_mode(:src) if line.block_type.casecmp("SRC")==0
-            output_buffer.pop_mode(:example) if line.block_type.casecmp("EXAMPLE")==0
-          else
-            output_buffer << line.line if output_buffer.preserve_whitespace?
-          end
+        when :begin_block
+
+          output_buffer.push_mode(:blockquote) if line.block_type.casecmp("QUOTE") == 0
+          output_buffer.push_mode(:src) if line.block_type.casecmp("SRC") == 0
+          output_buffer.push_mode(:example) if line.block_type.casecmp("EXAMPLE") == 0
+          output_buffer.push_mode(:center) if line.block_type.casecmp("CENTER") == 0
+
+        when :end_block
+
+          output_buffer.pop_mode(:blockquote) if line.block_type.casecmp("QUOTE") == 0
+          output_buffer.pop_mode(:src) if line.block_type.casecmp("SRC") == 0
+          output_buffer.pop_mode(:example) if line.block_type.casecmp("EXAMPLE") == 0
+          output_buffer.pop_mode(:center) if line.block_type.casecmp("CENTER") == 0
 
         when :table_row, :table_header
 
           output_buffer << line.line.lstrip
 
-        when :unordered_list, :ordered_list
+        when :unordered_list, :ordered_list, :definition_list
           
           output_buffer << line.output_text << " "
 
@@ -245,6 +267,7 @@ module Orgmode
       end
       output_buffer.flush!
       output_buffer.pop_mode until output_buffer.current_mode == :normal
+      output_buffer.output_footnotes!
       output_buffer.output
     end
 
