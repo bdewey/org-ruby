@@ -56,7 +56,7 @@ module Orgmode
       ordered_list? or unordered_list?
     end
 
-    UnorderedListRegexp = /^\s*(-|\+)\s*/
+    UnorderedListRegexp = /^\s*(-|\+)\s+/
 
     def unordered_list?
       check_assignment_or_regexp(:unordered_list, UnorderedListRegexp)
@@ -66,7 +66,7 @@ module Orgmode
       @line.sub(UnorderedListRegexp, "")
     end
 
-    OrderedListRegexp = /^\s*\d+(\.|\))\s*/
+    OrderedListRegexp = /^\s*\d+(\.|\))\s+/
 
     def ordered_list?
       check_assignment_or_regexp(:ordered_list, OrderedListRegexp)
