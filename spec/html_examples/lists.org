@@ -34,3 +34,14 @@ And this is a paragraph *after* the list.
    - This is a single-line list.
    And this is a *separate paragraph.* Note the indentation in the org
    file.
+   
+** Invalid lists
+
+   Note that spaces are required to denote lists. Thus, none of the following
+   should get recognized as lists.
+   
+   -This isn't a list.
+   -And this isn't a list.
+   
+   1.And this isn't a list.
+   2.And this isn't a list.
