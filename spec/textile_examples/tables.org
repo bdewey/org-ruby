@@ -24,3 +24,27 @@ Different types of ORG tables.
   | Seven | Eight | Nine  |
 
   The separator row should not get printed out.
+
+* Table with complete box
+
+  |-------+-------+-------|
+  | One   | Two   | Three |
+  |-------+-------+-------|
+  | Four  | Five  | Six   |
+  | Seven | Eight | Nine  |
+  |-------+-------+-------|
+
+  Only the first row should be a header row.
+
+* Table with extra lines
+
+  |-------+--------+--------|
+  | One   | Two    | Three  |
+  |-------+--------+--------|
+  | Four  | Five   | Six    |
+  | Seven | Eight  | Nine   |
+  |-------+--------+--------|
+  | Ten   | Eleven | Twelve |
+  |-------+--------+--------|
+
+  Only the first row should be a header row.
