@@ -1,0 +1,56 @@
+<p class="title">advanced-code.org</p>
+<p>Turns out there&#8217;s more way to do code than just BEGIN_EXAMPLE.</p>
+<h1><span class="heading-number heading-number-1">1 </span>Inline examples</h1>
+<p>This should work:</p>
+<pre class="example">
+   fixed width? how does this work?   
+                         ...........
+                        ............
+                                   .
+                        .  .   .   .
+                        .          ..
+                        ....... .....
+                            .  .
+                            ....
+</pre>
+<p>Two ASCII blobs.</p>
+<h1><span class="heading-number heading-number-1">2 </span>BEGIN_SRC</h1>
+<pre class="example">
+PROPERTIES:
+ARCHIVE_TIME: 2009-12-26 Sat 22:16
+ARCHIVE_FILE: ~/brians-brain/content/projects/orgmode_parser.org
+ARCHIVE_OLPATH: &amp;lt;%= @page.title %&amp;gt;/Future Development
+ARCHIVE_CATEGORY: orgmode_parser
+ARCHIVE_TODO: DONE
+END:
+</pre>
+<p>And this:</p>
+<pre class="src">
+    # Finds all emphasis matches in a string.
+    # Supply a block that will get the marker and body as parameters.
+    def match_all(str)
+      str.scan(@org_emphasis_regexp) do |match|
+        yield $2, $3
+      end
+    end
+</pre>
+<p>Now let&#8217;s test case-insensitive code blocks.</p>
+<pre class="src">
+    # Finds all emphasis matches in a string.
+    # Supply a block that will get the marker and body as parameters.
+    def match_all(str)
+      str.scan(@org_emphasis_regexp) do |match|
+        yield $2, $3
+      end
+    end
+</pre>
+<pre class="src">
+(def fib-seq
+  (concat
+   [0 1]
+   ((fn rfib [a b]
+        (lazy-cons (+ a b) (rfib b (+ a b)))) 0 1)))
+ 
+user&gt; (take 20 fib-seq)
+(0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1597 2584 4181)
+</pre>

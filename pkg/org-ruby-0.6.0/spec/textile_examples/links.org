@@ -1,0 +1,11 @@
+LINKS
+
+[[http://www.bing.com]]
+
+* Supported Link Styles
+
+  - [[http://www.hotmail.com]] => Simple
+  - [[http://www.hotmail.com][Hotmail]] => With link text
+  - [[http://url/with spaces][with spaces]]
+  - [[http://url/with spaces]]
+

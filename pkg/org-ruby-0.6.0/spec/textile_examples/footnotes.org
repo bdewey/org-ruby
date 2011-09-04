@@ -1,0 +1,7 @@
+#+TITLE: Footnotes
+#+OPTIONS: f:t
+
+Hello[fn:abc]
+World[fn:abc:definition of abc]
+
+Bfoo[fn:1:*blub*]

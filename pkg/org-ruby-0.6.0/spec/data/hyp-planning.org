@@ -1,0 +1,335 @@
+#+TITLE:     Introduction to Hyper-V Pre-Planning and Planning
+#+AUTHOR:    Brian Dewey
+#+EMAIL:     bdewey@microsoft.com
+#+DATE:      December 9, 2009
+#+DESCRIPTION: 
+#+KEYWORDS: 
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:nil
+#+OPTIONS:   TeX:t LaTeX:nil skip:nil d:nil todo:nil pri:nil tags:nil
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+
+* DONE Introduction
+  CLOSED: [2009-12-09 Wed 15:18]
+  CLOCK: [2009-12-09 Wed 15:00]--[2009-12-09 Wed 15:18] =>  0:18
+  CLOCK: [2009-12-09 Wed 10:02]--[2009-12-09 Wed 10:14] =>  0:12
+
+  The pre-planning activities for Hyper-V proceeded in three
+  phases. In the first phase, we identified and wrote down a set of
+  /business value propositions./ These are things we could pitch to
+  customers as new value they would get from using Windows 8. To wrap
+  up phase one, we worked with Mike Neil's team in Windows Server to
+  rank the business value propositions. This step ensured that COSD
+  and Windows Server operated from a common, agreed-upon set of
+  priorities.
+
+  For the second phase of pre-planning, we brainstormed all of the
+  features we would need to implement to deliver on the value
+  propositions from phase one. We captured a short description of each
+  potential feature in a one-page spec.
+
+  In the final phase of pre-planning, the dev team estimated how much
+  dev effort would be required to implement each feature.
+
+  By the numbers, our pre-planning work generated:
+
+  - 19 different value propositions
+
+  - 159 one-page specs 
+
+  - A 770-line spreadsheet containing dev estimates
+
+  - 4.5 times the amount of dev work than we can tackle in a single release
+
+  Moving from pre-planning to planning, our objective has been to
+  understand and to shape overall Windows priorities so we can pick
+  the /right/ 20% of work to commit to for Windows 8.
+
+  This document gives an overview of the different pre-planning
+  activities we did. It provides pointers to the pre-planning
+  artefacts we produced and shows how we've been able to map our
+  pre-planning work into planning.
+
+* Business Value Propositions
+  CLOCK: [2009-12-07 Mon 09:09]--[2009-12-07 Mon 09:50] =>  0:41
+  CLOSED: [2009-12-01 Tue 10:52]
+
+  One of the first pre-planning activities we did in Hyper-V was
+  define a set of /business value propositions/ (BVPs). A business value
+  proposition is an end-to-end hook that can convince a customer that
+  Windows 8 is worth buying. 
+
+  Our BVPs are stored in the [[http://windows/hyper-v/initiatives/Value%20Propositions/Forms/AllItems.aspx][Hyper-V Portal]].
+
+** Anatomy of a BVP
+
+   Each BVP followed a simple, one-page template with the following
+   parts:
+   
+   - Customer Summary
+   - Storyboard
+   - Requirements
+   - Partner teams
+
+   The following sections walk through each section and give an
+   example from one of our BVPs, [[http://windows/hyper-v/initiatives/Value Propositions/DynamicDatacenter-ValueProp.docx][Resource-Smart Virtualization
+   Infrastructure]] (also called /Dynamic Datacenter/).
+   
+
+*** Customer Summary
+
+    The /customer summary/ section is a one-sentence description of
+    the customer value proposition, written from the customer's point
+    of view. Each customer summary starts with the phrase, /I want.../
+    The purpose of this section is to make sure we can give a concise
+    description of what we expect the customer to accomplish.
+
+    #+BEGIN_QUOTE
+    /Example:/
+    
+    I want to add or remove computing resources to company owned
+    virtualization infrastructure automatically, on-demand in
+    response to rapidly changing business needs without any loss of
+    business availability.
+    #+END_QUOTE
+
+*** Storyboard
+
+    To help people understand the customer scenario, the /storyboard/
+    section walks through the steps the customer would take to get the
+    new value from Windows 8.
+
+    #+BEGIN_QUOTE
+    /Example:/
+
+    Comsco warehouse IT provides access to multitudes of different
+    workloads including database servers, LOB applications, and
+    homegrown three-tier distributed applications spread across two
+    sites. Tim, administrator at Comsco IT, wants to see VM life cycle
+    management (create, deploy, service, move and destroy) utilizing
+    their existing tools and want it to be more efficient process than
+    managing physical servers.  Tim wants Microsoft software to
+    automatically create new VM on server from a pool of physical
+    servers and deploy workload in the VM when combined criteria of
+    load balancing and resource utilization he defined are met. While
+    Tim will continue to monitor real-time usage and Joe, who works in
+    CIO office, wants historical trending of resource utilization of
+    CPU, memory, power, storage, network bandwidth, storage bandwidth
+    and backup bandwidth for selected VMs and workloads across all the
+    servers. Based on historical trend analysis, Tim receives business
+    logic requirements from the office of CIO and he defines per VM
+    multi dimensional policy in Microsoft software to automatically
+    control resource usage allocation, resource prioritization and
+    resource move for above resource types.  Tim also wants to service
+    storage hardware without any downtime to running workloads.  Tim
+    wants MS software to freely move workloads between his primary
+    site and across the town secondary site as needed without any
+    downtime.
+    #+END_QUOTE
+
+*** Requirements
+
+    This section captures the core requirements for delivering the
+    customer value. Knowing we would not be able to do everything, we
+    categorized requirements into those needed for delivering good
+    value, a better value, and best value. To minimize the
+    randomization that could come from the bucketing, we identified
+    the customers who would be satisfied by a given level of value.
+
+    #+BEGIN_QUOTE
+
+    /Example:/
+
+    | Target Level | Customer                                | Example Requirements                          |
+    |--------------+-----------------------------------------+-----------------------------------------------|
+    | Good         | Large/medium enterprises                | Storage migration with zero business downtime |
+    | Better       | Early adopters at the Dyanmic I/O model | VM migration for load balancing               |
+    | Best         | Hosters                                 | Chargeback infrastructure                     |
+
+    #+END_QUOTE
+
+
+    
+
+*** Partner teams
+
+    Because BVPs describe end-to-end value, none can be delivered just
+    from the Hyper-V team. This section notes the partner teams we
+    would need to reach out to.
+
+    #+BEGIN_QUOTE
+    /Example:/
+
+    SCVMM, Failover clustering, Kernel, Intel & AMD
+    #+END_QUOTE
+
+** BVP Ranking
+
+   Working with Mike Neil's team, the Hyper-V trio and PM leads ranked
+   the BVPs based on the information we'd gathered through CFD
+   sessions and on the importance of competing with VMWare. The
+   consensus opinion is stored in a spreadsheet [[http://windows/hyper-v/initiatives/Value Propositions/ValueProposition-BucketTemplate-Master.xlsx][here]].
+
+   For each BVP, we also identified the target value level -- would we
+   aim for good value, better value, or best value?
+
+   Here's our ranked BVP list.
+
+| Value Proposition                            | Customer Statement                                                                                                                                                                                                                                                                                                                                                                                                                   | Target Bucket |
+|----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------|
+| Resource-Smart Virtualization Infrastructure | I want to add or remove computing resources to company owned virtualization infrastructure automatically, on-demand in response to rapidly changing business needs without any loss of business availability.                                                                                                                                                                                                                        | Best          |
+| Server High Availability                     | I want to ensure that my server applications are highly available.                                                                                                                                                                                                                                                                                                                                                                   | Better        |
+| Server Disaster Recovery                     | I want to ensure my business can quickly resume operations in the event of a disaster.                                                                                                                                                                                                                                                                                                                                               | Better        |
+| Platform Extensibility                       | I want a rich ecosystem so I'm not locked into a single vendor for storage, networking, etc.                                                                                                                                                                                                                                                                                                                                         | Better        |
+| Hosting                                      | I need to be able to deploy thousands of physical servers into one or more farms dedicated for hosting. Provisioning of virtual machines must integrate fully into my back end network topology. Virtual machines must have strong network isolation. I must be able to monitor, change, charge for and throttle usage dynamically. I must be able to move virtual machines to another server in my farm with little or no downtime. | Better        |
+| Scale Up                                     | I want to get the maximum utilization from my hardware investment.                                                                                                                                                                                                                                                                                                                                                                   | Better        |
+| VDI                                          | I want to control cost by deploying thin desktops and letting employees connect to a completely virtualized desktop.                                                                                                                                                                                                                                                                                                                 | Better        |
+| Cloud Integration                            | I want to be able to dynamically enable movement of workloads between on premise and off premise without changing the operational or application model.                                                                                                                                                                                                                                                                              | Better        |
+| Security                                     | I want to enhance the security of my system by making it more difficult for malicious programs to attack my operating system core.                                                                                                                                                                                                                                                                                                   | Good          |
+| Deployment                                   | I want to increase efficiency in managing my datacenter & desktop infrastructure.                                                                                                                                                                                                                                                                                                                                                    | Better        |
+| Green IT                                     | I want to increase energy efficiency in my datacenter infrastructure.                                                                                                                                                                                                                                                                                                                                                                | Good          |
+| Server test/dev                              | I want to quickly and easily create and test server applications.                                                                                                                                                                                                                                                                                                                                                                    | Good          |
+| Appliance Development Model                  | I want to reduce development costs by shipping a server application in a pre-configured VM.                                                                                                                                                                                                                                                                                                                                          | Good          |
+| Application Compatibility                    | I want users to have access to old applications even when I upgrade their desktop operating systems.                                                                                                                                                                                                                                                                                                                                 | Cut           |
+| Client test/dev                              | I want to quickly and easily create and test desktop applications                                                                                                                                                                                                                                                                                                                                                                    | Cut           |
+| Integration Testing                          | I want to quickly and easily test new applications and updates before deploying them                                                                                                                                                                                                                                                                                                                                                 | Cut           |
+| Employee-owned hardware                      | I want to let employees use their own hardware to run corporate applications and connect to the corporate network in a secure way.                                                                                                                                                                                                                                                                                                   | Cut           |
+
+
+* DONE One-Page Specs
+  SCHEDULED: <2009-12-07 Mon> CLOSED: [2009-12-07 Mon 16:39]
+  CLOCK: [2009-12-07 Mon 16:26]--[2009-12-07 Mon 16:39] =>  0:13
+
+  Armed with the prioritized list of customer value propositions to
+  consider for Windows 8, we started work on the next level of detail:
+  What features would we need to implement to deliver the value
+  proposition? Two main tasks refined our thinking in this
+  area. First, we brainstormed all of the features required to deliver
+  the target level of value in the BVP. Then, to reduce ambiguity, we
+  wrote a /one page spec/ for each feature. What exactly does
+  /cross-cluster live migration/ mean? The one-page spec tells
+  you. The goal of the one page spec was to capture just enough
+  information that a developer could estimate how expensive the
+  feature would be to implement. Our one-page spec library is [[http://windows/hyper-v/w8/Specs/Forms/AllItems.aspx][here]].
+
+  #+BEGIN_QUOTE
+
+  /Example: Cross-cluster live migration/
+
+  Key customer scenario: An enterprise is building large scale Hyper-V
+  based infrastructure to run vast majority of server workloads with
+  High-Availability is a requirement.  Customer builds multiple
+  clusters for one or more of the following business needs:
+
+# NOTE, for formatting reasons, don't fill the following.
+
+  - To keep cluster size to be manageable based on preconceived perception of node failure time is linearly proportional to cluster size,
+  - Due to increased business need they need to build new cluster once maximum supported cluster size is reached,
+  - There are departmental clusters and temporarily there is a need to use extra capacity of a cluster when one cluster experiences capacity peaks.
+
+  Customer would like ability to live migrate, quick migrate or move
+  VMs from one cluster to other cluster for above mentioned needs.
+
+  The goal is to provide more flexibility in VM mobility space without
+  cluster as a boundary.  Hyper-V needs to perform two operations in a
+  transaction:
+
+  - Live migrate VM from one cluster node to destination cluster node.
+  - Live migrate VM’s storage from one cluster’s shared storage to another cluster’s shared storage.
+
+
+  If any of the above fails, VM must continue to run on the source
+  node.
+
+  A user should be able to orchestrate live migration through Hyper-V
+  manager, Failover cluster UI, WMI or Powershell.
+
+  Live migration should perform necessary checks to ensure live
+  migration requirements are met.  Some of the examples in addition to
+  other migration checks are, performing estimation of time to migrate
+  VM, access to the VM storage and same IP network on destination to
+  ensure VM will be able to migrate successfully without dropping a
+  TCP connection. If Hyper-V cannot reliably guaranty retaining TCP
+  connection live migration should fail and must ensure VM continues
+  to run on source node.
+
+  Administrator should be able to set cluster wide, Hyper-V wide or
+  per VM policies around allowing or denying live migrating one or
+  more VMs from one cluster to any particular cluster or any other
+  cluster.
+
+  User experience and workflow of orchestrating live migration within
+  a cluster or across the cluster site should be the same.
+
+
+  #+END_QUOTE
+* DONE Feature SWAGS
+  CLOSED: [2009-12-09 Wed 08:57]
+  CLOCK: [2009-12-09 Wed 08:46]--[2009-12-09 Wed 08:57] =>  0:11
+
+  SCHEDULED: <2009-12-07 Mon>
+
+  Using the one-page specs, the dev team estimated the dev time it
+  would take to implement each feature identified to deliver on the
+  business value propositions. The estimates are kept in this
+  [[http://windows/hyper-v/w8/BVP/BVP%20Feature%20Expansion.xlsx][spreadsheet]]. The estimaes are fine-grained. To stretch an analogy,
+  instead of t-shirt sizes, we've got estimates of the yards of thread
+  required to make the t-shirt. For each feature we identified in the
+  BVP process, the dev team estimated how to break apart the work and
+  estimated the number of weeks of senior, mid-level, and junior dev
+  time it would take to implement the feature.
+
+  The key conclusion from the exercise: Our eyes are *way* bigger than
+  our wallets. In the BVP process, we identified about five times as
+  much work as we will be able to deliver in Windows 8.
+
+
+* DONE Moving From Pre-Planning to Planning
+  CLOSED: [2009-12-09 Wed 15:20]
+  CLOCK: [2009-12-09 Wed 09:56]--[2009-12-09 Wed 10:01] =>  0:05
+  CLOCK: [2009-12-09 Wed 09:00]--[2009-12-09 Wed 09:01] =>  0:01
+
+  Pre-planning identified a significant amount of work we /could/ do
+  in Windows 8. Our challenge in planning has been to identify the 20%
+  of the work on our list that best aligns with the overall Windows
+  vision, so we can commit to this as work we /will/ do for Windows 8.
+
+  The business value propositions we defined in pre-planning lined up
+  well with planning themes & subthemes. As we moved from pre-planning
+  to planning, we narrowed down the list of BVPs that we focused on,
+  and we worked through the established theme & subtheme
+  planning. Through the Windows planning process, we have been able to
+  work with our partner teams to find alignment on priorities.
+
+  The following table shows how we mapped our BVPs to planning themes
+  for the planning process.
+
+   | BVP                                                                      | Planning Theme (Subtheme)                                                              |
+   |--------------------------------------------------------------------------+----------------------------------------------------------------------------------------|
+   | Resource-Smart Virtualization Infrastructure, Hosting, Cloud Integration | Infrastructure Scaled for SMB, Enterprise, & Service Providers (Hosted Private Clouds) |
+   | Server High Availability                                                 | Continuous Availability (Contiuous Availability)                                       |
+   | Server Disaster Recovery                                                 | Continuous Availability (Business Continuity)                                          |
+   | Platform Extensibility                                                   | Big Bet: Scale for Datacenters                                                         |
+   | Scale Up, Green IT                                                       | Infrastructure Scaled... (Leverage the Hardware Ecosystem)                             |
+   | VDI                                                                      | Work Anywhere (Centralized Desktops)                                                   |
+   | Deployment                                                               | Management (Solution Deployment)                                                       |
+   | Server test/dev, Client test/dev                                         | Streamline the developer experience *or* Desktop for enthusiasts                       |
+   | Appliance Development Model                                              | Infrastructure Scaled... (Virtual Appliance for Partners)                              |
+
+
+  
+
+* TODO Conclusion
+
+  Because of our pre-planning work, we've had good alignment between
+  COSD (and now Windows Core) and Windows Server on overall Hyper-V
+  priorities and directions. The work on estimating feature costs has
+  enabled us to set realistic expectations on the scope of work we can
+  deliver in Windows 8. Taken together, our pre-planning work should
+  have made Hyper-V a more predictable and transparent partner team to
+  work with in the planning process.
+

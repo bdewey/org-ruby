@@ -1,0 +1,639 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+
+  <title>Class: Orgmode::RegexpHelper</title>
+
+  <link rel="stylesheet" href="../rdoc.css" type="text/css" media="screen" />
+
+  <script src="../js/jquery.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../js/thickbox-compressed.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../js/quicksearch.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../js/darkfish.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+<body id="top" class="class">
+
+  <div id="metadata">
+    <div id="home-metadata">
+      <div id="home-section" class="section">
+        <h3 class="section-header">
+          <a href="../index.html">Home</a>
+          <a href="../index.html#classes">Classes</a>
+          <a href="../index.html#methods">Methods</a>
+        </h3>
+      </div>
+    </div>
+
+    <div id="file-metadata">
+      <div id="file-list-section" class="section">
+        <h3 class="section-header">In Files</h3>
+        <div class="section-body">
+          <ul>
+          
+            <li><a href="../lib/org-ruby/regexp_helper_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="lib/org-ruby/regexp_helper.rb">lib/org-ruby/regexp_helper.rb</a></li>
+          
+          </ul>
+        </div>
+      </div>
+
+      
+    </div>
+
+    <div id="class-metadata">
+      
+      <!-- Parent Class -->
+      <div id="parent-class-section" class="section">
+        <h3 class="section-header">Parent</h3>
+        
+        <p class="link">Object</p>
+        
+      </div>
+      
+
+      
+
+      
+
+      
+      <!-- Method Quickref -->
+      <div id="method-list-section" class="section">
+        <h3 class="section-header">Methods</h3>
+        <ul class="link-list">
+          
+          <li><a href="#method-c-new">::new</a></li>
+          
+          <li><a href="#method-i-match_all">#match_all</a></li>
+          
+          <li><a href="#method-i-rewrite_emphasis">#rewrite_emphasis</a></li>
+          
+          <li><a href="#method-i-rewrite_footnote">#rewrite_footnote</a></li>
+          
+          <li><a href="#method-i-rewrite_images">#rewrite_images</a></li>
+          
+          <li><a href="#method-i-rewrite_links">#rewrite_links</a></li>
+          
+          <li><a href="#method-i-rewrite_subp">#rewrite_subp</a></li>
+          
+        </ul>
+      </div>
+      
+
+      
+    </div>
+
+    <div id="project-metadata">
+      
+      
+      <div id="fileindex-section" class="section project-section">
+        <h3 class="section-header">Files</h3>
+        <ul>
+        
+          <li class="file"><a href="../History_txt.html">History.txt</a></li>
+        
+          <li class="file"><a href="../README_rdoc.html">README.rdoc</a></li>
+        
+          <li class="file"><a href="../announcement_txt.html">announcement.txt</a></li>
+        
+        </ul>
+      </div>
+      
+
+      <div id="classindex-section" class="section project-section">
+        <h3 class="section-header">Class/Module Index
+          <span class="search-toggle"><img src="../images/find.png"
+            height="16" width="16" alt="[+]"
+            title="show/hide quicksearch" /></span></h3>
+        <form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+        <fieldset>
+          <legend>Quicksearch</legend>
+          <input type="text" name="quicksearch" value=""
+            class="quicksearch-field" />
+        </fieldset>
+        </form>
+
+        <ul class="link-list">
+        
+          <li><a href="../Orgmode.html">Orgmode</a></li>
+        
+          <li><a href="../Orgmode/Headline.html">Orgmode::Headline</a></li>
+        
+          <li><a href="../Orgmode/HtmlOutputBuffer.html">Orgmode::HtmlOutputBuffer</a></li>
+        
+          <li><a href="../Orgmode/Line.html">Orgmode::Line</a></li>
+        
+          <li><a href="../Orgmode/OutputBuffer.html">Orgmode::OutputBuffer</a></li>
+        
+          <li><a href="../Orgmode/Parser.html">Orgmode::Parser</a></li>
+        
+          <li><a href="../Orgmode/RegexpHelper.html">Orgmode::RegexpHelper</a></li>
+        
+          <li><a href="../Orgmode/TextileOutputBuffer.html">Orgmode::TextileOutputBuffer</a></li>
+        
+          <li><a href="../OrgRuby.html">OrgRuby</a></li>
+        
+        </ul>
+        <div id="no-class-search-results" style="display: none;">No matching classes.</div>
+      </div>
+
+      
+    </div>
+  </div>
+
+  <div id="documentation">
+    <h1 class="class">Orgmode::RegexpHelper</h1>
+
+    <div id="description" class="description">
+      
+<h1>Summary</h1>
+
+<p>This class contains helper routines to deal with the Regexp “black
+magic” you need to properly parse org-mode files.</p>
+
+<h1>Key methods</h1>
+<ul><li>
+<p>Use <tt><a
+href="RegexpHelper.html#method-i-rewrite_emphasis">rewrite_emphasis</a></tt>
+to replace org-mode emphasis strings (e.g., /italic/) with the suitable
+markup for the output.</p>
+</li><li>
+<p>Use <tt><a
+href="RegexpHelper.html#method-i-rewrite_links">rewrite_links</a></tt> to
+get a chance to rewrite all org-mode links with suitable markup for the
+output.</p>
+</li><li>
+<p>Use <tt><a
+href="RegexpHelper.html#method-i-rewrite_images">rewrite_images</a></tt> to
+rewrite all inline image links with suitable markup for the output.</p>
+</li></ul>
+
+    </div><!-- description -->
+
+    
+    <div id="5Buntitled-5D" class="documentation-section">
+      
+
+      
+
+      
+
+      
+      <!-- Attributes -->
+      <div id="attribute-method-details" class="method-section section">
+        <h3 class="section-header">Attributes</h3>
+
+        
+        <div id="body_regexp-attribute-method" class="method-detail">
+          <a name="body_regexp"></a>
+          
+          <div class="method-heading attribute-method-heading">
+            <span class="method-name">body_regexp</span><span
+              class="attribute-access-type">[R]</span>
+          </div>
+
+          <div class="method-description">
+          
+          
+          
+          </div>
+        </div>
+        
+        <div id="border_forbidden-attribute-method" class="method-detail">
+          <a name="border_forbidden"></a>
+          
+          <div class="method-heading attribute-method-heading">
+            <span class="method-name">border_forbidden</span><span
+              class="attribute-access-type">[R]</span>
+          </div>
+
+          <div class="method-description">
+          
+          
+          
+          </div>
+        </div>
+        
+        <div id="markers-attribute-method" class="method-detail">
+          <a name="markers"></a>
+          
+          <div class="method-heading attribute-method-heading">
+            <span class="method-name">markers</span><span
+              class="attribute-access-type">[R]</span>
+          </div>
+
+          <div class="method-description">
+          
+          
+          
+          </div>
+        </div>
+        
+        <div id="org_emphasis_regexp-attribute-method" class="method-detail">
+          <a name="org_emphasis_regexp"></a>
+          
+          <div class="method-heading attribute-method-heading">
+            <span class="method-name">org_emphasis_regexp</span><span
+              class="attribute-access-type">[R]</span>
+          </div>
+
+          <div class="method-description">
+          
+          
+          
+          </div>
+        </div>
+        
+        <div id="post_emphasis-attribute-method" class="method-detail">
+          <a name="post_emphasis"></a>
+          
+          <div class="method-heading attribute-method-heading">
+            <span class="method-name">post_emphasis</span><span
+              class="attribute-access-type">[R]</span>
+          </div>
+
+          <div class="method-description">
+          
+          
+          
+          </div>
+        </div>
+        
+        <div id="pre_emphasis-attribute-method" class="method-detail">
+          <a name="pre_emphasis"></a>
+          
+          <div class="method-heading attribute-method-heading">
+            <span class="method-name">pre_emphasis</span><span
+              class="attribute-access-type">[R]</span>
+          </div>
+
+          <div class="method-description">
+          
+          <p>EMPHASIS</p>
+
+<p>I figure it’s best to stick as closely to the elisp implementation as
+possible for emphasis. org.el defines the regular expression that is used
+to apply “emphasis” (in my terminology, inline formatting instead of
+block formatting). Here’s the documentation from org.el.</p>
+
+<p>Terminology: In an emphasis string like “ *strong word* ”, we call the
+initial space PREMATCH, the final space POSTMATCH, the stars MARKERS,
+“s” and “d” are BORDER characters and “trong wor” is the body. 
+The different components in this variable specify what is allowed/forbidden
+in each part:</p>
+
+<p>pre          Chars allowed as prematch.  <a href="Line.html">Line</a>
+beginning allowed, too. post         Chars allowed as postmatch.  <a
+href="Line.html">Line</a> end will be allowed too. border       The chars
+<b>forbidden</b> as border characters. body-regexp  A regexp like "." to
+match a body character.  Don’t use</p>
+
+<pre>non-shy groups here, and don't allow newline here.</pre>
+
+<p>newline      The maximum number of newlines allowed in an emphasis exp.</p>
+
+<p>I currently don’t use <tt>newline</tt> because I’ve thrown this
+information away by this point in the code. TODO – revisit?</p>
+          
+          </div>
+        </div>
+        
+      </div><!-- attribute-method-details -->
+      
+
+      <!-- Methods -->
+      
+      <div id="public-class-method-details" class="method-section section">
+        <h3 class="section-header">Public Class Methods</h3>
+
+      
+        <div id="new-method" class="method-detail ">
+          <a name="method-c-new"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">new</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="new-source">
+<pre>
+<span class="ruby-comment"># File lib/org-ruby/regexp_helper.rb, line 53</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>
+  <span class="ruby-comment"># Set up the emphasis regular expression.</span>
+  <span class="ruby-ivar">@pre_emphasis</span> = <span class="ruby-string">&quot; \t\\('\&quot;&quot;</span>
+  <span class="ruby-ivar">@post_emphasis</span> = <span class="ruby-string">&quot;- \t.,:!?;'\&quot;\\)&quot;</span>
+  <span class="ruby-ivar">@border_forbidden</span> = <span class="ruby-string">&quot; \t\r\n,\&quot;'&quot;</span>
+  <span class="ruby-ivar">@body_regexp</span> = <span class="ruby-string">&quot;.*?&quot;</span>
+  <span class="ruby-ivar">@markers</span> = <span class="ruby-string">&quot;*/_=~+&quot;</span>
+  <span class="ruby-ivar">@logger</span> = <span class="ruby-constant">Logger</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">STDERR</span>)
+  <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">level</span> = <span class="ruby-constant">Logger</span><span class="ruby-operator">::</span><span class="ruby-constant">WARN</span>
+  <span class="ruby-identifier">build_org_emphasis_regexp</span>
+  <span class="ruby-identifier">build_org_link_regexp</span>
+  <span class="ruby-ivar">@org_subp_regexp</span> = <span class="ruby-regexp">/([_^])\{(.*?)\}/</span>
+  <span class="ruby-ivar">@org_footnote_regexp</span> = <span class="ruby-regexp">/\[fn:(.+?)(:(.*?))?\]/</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- new-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- new-method -->
+
+      
+      </div><!-- public-class-method-details -->
+    
+      <div id="public-instance-method-details" class="method-section section">
+        <h3 class="section-header">Public Instance Methods</h3>
+
+      
+        <div id="match_all-method" class="method-detail ">
+          <a name="method-i-match_all"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">match_all</span><span
+              class="method-args">(str)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Finds all emphasis matches in a string. Supply a block that will get the
+marker and body as parameters.</p>
+            
+
+            
+            <div class="method-source-code" id="match_all-source">
+<pre>
+<span class="ruby-comment"># File lib/org-ruby/regexp_helper.rb, line 70</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">match_all</span>(<span class="ruby-identifier">str</span>)
+  <span class="ruby-identifier">str</span>.<span class="ruby-identifier">scan</span>(<span class="ruby-ivar">@org_emphasis_regexp</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">match</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">yield</span> <span class="ruby-node">$2</span>, <span class="ruby-node">$3</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- match_all-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- match_all-method -->
+
+      
+        <div id="rewrite_emphasis-method" class="method-detail ">
+          <a name="method-i-rewrite_emphasis"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">rewrite_emphasis</span><span
+              class="method-args">(str)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Compute replacements for all matching emphasized phrases. Supply a block
+that will get the marker and body as parameters; return the replacement
+string from your block.</p>
+
+<h1>Example</h1>
+
+<pre>re = RegexpHelper.new
+result = re.rewrite_emphasis(&quot;*bold*, /italic/, =code=&quot;) do |marker, body|
+    &quot;&lt;#{map[marker]}&gt;#{body}&lt;/#{map[marker]}&gt;&quot;
+end</pre>
+
+<p>In this example, the block body will get called three times:</p>
+<ol><li>
+<p>Marker: “*”, body: “bold”</p>
+</li><li>
+<p>Marker: “/”, body: “italic”</p>
+</li><li>
+<p>Marker: “=”, body: “code”</p>
+</li></ol>
+
+<p>The return from this block is a string that will be used to replace
+“<b>bold</b>”, “/italic/”, and “=code=”, respectively. (Clearly
+this sample string will use HTML-like syntax, assuming <tt>map</tt> is
+defined appropriately.)</p>
+            
+
+            
+            <div class="method-source-code" id="rewrite_emphasis-source">
+<pre>
+<span class="ruby-comment"># File lib/org-ruby/regexp_helper.rb, line 97</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">rewrite_emphasis</span>(<span class="ruby-identifier">str</span>)
+  <span class="ruby-identifier">str</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-ivar">@org_emphasis_regexp</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">match</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">inner</span> = <span class="ruby-keyword">yield</span> <span class="ruby-node">$2</span>, <span class="ruby-node">$3</span>
+    <span class="ruby-node">&quot;#{$1}#{inner}#{$4}&quot;</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- rewrite_emphasis-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- rewrite_emphasis-method -->
+
+      
+        <div id="rewrite_footnote-method" class="method-detail ">
+          <a name="method-i-rewrite_footnote"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">rewrite_footnote</span><span
+              class="method-args">(str)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>rewrite footnotes</p>
+            
+
+            
+            <div class="method-source-code" id="rewrite_footnote-source">
+<pre>
+<span class="ruby-comment"># File lib/org-ruby/regexp_helper.rb, line 112</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">rewrite_footnote</span>(<span class="ruby-identifier">str</span>) <span class="ruby-comment"># :yields: name, definition or nil</span>
+  <span class="ruby-identifier">str</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-ivar">@org_footnote_regexp</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">match</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">yield</span> <span class="ruby-node">$1</span>, <span class="ruby-node">$3</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- rewrite_footnote-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- rewrite_footnote-method -->
+
+      
+        <div id="rewrite_images-method" class="method-detail ">
+          <a name="method-i-rewrite_images"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">rewrite_images</span><span
+              class="method-args">(str)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Rewrites all of the inline image tags.</p>
+            
+
+            
+            <div class="method-source-code" id="rewrite_images-source">
+<pre>
+<span class="ruby-comment"># File lib/org-ruby/regexp_helper.rb, line 153</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">rewrite_images</span>(<span class="ruby-identifier">str</span>) <span class="ruby-comment">#  :yields: image_link</span>
+  <span class="ruby-identifier">str</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-ivar">@org_img_regexp</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">match</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">yield</span> <span class="ruby-node">$1</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- rewrite_images-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- rewrite_images-method -->
+
+      
+        <div id="rewrite_links-method" class="method-detail ">
+          <a name="method-i-rewrite_links"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">rewrite_links</span><span
+              class="method-args">(str)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <h1>Summary</h1>
+
+<p>Rewrite org-mode links in a string to markup suitable to the output format.</p>
+
+<h1>Usage</h1>
+
+<p>Give this a block that expect the link and optional friendly text. Return
+how that link should get formatted.</p>
+
+<h1>Example</h1>
+
+<pre>re = RegexpHelper.new
+result = re.rewrite_links(&quot;[[http://www.bing.com]] and [[http://www.hotmail.com][Hotmail]]&quot;) do |link, text}
+    text ||= link
+    &quot;&lt;a href=\&quot;#{link}\&quot;&gt;#{text}&lt;/a&gt;&quot;
+ end</pre>
+
+<p>In this example, the block body will get called two times. In the first
+instance, <tt>text</tt> will be nil (the org-mode markup gives no friendly
+text for the link +<a href="http://www.bing.com">www.bing.com</a>+. In the
+second instance, the block will get text of <b>Hotmail</b> and the link +<a
+href="http://www.hotmail.com">www.hotmail.com</a>+. In both cases, the
+block returns an HTML-style link, and that is how things will get recorded
+in <tt>result</tt>.</p>
+            
+
+            
+            <div class="method-source-code" id="rewrite_links-source">
+<pre>
+<span class="ruby-comment"># File lib/org-ruby/regexp_helper.rb, line 143</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">rewrite_links</span>(<span class="ruby-identifier">str</span>) <span class="ruby-comment">#  :yields: link, text</span>
+  <span class="ruby-identifier">i</span> = <span class="ruby-identifier">str</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-ivar">@org_link_regexp</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">match</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">yield</span> <span class="ruby-node">$1</span>, <span class="ruby-keyword">nil</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">i</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-ivar">@org_link_text_regexp</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">match</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">yield</span> <span class="ruby-node">$1</span>, <span class="ruby-node">$2</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- rewrite_links-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- rewrite_links-method -->
+
+      
+        <div id="rewrite_subp-method" class="method-detail ">
+          <a name="method-i-rewrite_subp"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">rewrite_subp</span><span
+              class="method-args">(str)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>rewrite subscript and superscript (_{foo} and ^{bar})</p>
+            
+
+            
+            <div class="method-source-code" id="rewrite_subp-source">
+<pre>
+<span class="ruby-comment"># File lib/org-ruby/regexp_helper.rb, line 105</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">rewrite_subp</span>(<span class="ruby-identifier">str</span>) <span class="ruby-comment"># :yields: type (&quot;_&quot; for subscript and &quot;^&quot; for superscript), text</span>
+  <span class="ruby-identifier">str</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-ivar">@org_subp_regexp</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">match</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">yield</span> <span class="ruby-node">$1</span>, <span class="ruby-node">$2</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- rewrite_subp-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- rewrite_subp-method -->
+
+      
+      </div><!-- public-instance-method-details -->
+    
+    </div><!-- 5Buntitled-5D -->
+  
+
+  </div><!-- documentation -->
+
+  <div id="validator-badges">
+    <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+    <p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+      Rdoc Generator</a> 2</small>.</p>
+  </div>
+
+</body>
+</html>
+

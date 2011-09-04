@@ -1,0 +1,11 @@
+KEYWORDS 
+
+By default, I don't want keywords exported to textile. 
+
+h1. Recognize standard keywords
+
+The standard @orgmode@ keywords are TODO and DONE. Recognize those. 
+
+h1. Recongize buffer-specific keywords
+
+There's a way to define a custom keyword list in a buffer. Research that and handle it. 

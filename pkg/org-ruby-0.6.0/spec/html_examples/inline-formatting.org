@@ -1,0 +1,27 @@
+Inline Formatting
+
+I want to make sure I handle all inline formatting. I need to handle
+*bold*, /italic/, =code=, ~verbatim~, _underline_, +strikethrough+. 
+
+In addition, I need to make sure I can handle links. We've got simple
+links, like this:
+
+- [[http://www.bing.com]]
+- [[http://www.google.com]]
+- http://www.gmail.com
+
+Note the last one *is not* a link, as the source doesn't include it in
+double-brackets and I don't auto-recognize URLs.
+
+I should also handle links with [[http://www.xkcd.com][helpful text]].
+
+Helpful addition from [[https://github.com/punchagan][punchagan]], we now
+recognize when the link goes to an image and make the link anchor be the
+image, like this:
+
+- [[http://farm7.static.flickr.com/6078/6084185195_552aa270b2.jpg]]
+
+Also, if you make the descriptive text be an image, then it will get formatted
+with an image tag, like so:
+
+- [[http://www.xkcd.com][http://imgs.xkcd.com/comics/t_cells.png]]
