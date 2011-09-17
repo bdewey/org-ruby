@@ -144,11 +144,17 @@ module Orgmode
       i = str.gsub(@org_link_regexp) do |match|
         yield $1, nil
       end
-      i.gsub(@org_link_text_regexp) do |match|
-        yield $1, $2
+      if str =~ @org_angle_link_text_regexp
+        i.gsub(@org_angle_link_text_regexp) do |match|
+          yield "#{$2}:#{$3}", nil
+        end
+      else
+        i.gsub(@org_link_text_regexp) do |match|
+          yield $1, $2
+        end
       end
     end
-    
+
     # Rewrites all of the inline image tags.
     def rewrite_images(str) #  :yields: image_link
       str.gsub(@org_img_regexp) do |match|
@@ -180,6 +186,7 @@ module Orgmode
                                \]\[
                                  ([^\]]*) # This is the friendly text
                                \]\]/x
+      @org_angle_link_text_regexp = /(<|&lt;)(\w+):([^\]\t\n\r<> ][^\]\t\n\r<> ]*)(>|&gt;)/x
     end
   end                           # class Emphasis
 end                             # module Orgmode
