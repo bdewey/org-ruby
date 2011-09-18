@@ -41,6 +41,26 @@ module Orgmode
       return @line =~ /^#/
     end
 
+    PropertyDrawerRegexp = /^\s*:(PROPERTIES|END):/i
+
+    def property_drawer_begin_block?
+      @line =~ PropertyDrawerRegexp && $1 =~ /PROPERTIES/
+    end
+
+    def property_drawer_end_block?
+      @line =~ PropertyDrawerRegexp && $1 =~ /END/
+    end
+
+    def property_drawer?
+      check_assignment_or_regexp(:property_drawer, PropertyDrawerRegexp)
+    end
+
+    PropertyDrawerItemRegexp = /^\s*:(\w+):\s*(.*)$/i
+
+    def property_drawer_item?
+      @line =~ PropertyDrawerItemRegexp
+    end
+
     # Tests if a line contains metadata instead of actual content.
     def metadata?
       check_assignment_or_regexp(:metadata, /^\s*(CLOCK|DEADLINE|START|CLOSED|SCHEDULED):/)
@@ -173,6 +193,9 @@ module Orgmode
       return :definition_list if definition_list? # order is important! A definition_list is also an unordered_list!
       return :ordered_list if ordered_list?
       return :unordered_list if unordered_list?
+      return :property_drawer_begin_block if property_drawer_begin_block?
+      return :property_drawer_end_block if property_drawer_end_block?
+      return :property_drawer_item if property_drawer_item?
       return :metadata if metadata?
       return :begin_block if begin_block?
       return :end_block if end_block?

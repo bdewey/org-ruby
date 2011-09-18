@@ -77,7 +77,7 @@ module Orgmode
     # Should we export sub/superscripts? (_{foo}/^{foo})
     # only {} mode is currently supported.
     def use_sub_superscripts?
-      @options["^"] != "nil" 
+      @options["^"] != "nil"
     end
 
     # I can construct a parser object either with an array of lines
@@ -122,6 +122,7 @@ module Orgmode
             table_header_set = false if !line.table?
             mode = :code if line.begin_block? and line.block_type == "EXAMPLE"
             mode = :block_comment if line.begin_block? and line.block_type == "COMMENT"
+            mode = :property_drawer if line.property_drawer_begin_block?
             if (@current_headline) then
               @current_headline.body_lines << line
             else
@@ -146,6 +147,20 @@ module Orgmode
             mode = :normal
           else
             line.assigned_paragraph_type = :paragraph unless line.blank?
+          end
+          if (@current_headline) then
+            @current_headline.body_lines << line
+          else
+            @header_lines << line
+          end
+
+        when :property_drawer
+
+          line = Line.new line, self
+          if line.property_drawer_end_block?
+            mode = :normal
+          else
+            line.assigned_paragraph_type = :property_drawer unless line.blank?
           end
           if (@current_headline) then
             @current_headline.body_lines << line
@@ -186,7 +201,7 @@ module Orgmode
       export_options[:skip_tables] = true if not export_tables?
       output = ""
       output_buffer = HtmlOutputBuffer.new(output, export_options)
-      
+
       if @in_buffer_settings["TITLE"] then
 
         # If we're given a new title, then just create a new line
@@ -195,7 +210,7 @@ module Orgmode
         Parser.translate([title], output_buffer)
       end
       Parser.translate(@header_lines, output_buffer) unless skip_header_lines?
-      
+
       # If we've output anything at all, remove the :decorate_title option.
       export_options.delete(:decorate_title) if (output.length > 0)
       @headlines.each do |headline|
@@ -224,11 +239,10 @@ module Orgmode
         # See if we're carrying paragraph payload, and output
         # it if we're about to switch to some other output type.
         output_buffer.prepare(line)
-
         case line.paragraph_type
-        when :metadata, :table_separator, :blank, :comment
+        when :metadata, :table_separator, :blank, :comment, :property_drawer_item, :property_drawer_begin_block, :property_drawer_end_block
 
-          output_buffer << line.line if output_buffer.preserve_whitespace?          
+          output_buffer << line.line if output_buffer.preserve_whitespace?
 
         when :begin_block
 
@@ -249,7 +263,7 @@ module Orgmode
           output_buffer << line.line.lstrip
 
         when :unordered_list, :ordered_list, :definition_list
-          
+
           output_buffer << line.output_text << " "
 
         when :inline_example

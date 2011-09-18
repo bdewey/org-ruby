@@ -54,7 +54,7 @@ module Orgmode
       push_mode(:normal)
     end
 
-    Modes = [:normal, :ordered_list, :unordered_list, :definition_list, :blockquote, :src, :example, :table, :inline_example, :center]
+    Modes = [:normal, :ordered_list, :unordered_list, :definition_list, :blockquote, :src, :example, :table, :inline_example, :center, :property_drawer]
 
     def current_mode
       @mode_stack.last
@@ -84,8 +84,10 @@ module Orgmode
         maintain_list_indent_stack(line)
         @output_type = line.paragraph_type 
       end
-      push_mode(:inline_example) if line.inline_example? and current_mode != :inline_example
-      pop_mode(:inline_example) if current_mode == :inline_example && !line.inline_example?
+      push_mode(:inline_example) if line.inline_example? and current_mode != :inline_example and not line.property_drawer?
+      pop_mode(:inline_example) if current_mode == :inline_example and !line.inline_example?
+      push_mode(:property_drawer) if line.property_drawer? and current_mode != :property_drawer
+      pop_mode(:property_drawer) if current_mode == :property_drawer and line.property_drawer_end_block?
       push_mode(:table) if enter_table?
       pop_mode(:table) if exit_table?
       @buffered_lines.push(line)
