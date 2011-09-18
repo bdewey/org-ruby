@@ -25,3 +25,9 @@ Also, if you make the descriptive text be an image, then it will get formatted
 with an image tag, like so:
 
 - [[http://www.xkcd.com][http://imgs.xkcd.com/comics/t_cells.png]]
+
+Helpful addition from [[https://github.com/wallyqs][wallyqs]]:
+
+
+While "naked" links don't work (like http://www.google.com), angle links
+do work. This should look like a link: <http://www.google.com>.
