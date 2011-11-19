@@ -1,0 +1,13 @@
+* This headline is in the output
+* COMMENT Commented headline should not be in the output
+This should not be in the output either.
+** This should not be in the output.
+*** Neither this 
+**** nor this
+** Not in the output
+* This is in the output
+** COMMENT But this is not
+This is not in the output
+*** Neither is this
+** Yet, this is in the output
+and this is also part of the output

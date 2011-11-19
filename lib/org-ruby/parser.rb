@@ -329,6 +329,10 @@ module Orgmode
               inherit_export_level = headline.level
             end
           end
+          if headline.comment_headline?
+            headline.export_state = :exclude
+            inherit_export_level = headline.level
+          end
         end
       end
     end

@@ -56,5 +56,10 @@ describe Orgmode::Headline do
     h.headline_text.should eql("Feed cat")
     h.keyword.should eql("TODO")
   end
+
+  it "should recognize headlines marked as COMMENT" do
+    h = Orgmode::Headline.new "* COMMENT This headline is a comment"
+    h.comment_headline?.should_not be_nil
+  end
 end
 
