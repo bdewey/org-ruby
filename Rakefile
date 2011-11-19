@@ -19,7 +19,7 @@ Bones {
   url  'http://github.com/bdewey/org-ruby'
   version  OrgRuby::VERSION
   depend_on 'rubypants'
-  spec.opts ['--color']
+  # spec.opts ['--color']
 }
 
 
