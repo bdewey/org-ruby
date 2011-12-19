@@ -16,6 +16,7 @@ extracting "content" from the orgfile as opposed to "metadata."
 * Supports tables, block quotes, and block code
 * Supports bold, italic, underline, strikethrough, and code inline formatting.
 * Supports hyperlinks that are in double-brackets
+* Supports +.org+ views in Rails through Tilt.
 * Upcoming: Handle export options specified in the org buffer.
 
 == SYNOPSIS:
@@ -34,7 +35,7 @@ From Ruby code:
 
      Orgmode::Parser.new(data)
 
-...will construct a new +Parser+ object. 
+...will construct a new +Parser+ object.
 
 == INSTALL:
 
