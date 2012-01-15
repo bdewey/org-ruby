@@ -59,6 +59,11 @@ module Orgmode
         css_class = " style=\"text-align: center\"" if mode == :center
         @logger.debug "#{mode}: <#{ModeTag[mode]}#{css_class}>\n" 
         @output << "<#{ModeTag[mode]}#{css_class}>\n" unless mode == :table and skip_tables?
+        # Special case to add code tags to src blogs and specify language
+        if mode == :src
+          @logger.debug "<code class=\"#{@block_lang}\">\n"
+          @output << "<code class=\"#{@block_lang}\">\n"
+        end
         # Entering a new mode obliterates the title decoration
         @title_decoration = ""
       end
@@ -71,6 +76,10 @@ module Orgmode
       m = super(mode)
       if ModeTag[m] then
         output_indentation
+        if mode == :src
+          @logger.debug "</code>\n"
+          @output << "</code>\n"
+        end
         @logger.debug "</#{ModeTag[m]}>\n"
         @output << "</#{ModeTag[m]}>\n" unless mode == :table and skip_tables?
       end

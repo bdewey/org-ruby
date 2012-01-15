@@ -80,6 +80,7 @@ module Orgmode
     def prepare(line)
       @logger.debug "Looking at #{line.paragraph_type}: #{line.to_s}"
       if not should_accumulate_output?(line) then
+        @block_lang = line.block_lang if line.begin_block? and line.code_block_type?
         flush!
         maintain_list_indent_stack(line)
         @output_type = line.paragraph_type 
