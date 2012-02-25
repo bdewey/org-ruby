@@ -8,8 +8,15 @@ end
 ensure_in_path 'lib'
 require 'org-ruby'
 
-task :default => 'spec:run'
-task 'gem:release' => 'spec:run'
+require 'rspec/core'
+require 'rspec/core/rake_task'
+
+RSpec::Core::RakeTask.new(:spec) do |spec|
+  spec.pattern = FileList['spec/**/*_spec.rb']
+end
+
+task :default => 'spec'
+task 'gem:release' => 'spec'
 
 Bones {
   readme_file 'README.rdoc'
@@ -19,7 +26,6 @@ Bones {
   url  'http://github.com/bdewey/org-ruby'
   version  OrgRuby::VERSION
   depend_on 'rubypants'
-  # spec.opts ['--color']
 }
 
 
