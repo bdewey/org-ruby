@@ -169,6 +169,7 @@ module Orgmode
       @buffer.gsub!(/&/, "&amp;")
       @buffer.gsub!(/</, "&lt;")
       @buffer.gsub!(/>/, "&gt;")
+      @buffer.gsub!(/^ *-{5,} *$/, "<hr/>")
     end
 
     def output_indentation
