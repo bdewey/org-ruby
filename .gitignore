@@ -1,2 +1,3 @@
 *.tmproj
 /util/gen-special-replace.elc
+/TAGS-README.html
