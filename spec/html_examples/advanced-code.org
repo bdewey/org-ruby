@@ -80,3 +80,27 @@ Even if no language is set, it is still wrapped in code tags but class is empty.
 #+BEGIN_SRC 
 echo 'Defaults env_keeps="http_proxy https_proxy ftp_proxy"' | sudo tee -a /etc/sudoers
 #+END_SRC
+
+* It should be possible to write a colon at the beginning of an example
+
+#+BEGIN_QUOTE
+I really love to write about
+:symbols. They sure are the
+best things in the world!
+#+END_QUOTE
+
+#+BEGIN_SRC ruby
+{
+:one => 1,
+:two => 2
+}
+#+END_SRC
+
+#+BEGIN_SRC clojure
+(defproject helloworld "0.1"
+:dependencies [[org.clojure/clojure
+                 "1.1.0-master-SNAPSHOT"]
+              [org.clojure/clojure-contrib
+                 "1.0-SNAPSHOT"]]
+:main helloworld)
+#+END_SRC

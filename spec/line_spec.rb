@@ -24,7 +24,7 @@ describe Orgmode::Line do
     end
   end
 
-  [": inline", " :inline", "\t\t:\tinline"].each do |inline_example|
+  [": inline", " : inline", "\t\t:\tinline"].each do |inline_example|
     it "should recognize this inline example: #{inline_example}" do
       Orgmode::Line.new(inline_example).inline_example?.should be_true
     end

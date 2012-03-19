@@ -3,15 +3,15 @@
 <h1><span class="heading-number heading-number-1">1 </span>Inline examples</h1>
 <p>This should work:</p>
 <pre class="example">
-   fixed width? how does this work?   
-                         ...........
-                        ............
-                                   .
-                        .  .   .   .
-                        .          ..
-                        ....... .....
-                            .  .
-                            ....
+  fixed width? how does this work?   
+                        ...........
+                       ............
+                                  .
+                       .  .   .   .
+                       .          ..
+                       ....... .....
+                           .  .
+                           ....
 </pre>
 <p>Two ASCII blobs.</p>
 <h1><span class="heading-number heading-number-1">2 </span>BEGIN_SRC</h1>
@@ -55,5 +55,27 @@ user&gt; (take 20 fib-seq)
 <pre class="src">
 <code class="">
 echo 'Defaults env_keeps="http_proxy https_proxy ftp_proxy"' | sudo tee -a /etc/sudoers
+</code>
+</pre>
+<h1><span class="heading-number heading-number-1">3 </span>It should be possible to write a colon at the beginning of an example</h1>
+<blockquote>
+  <p>I really love to write about :symbols. They sure are the best things in the world!</p>
+</blockquote>
+<pre class="src">
+<code class="ruby">
+{
+:one =&gt; 1,
+:two =&gt; 2
+}
+</code>
+</pre>
+<pre class="src">
+<code class="clojure">
+(defproject helloworld "0.1"
+:dependencies [[org.clojure/clojure
+                 "1.1.0-master-SNAPSHOT"]
+              [org.clojure/clojure-contrib
+                 "1.0-SNAPSHOT"]]
+:main helloworld)
 </code>
 </pre>
