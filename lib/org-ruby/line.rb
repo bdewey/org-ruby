@@ -162,7 +162,7 @@ module Orgmode
       block_type =~ /^(EXAMPLE|SRC)$/i
     end
 
-    InlineExampleRegexp = /^\s*:/
+    InlineExampleRegexp = /^\s*:\s/
 
     # Test if the line matches the "inline example" case:
     # the first character on the line is a colon.
