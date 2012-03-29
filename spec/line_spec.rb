@@ -51,6 +51,7 @@ describe Orgmode::Line do
   end
 
   it "should recognize horizontal rules" do
+    # 5 hypens should match.
     Orgmode::Line.new("-----").horizontal_rule?.should be_true
     # More than 5 hyphens are allowed.
     Orgmode::Line.new("----------").horizontal_rule?.should be_true
