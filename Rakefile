@@ -1,15 +1,31 @@
 
 begin
+  require 'rubygems'
+rescue LoadError
+  abort '### Can\'t find "rubygems"??? ###'
+end
+
+begin
   require 'bones'
 rescue LoadError
-  abort '### Please install the "bones" gem ###'
+  abort '### Please install the "bones" gem with "gem install bones". ###'
+end
+
+begin
+  require 'rubypants'
+rescue LoadError
+  abort '### Please install the "rubypants" gem with "gem install rubypants". ###'
 end
 
 ensure_in_path 'lib'
 require 'org-ruby'
 
-require 'rspec/core'
-require 'rspec/core/rake_task'
+begin
+  require 'rspec/core'
+  require 'rspec/core/rake_task'
+rescue LoadError
+  abort '### Please install the "rspec" gem with "gem install rspec". ###'
+end
 
 RSpec::Core::RakeTask.new(:spec) do |spec|
   spec.pattern = FileList['spec/**/*_spec.rb']

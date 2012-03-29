@@ -93,7 +93,9 @@ module Orgmode
         @logger.debug "FLUSH CODE ==========> #{@buffer.inspect}"
         @output << @buffer << "\n"
       else
-        if @buffer.length > 0 and @output_type == :definition_list then
+        if @buffer.length > 0 and @output_type == :horizontal_rule then
+          @output << "<hr/>\n"
+        elsif @buffer.length > 0 and @output_type == :definition_list then
           unless buffer_mode_is_table? and skip_tables?
             output_indentation
             d = @buffer.split("::", 2)
@@ -169,7 +171,6 @@ module Orgmode
       @buffer.gsub!(/&/, "&amp;")
       @buffer.gsub!(/</, "&lt;")
       @buffer.gsub!(/>/, "&gt;")
-      @buffer.gsub!(/^ *-{5,} *$/, "<hr/>")
     end
 
     def output_indentation
