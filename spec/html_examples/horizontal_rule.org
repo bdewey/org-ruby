@@ -1,0 +1,3 @@
+Test that 5 hyphens
+-----
+produce a horizontal rule.
