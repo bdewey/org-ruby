@@ -1,0 +1,12 @@
+TAGS File README
+
+This TAGS file was created using 
+#+BEGIN_SRC shell-script -r
+org-ruby $ ctags --version
+Exuberant Ctags 5.8, Copyright (C) 1996-2009 Darren Hiebert
+  Compiled: Feb 25 2012, 19:54:05
+  Addresses: <dhiebert@users.sourceforge.net>, http://ctags.sourceforge.net
+  Optional compiled features: +wildcards, +regex
+
+org-ruby $ ctags -e $(find lib spec test -name '*.rb') bin/org-ruby 
+#+END_SRC

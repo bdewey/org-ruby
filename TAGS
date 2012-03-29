@@ -1,133 +1,166 @@
 
-./bin/org-ruby,0
+lib/org-ruby/headline.rb,404
+module OrgmodeOrgmode3,45
+  class Headline < LineHeadline6,107
+    def initialize(line, parser = nil, offset=0)initialize47,1403
+    def output_textoutput_text70,2258
+    def self.headline?(line)headline76,2420
+    def comment_headline?comment_headline?81,2539
+    def paragraph_typeparagraph_type86,2657
+    def to_textileto_textile91,2769
+    def parse_keywordsparse_keywords100,2999
 
-./lib/org-ruby/headline.rb,619
-module Orgmode::Orgmode3,45
-  class Headline::Orgmode::Headline6,109
-    attr_reader :level::Orgmode::Headline#level9,178
-    attr_reader :headline_text::Orgmode::Headline#headline_text13,325
-    attr_reader :body_lines::Orgmode::Headline#body_lines16,418
-    attr_reader :tags::Orgmode::Headline#tags19,481
-    attr_reader :keyword::Orgmode::Headline#keyword22,567
-    def initialize::Orgmode::Headline#Orgmode::Headline.new35,896
-    def self.headline?::Orgmode::Headline.headline?58,1687
-    def to_textile::Orgmode::Headline#to_textile63,1818
-    def to_html::Orgmode::Headline#to_html69,1939
+lib/org-ruby/html_output_buffer.rb,583
+module OrgmodeOrgmode4,113
+  class HtmlOutputBuffer < OutputBufferHtmlOutputBuffer6,129
+    def initialize(output, opts = {})initialize38,854
+    def push_mode(mode)push_mode53,1343
+    def pop_mode(mode = nil)pop_mode75,2269
+    def flush!flush!88,2618
+    def output_footnotes!output_footnotes!139,4923
+    def skip_tables?skip_tables?159,5552
+    def buffer_mode_is_table?buffer_mode_is_table?163,5611
+    def escape_buffer!escape_buffer!168,5753
+    def output_indentationoutput_indentation174,5885
+    def inline_formatting(str)inline_formatting190,6435
 
-./lib/org-ruby/html_output_buffer.rb,591
-module Orgmode::Orgmode3,54
-  class HtmlOutputBuffer::Orgmode::HtmlOutputBuffer5,72
-    def initialize::Orgmode::HtmlOutputBuffer#Orgmode::HtmlOutputBuffer.new22,417
-    def push_mode::Orgmode::HtmlOutputBuffer#push_mode31,619
-    def pop_mode::Orgmode::HtmlOutputBuffer#pop_mode42,918
-    def flush!::Orgmode::HtmlOutputBuffer#flush!51,1133
-    def escape_buffer!::Orgmode::HtmlOutputBuffer#escape_buffer!78,2163
-    def output_indentation::Orgmode::HtmlOutputBuffer#output_indentation84,2299
-    def inline_formatting::Orgmode::HtmlOutputBuffer#inline_formatting100,2827
+lib/org-ruby/html_symbol_replace.rb,100
+module OrgmodeOrgmode3,48
+  def Orgmode.special_symbols_to_html(str)special_symbols_to_html4,63
 
-./lib/org-ruby/line.rb,1527
-module Orgmode::Orgmode1,0
-  class Line::Orgmode::Line4,67
-    attr_reader :line::Orgmode::Line#line7,114
-    attr_reader :indent::Orgmode::Line#indent12,300
-    attr_accessor :assigned_paragraph_type::Orgmode::Line#assigned_paragraph_type19,664
-    def initialize::Orgmode::Line#Orgmode::Line.new21,708
-    def to_s::Orgmode::Line#to_s29,885
-    def comment?::Orgmode::Line#comment?34,966
-    def metadata?::Orgmode::Line#metadata?39,1083
-    def nonprinting?::Orgmode::Line#nonprinting?43,1175
-    def blank?::Orgmode::Line#blank?47,1227
-    def plain_list?::Orgmode::Line#plain_list?51,1279
-    def unordered_list?::Orgmode::Line#unordered_list?57,1394
-    def strip_unordered_list_tag::Orgmode::Line#strip_unordered_list_tag61,1471
-    def ordered_list?::Orgmode::Line#ordered_list?67,1588
-    def strip_ordered_list_tag::Orgmode::Line#strip_ordered_list_tag71,1661
-    def plain_text?::Orgmode::Line#plain_text?75,1729
-    def table_row?::Orgmode::Line#table_row?79,1812
-    def table_separator?::Orgmode::Line#table_separator?85,1959
-    def table?::Orgmode::Line#table?93,2195
-    def begin_block?::Orgmode::Line#begin_block?99,2308
-    def end_block?::Orgmode::Line#end_block?103,2380
-    def block_type::Orgmode::Line#block_type107,2450
-    def paragraph_type::Orgmode::Line#paragraph_type112,2572
-    def self.to_textile::Orgmode::Line.to_textile124,2956
-    def self.to_html::Orgmode::Line.to_html130,3106
-    def self.translate::Orgmode::Line.translate137,3320
+lib/org-ruby/line.rb,1591
+module OrgmodeOrgmode1,0
+  class LineLine4,65
+    def initialize(line, parser = nil)initialize24,782
+    def to_sto_s33,988
+    def comment?comment?38,1065
+    def property_drawer_begin_block?property_drawer_begin_block?46,1323
+    def property_drawer_end_block?property_drawer_end_block?50,1427
+    def property_drawer?property_drawer?54,1522
+    def property_drawer_item?property_drawer_item?60,1684
+    def metadata?metadata?65,1830
+    def nonprinting?nonprinting?69,1949
+    def blank?blank?73,2037
+    def plain_list?plain_list?77,2111
+    def unordered_list?unordered_list?83,2242
+    def strip_unordered_list_tagstrip_unordered_list_tag87,2346
+    def definition_list?definition_list?93,2480
+    def ordered_list?ordered_list?99,2632
+    def strip_ordered_list_tagstrip_ordered_list_tag103,2730
+    def output_textoutput_text109,2916
+    def plain_text?plain_text?116,3140
+    def table_row?table_row?120,3224
+    def table_separator?table_separator?126,3396
+    def table_header?table_header?135,3725
+    def table?table?139,3804
+    def begin_block?begin_block?145,3938
+    def end_block?end_block?149,4013
+    def block_typeblock_type153,4084
+    def block_langblock_lang157,4145
+    def code_block_type?code_block_type?161,4206
+    def inline_example?inline_example?169,4422
+    def in_buffer_setting?in_buffer_setting?183,4949
+    def paragraph_typeparagraph_type195,5293
+    def self.to_textile(lines)to_textile214,6122
+    def check_assignment_or_regexp(assignment, regexp)check_assignment_or_regexp239,7190
 
-./lib/org-ruby/output_buffer.rb,1282
-module Orgmode::Orgmode3,18
-  class OutputBuffer::Orgmode::OutputBuffer9,297
-    attr_reader :buffer::Orgmode::OutputBuffer#buffer12,381
-    attr_reader :output::Orgmode::OutputBuffer#output15,446
-    attr_accessor :output_type::Orgmode::OutputBuffer#output_type18,532
-    def initialize::Orgmode::OutputBuffer#Orgmode::OutputBuffer.new22,686
-    def current_mode::Orgmode::OutputBuffer#current_mode40,1138
-    def current_mode_list?::Orgmode::OutputBuffer#current_mode_list?44,1197
-    def push_mode::Orgmode::OutputBuffer#push_mode48,1286
-    def pop_mode::Orgmode::OutputBuffer#pop_mode53,1421
-    def prepare::Orgmode::OutputBuffer#prepare61,1729
-    def enter_table?::Orgmode::OutputBuffer#enter_table?73,2129
-    def exit_table?::Orgmode::OutputBuffer#exit_table?79,2314
-    def <<::Orgmode::OutputBuffer#<<85,2480
-    def list_indent_level::Orgmode::OutputBuffer#list_indent_level90,2585
-    def preserve_whitespace?::Orgmode::OutputBuffer#preserve_whitespace?95,2729
-    def continue_current_list?::Orgmode::OutputBuffer#continue_current_list?106,2991
-    def maintain_list_indent_stack::Orgmode::OutputBuffer#maintain_list_indent_stack109,3037
-    def should_accumulate_output?::Orgmode::OutputBuffer#should_accumulate_output?145,4184
+lib/org-ruby/output_buffer.rb,960
+module OrgmodeOrgmode3,18
+  class OutputBufferOutputBuffer9,295
+    def initialize(output)initialize34,1103
+    def current_modecurrent_mode59,1789
+    def current_mode_list?current_mode_list?63,1842
+    def push_mode(mode)push_mode67,1953
+    def pop_mode(mode = nil)pop_mode72,2088
+    def prepare(line)prepare80,2396
+    def clear_accumulation_buffer!clear_accumulation_buffer!101,3537
+    def get_next_headline_number(level)get_next_headline_number110,3852
+    def enter_table?enter_table?124,4399
+    def exit_table?exit_table?130,4620
+    def << (str)<<136,4830
+    def list_indent_levellist_indent_level146,5154
+    def preserve_whitespace?preserve_whitespace?151,5295
+    def mode_is_code(mode)mode_is_code158,5453
+    def maintain_list_indent_stack(line)maintain_list_indent_stack167,5596
+    def output_footnotes!output_footnotes!200,6570
+    def should_accumulate_output?(line)should_accumulate_output?208,6850
 
-./lib/org-ruby/parser.rb,473
-module Orgmode::Orgmode4,40
-  class Parser::Orgmode::Parser10,125
-    attr_reader :lines::Orgmode::Parser#lines13,186
-    attr_reader :headlines::Orgmode::Parser#headlines16,253
-    attr_reader :header_lines::Orgmode::Parser#header_lines19,333
-    def initialize::Orgmode::Parser#Orgmode::Parser.new23,505
-    def self.load::Orgmode::Parser.load73,2075
-    def to_textile::Orgmode::Parser#to_textile79,2241
-    def to_html::Orgmode::Parser#to_html89,2477
+lib/org-ruby/parser.rb,911
+module OrgmodeOrgmode4,40
+  class ParserParser10,123
+    def custom_keyword_regexpcustom_keyword_regexp32,775
+    def export_select_tagsexport_select_tags39,1035
+    def export_exclude_tagsexport_exclude_tags46,1316
+    def export_todo?export_todo?52,1547
+    def export_footnotes?export_footnotes?57,1656
+    def export_heading_number?export_heading_number?62,1774
+    def skip_header_lines?skip_header_lines?67,1905
+    def export_tables?export_tables?73,2068
+    def use_sub_superscripts?use_sub_superscripts?79,2229
+    def initialize(lines, offset=0)initialize85,2434
+    def self.load(fname)load176,5550
+    def to_textileto_textile182,5702
+    def to_htmlto_html192,5941
+    def self.translate(lines, output_buffer)translate236,7495
+    def mark_trees_for_exportmark_trees_for_export290,9493
+    def store_in_buffer_setting(key, value)store_in_buffer_setting341,11317
 
-./lib/org-ruby/regexp_helper.rb,1014
-module Orgmode::Orgmode3,18
-  class RegexpHelper::Orgmode::RegexpHelper17,456
-    attr_reader   :pre_emphasis::Orgmode::RegexpHelper#pre_emphasis42,1785
-    attr_reader   :post_emphasis::Orgmode::RegexpHelper#post_emphasis43,1817
-    attr_reader   :border_forbidden::Orgmode::RegexpHelper#border_forbidden44,1850
-    attr_reader   :body_regexp::Orgmode::RegexpHelper#body_regexp45,1886
-    attr_reader   :markers::Orgmode::RegexpHelper#markers46,1917
-    attr_reader   :org_emphasis_regexp::Orgmode::RegexpHelper#org_emphasis_regexp48,1945
-    def initialize::Orgmode::RegexpHelper#Orgmode::RegexpHelper.new50,1999
-    def match_all::Orgmode::RegexpHelper#match_all65,2476
-    def rewrite_emphasis::Orgmode::RegexpHelper#rewrite_emphasis92,3413
-    def rewrite_links::Orgmode::RegexpHelper#rewrite_links124,4523
-    def build_org_emphasis_regexp::Orgmode::RegexpHelper#build_org_emphasis_regexp135,4759
-    def build_org_link_regexp::Orgmode::RegexpHelper#build_org_link_regexp145,5326
+lib/org-ruby/regexp_helper.rb,686
+module OrgmodeOrgmode3,18
+  class RegexpHelperRegexpHelper20,562
+    def initializeinitialize53,2089
+    def match_all(str)match_all70,2676
+    def rewrite_emphasis(str)rewrite_emphasis97,3613
+    def rewrite_subp(str) # :yields: type ("_" for subscript and "^" for superscript), textrewrite_subp105,3828
+    def rewrite_footnote(str) # :yields: name, definition or nilrewrite_footnote112,4028
+    def rewrite_links(str) #  :yields: link, textrewrite_links143,5136
+    def rewrite_images(str) #  :yields: image_linkrewrite_images159,5571
+    def build_org_emphasis_regexpbuild_org_emphasis_regexp167,5714
+    def build_org_link_regexpbuild_org_link_regexp177,6285
 
-./lib/org-ruby/textile_output_buffer.rb,454
-module Orgmode::Orgmode3,20
-  class TextileOutputBuffer::Orgmode::TextileOutputBuffer5,38
-    def initialize::Orgmode::TextileOutputBuffer#Orgmode::TextileOutputBuffer.new7,84
-    def push_mode::Orgmode::TextileOutputBuffer#push_mode12,169
-    def pop_mode::Orgmode::TextileOutputBuffer#pop_mode17,262
-    def inline_formatting::Orgmode::TextileOutputBuffer#inline_formatting34,585
-    def flush!::Orgmode::TextileOutputBuffer#flush!48,973
+lib/org-ruby/textile_output_buffer.rb,365
+module OrgmodeOrgmode3,20
+  class TextileOutputBuffer < OutputBufferTextileOutputBuffer5,36
+    def initialize(output)initialize7,80
+    def push_mode(mode)push_mode14,257
+    def pop_mode(mode = nil)pop_mode20,400
+    def inline_formatting(input)inline_formatting38,769
+    def output_footnotes!output_footnotes!65,1631
+    def flush!flush!76,1851
 
-./lib/org-ruby.rb,243
-module OrgRuby::OrgRuby3,27
-  def self.version::OrgRuby.version13,277
-  def self.libpath::OrgRuby.libpath21,476
-  def self.path::OrgRuby.path29,721
-  def self.require_all_libs_relative_to::OrgRuby.require_all_libs_relative_to38,1108
+lib/org-ruby/textile_symbol_replace.rb,106
+module OrgmodeOrgmode4,66
+  def Orgmode.special_symbols_to_textile(str)special_symbols_to_textile5,81
 
-./spec/headline_spec.rb,0
+lib/org-ruby/tilt.rb,277
+  module TiltTilt4,24
+    class OrgTemplate < TemplateOrgTemplate5,38
+      def self.engine_initialized?engine_initialized6,71
+      def initialize_engineinitialize_engine10,144
+      def prepareprepare14,210
+      def evaluate(scope, locals, &block)evaluate19,305
 
-./spec/line_spec.rb,0
+lib/org-ruby.rb,239
+module OrgRubyOrgRuby3,27
+  def self.versionversion13,275
+  def self.libpath( *args )libpath21,474
+  def self.path( *args )path29,719
+  def self.require_all_libs_relative_to( fname, dir = nil )require_all_libs_relative_to38,1106
 
-./spec/parser_spec.rb,0
+spec/headline_spec.rb,0
 
-./spec/regexp_helper_spec.rb,0
+spec/line_spec.rb,0
 
-./spec/spec_helper.rb,0
+spec/output_buffer_spec.rb,0
 
-./spec/textile_output_buffer_spec.rb,0
+spec/parser_spec.rb,0
 
-./test/test_orgmode_parser.rb,0
+spec/regexp_helper_spec.rb,0
+
+spec/spec_helper.rb,0
+
+spec/textile_output_buffer_spec.rb,0
+
+test/test_orgmode_parser.rb,0
+
+bin/org-ruby,0

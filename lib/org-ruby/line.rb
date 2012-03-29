@@ -94,6 +94,12 @@ module Orgmode
       check_assignment_or_regexp(:definition_list, DefinitionListRegexp)
     end
 
+    HorizontalRuleRegexp = /^\s*-{5,}\s*$/
+
+    def horizontal_rule?
+      check_assignment_or_regexp(:horizontal_rule, HorizontalRuleRegexp)
+    end
+
     OrderedListRegexp = /^\s*\d+(\.|\))\s+/
 
     def ordered_list?
@@ -208,6 +214,7 @@ module Orgmode
       return :table_row if table_row?
       return :table_header if table_header?
       return :inline_example if inline_example?
+      return :horizontal_rule if horizontal_rule?
       return :paragraph
     end
 
