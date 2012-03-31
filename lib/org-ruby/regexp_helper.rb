@@ -141,17 +141,12 @@ module Orgmode
     # HTML-style link, and that is how things will get recorded in
     # +result+.
     def rewrite_links(str) #  :yields: link, text
-      i = str.gsub(@org_link_regexp) do |match|
+      str.gsub(@org_link_regexp) do |match|
         yield $1, nil
-      end
-      if str =~ @org_angle_link_text_regexp
-        i.gsub(@org_angle_link_text_regexp) do |match|
-          yield "#{$2}:#{$3}", nil
-        end
-      else
-        i.gsub(@org_link_text_regexp) do |match|
+      end.gsub(@org_link_text_regexp) do |match|
           yield $1, $2
-        end
+      end.gsub(@org_angle_link_text_regexp) do |match|
+          yield "#{$2}:#{$3}", nil
       end
     end
 
