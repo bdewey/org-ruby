@@ -146,6 +146,12 @@ describe Orgmode::Parser do
         actual.should be_kind_of(String)
         actual.should == expected
       end
+
+      it "should render #{basename}.org to HTML using Tilt templates" do
+        expected = IO.read(textile_name)
+        template = Tilt.new(file).render
+        template.should == expected
+      end
     end
   end
 end
