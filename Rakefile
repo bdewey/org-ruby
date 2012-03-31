@@ -1,10 +1,4 @@
-
-begin
-  require 'bones'
-rescue LoadError
-  abort '### Please install the "bones" gem ###'
-end
-
+require 'bones'
 ensure_in_path 'lib'
 require 'org-ruby'
 
