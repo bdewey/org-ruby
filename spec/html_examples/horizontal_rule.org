@@ -1,3 +1,5 @@
-Test that 5 hyphens
+Useful contribution by [[http://www.neilsmithline.com][Neil-Smithline]]
+
+5 hyphens or more,
 -----
-produce a horizontal rule.
+will produce a horizontal rule.
