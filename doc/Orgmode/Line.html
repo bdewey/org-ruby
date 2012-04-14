@@ -1,1597 +1,1369 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+
+<html>
 <head>
-	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-
-	<title>Class: Orgmode::Line</title>
-
-	<link rel="stylesheet" href="../rdoc.css" type="text/css" media="screen" />
-
-	<script src="../js/jquery.js" type="text/javascript"
-		charset="utf-8"></script>
-	<script src="../js/thickbox-compressed.js" type="text/javascript"
-		charset="utf-8"></script>
-	<script src="../js/quicksearch.js" type="text/javascript"
-		charset="utf-8"></script>
-	<script src="../js/darkfish.js" type="text/javascript"
-		charset="utf-8"></script>
-
-</head>
-<body class="class">
-
-	<div id="metadata">
-		<div id="home-metadata">
-			<div id="home-section" class="section">
-        <h3 class="section-header">
-          <a href="../index.html">Home</a>
-          <a href="../index.html#classes">Classes</a>
-          <a href="../index.html#methods">Methods</a>
-        </h3>
-			</div>
-		</div>
-
-		<div id="file-metadata">
-			<div id="file-list-section" class="section">
-				<h3 class="section-header">In Files</h3>
-				<div class="section-body">
-					<ul>
-					
-						<li><a href="../lib/org-ruby/line_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
-							class="thickbox" title="lib/org-ruby/line.rb">lib/org-ruby/line.rb</a></li>
-					
-					</ul>
-				</div>
-			</div>
-
-			
-		</div>
-
-		<div id="class-metadata">
-
-			<!-- Parent Class -->
-			
-			<div id="parent-class-section" class="section">
-				<h3 class="section-header">Parent</h3>
-				
-				<p class="link">Object</p>
-				
-			</div>
-			
-
-			<!-- Namespace Contents -->
-			
-
-			<!-- Method Quickref -->
-			
-			<div id="method-list-section" class="section">
-				<h3 class="section-header">Methods</h3>
-				<ul class="link-list">
-					
-					<li><a href="#method-c-new">::new</a></li>
-					
-					<li><a href="#method-c-to_textile">::to_textile</a></li>
-					
-					<li><a href="#method-i-begin_block%3F">#begin_block?</a></li>
-					
-					<li><a href="#method-i-blank%3F">#blank?</a></li>
-					
-					<li><a href="#method-i-block_lang">#block_lang</a></li>
-					
-					<li><a href="#method-i-block_type">#block_type</a></li>
-					
-					<li><a href="#method-i-check_assignment_or_regexp">#check_assignment_or_regexp</a></li>
-					
-					<li><a href="#method-i-code_block_type%3F">#code_block_type?</a></li>
-					
-					<li><a href="#method-i-comment%3F">#comment?</a></li>
-					
-					<li><a href="#method-i-definition_list%3F">#definition_list?</a></li>
-					
-					<li><a href="#method-i-end_block%3F">#end_block?</a></li>
-					
-					<li><a href="#method-i-horizontal_rule%3F">#horizontal_rule?</a></li>
-					
-					<li><a href="#method-i-in_buffer_setting%3F">#in_buffer_setting?</a></li>
-					
-					<li><a href="#method-i-inline_example%3F">#inline_example?</a></li>
-					
-					<li><a href="#method-i-metadata%3F">#metadata?</a></li>
-					
-					<li><a href="#method-i-nonprinting%3F">#nonprinting?</a></li>
-					
-					<li><a href="#method-i-ordered_list%3F">#ordered_list?</a></li>
-					
-					<li><a href="#method-i-output_text">#output_text</a></li>
-					
-					<li><a href="#method-i-paragraph_type">#paragraph_type</a></li>
-					
-					<li><a href="#method-i-plain_list%3F">#plain_list?</a></li>
-					
-					<li><a href="#method-i-plain_text%3F">#plain_text?</a></li>
-					
-					<li><a href="#method-i-property_drawer%3F">#property_drawer?</a></li>
-					
-					<li><a href="#method-i-property_drawer_begin_block%3F">#property_drawer_begin_block?</a></li>
-					
-					<li><a href="#method-i-property_drawer_end_block%3F">#property_drawer_end_block?</a></li>
-					
-					<li><a href="#method-i-property_drawer_item%3F">#property_drawer_item?</a></li>
-					
-					<li><a href="#method-i-strip_ordered_list_tag">#strip_ordered_list_tag</a></li>
-					
-					<li><a href="#method-i-strip_unordered_list_tag">#strip_unordered_list_tag</a></li>
-					
-					<li><a href="#method-i-table%3F">#table?</a></li>
-					
-					<li><a href="#method-i-table_header%3F">#table_header?</a></li>
-					
-					<li><a href="#method-i-table_row%3F">#table_row?</a></li>
-					
-					<li><a href="#method-i-table_separator%3F">#table_separator?</a></li>
-					
-					<li><a href="#method-i-to_s">#to_s</a></li>
-					
-					<li><a href="#method-i-unordered_list%3F">#unordered_list?</a></li>
-					
-				</ul>
-			</div>
-			
-
-			<!-- Included Modules -->
-			
-		</div>
-
-		<div id="project-metadata">
-			
-			
-			<div id="fileindex-section" class="section project-section">
-				<h3 class="section-header">Files</h3>
-				<ul>
-				
-					<li class="file"><a href="../History_txt.html">History.txt</a></li>
-				
-					<li class="file"><a href="../README_rdoc.html">README.rdoc</a></li>
-				
-					<li class="file"><a href="../announcement_txt.html">announcement.txt</a></li>
-				
-				</ul>
-			</div>
-			
-
-			<div id="classindex-section" class="section project-section">
-				<h3 class="section-header">Class Index
-					<span class="search-toggle"><img src="../images/find.png"
-						height="16" width="16" alt="[+]"
-						title="show/hide quicksearch" /></span></h3>
-				<form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
-				<fieldset>
-					<legend>Quicksearch</legend>
-					<input type="text" name="quicksearch" value=""
-						class="quicksearch-field" />
-				</fieldset>
-				</form>
-
-				<ul class="link-list">
-				
-					<li><a href="../Orgmode.html">Orgmode</a></li>
-				
-					<li><a href="../Orgmode/Headline.html">Orgmode::Headline</a></li>
-				
-					<li><a href="../Orgmode/HtmlOutputBuffer.html">Orgmode::HtmlOutputBuffer</a></li>
-				
-					<li><a href="../Orgmode/Line.html">Orgmode::Line</a></li>
-				
-					<li><a href="../Orgmode/OutputBuffer.html">Orgmode::OutputBuffer</a></li>
-				
-					<li><a href="../Orgmode/Parser.html">Orgmode::Parser</a></li>
-				
-					<li><a href="../Orgmode/RegexpHelper.html">Orgmode::RegexpHelper</a></li>
-				
-					<li><a href="../Orgmode/TextileOutputBuffer.html">Orgmode::TextileOutputBuffer</a></li>
-				
-					<li><a href="../Tilt.html">Tilt</a></li>
-				
-					<li><a href="../Tilt/OrgTemplate.html">Tilt::OrgTemplate</a></li>
-				
-					<li><a href="../OrgRuby.html">OrgRuby</a></li>
-				
-				</ul>
-				<div id="no-class-search-results" style="display: none;">No matching classes.</div>
-			</div>
-
-			
-		</div>
-	</div>
-
-	<div id="documentation">
-		<h1 class="class">Orgmode::Line</h1>
-
-		<div id="description">
-			<p>
-Represents a single line of an orgmode file.
-</p>
-
-		</div>
-
-		<!-- Constants -->
-		
-		<div id="constants-list" class="section">
-			<h3 class="section-header">Constants</h3>
-			<dl>
-			
-				<dt><a name="PropertyDrawerRegexp">PropertyDrawerRegexp</a></dt>
-				
-				<dd class="description"></dd>
-				
-			
-				<dt><a name="PropertyDrawerItemRegexp">PropertyDrawerItemRegexp</a></dt>
-				
-				<dd class="description"></dd>
-				
-			
-				<dt><a name="UnorderedListRegexp">UnorderedListRegexp</a></dt>
-				
-				<dd class="description"></dd>
-				
-			
-				<dt><a name="DefinitionListRegexp">DefinitionListRegexp</a></dt>
-				
-				<dd class="description"></dd>
-				
-			
-				<dt><a name="HorizontalRuleRegexp">HorizontalRuleRegexp</a></dt>
-				
-				<dd class="description"></dd>
-				
-			
-				<dt><a name="OrderedListRegexp">OrderedListRegexp</a></dt>
-				
-				<dd class="description"></dd>
-				
-			
-				<dt><a name="BlockRegexp">BlockRegexp</a></dt>
-				
-				<dd class="description"></dd>
-				
-			
-				<dt><a name="InlineExampleRegexp">InlineExampleRegexp</a></dt>
-				
-				<dd class="description"></dd>
-				
-			
-				<dt><a name="InBufferSettingRegexp">InBufferSettingRegexp</a></dt>
-				
-				<dd class="description"></dd>
-				
-			
-			</dl>
-		</div>
-		
-
-		<!-- Attributes -->
-		
-		<div id="attribute-method-details" class="method-section section">
-			<h3 class="section-header">Attributes</h3>
-
-			
-			<div id="line-attribute-method" class="method-detail">
-				<a name="line"></a>
-				
-				<div class="method-heading attribute-method-heading">
-					<span class="method-name">line</span><span
-						class="attribute-access-type">[R]</span>
-				</div>
-
-				<div class="method-description">
-				
-				<p>
-This is the line itself.
-</p>
-				
-				</div>
-			</div>
-			
-			<div id="indent-attribute-method" class="method-detail">
-				<a name="indent"></a>
-				
-				<div class="method-heading attribute-method-heading">
-					<span class="method-name">indent</span><span
-						class="attribute-access-type">[R]</span>
-				</div>
-
-				<div class="method-description">
-				
-				<p>
-The indent level of this line. this is important to properly translate
-nested lists from orgmode to textile. TODO 2009-12-20 bdewey: Handle tabs
-</p>
-				
-				</div>
-			</div>
-			
-			<div id="parser-attribute-method" class="method-detail">
-				<a name="parser"></a>
-				
-				<div class="method-heading attribute-method-heading">
-					<span class="method-name">parser</span><span
-						class="attribute-access-type">[R]</span>
-				</div>
-
-				<div class="method-description">
-				
-				<p>
-Backpointer to the parser that owns this line.
-</p>
-				
-				</div>
-			</div>
-			
-			<div id="assigned-paragraph-type-attribute-method" class="method-detail">
-				<a name="assigned_paragraph_type"></a>
-				
-				<a name="assigned_paragraph_type="></a>
-				
-				<div class="method-heading attribute-method-heading">
-					<span class="method-name">assigned_paragraph_type</span><span
-						class="attribute-access-type">[RW]</span>
-				</div>
-
-				<div class="method-description">
-				
-				<p>
-A line can have its type assigned instead of inferred from its content. For
-example, something that parses as a &#8220;table&#8221; on its own
-(&#8220;| one | two|n&#8220;) may just be a paragraph if it&#8217;s inside
-#+BEGIN_EXAMPLE. Set this property on the line to assign its type. This
-will then affect the value of <tt><a
-href="Line.html#method-i-paragraph_type">paragraph_type</a></tt>.
-</p>
-				
-				</div>
-			</div>
-			
-		</div>
-		
-
-		<!-- Methods -->
-		
-		<div id="public-class-method-details" class="method-section section">
-			<h3 class="section-header">Public Class Methods</h3>
-
-		
-			<div id="new-method" class="method-detail ">
-				<a name="method-c-new"></a>
-
-				<div class="method-heading">
-				
-					<span class="method-name">new</span><span
-						class="method-args">(line, parser = nil)</span>
-					<span class="method-click-advice">click to toggle source</span>
-				
-				</div>
-
-				<div class="method-description">
-					
-					
-					
-
-					
-					<div class="method-source-code"
-						id="new-source">
-<pre>
-    <span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 24</span>
-24:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">line</span>, <span class="ruby-identifier">parser</span> = <span class="ruby-keyword kw">nil</span>)
-25:       <span class="ruby-ivar">@parser</span> = <span class="ruby-identifier">parser</span>
-26:       <span class="ruby-ivar">@line</span> = <span class="ruby-identifier">line</span>
-27:       <span class="ruby-ivar">@indent</span> = <span class="ruby-value">0</span>
-28:       <span class="ruby-ivar">@line</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/\s*/</span>
-29:       <span class="ruby-ivar">@assigned_paragraph_type</span> = <span class="ruby-keyword kw">nil</span>
-30:       <span class="ruby-ivar">@indent</span> = <span class="ruby-node">$&amp;</span>.<span class="ruby-identifier">length</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">blank?</span>
-31:     <span class="ruby-keyword kw">end</span></pre>
-					</div>
-					
-				</div>
-
-				
-
-				
-			</div>
-
-		
-			<div id="to-textile-method" class="method-detail ">
-				<a name="method-c-to_textile"></a>
-
-				<div class="method-heading">
-				
-					<span class="method-name">to_textile</span><span
-						class="method-args">(lines)</span>
-					<span class="method-click-advice">click to toggle source</span>
-				
-				</div>
-
-				<div class="method-description">
-					
-					
-					
-
-					
-					<div class="method-source-code"
-						id="to-textile-source">
-<pre>
-     <span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 221</span>
-221:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">to_textile</span>(<span class="ruby-identifier">lines</span>)
-222:       <span class="ruby-identifier">output</span> = <span class="ruby-value str">&quot;&quot;</span>
-223:       <span class="ruby-identifier">output_buffer</span> = <span class="ruby-constant">TextileOutputBuffer</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">output</span>)
-224:       <span class="ruby-constant">Parser</span>.<span class="ruby-identifier">translate</span>(<span class="ruby-identifier">lines</span>, <span class="ruby-identifier">output_buffer</span>)
-225:     <span class="ruby-keyword kw">end</span></pre>
-					</div>
-					
-				</div>
-
-				
-
-				
-			</div>
-
-		
-		</div>
-	
-		<div id="public-instance-method-details" class="method-section section">
-			<h3 class="section-header">Public Instance Methods</h3>
-
-		
-			<div id="begin-block--method" class="method-detail ">
-				<a name="method-i-begin_block%3F"></a>
-
-				<div class="method-heading">
-				
-					<span class="method-name">begin_block?</span><span
-						class="method-args">()</span>
-					<span class="method-click-advice">click to toggle source</span>
-				
-				</div>
-
-				<div class="method-description">
-					
-					
-					
-
-					
-					<div class="method-source-code"
-						id="begin-block--source">
-<pre>
-     <span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 151</span>
-151:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">begin_block?</span>
-152:       <span class="ruby-ivar">@line</span> <span class="ruby-operator">=~</span> <span class="ruby-constant">BlockRegexp</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-node">$1</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/BEGIN/</span>
-153:     <span class="ruby-keyword kw">end</span></pre>
-					</div>
-					
-				</div>
-
-				
-
-				
-			</div>
-
-		
-			<div id="blank--method" class="method-detail ">
-				<a name="method-i-blank%3F"></a>
-
-				<div class="method-heading">
-				
-					<span class="method-name">blank?</span><span
-						class="method-args">()</span>
-					<span class="method-click-advice">click to toggle source</span>
-				
-				</div>
-
-				<div class="method-description">
-					
-					
-					
-
-					
-					<div class="method-source-code"
-						id="blank--source">
-<pre>
-    <span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 73</span>
-73:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">blank?</span>
-74:       <span class="ruby-identifier">check_assignment_or_regexp</span>(<span class="ruby-value">:blank</span>, <span class="ruby-regexp re">/^\s*$/</span>)
-75:     <span class="ruby-keyword kw">end</span></pre>
-					</div>
-					
-				</div>
-
-				
-
-				
-			</div>
-
-		
-			<div id="block-lang-method" class="method-detail ">
-				<a name="method-i-block_lang"></a>
-
-				<div class="method-heading">
-				
-					<span class="method-name">block_lang</span><span
-						class="method-args">()</span>
-					<span class="method-click-advice">click to toggle source</span>
-				
-				</div>
-
-				<div class="method-description">
-					
-					
-					
-
-					
-					<div class="method-source-code"
-						id="block-lang-source">
-<pre>
-     <span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 163</span>
-163:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">block_lang</span>
-164:       <span class="ruby-node">$3</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@line</span> <span class="ruby-operator">=~</span> <span class="ruby-constant">BlockRegexp</span>
-165:     <span class="ruby-keyword kw">end</span></pre>
-					</div>
-					
-				</div>
-
-				
-
-				
-			</div>
-
-		
-			<div id="block-type-method" class="method-detail ">
-				<a name="method-i-block_type"></a>
-
-				<div class="method-heading">
-				
-					<span class="method-name">block_type</span><span
-						class="method-args">()</span>
-					<span class="method-click-advice">click to toggle source</span>
-				
-				</div>
-
-				<div class="method-description">
-					
-					
-					
-
-					
-					<div class="method-source-code"
-						id="block-type-source">
-<pre>
-     <span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 159</span>
-159:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">block_type</span>
-160:       <span class="ruby-node">$2</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@line</span> <span class="ruby-operator">=~</span> <span class="ruby-constant">BlockRegexp</span>
-161:     <span class="ruby-keyword kw">end</span></pre>
-					</div>
-					
-				</div>
-
-				
-
-				
-			</div>
-
-		
-			<div id="code-block-type--method" class="method-detail ">
-				<a name="method-i-code_block_type%3F"></a>
-
-				<div class="method-heading">
-				
-					<span class="method-name">code_block_type?</span><span
-						class="method-args">()</span>
-					<span class="method-click-advice">click to toggle source</span>
-				
-				</div>
-
-				<div class="method-description">
-					
-					
-					
-
-					
-					<div class="method-source-code"
-						id="code-block-type--source">
-<pre>
-     <span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 167</span>
-167:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">code_block_type?</span>
-168:       <span class="ruby-identifier">block_type</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^(EXAMPLE|SRC)$/</span>
-169:     <span class="ruby-keyword kw">end</span></pre>
-					</div>
-					
-				</div>
-
-				
-
-				
-			</div>
-
-		
-			<div id="comment--method" class="method-detail ">
-				<a name="method-i-comment%3F"></a>
-
-				<div class="method-heading">
-				
-					<span class="method-name">comment?</span><span
-						class="method-args">()</span>
-					<span class="method-click-advice">click to toggle source</span>
-				
-				</div>
-
-				<div class="method-description">
-					
-					<p>
-Tests if a line is a comment.
-</p>
-					
-
-					
-					<div class="method-source-code"
-						id="comment--source">
-<pre>
-    <span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 38</span>
-38:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">comment?</span>
-39:       <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@assigned_paragraph_type</span> <span class="ruby-operator">==</span> <span class="ruby-value">:comment</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@assigned_paragraph_type</span>
-40:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">block_type</span>.<span class="ruby-identifier">casecmp</span>(<span class="ruby-value str">&quot;COMMENT&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">begin_block?</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">end_block?</span>
-41:       <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@line</span> <span class="ruby-operator">=~</span> <span class="ruby-node">/^#/</span>
-42:     <span class="ruby-keyword kw">end</span></pre>
-					</div>
-					
-				</div>
-
-				
-
-				
-			</div>
-
-		
-			<div id="definition-list--method" class="method-detail ">
-				<a name="method-i-definition_list%3F"></a>
-
-				<div class="method-heading">
-				
-					<span class="method-name">definition_list?</span><span
-						class="method-args">()</span>
-					<span class="method-click-advice">click to toggle source</span>
-				
-				</div>
-
-				<div class="method-description">
-					
-					
-					
-
-					
-					<div class="method-source-code"
-						id="definition-list--source">
-<pre>
-    <span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 93</span>
-93:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">definition_list?</span>
-94:       <span class="ruby-identifier">check_assignment_or_regexp</span>(<span class="ruby-value">:definition_list</span>, <span class="ruby-constant">DefinitionListRegexp</span>)
-95:     <span class="ruby-keyword kw">end</span></pre>
-					</div>
-					
-				</div>
-
-				
-
-				
-			</div>
-
-		
-			<div id="end-block--method" class="method-detail ">
-				<a name="method-i-end_block%3F"></a>
-
-				<div class="method-heading">
-				
-					<span class="method-name">end_block?</span><span
-						class="method-args">()</span>
-					<span class="method-click-advice">click to toggle source</span>
-				
-				</div>
-
-				<div class="method-description">
-					
-					
-					
-
-					
-					<div class="method-source-code"
-						id="end-block--source">
-<pre>
-     <span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 155</span>
-155:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">end_block?</span>
-156:       <span class="ruby-ivar">@line</span> <span class="ruby-operator">=~</span> <span class="ruby-constant">BlockRegexp</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-node">$1</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/END/</span>
-157:     <span class="ruby-keyword kw">end</span></pre>
-					</div>
-					
-				</div>
-
-				
-
-				
-			</div>
-
-		
-			<div id="horizontal-rule--method" class="method-detail ">
-				<a name="method-i-horizontal_rule%3F"></a>
-
-				<div class="method-heading">
-				
-					<span class="method-name">horizontal_rule?</span><span
-						class="method-args">()</span>
-					<span class="method-click-advice">click to toggle source</span>
-				
-				</div>
-
-				<div class="method-description">
-					
-					
-					
-
-					
-					<div class="method-source-code"
-						id="horizontal-rule--source">
-<pre>
-     <span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 99</span>
- 99:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">horizontal_rule?</span>
-100:       <span class="ruby-identifier">check_assignment_or_regexp</span>(<span class="ruby-value">:horizontal_rule</span>, <span class="ruby-constant">HorizontalRuleRegexp</span>)
-101:     <span class="ruby-keyword kw">end</span></pre>
-					</div>
-					
-				</div>
-
-				
-
-				
-			</div>
-
-		
-			<div id="in-buffer-setting--method" class="method-detail ">
-				<a name="method-i-in_buffer_setting%3F"></a>
-
-				<div class="method-heading">
-				
-					<span class="method-callseq"> }</span>
-					<span class="method-click-advice">click to toggle source</span>
-				
-				</div>
-
-				<div class="method-description">
-					
-					<p>
-Called without a block, this method determines if the line contains an
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>class Orgmode::Line - org-ruby-0.6.1 Documentation</title>
+
+<link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../index.html">Home</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/org-ruby/line.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">Object
+  
+</nav>
+
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li><a href="#method-c-new">::new</a>
+    
+    <li><a href="#method-c-to_textile">::to_textile</a>
+    
+    <li><a href="#method-i-begin_block-3F">#begin_block?</a>
+    
+    <li><a href="#method-i-blank-3F">#blank?</a>
+    
+    <li><a href="#method-i-block_lang">#block_lang</a>
+    
+    <li><a href="#method-i-block_type">#block_type</a>
+    
+    <li><a href="#method-i-code_block_type-3F">#code_block_type?</a>
+    
+    <li><a href="#method-i-comment-3F">#comment?</a>
+    
+    <li><a href="#method-i-definition_list-3F">#definition_list?</a>
+    
+    <li><a href="#method-i-end_block-3F">#end_block?</a>
+    
+    <li><a href="#method-i-horizontal_rule-3F">#horizontal_rule?</a>
+    
+    <li><a href="#method-i-in_buffer_setting-3F">#in_buffer_setting?</a>
+    
+    <li><a href="#method-i-inline_example-3F">#inline_example?</a>
+    
+    <li><a href="#method-i-metadata-3F">#metadata?</a>
+    
+    <li><a href="#method-i-nonprinting-3F">#nonprinting?</a>
+    
+    <li><a href="#method-i-ordered_list-3F">#ordered_list?</a>
+    
+    <li><a href="#method-i-output_text">#output_text</a>
+    
+    <li><a href="#method-i-paragraph_type">#paragraph_type</a>
+    
+    <li><a href="#method-i-plain_list-3F">#plain_list?</a>
+    
+    <li><a href="#method-i-plain_text-3F">#plain_text?</a>
+    
+    <li><a href="#method-i-property_drawer-3F">#property_drawer?</a>
+    
+    <li><a href="#method-i-property_drawer_begin_block-3F">#property_drawer_begin_block?</a>
+    
+    <li><a href="#method-i-property_drawer_end_block-3F">#property_drawer_end_block?</a>
+    
+    <li><a href="#method-i-property_drawer_item-3F">#property_drawer_item?</a>
+    
+    <li><a href="#method-i-strip_ordered_list_tag">#strip_ordered_list_tag</a>
+    
+    <li><a href="#method-i-strip_unordered_list_tag">#strip_unordered_list_tag</a>
+    
+    <li><a href="#method-i-table-3F">#table?</a>
+    
+    <li><a href="#method-i-table_header-3F">#table_header?</a>
+    
+    <li><a href="#method-i-table_row-3F">#table_row?</a>
+    
+    <li><a href="#method-i-table_separator-3F">#table_separator?</a>
+    
+    <li><a href="#method-i-to_s">#to_s</a>
+    
+    <li><a href="#method-i-unordered_list-3F">#unordered_list?</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="../History_txt.html">History</a>
+  
+    <li class="file"><a href="../README_rdoc.html">README</a>
+  
+    <li class="file"><a href="../announcement_txt.html">announcement</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../Orgmode.html">Orgmode</a>
+  
+    <li><a href="../Orgmode/Headline.html">Orgmode::Headline</a>
+  
+    <li><a href="../Orgmode/HtmlOutputBuffer.html">Orgmode::HtmlOutputBuffer</a>
+  
+    <li><a href="../Orgmode/Line.html">Orgmode::Line</a>
+  
+    <li><a href="../Orgmode/OutputBuffer.html">Orgmode::OutputBuffer</a>
+  
+    <li><a href="../Orgmode/Parser.html">Orgmode::Parser</a>
+  
+    <li><a href="../Orgmode/RegexpHelper.html">Orgmode::RegexpHelper</a>
+  
+    <li><a href="../Orgmode/TextileOutputBuffer.html">Orgmode::TextileOutputBuffer</a>
+  
+    <li><a href="../Tilt.html">Tilt</a>
+  
+    <li><a href="../Tilt/OrgTemplate.html">Tilt::OrgTemplate</a>
+  
+    <li><a href="../OrgRuby.html">OrgRuby</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class Orgmode::Line</h1>
+
+  <div id="description" class="description">
+    
+<p>Represents a single line of an orgmode file.</p>
+
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+    <!-- Constants -->
+    <section id="constants-list" class="section">
+      <h3 class="section-header">Constants</h3>
+      <dl>
+      
+        <dt id="BlockRegexp">BlockRegexp
+        
+        <dd class="description">
+        
+      
+        <dt id="DefinitionListRegexp">DefinitionListRegexp
+        
+        <dd class="description">
+        
+      
+        <dt id="HorizontalRuleRegexp">HorizontalRuleRegexp
+        
+        <dd class="description">
+        
+      
+        <dt id="InBufferSettingRegexp">InBufferSettingRegexp
+        
+        <dd class="description">
+        
+      
+        <dt id="InlineExampleRegexp">InlineExampleRegexp
+        
+        <dd class="description">
+        
+      
+        <dt id="OrderedListRegexp">OrderedListRegexp
+        
+        <dd class="description">
+        
+      
+        <dt id="PropertyDrawerItemRegexp">PropertyDrawerItemRegexp
+        
+        <dd class="description">
+        
+      
+        <dt id="PropertyDrawerRegexp">PropertyDrawerRegexp
+        
+        <dd class="description">
+        
+      
+        <dt id="UnorderedListRegexp">UnorderedListRegexp
+        
+        <dd class="description">
+        
+      
+      </dl>
+    </section>
+    
+
+    
+    <!-- Attributes -->
+    <section id="attribute-method-details" class="method-section section">
+      <h3 class="section-header">Attributes</h3>
+
+      
+      <div id="attribute-i-assigned_paragraph_type" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">assigned_paragraph_type</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>A line can have its type assigned instead of inferred from its content. For
+example, something that parses as a “table” on its own (“| one | two|n”)
+may just be a paragraph if it’s inside #+BEGIN_EXAMPLE. Set this property
+on the line to assign its type. This will then affect the value of
+<code>paragraph_type</code>.</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-indent" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">indent</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>The indent level of this line. this is important to properly translate
+nested lists from orgmode to textile. TODO 2009-12-20 bdewey: Handle tabs</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-line" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">line</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>This is the line itself.</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-parser" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">parser</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>Backpointer to the parser that owns this line.</p>
+        
+        </div>
+      </div>
+      
+    </section><!-- attribute-method-details -->
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">(line, parser = nil)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/org-ruby/line.rb, line 24</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">line</span>, <span class="ruby-identifier">parser</span> = <span class="ruby-keyword">nil</span>)
+  <span class="ruby-ivar">@parser</span> = <span class="ruby-identifier">parser</span>
+  <span class="ruby-ivar">@line</span> = <span class="ruby-identifier">line</span>
+  <span class="ruby-ivar">@indent</span> = <span class="ruby-value">0</span>
+  <span class="ruby-ivar">@line</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp">%r\s*/</span>
+  <span class="ruby-ivar">@assigned_paragraph_type</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-ivar">@indent</span> = <span class="ruby-node">$&amp;</span>.<span class="ruby-identifier">length</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">blank?</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- new-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- new-method -->
+
+    
+      <div id="method-c-to_textile" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">to_textile</span><span
+            class="method-args">(lines)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="to_textile-source">
+            <pre><span class="ruby-comment"># File lib/org-ruby/line.rb, line 221</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">to_textile</span>(<span class="ruby-identifier">lines</span>)
+  <span class="ruby-identifier">output</span> = <span class="ruby-string">&quot;&quot;</span>
+  <span class="ruby-identifier">output_buffer</span> = <span class="ruby-constant">TextileOutputBuffer</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">output</span>)
+  <span class="ruby-constant">Parser</span>.<span class="ruby-identifier">translate</span>(<span class="ruby-identifier">lines</span>, <span class="ruby-identifier">output_buffer</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- to_textile-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- to_textile-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-begin_block-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">begin_block?</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="begin_block-3F-source">
+            <pre><span class="ruby-comment"># File lib/org-ruby/line.rb, line 151</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">begin_block?</span>
+  <span class="ruby-ivar">@line</span> <span class="ruby-operator">=~</span> <span class="ruby-constant">BlockRegexp</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-node">$1</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp">%rBEGIN/</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- begin_block-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- begin_block-3F-method -->
+
+    
+      <div id="method-i-blank-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">blank?</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="blank-3F-source">
+            <pre><span class="ruby-comment"># File lib/org-ruby/line.rb, line 73</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">blank?</span>
+  <span class="ruby-identifier">check_assignment_or_regexp</span>(<span class="ruby-value">:blank</span>, <span class="ruby-regexp">%r^\s*$/</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- blank-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- blank-3F-method -->
+
+    
+      <div id="method-i-block_lang" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">block_lang</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="block_lang-source">
+            <pre><span class="ruby-comment"># File lib/org-ruby/line.rb, line 163</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">block_lang</span>
+  <span class="ruby-node">$3</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@line</span> <span class="ruby-operator">=~</span> <span class="ruby-constant">BlockRegexp</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- block_lang-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- block_lang-method -->
+
+    
+      <div id="method-i-block_type" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">block_type</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="block_type-source">
+            <pre><span class="ruby-comment"># File lib/org-ruby/line.rb, line 159</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">block_type</span>
+  <span class="ruby-node">$2</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@line</span> <span class="ruby-operator">=~</span> <span class="ruby-constant">BlockRegexp</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- block_type-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- block_type-method -->
+
+    
+      <div id="method-i-code_block_type-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">code_block_type?</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="code_block_type-3F-source">
+            <pre><span class="ruby-comment"># File lib/org-ruby/line.rb, line 167</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">code_block_type?</span>
+  <span class="ruby-identifier">block_type</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp">%r^(EXAMPLE|SRC)$/</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- code_block_type-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- code_block_type-3F-method -->
+
+    
+      <div id="method-i-comment-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">comment?</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Tests if a line is a comment.</p>
+          
+
+          
+          <div class="method-source-code" id="comment-3F-source">
+            <pre><span class="ruby-comment"># File lib/org-ruby/line.rb, line 38</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">comment?</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-ivar">@assigned_paragraph_type</span> <span class="ruby-operator">==</span> <span class="ruby-value">:comment</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@assigned_paragraph_type</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">block_type</span>.<span class="ruby-identifier">casecmp</span>(<span class="ruby-string">&quot;COMMENT&quot;</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">begin_block?</span> <span class="ruby-keyword">or</span> <span class="ruby-identifier">end_block?</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-ivar">@line</span> <span class="ruby-operator">=~</span> <span class="ruby-node">%r^#/</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- comment-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- comment-3F-method -->
+
+    
+      <div id="method-i-definition_list-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">definition_list?</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="definition_list-3F-source">
+            <pre><span class="ruby-comment"># File lib/org-ruby/line.rb, line 93</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">definition_list?</span>
+  <span class="ruby-identifier">check_assignment_or_regexp</span>(<span class="ruby-value">:definition_list</span>, <span class="ruby-constant">DefinitionListRegexp</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- definition_list-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- definition_list-3F-method -->
+
+    
+      <div id="method-i-end_block-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">end_block?</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="end_block-3F-source">
+            <pre><span class="ruby-comment"># File lib/org-ruby/line.rb, line 155</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">end_block?</span>
+  <span class="ruby-ivar">@line</span> <span class="ruby-operator">=~</span> <span class="ruby-constant">BlockRegexp</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-node">$1</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp">%rEND/</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- end_block-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- end_block-3F-method -->
+
+    
+      <div id="method-i-horizontal_rule-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">horizontal_rule?</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="horizontal_rule-3F-source">
+            <pre><span class="ruby-comment"># File lib/org-ruby/line.rb, line 99</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">horizontal_rule?</span>
+  <span class="ruby-identifier">check_assignment_or_regexp</span>(<span class="ruby-value">:horizontal_rule</span>, <span class="ruby-constant">HorizontalRuleRegexp</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- horizontal_rule-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- horizontal_rule-3F-method -->
+
+    
+      <div id="method-i-in_buffer_setting-3F" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            in_buffer_setting?         &rarr; boolean
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            in_buffer_setting? { |key, value| ... }
+          </span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Called without a block, this method determines if the line contains an
 in-buffer setting. Called with a block, the block will get called if the
-line contains an in-buffer setting with the key and value for the setting.
-</p>
-					
-
-					
-					<div class="method-source-code"
-						id="in-buffer-setting--source">
-<pre>
-     <span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 189</span>
-189:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">in_buffer_setting?</span>
-190:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@assigned_paragraph_type</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@assigned_paragraph_type</span> <span class="ruby-operator">!=</span> <span class="ruby-value">:comment</span>
-191:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block_given?</span> <span class="ruby-keyword kw">then</span>
-192:         <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@line</span> <span class="ruby-operator">=~</span> <span class="ruby-constant">InBufferSettingRegexp</span>
-193:           <span class="ruby-keyword kw">yield</span> <span class="ruby-node">$1</span>, <span class="ruby-node">$2</span>
-194:         <span class="ruby-keyword kw">end</span>
-195:       <span class="ruby-keyword kw">else</span>
-196:         <span class="ruby-ivar">@line</span> <span class="ruby-operator">=~</span> <span class="ruby-constant">InBufferSettingRegexp</span>
-197:       <span class="ruby-keyword kw">end</span>
-198:     <span class="ruby-keyword kw">end</span></pre>
-					</div>
-					
-				</div>
-
-				
-
-				
-			</div>
-
-		
-			<div id="inline-example--method" class="method-detail ">
-				<a name="method-i-inline_example%3F"></a>
-
-				<div class="method-heading">
-				
-					<span class="method-name">inline_example?</span><span
-						class="method-args">()</span>
-					<span class="method-click-advice">click to toggle source</span>
-				
-				</div>
-
-				<div class="method-description">
-					
-					<p>
-Test if the line matches the &#8220;inline example&#8221; case: the first
-character on the line is a colon.
-</p>
-					
-
-					
-					<div class="method-source-code"
-						id="inline-example--source">
-<pre>
-     <span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 175</span>
-175:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">inline_example?</span>
-176:       <span class="ruby-identifier">check_assignment_or_regexp</span>(<span class="ruby-value">:inline_example</span>, <span class="ruby-constant">InlineExampleRegexp</span>)
-177:     <span class="ruby-keyword kw">end</span></pre>
-					</div>
-					
-				</div>
-
-				
-
-				
-			</div>
-
-		
-			<div id="metadata--method" class="method-detail ">
-				<a name="method-i-metadata%3F"></a>
-
-				<div class="method-heading">
-				
-					<span class="method-name">metadata?</span><span
-						class="method-args">()</span>
-					<span class="method-click-advice">click to toggle source</span>
-				
-				</div>
-
-				<div class="method-description">
-					
-					<p>
-Tests if a line contains metadata instead of actual content.
-</p>
-					
-
-					
-					<div class="method-source-code"
-						id="metadata--source">
-<pre>
-    <span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 65</span>
-65:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">metadata?</span>
-66:       <span class="ruby-identifier">check_assignment_or_regexp</span>(<span class="ruby-value">:metadata</span>, <span class="ruby-regexp re">/^\s*(CLOCK|DEADLINE|START|CLOSED|SCHEDULED):/</span>)
-67:     <span class="ruby-keyword kw">end</span></pre>
-					</div>
-					
-				</div>
-
-				
-
-				
-			</div>
-
-		
-			<div id="nonprinting--method" class="method-detail ">
-				<a name="method-i-nonprinting%3F"></a>
-
-				<div class="method-heading">
-				
-					<span class="method-name">nonprinting?</span><span
-						class="method-args">()</span>
-					<span class="method-click-advice">click to toggle source</span>
-				
-				</div>
-
-				<div class="method-description">
-					
-					
-					
-
-					
-					<div class="method-source-code"
-						id="nonprinting--source">
-<pre>
-    <span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 69</span>
-69:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">nonprinting?</span>
-70:       <span class="ruby-identifier">comment?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">metadata?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">begin_block?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">end_block?</span>
-71:     <span class="ruby-keyword kw">end</span></pre>
-					</div>
-					
-				</div>
-
-				
-
-				
-			</div>
-
-		
-			<div id="ordered-list--method" class="method-detail ">
-				<a name="method-i-ordered_list%3F"></a>
-
-				<div class="method-heading">
-				
-					<span class="method-name">ordered_list?</span><span
-						class="method-args">()</span>
-					<span class="method-click-advice">click to toggle source</span>
-				
-				</div>
-
-				<div class="method-description">
-					
-					
-					
-
-					
-					<div class="method-source-code"
-						id="ordered-list--source">
-<pre>
-     <span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 105</span>
-105:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ordered_list?</span>
-106:       <span class="ruby-identifier">check_assignment_or_regexp</span>(<span class="ruby-value">:ordered_list</span>, <span class="ruby-constant">OrderedListRegexp</span>)
-107:     <span class="ruby-keyword kw">end</span></pre>
-					</div>
-					
-				</div>
-
-				
-
-				
-			</div>
-
-		
-			<div id="output-text-method" class="method-detail ">
-				<a name="method-i-output_text"></a>
-
-				<div class="method-heading">
-				
-					<span class="method-name">output_text</span><span
-						class="method-args">()</span>
-					<span class="method-click-advice">click to toggle source</span>
-				
-				</div>
-
-				<div class="method-description">
-					
-					<p>
-Extracts meaningful text and excludes org-mode markup, like identifiers for
-lists or headings.
-</p>
-					
-
-					
-					<div class="method-source-code"
-						id="output-text-source">
-<pre>
-     <span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 115</span>
-115:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">output_text</span>
-116:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">strip_ordered_list_tag</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ordered_list?</span>
-117:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">strip_unordered_list_tag</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">unordered_list?</span>
-118:       <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@line</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-constant">InlineExampleRegexp</span>, <span class="ruby-value str">&quot;&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">inline_example?</span>
-119:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">line</span>
-120:     <span class="ruby-keyword kw">end</span></pre>
-					</div>
-					
-				</div>
-
-				
-
-				
-			</div>
-
-		
-			<div id="paragraph-type-method" class="method-detail ">
-				<a name="method-i-paragraph_type"></a>
-
-				<div class="method-heading">
-				
-					<span class="method-name">paragraph_type</span><span
-						class="method-args">()</span>
-					<span class="method-click-advice">click to toggle source</span>
-				
-				</div>
-
-				<div class="method-description">
-					
-					<p>
-Determines the paragraph type of the current line.
-</p>
-					
-
-					
-					<div class="method-source-code"
-						id="paragraph-type-source">
-<pre>
-     <span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 201</span>
-201:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">paragraph_type</span>
-202:       <span class="ruby-keyword kw">return</span> <span class="ruby-value">:blank</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">blank?</span>
-203:       <span class="ruby-keyword kw">return</span> <span class="ruby-value">:definition_list</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">definition_list?</span> <span class="ruby-comment cmt"># order is important! A definition_list is also an unordered_list!</span>
-204:       <span class="ruby-keyword kw">return</span> <span class="ruby-value">:ordered_list</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ordered_list?</span>
-205:       <span class="ruby-keyword kw">return</span> <span class="ruby-value">:unordered_list</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">unordered_list?</span>
-206:       <span class="ruby-keyword kw">return</span> <span class="ruby-value">:property_drawer_begin_block</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">property_drawer_begin_block?</span>
-207:       <span class="ruby-keyword kw">return</span> <span class="ruby-value">:property_drawer_end_block</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">property_drawer_end_block?</span>
-208:       <span class="ruby-keyword kw">return</span> <span class="ruby-value">:property_drawer_item</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">property_drawer_item?</span>
-209:       <span class="ruby-keyword kw">return</span> <span class="ruby-value">:metadata</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">metadata?</span>
-210:       <span class="ruby-keyword kw">return</span> <span class="ruby-value">:begin_block</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">begin_block?</span>
-211:       <span class="ruby-keyword kw">return</span> <span class="ruby-value">:end_block</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">end_block?</span>
-212:       <span class="ruby-keyword kw">return</span> <span class="ruby-value">:comment</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">comment?</span>
-213:       <span class="ruby-keyword kw">return</span> <span class="ruby-value">:table_separator</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">table_separator?</span>
-214:       <span class="ruby-keyword kw">return</span> <span class="ruby-value">:table_row</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">table_row?</span>
-215:       <span class="ruby-keyword kw">return</span> <span class="ruby-value">:table_header</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">table_header?</span>
-216:       <span class="ruby-keyword kw">return</span> <span class="ruby-value">:inline_example</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">inline_example?</span>
-217:       <span class="ruby-keyword kw">return</span> <span class="ruby-value">:horizontal_rule</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">horizontal_rule?</span>
-218:       <span class="ruby-keyword kw">return</span> <span class="ruby-value">:paragraph</span>
-219:     <span class="ruby-keyword kw">end</span></pre>
-					</div>
-					
-				</div>
-
-				
-
-				
-			</div>
-
-		
-			<div id="plain-list--method" class="method-detail ">
-				<a name="method-i-plain_list%3F"></a>
-
-				<div class="method-heading">
-				
-					<span class="method-name">plain_list?</span><span
-						class="method-args">()</span>
-					<span class="method-click-advice">click to toggle source</span>
-				
-				</div>
-
-				<div class="method-description">
-					
-					
-					
-
-					
-					<div class="method-source-code"
-						id="plain-list--source">
-<pre>
-    <span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 77</span>
-77:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">plain_list?</span>
-78:       <span class="ruby-identifier">ordered_list?</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">unordered_list?</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">definition_list?</span>
-79:     <span class="ruby-keyword kw">end</span></pre>
-					</div>
-					
-				</div>
-
-				
-
-				
-			</div>
-
-		
-			<div id="plain-text--method" class="method-detail ">
-				<a name="method-i-plain_text%3F"></a>
-
-				<div class="method-heading">
-				
-					<span class="method-name">plain_text?</span><span
-						class="method-args">()</span>
-					<span class="method-click-advice">click to toggle source</span>
-				
-				</div>
-
-				<div class="method-description">
-					
-					
-					
-
-					
-					<div class="method-source-code"
-						id="plain-text--source">
-<pre>
-     <span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 122</span>
-122:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">plain_text?</span>
-123:       <span class="ruby-keyword kw">not</span> <span class="ruby-identifier">metadata?</span> <span class="ruby-keyword kw">and</span> <span class="ruby-keyword kw">not</span> <span class="ruby-identifier">blank?</span> <span class="ruby-keyword kw">and</span> <span class="ruby-keyword kw">not</span> <span class="ruby-identifier">plain_list?</span>
-124:     <span class="ruby-keyword kw">end</span></pre>
-					</div>
-					
-				</div>
-
-				
-
-				
-			</div>
-
-		
-			<div id="property-drawer--method" class="method-detail ">
-				<a name="method-i-property_drawer%3F"></a>
-
-				<div class="method-heading">
-				
-					<span class="method-name">property_drawer?</span><span
-						class="method-args">()</span>
-					<span class="method-click-advice">click to toggle source</span>
-				
-				</div>
-
-				<div class="method-description">
-					
-					
-					
-
-					
-					<div class="method-source-code"
-						id="property-drawer--source">
-<pre>
-    <span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 54</span>
-54:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">property_drawer?</span>
-55:       <span class="ruby-identifier">check_assignment_or_regexp</span>(<span class="ruby-value">:property_drawer</span>, <span class="ruby-constant">PropertyDrawerRegexp</span>)
-56:     <span class="ruby-keyword kw">end</span></pre>
-					</div>
-					
-				</div>
-
-				
-
-				
-			</div>
-
-		
-			<div id="property-drawer-begin-block--method" class="method-detail ">
-				<a name="method-i-property_drawer_begin_block%3F"></a>
-
-				<div class="method-heading">
-				
-					<span class="method-name">property_drawer_begin_block?</span><span
-						class="method-args">()</span>
-					<span class="method-click-advice">click to toggle source</span>
-				
-				</div>
-
-				<div class="method-description">
-					
-					
-					
-
-					
-					<div class="method-source-code"
-						id="property-drawer-begin-block--source">
-<pre>
-    <span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 46</span>
-46:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">property_drawer_begin_block?</span>
-47:       <span class="ruby-ivar">@line</span> <span class="ruby-operator">=~</span> <span class="ruby-constant">PropertyDrawerRegexp</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-node">$1</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/PROPERTIES/</span>
-48:     <span class="ruby-keyword kw">end</span></pre>
-					</div>
-					
-				</div>
-
-				
-
-				
-			</div>
-
-		
-			<div id="property-drawer-end-block--method" class="method-detail ">
-				<a name="method-i-property_drawer_end_block%3F"></a>
-
-				<div class="method-heading">
-				
-					<span class="method-name">property_drawer_end_block?</span><span
-						class="method-args">()</span>
-					<span class="method-click-advice">click to toggle source</span>
-				
-				</div>
-
-				<div class="method-description">
-					
-					
-					
-
-					
-					<div class="method-source-code"
-						id="property-drawer-end-block--source">
-<pre>
-    <span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 50</span>
-50:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">property_drawer_end_block?</span>
-51:       <span class="ruby-ivar">@line</span> <span class="ruby-operator">=~</span> <span class="ruby-constant">PropertyDrawerRegexp</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-node">$1</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/END/</span>
-52:     <span class="ruby-keyword kw">end</span></pre>
-					</div>
-					
-				</div>
-
-				
-
-				
-			</div>
-
-		
-			<div id="property-drawer-item--method" class="method-detail ">
-				<a name="method-i-property_drawer_item%3F"></a>
-
-				<div class="method-heading">
-				
-					<span class="method-name">property_drawer_item?</span><span
-						class="method-args">()</span>
-					<span class="method-click-advice">click to toggle source</span>
-				
-				</div>
-
-				<div class="method-description">
-					
-					
-					
-
-					
-					<div class="method-source-code"
-						id="property-drawer-item--source">
-<pre>
-    <span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 60</span>
-60:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">property_drawer_item?</span>
-61:       <span class="ruby-ivar">@line</span> <span class="ruby-operator">=~</span> <span class="ruby-constant">PropertyDrawerItemRegexp</span>
-62:     <span class="ruby-keyword kw">end</span></pre>
-					</div>
-					
-				</div>
-
-				
-
-				
-			</div>
-
-		
-			<div id="strip-ordered-list-tag-method" class="method-detail ">
-				<a name="method-i-strip_ordered_list_tag"></a>
-
-				<div class="method-heading">
-				
-					<span class="method-name">strip_ordered_list_tag</span><span
-						class="method-args">()</span>
-					<span class="method-click-advice">click to toggle source</span>
-				
-				</div>
-
-				<div class="method-description">
-					
-					
-					
-
-					
-					<div class="method-source-code"
-						id="strip-ordered-list-tag-source">
-<pre>
-     <span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 109</span>
-109:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">strip_ordered_list_tag</span>
-110:       <span class="ruby-ivar">@line</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-constant">OrderedListRegexp</span>, <span class="ruby-value str">&quot;&quot;</span>)
-111:     <span class="ruby-keyword kw">end</span></pre>
-					</div>
-					
-				</div>
-
-				
-
-				
-			</div>
-
-		
-			<div id="strip-unordered-list-tag-method" class="method-detail ">
-				<a name="method-i-strip_unordered_list_tag"></a>
-
-				<div class="method-heading">
-				
-					<span class="method-name">strip_unordered_list_tag</span><span
-						class="method-args">()</span>
-					<span class="method-click-advice">click to toggle source</span>
-				
-				</div>
-
-				<div class="method-description">
-					
-					
-					
-
-					
-					<div class="method-source-code"
-						id="strip-unordered-list-tag-source">
-<pre>
-    <span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 87</span>
-87:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">strip_unordered_list_tag</span>
-88:       <span class="ruby-ivar">@line</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-constant">UnorderedListRegexp</span>, <span class="ruby-value str">&quot;&quot;</span>)
-89:     <span class="ruby-keyword kw">end</span></pre>
-					</div>
-					
-				</div>
-
-				
-
-				
-			</div>
-
-		
-			<div id="table--method" class="method-detail ">
-				<a name="method-i-table%3F"></a>
-
-				<div class="method-heading">
-				
-					<span class="method-name">table?</span><span
-						class="method-args">()</span>
-					<span class="method-click-advice">click to toggle source</span>
-				
-				</div>
-
-				<div class="method-description">
-					
-					
-					
-
-					
-					<div class="method-source-code"
-						id="table--source">
-<pre>
-     <span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 145</span>
-145:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">table?</span>
-146:       <span class="ruby-identifier">table_row?</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">table_separator?</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">table_header?</span>
-147:     <span class="ruby-keyword kw">end</span></pre>
-					</div>
-					
-				</div>
-
-				
-
-				
-			</div>
-
-		
-			<div id="table-header--method" class="method-detail ">
-				<a name="method-i-table_header%3F"></a>
-
-				<div class="method-heading">
-				
-					<span class="method-name">table_header?</span><span
-						class="method-args">()</span>
-					<span class="method-click-advice">click to toggle source</span>
-				
-				</div>
-
-				<div class="method-description">
-					
-					<p>
-Checks if this line is a table header. 
-</p>
-					
-
-					
-					<div class="method-source-code"
-						id="table-header--source">
-<pre>
-     <span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 141</span>
-141:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">table_header?</span>
-142:       <span class="ruby-ivar">@assigned_paragraph_type</span> <span class="ruby-operator">==</span> <span class="ruby-value">:table_header</span>
-143:     <span class="ruby-keyword kw">end</span></pre>
-					</div>
-					
-				</div>
-
-				
-
-				
-			</div>
-
-		
-			<div id="table-row--method" class="method-detail ">
-				<a name="method-i-table_row%3F"></a>
-
-				<div class="method-heading">
-				
-					<span class="method-name">table_row?</span><span
-						class="method-args">()</span>
-					<span class="method-click-advice">click to toggle source</span>
-				
-				</div>
-
-				<div class="method-description">
-					
-					
-					
-
-					
-					<div class="method-source-code"
-						id="table-row--source">
-<pre>
-     <span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 126</span>
-126:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">table_row?</span>
-127:       <span class="ruby-comment cmt"># for an org-mode table, the first non-whitespace character is a</span>
-128:       <span class="ruby-comment cmt"># | (pipe).</span>
-129:       <span class="ruby-identifier">check_assignment_or_regexp</span>(<span class="ruby-value">:table_row</span>, <span class="ruby-regexp re">/^\s*\|/</span>)
-130:     <span class="ruby-keyword kw">end</span></pre>
-					</div>
-					
-				</div>
-
-				
-
-				
-			</div>
-
-		
-			<div id="table-separator--method" class="method-detail ">
-				<a name="method-i-table_separator%3F"></a>
-
-				<div class="method-heading">
-				
-					<span class="method-name">table_separator?</span><span
-						class="method-args">()</span>
-					<span class="method-click-advice">click to toggle source</span>
-				
-				</div>
-
-				<div class="method-description">
-					
-					
-					
-
-					
-					<div class="method-source-code"
-						id="table-separator--source">
-<pre>
-     <span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 132</span>
-132:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">table_separator?</span>
-133:       <span class="ruby-comment cmt"># an org-mode table separator has the first non-whitespace</span>
-134:       <span class="ruby-comment cmt"># character as a | (pipe), then consists of nothing else other</span>
-135:       <span class="ruby-comment cmt"># than pipes, hyphens, and pluses.</span>
-136: 
-137:       <span class="ruby-identifier">check_assignment_or_regexp</span>(<span class="ruby-value">:table_separator</span>, <span class="ruby-regexp re">/^\s*\|[-\|\+]*\s*$/</span>)
-138:     <span class="ruby-keyword kw">end</span></pre>
-					</div>
-					
-				</div>
-
-				
-
-				
-			</div>
-
-		
-			<div id="to-s-method" class="method-detail ">
-				<a name="method-i-to_s"></a>
-
-				<div class="method-heading">
-				
-					<span class="method-name">to_s</span><span
-						class="method-args">()</span>
-					<span class="method-click-advice">click to toggle source</span>
-				
-				</div>
-
-				<div class="method-description">
-					
-					
-					
-
-					
-					<div class="method-source-code"
-						id="to-s-source">
-<pre>
-    <span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 33</span>
-33:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_s</span>
-34:       <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@line</span>
-35:     <span class="ruby-keyword kw">end</span></pre>
-					</div>
-					
-				</div>
-
-				
-
-				
-			</div>
-
-		
-			<div id="unordered-list--method" class="method-detail ">
-				<a name="method-i-unordered_list%3F"></a>
-
-				<div class="method-heading">
-				
-					<span class="method-name">unordered_list?</span><span
-						class="method-args">()</span>
-					<span class="method-click-advice">click to toggle source</span>
-				
-				</div>
-
-				<div class="method-description">
-					
-					
-					
-
-					
-					<div class="method-source-code"
-						id="unordered-list--source">
-<pre>
-    <span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 83</span>
-83:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">unordered_list?</span>
-84:       <span class="ruby-identifier">check_assignment_or_regexp</span>(<span class="ruby-value">:unordered_list</span>, <span class="ruby-constant">UnorderedListRegexp</span>)
-85:     <span class="ruby-keyword kw">end</span></pre>
-					</div>
-					
-				</div>
-
-				
-
-				
-			</div>
-
-		
-		</div>
-	
-		<div id="private-instance-method-details" class="method-section section">
-			<h3 class="section-header">Private Instance Methods</h3>
-
-		
-			<div id="check-assignment-or-regexp-method" class="method-detail ">
-				<a name="method-i-check_assignment_or_regexp"></a>
-
-				<div class="method-heading">
-				
-					<span class="method-callseq">check_assignment_or_regexp(assignment, regexp) => boolean</span>
-					<span class="method-click-advice">click to toggle source</span>
-				
-				</div>
-
-				<div class="method-description">
-					
-					<p>
-This function is an internal helper for determining the paragraph type of a
-line... for instance, if the line is a comment or contains metadata.
-It&#8217;s used in routines like blank?, plain_list?, etc.
-</p>
-<p>
-What&#8217;s tricky is lines can have assigned types, so you need to check
-the assigned type, if present, or see if the characteristic regexp for the
-paragraph type matches if not present.
-</p>
-<table>
-<tr><td valign="top">assignment</td><td><p>
-if the paragraph has an assigned type, it will be checked to see if it
-equals <tt>assignment</tt>.
-</p>
-</td></tr>
-<tr><td valign="top">regexp</td><td><p>
-If the paragraph does not have an assigned type, the contents of the
-paragraph will be checked against this regexp.
-</p>
-</td></tr>
-</table>
-					
-
-					
-					<div class="method-source-code"
-						id="check-assignment-or-regexp-source">
-<pre>
-     <span class="ruby-comment cmt"># File lib/org-ruby/line.rb, line 246</span>
-246:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">check_assignment_or_regexp</span>(<span class="ruby-identifier">assignment</span>, <span class="ruby-identifier">regexp</span>)
-247:       <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@assigned_paragraph_type</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">assignment</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@assigned_paragraph_type</span>
-248:       <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@line</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">regexp</span>
-249:     <span class="ruby-keyword kw">end</span></pre>
-					</div>
-					
-				</div>
-
-				
-
-				
-			</div>
-
-		
-		</div>
-	
-
-	</div>
-
-
-	<div id="rdoc-debugging-section-dump" class="debugging-section">
-	
-		<p>Disabled; run with --debug to generate this.</p>
-	
-	</div>
-
-	<div id="validator-badges">
-		<p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
-		<p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
-			Rdoc Generator</a> 1.1.6</small>.</p>
-	</div>
-
-</body>
-</html>
+line contains an in-buffer setting with the key and value for the setting.</p>
+          
+
+          
+          <div class="method-source-code" id="in_buffer_setting-3F-source">
+            <pre><span class="ruby-comment"># File lib/org-ruby/line.rb, line 189</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">in_buffer_setting?</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@assigned_paragraph_type</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@assigned_paragraph_type</span> <span class="ruby-operator">!=</span> <span class="ruby-value">:comment</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">block_given?</span> <span class="ruby-keyword">then</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-ivar">@line</span> <span class="ruby-operator">=~</span> <span class="ruby-constant">InBufferSettingRegexp</span>
+      <span class="ruby-keyword">yield</span> <span class="ruby-node">$1</span>, <span class="ruby-node">$2</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-ivar">@line</span> <span class="ruby-operator">=~</span> <span class="ruby-constant">InBufferSettingRegexp</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- in_buffer_setting-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- in_buffer_setting-3F-method -->
+
+    
+      <div id="method-i-inline_example-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">inline_example?</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Test if the line matches the “inline example” case: the first character on
+the line is a colon.</p>
+          
+
+          
+          <div class="method-source-code" id="inline_example-3F-source">
+            <pre><span class="ruby-comment"># File lib/org-ruby/line.rb, line 175</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">inline_example?</span>
+  <span class="ruby-identifier">check_assignment_or_regexp</span>(<span class="ruby-value">:inline_example</span>, <span class="ruby-constant">InlineExampleRegexp</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- inline_example-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- inline_example-3F-method -->
+
+    
+      <div id="method-i-metadata-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">metadata?</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Tests if a line contains metadata instead of actual content.</p>
+          
+
+          
+          <div class="method-source-code" id="metadata-3F-source">
+            <pre><span class="ruby-comment"># File lib/org-ruby/line.rb, line 65</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">metadata?</span>
+  <span class="ruby-identifier">check_assignment_or_regexp</span>(<span class="ruby-value">:metadata</span>, <span class="ruby-regexp">%r^\s*(CLOCK|DEADLINE|START|CLOSED|SCHEDULED):/</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- metadata-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- metadata-3F-method -->
+
+    
+      <div id="method-i-nonprinting-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">nonprinting?</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="nonprinting-3F-source">
+            <pre><span class="ruby-comment"># File lib/org-ruby/line.rb, line 69</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">nonprinting?</span>
+  <span class="ruby-identifier">comment?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">metadata?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">begin_block?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">end_block?</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- nonprinting-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- nonprinting-3F-method -->
+
+    
+      <div id="method-i-ordered_list-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">ordered_list?</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="ordered_list-3F-source">
+            <pre><span class="ruby-comment"># File lib/org-ruby/line.rb, line 105</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">ordered_list?</span>
+  <span class="ruby-identifier">check_assignment_or_regexp</span>(<span class="ruby-value">:ordered_list</span>, <span class="ruby-constant">OrderedListRegexp</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- ordered_list-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- ordered_list-3F-method -->
+
+    
+      <div id="method-i-output_text" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">output_text</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Extracts meaningful text and excludes org-mode markup, like identifiers for
+lists or headings.</p>
+          
+
+          
+          <div class="method-source-code" id="output_text-source">
+            <pre><span class="ruby-comment"># File lib/org-ruby/line.rb, line 115</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">output_text</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">strip_ordered_list_tag</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">ordered_list?</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">strip_unordered_list_tag</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">unordered_list?</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-ivar">@line</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-constant">InlineExampleRegexp</span>, <span class="ruby-string">&quot;&quot;</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">inline_example?</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">line</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- output_text-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- output_text-method -->
+
+    
+      <div id="method-i-paragraph_type" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">paragraph_type</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Determines the paragraph type of the current line.</p>
+          
+
+          
+          <div class="method-source-code" id="paragraph_type-source">
+            <pre><span class="ruby-comment"># File lib/org-ruby/line.rb, line 201</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">paragraph_type</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-value">:blank</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">blank?</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-value">:definition_list</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">definition_list?</span> <span class="ruby-comment"># order is important! A definition_list is also an unordered_list!</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-value">:ordered_list</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">ordered_list?</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-value">:unordered_list</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">unordered_list?</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-value">:property_drawer_begin_block</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">property_drawer_begin_block?</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-value">:property_drawer_end_block</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">property_drawer_end_block?</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-value">:property_drawer_item</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">property_drawer_item?</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-value">:metadata</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">metadata?</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-value">:begin_block</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">begin_block?</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-value">:end_block</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">end_block?</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-value">:comment</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">comment?</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-value">:table_separator</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">table_separator?</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-value">:table_row</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">table_row?</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-value">:table_header</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">table_header?</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-value">:inline_example</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">inline_example?</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-value">:horizontal_rule</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">horizontal_rule?</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-value">:paragraph</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- paragraph_type-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- paragraph_type-method -->
+
+    
+      <div id="method-i-plain_list-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">plain_list?</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="plain_list-3F-source">
+            <pre><span class="ruby-comment"># File lib/org-ruby/line.rb, line 77</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">plain_list?</span>
+  <span class="ruby-identifier">ordered_list?</span> <span class="ruby-keyword">or</span> <span class="ruby-identifier">unordered_list?</span> <span class="ruby-keyword">or</span> <span class="ruby-identifier">definition_list?</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- plain_list-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- plain_list-3F-method -->
+
+    
+      <div id="method-i-plain_text-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">plain_text?</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="plain_text-3F-source">
+            <pre><span class="ruby-comment"># File lib/org-ruby/line.rb, line 122</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">plain_text?</span>
+  <span class="ruby-keyword">not</span> <span class="ruby-identifier">metadata?</span> <span class="ruby-keyword">and</span> <span class="ruby-keyword">not</span> <span class="ruby-identifier">blank?</span> <span class="ruby-keyword">and</span> <span class="ruby-keyword">not</span> <span class="ruby-identifier">plain_list?</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- plain_text-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- plain_text-3F-method -->
+
+    
+      <div id="method-i-property_drawer-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">property_drawer?</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="property_drawer-3F-source">
+            <pre><span class="ruby-comment"># File lib/org-ruby/line.rb, line 54</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">property_drawer?</span>
+  <span class="ruby-identifier">check_assignment_or_regexp</span>(<span class="ruby-value">:property_drawer</span>, <span class="ruby-constant">PropertyDrawerRegexp</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- property_drawer-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- property_drawer-3F-method -->
+
+    
+      <div id="method-i-property_drawer_begin_block-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">property_drawer_begin_block?</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="property_drawer_begin_block-3F-source">
+            <pre><span class="ruby-comment"># File lib/org-ruby/line.rb, line 46</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">property_drawer_begin_block?</span>
+  <span class="ruby-ivar">@line</span> <span class="ruby-operator">=~</span> <span class="ruby-constant">PropertyDrawerRegexp</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-node">$1</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp">%rPROPERTIES/</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- property_drawer_begin_block-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- property_drawer_begin_block-3F-method -->
+
+    
+      <div id="method-i-property_drawer_end_block-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">property_drawer_end_block?</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="property_drawer_end_block-3F-source">
+            <pre><span class="ruby-comment"># File lib/org-ruby/line.rb, line 50</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">property_drawer_end_block?</span>
+  <span class="ruby-ivar">@line</span> <span class="ruby-operator">=~</span> <span class="ruby-constant">PropertyDrawerRegexp</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-node">$1</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp">%rEND/</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- property_drawer_end_block-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- property_drawer_end_block-3F-method -->
+
+    
+      <div id="method-i-property_drawer_item-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">property_drawer_item?</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="property_drawer_item-3F-source">
+            <pre><span class="ruby-comment"># File lib/org-ruby/line.rb, line 60</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">property_drawer_item?</span>
+  <span class="ruby-ivar">@line</span> <span class="ruby-operator">=~</span> <span class="ruby-constant">PropertyDrawerItemRegexp</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- property_drawer_item-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- property_drawer_item-3F-method -->
+
+    
+      <div id="method-i-strip_ordered_list_tag" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">strip_ordered_list_tag</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="strip_ordered_list_tag-source">
+            <pre><span class="ruby-comment"># File lib/org-ruby/line.rb, line 109</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">strip_ordered_list_tag</span>
+  <span class="ruby-ivar">@line</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-constant">OrderedListRegexp</span>, <span class="ruby-string">&quot;&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- strip_ordered_list_tag-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- strip_ordered_list_tag-method -->
+
+    
+      <div id="method-i-strip_unordered_list_tag" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">strip_unordered_list_tag</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="strip_unordered_list_tag-source">
+            <pre><span class="ruby-comment"># File lib/org-ruby/line.rb, line 87</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">strip_unordered_list_tag</span>
+  <span class="ruby-ivar">@line</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-constant">UnorderedListRegexp</span>, <span class="ruby-string">&quot;&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- strip_unordered_list_tag-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- strip_unordered_list_tag-method -->
+
+    
+      <div id="method-i-table-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">table?</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="table-3F-source">
+            <pre><span class="ruby-comment"># File lib/org-ruby/line.rb, line 145</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">table?</span>
+  <span class="ruby-identifier">table_row?</span> <span class="ruby-keyword">or</span> <span class="ruby-identifier">table_separator?</span> <span class="ruby-keyword">or</span> <span class="ruby-identifier">table_header?</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- table-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- table-3F-method -->
+
+    
+      <div id="method-i-table_header-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">table_header?</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Checks if this line is a table header.</p>
+          
+
+          
+          <div class="method-source-code" id="table_header-3F-source">
+            <pre><span class="ruby-comment"># File lib/org-ruby/line.rb, line 141</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">table_header?</span>
+  <span class="ruby-ivar">@assigned_paragraph_type</span> <span class="ruby-operator">==</span> <span class="ruby-value">:table_header</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- table_header-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- table_header-3F-method -->
+
+    
+      <div id="method-i-table_row-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">table_row?</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="table_row-3F-source">
+            <pre><span class="ruby-comment"># File lib/org-ruby/line.rb, line 126</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">table_row?</span>
+  <span class="ruby-comment"># for an org-mode table, the first non-whitespace character is a</span>
+  <span class="ruby-comment"># | (pipe).</span>
+  <span class="ruby-identifier">check_assignment_or_regexp</span>(<span class="ruby-value">:table_row</span>, <span class="ruby-regexp">%r^\s*\|/</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- table_row-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- table_row-3F-method -->
+
+    
+      <div id="method-i-table_separator-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">table_separator?</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="table_separator-3F-source">
+            <pre><span class="ruby-comment"># File lib/org-ruby/line.rb, line 132</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">table_separator?</span>
+  <span class="ruby-comment"># an org-mode table separator has the first non-whitespace</span>
+  <span class="ruby-comment"># character as a | (pipe), then consists of nothing else other</span>
+  <span class="ruby-comment"># than pipes, hyphens, and pluses.</span>
+
+  <span class="ruby-identifier">check_assignment_or_regexp</span>(<span class="ruby-value">:table_separator</span>, <span class="ruby-regexp">%r^\s*\|[-\|\+]*\s*$/</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- table_separator-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- table_separator-3F-method -->
+
+    
+      <div id="method-i-to_s" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">to_s</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="to_s-source">
+            <pre><span class="ruby-comment"># File lib/org-ruby/line.rb, line 33</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">to_s</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-ivar">@line</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- to_s-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- to_s-method -->
+
+    
+      <div id="method-i-unordered_list-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">unordered_list?</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="unordered_list-3F-source">
+            <pre><span class="ruby-comment"># File lib/org-ruby/line.rb, line 83</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">unordered_list?</span>
+  <span class="ruby-identifier">check_assignment_or_regexp</span>(<span class="ruby-value">:unordered_list</span>, <span class="ruby-constant">UnorderedListRegexp</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- unordered_list-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- unordered_list-3F-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.12.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
 

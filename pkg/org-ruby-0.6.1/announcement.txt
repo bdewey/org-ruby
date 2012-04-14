@@ -1,4 +1,4 @@
-org-ruby version 0.6.0
+org-ruby version 0.6.1
     by Brian Dewey
     http://github.com/bdewey/org-ruby
 
@@ -11,14 +11,9 @@ conversion. The supplied textile conversion is optimized for
 extracting "content" from the orgfile as opposed to "metadata." 
 
 == CHANGES
-* The anchor text for a link can now be an image, and will get an img tag (thanks, punchagan)
-* Fixed bug in tables; only the first row is a header even if others have divider lines (thanks, leathekd)
-* Fixed bug in the list regular expression; lists require a space after the item delimiter (thanks, punchagan)
-* Lots from ruediger:
-  * subscript / superscript
-  * definition lists
-  * centered text
-  * symbol replacement
-
-* Minor enhancement: Displays inline images
-
+* Added encoding directive to support Ruby 1.9.2
+* Headlines with the COMMENT keyword, and the PROPERTIES drawer are not exported
+* Angle links in org-mode are embedded in anchor tags on html output
+* #+BEGIN/END_SRC lang code blocks are embedded in code tags with class that specifies the coding language
+* Fixed bug in code blocks when a colon was at the beginning
+* More than five dashes create an horizontal rule in html output (thanks Neil-Smithline!)

@@ -1,335 +1,294 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+
+<html>
 <head>
-	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
 
-	<title>Module: OrgRuby</title>
+<title>module OrgRuby - org-ruby-0.6.1 Documentation</title>
 
-	<link rel="stylesheet" href="./rdoc.css" type="text/css" media="screen" />
+<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
 
-	<script src="./js/jquery.js" type="text/javascript"
-		charset="utf-8"></script>
-	<script src="./js/thickbox-compressed.js" type="text/javascript"
-		charset="utf-8"></script>
-	<script src="./js/quicksearch.js" type="text/javascript"
-		charset="utf-8"></script>
-	<script src="./js/darkfish.js" type="text/javascript"
-		charset="utf-8"></script>
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
 
-</head>
-<body class="module">
+<script type="text/javascript" charset="utf-8" src="./js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
 
-	<div id="metadata">
-		<div id="home-metadata">
-			<div id="home-section" class="section">
-        <h3 class="section-header">
-          <a href="./index.html">Home</a>
-          <a href="./index.html#classes">Classes</a>
-          <a href="./index.html#methods">Methods</a>
-        </h3>
-			</div>
-		</div>
 
-		<div id="file-metadata">
-			<div id="file-list-section" class="section">
-				<h3 class="section-header">In Files</h3>
-				<div class="section-body">
-					<ul>
-					
-						<li><a href="./lib/org-ruby_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
-							class="thickbox" title="lib/org-ruby.rb">lib/org-ruby.rb</a></li>
-					
-					</ul>
-				</div>
-			</div>
+<body id="top" class="module">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="./index.html">Home</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
 
-			
-		</div>
 
-		<div id="class-metadata">
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
 
-			<!-- Parent Class -->
-			
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
 
-			<!-- Namespace Contents -->
-			
 
-			<!-- Method Quickref -->
-			
-			<div id="method-list-section" class="section">
-				<h3 class="section-header">Methods</h3>
-				<ul class="link-list">
-					
-					<li><a href="#method-c-libpath">::libpath</a></li>
-					
-					<li><a href="#method-c-path">::path</a></li>
-					
-					<li><a href="#method-c-require_all_libs_relative_to">::require_all_libs_relative_to</a></li>
-					
-					<li><a href="#method-c-version">::version</a></li>
-					
-				</ul>
-			</div>
-			
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/org-ruby.rb
+  </ul>
+</nav>
 
-			<!-- Included Modules -->
-			
-		</div>
+    
+  </div>
 
-		<div id="project-metadata">
-			
-			
-			<div id="fileindex-section" class="section project-section">
-				<h3 class="section-header">Files</h3>
-				<ul>
-				
-					<li class="file"><a href="./History_txt.html">History.txt</a></li>
-				
-					<li class="file"><a href="./README_rdoc.html">README.rdoc</a></li>
-				
-					<li class="file"><a href="./announcement_txt.html">announcement.txt</a></li>
-				
-				</ul>
-			</div>
-			
+  <div id="class-metadata">
+    
+    
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
 
-			<div id="classindex-section" class="section project-section">
-				<h3 class="section-header">Class Index
-					<span class="search-toggle"><img src="./images/find.png"
-						height="16" width="16" alt="[+]"
-						title="show/hide quicksearch" /></span></h3>
-				<form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
-				<fieldset>
-					<legend>Quicksearch</legend>
-					<input type="text" name="quicksearch" value=""
-						class="quicksearch-field" />
-				</fieldset>
-				</form>
+  <ul class="link-list">
+    
+    <li><a href="#method-c-libpath">::libpath</a>
+    
+    <li><a href="#method-c-path">::path</a>
+    
+    <li><a href="#method-c-require_all_libs_relative_to">::require_all_libs_relative_to</a>
+    
+    <li><a href="#method-c-version">::version</a>
+    
+  </ul>
+</nav>
 
-				<ul class="link-list">
-				
-					<li><a href="./Orgmode.html">Orgmode</a></li>
-				
-					<li><a href="./Orgmode/Headline.html">Orgmode::Headline</a></li>
-				
-					<li><a href="./Orgmode/HtmlOutputBuffer.html">Orgmode::HtmlOutputBuffer</a></li>
-				
-					<li><a href="./Orgmode/Line.html">Orgmode::Line</a></li>
-				
-					<li><a href="./Orgmode/OutputBuffer.html">Orgmode::OutputBuffer</a></li>
-				
-					<li><a href="./Orgmode/Parser.html">Orgmode::Parser</a></li>
-				
-					<li><a href="./Orgmode/RegexpHelper.html">Orgmode::RegexpHelper</a></li>
-				
-					<li><a href="./Orgmode/TextileOutputBuffer.html">Orgmode::TextileOutputBuffer</a></li>
-				
-					<li><a href="./Tilt.html">Tilt</a></li>
-				
-					<li><a href="./Tilt/OrgTemplate.html">Tilt::OrgTemplate</a></li>
-				
-					<li><a href="./OrgRuby.html">OrgRuby</a></li>
-				
-				</ul>
-				<div id="no-class-search-results" style="display: none;">No matching classes.</div>
-			</div>
+  </div>
 
-			
-		</div>
-	</div>
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
 
-	<div id="documentation">
-		<h1 class="module">OrgRuby</h1>
+  <ul>
+  
+    <li class="file"><a href="./History_txt.html">History</a>
+  
+    <li class="file"><a href="./README_rdoc.html">README</a>
+  
+    <li class="file"><a href="./announcement_txt.html">announcement</a>
+  
+  </ul>
+</nav>
 
-		<div id="description">
-			
-		</div>
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
 
-		<!-- Constants -->
-		
+  <ul class="link-list">
+  
+    <li><a href="./Orgmode.html">Orgmode</a>
+  
+    <li><a href="./Orgmode/Headline.html">Orgmode::Headline</a>
+  
+    <li><a href="./Orgmode/HtmlOutputBuffer.html">Orgmode::HtmlOutputBuffer</a>
+  
+    <li><a href="./Orgmode/Line.html">Orgmode::Line</a>
+  
+    <li><a href="./Orgmode/OutputBuffer.html">Orgmode::OutputBuffer</a>
+  
+    <li><a href="./Orgmode/Parser.html">Orgmode::Parser</a>
+  
+    <li><a href="./Orgmode/RegexpHelper.html">Orgmode::RegexpHelper</a>
+  
+    <li><a href="./Orgmode/TextileOutputBuffer.html">Orgmode::TextileOutputBuffer</a>
+  
+    <li><a href="./Tilt.html">Tilt</a>
+  
+    <li><a href="./Tilt/OrgTemplate.html">Tilt::OrgTemplate</a>
+  
+    <li><a href="./OrgRuby.html">OrgRuby</a>
+  
+  </ul>
+</nav>
 
-		<!-- Attributes -->
-		
+  </div>
+</nav>
 
-		<!-- Methods -->
-		
-		<div id="public-class-method-details" class="method-section section">
-			<h3 class="section-header">Public Class Methods</h3>
+<div id="documentation">
+  <h1 class="module">module OrgRuby</h1>
 
-		
-			<div id="libpath-method" class="method-detail ">
-				<a name="method-c-libpath"></a>
+  <div id="description" class="description">
+    
+  </div><!-- description -->
 
-				<div class="method-heading">
-				
-					<span class="method-name">libpath</span><span
-						class="method-args">( *args )</span>
-					<span class="method-click-advice">click to toggle source</span>
-				
-				</div>
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
 
-				<div class="method-description">
-					
-					<p>
-Returns the library path for the module. If any arguments are given, they
-will be joined to the end of the libray path using <tt>File.join</tt>.
-</p>
-					
+    
 
-					
-					<div class="method-source-code"
-						id="libpath-source">
-<pre>
-    <span class="ruby-comment cmt"># File lib/org-ruby.rb, line 21</span>
-21:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">libpath</span>( *<span class="ruby-identifier">args</span> )
-22:     <span class="ruby-identifier">args</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-operator">?</span> <span class="ruby-constant">LIBPATH</span> <span class="ruby-operator">:</span> <span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">LIBPATH</span>, <span class="ruby-identifier">args</span>.<span class="ruby-identifier">flatten</span>)
-23:   <span class="ruby-keyword kw">end</span></pre>
-					</div>
-					
-				</div>
+    
 
-				
+    
 
-				
-			</div>
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
 
-		
-			<div id="path-method" class="method-detail ">
-				<a name="method-c-path"></a>
+    
+      <div id="method-c-libpath" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">libpath</span><span
+            class="method-args">( *args )</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
 
-				<div class="method-heading">
-				
-					<span class="method-name">path</span><span
-						class="method-args">( *args )</span>
-					<span class="method-click-advice">click to toggle source</span>
-				
-				</div>
+        <div class="method-description">
+          
+          <p>Returns the library path for the module. If any arguments are given, they
+will be joined to the end of the libray path using <code>File.join</code>.</p>
+          
 
-				<div class="method-description">
-					
-					<p>
-Returns the lpath for the module. If any arguments are given, they will be
-joined to the end of the path using <tt>File.join</tt>.
-</p>
-					
+          
+          <div class="method-source-code" id="libpath-source">
+            <pre><span class="ruby-comment"># File lib/org-ruby.rb, line 21</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">libpath</span>( *<span class="ruby-identifier">args</span> )
+  <span class="ruby-identifier">args</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-operator">?</span> <span class="ruby-constant">LIBPATH</span> <span class="ruby-operator">:</span> <span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">LIBPATH</span>, <span class="ruby-identifier">args</span>.<span class="ruby-identifier">flatten</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- libpath-source -->
+          
+        </div>
 
-					
-					<div class="method-source-code"
-						id="path-source">
-<pre>
-    <span class="ruby-comment cmt"># File lib/org-ruby.rb, line 29</span>
-29:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">path</span>( *<span class="ruby-identifier">args</span> )
-30:     <span class="ruby-identifier">args</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-operator">?</span> <span class="ruby-constant">PATH</span> <span class="ruby-operator">:</span> <span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">PATH</span>, <span class="ruby-identifier">args</span>.<span class="ruby-identifier">flatten</span>)
-31:   <span class="ruby-keyword kw">end</span></pre>
-					</div>
-					
-				</div>
+        
 
-				
+        
+      </div><!-- libpath-method -->
 
-				
-			</div>
+    
+      <div id="method-c-path" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">path</span><span
+            class="method-args">( *args )</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
 
-		
-			<div id="require-all-libs-relative-to-method" class="method-detail ">
-				<a name="method-c-require_all_libs_relative_to"></a>
+        <div class="method-description">
+          
+          <p>Returns the lpath for the module. If any arguments are given, they will be
+joined to the end of the path using <code>File.join</code>.</p>
+          
 
-				<div class="method-heading">
-				
-					<span class="method-name">require_all_libs_relative_to</span><span
-						class="method-args">( fname, dir = nil )</span>
-					<span class="method-click-advice">click to toggle source</span>
-				
-				</div>
+          
+          <div class="method-source-code" id="path-source">
+            <pre><span class="ruby-comment"># File lib/org-ruby.rb, line 29</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">path</span>( *<span class="ruby-identifier">args</span> )
+  <span class="ruby-identifier">args</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-operator">?</span> <span class="ruby-constant">PATH</span> <span class="ruby-operator">:</span> <span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">PATH</span>, <span class="ruby-identifier">args</span>.<span class="ruby-identifier">flatten</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- path-source -->
+          
+        </div>
 
-				<div class="method-description">
-					
-					<p>
-Utility method used to require all files ending in .rb that lie in the
+        
+
+        
+      </div><!-- path-method -->
+
+    
+      <div id="method-c-require_all_libs_relative_to" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">require_all_libs_relative_to</span><span
+            class="method-args">( fname, dir = nil )</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Utility method used to require all files ending in .rb that lie in the
 directory below this file that has the same name as the filename passed in.
 Optionally, a specific <em>directory</em> name can be passed in such that
-the <em>filename</em> does not have to be equivalent to the directory.
-</p>
-					
+the <em>filename</em> does not have to be equivalent to the directory.</p>
+          
 
-					
-					<div class="method-source-code"
-						id="require-all-libs-relative-to-source">
-<pre>
-    <span class="ruby-comment cmt"># File lib/org-ruby.rb, line 38</span>
-38:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">require_all_libs_relative_to</span>( <span class="ruby-identifier">fname</span>, <span class="ruby-identifier">dir</span> = <span class="ruby-keyword kw">nil</span> )
-39:     <span class="ruby-identifier">dir</span> <span class="ruby-operator">||=</span> <span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">fname</span>, <span class="ruby-value str">'.*'</span>)
-40:     <span class="ruby-identifier">search_me</span> = <span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(
-41:         <span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-identifier">fname</span>), <span class="ruby-identifier">dir</span>, <span class="ruby-value str">'**'</span>, <span class="ruby-value str">'*.rb'</span>))
-42: 
-43:     <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">glob</span>(<span class="ruby-identifier">search_me</span>).<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">rb</span><span class="ruby-operator">|</span> <span class="ruby-identifier">require</span> <span class="ruby-identifier">rb</span>}
-44:   <span class="ruby-keyword kw">end</span></pre>
-					</div>
-					
-				</div>
+          
+          <div class="method-source-code" id="require_all_libs_relative_to-source">
+            <pre><span class="ruby-comment"># File lib/org-ruby.rb, line 38</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">require_all_libs_relative_to</span>( <span class="ruby-identifier">fname</span>, <span class="ruby-identifier">dir</span> = <span class="ruby-keyword">nil</span> )
+  <span class="ruby-identifier">dir</span> <span class="ruby-operator">||=</span> <span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">fname</span>, <span class="ruby-string">'.*'</span>)
+  <span class="ruby-identifier">search_me</span> = <span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(
+      <span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-identifier">fname</span>), <span class="ruby-identifier">dir</span>, <span class="ruby-string">'**'</span>, <span class="ruby-string">'*.rb'</span>))
 
-				
+  <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">glob</span>(<span class="ruby-identifier">search_me</span>).<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">rb</span><span class="ruby-operator">|</span> <span class="ruby-identifier">require</span> <span class="ruby-identifier">rb</span>}
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- require_all_libs_relative_to-source -->
+          
+        </div>
 
-				
-			</div>
+        
 
-		
-			<div id="version-method" class="method-detail ">
-				<a name="method-c-version"></a>
+        
+      </div><!-- require_all_libs_relative_to-method -->
 
-				<div class="method-heading">
-				
-					<span class="method-name">version</span><span
-						class="method-args">()</span>
-					<span class="method-click-advice">click to toggle source</span>
-				
-				</div>
+    
+      <div id="method-c-version" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">version</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
 
-				<div class="method-description">
-					
-					<p>
-Returns the version string for the library.
-</p>
-					
+        <div class="method-description">
+          
+          <p>Returns the version string for the library.</p>
+          
 
-					
-					<div class="method-source-code"
-						id="version-source">
-<pre>
-    <span class="ruby-comment cmt"># File lib/org-ruby.rb, line 13</span>
-13:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">version</span>
-14:     <span class="ruby-constant">VERSION</span>
-15:   <span class="ruby-keyword kw">end</span></pre>
-					</div>
-					
-				</div>
+          
+          <div class="method-source-code" id="version-source">
+            <pre><span class="ruby-comment"># File lib/org-ruby.rb, line 13</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">version</span>
+  <span class="ruby-constant">VERSION</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- version-source -->
+          
+        </div>
 
-				
+        
 
-				
-			</div>
+        
+      </div><!-- version-method -->
 
-		
-		</div>
-	
+    
+    </section><!-- public-class-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
 
-	</div>
+</div><!-- documentation -->
 
 
-	<div id="rdoc-debugging-section-dump" class="debugging-section">
-	
-		<p>Disabled; run with --debug to generate this.</p>
-	
-	</div>
-
-	<div id="validator-badges">
-		<p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
-		<p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
-			Rdoc Generator</a> 1.1.6</small>.</p>
-	</div>
-
-</body>
-</html>
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.12.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
 

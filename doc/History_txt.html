@@ -1,457 +1,288 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<html>
 <head>
-	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
 
-	<title>File: History.txt [ org-ruby-0.6.1 Documentation]</title>
+<title>History - org-ruby-0.6.1 Documentation</title>
 
-	<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet" />
+<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
 
-	<script src="./js/jquery.js" type="text/javascript"
-		charset="utf-8"></script>
-	<script src="./js/thickbox-compressed.js" type="text/javascript"
-		charset="utf-8"></script>
-	<script src="./js/quicksearch.js" type="text/javascript"
-		charset="utf-8"></script>
-	<script src="./js/darkfish.js" type="text/javascript"
-		charset="utf-8"></script>
-</head>
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="./js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
+
 
 <body class="file">
-	<div id="metadata">
-		<div id="home-metadata">
-			<div id="home-section" class="section">
-        <h3 class="section-header">
-          <a href="./index.html">Home</a>
-          <a href="./index.html#classes">Classes</a>
-          <a href="./index.html#methods">Methods</a>
-        </h3>
-			</div>
-		</div>
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="./index.html">Home</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
 
-		<div id="project-metadata">
-			
-			
-			<div id="fileindex-section" class="section project-section">
-				<h3 class="section-header">Files</h3>
-				<ul>
-				
-					<li class="file"><a href="./History_txt.html">History.txt</a></li>
-				
-					<li class="file"><a href="./README_rdoc.html">README.rdoc</a></li>
-				
-					<li class="file"><a href="./announcement_txt.html">announcement.txt</a></li>
-				
-				</ul>
-			</div>
-			
 
-			<div id="classindex-section" class="section project-section">
-				<h3 class="section-header">Class Index
-					<span class="search-toggle"><img src="./images/find.png"
-						height="16" width="16" alt="[+]"
-						title="show/hide quicksearch" /></span></h3>
-				<form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
-				<fieldset>
-					<legend>Quicksearch</legend>
-					<input type="text" name="quicksearch" value=""
-						class="quicksearch-field" />
-				</fieldset>
-				</form>
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
 
-				<ul class="link-list">
-				
-					<li><a href="./Orgmode.html">Orgmode</a></li>
-				
-					<li><a href="./Orgmode/Headline.html">Orgmode::Headline</a></li>
-				
-					<li><a href="./Orgmode/HtmlOutputBuffer.html">Orgmode::HtmlOutputBuffer</a></li>
-				
-					<li><a href="./Orgmode/Line.html">Orgmode::Line</a></li>
-				
-					<li><a href="./Orgmode/OutputBuffer.html">Orgmode::OutputBuffer</a></li>
-				
-					<li><a href="./Orgmode/Parser.html">Orgmode::Parser</a></li>
-				
-					<li><a href="./Orgmode/RegexpHelper.html">Orgmode::RegexpHelper</a></li>
-				
-					<li><a href="./Orgmode/TextileOutputBuffer.html">Orgmode::TextileOutputBuffer</a></li>
-				
-					<li><a href="./Tilt.html">Tilt</a></li>
-				
-					<li><a href="./Tilt/OrgTemplate.html">Tilt::OrgTemplate</a></li>
-				
-					<li><a href="./OrgRuby.html">OrgRuby</a></li>
-				
-				</ul>
-				<div id="no-class-search-results" style="display: none;">No matching classes.</div>
-			</div>
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
 
-			
-		</div>
-	</div>
 
-	<div id="documentation">
-		<h2>0.6.1 / 2012-04-14</h2>
-<ul>
-<li><p>
-Added encoding directive to support Ruby 1.9.2
-</p>
-</li>
-<li><p>
-Headlines with the COMMENT keyword, and the PROPERTIES drawer are not
-exported
-</p>
-</li>
-<li><p>
-Angle links in org-mode are embedded in anchor tags on html output
-</p>
-</li>
-<li><p>
-#+BEGIN/END_SRC lang code blocks are embedded in code tags with class that
-specifies the coding language
-</p>
-</li>
-<li><p>
-Fixed bug in code blocks when a colon was at the beginning
-</p>
-</li>
-<li><p>
-More than five dashes create an horizontal rule in html output
-</p>
-</li>
-</ul>
-<h2>0.6.0 / 2011-09-03</h2>
-<ul>
-<li><p>
-Added support for a &#8220;header offset&#8221; &#8212; turns one star into
-an H2, etc. (thanks, niku)
-</p>
-</li>
-<li><p>
-The anchor text for a link can now be an image, and will get an img tag
-(thanks, punchagan)
-</p>
-</li>
-<li><p>
-Fixed bug in tables; only the first row is a header even if others have
-divider lines (thanks, leathekd)
-</p>
-</li>
-<li><p>
-Fixed bug in the list regular expression; lists require a space after the
-item delimiter (thanks, punchagan)
-</p>
-</li>
-<li><p>
-Lots from ruediger:
-</p>
-<ul>
-<li><p>
-subscript / superscript
-</p>
-</li>
-</ul>
-<ul>
-<li><p>
-definition lists
-</p>
-</li>
-</ul>
-<ul>
-<li><p>
-centered text
-</p>
-</li>
-</ul>
-<ul>
-<li><p>
-symbol replacement
-</p>
-</li>
-</ul>
-</li>
-</ul>
-<h2>0.5.3 / 2010-02-15</h2>
-<ul>
-<li><p>
-Minor enhancement: Displays inline images
-</p>
-</li>
-</ul>
-<h2>0.5.2 / 2010-01-05</h2>
-<ul>
-<li><p>
-Refactored to improve layering.
-</p>
-</li>
-</ul>
-<h2>0.5.1 / 2009-12-30</h2>
-<ul>
-<li><p>
-Minor enhancement: Recognize lines starting with &#8220;:&#8221; as
-examples.
-</p>
-</li>
-<li><p>
-Minor enhancement: Recognize #+BEGIN_SRC as source blocks
-</p>
-</li>
-<li><p>
-Minor enhancement: Add &#8220;src&#8221; and &#8220;example&#8221; classes
-to <pre> blocks.
-</p>
-</li>
-</ul>
-<h2>0.5.0 / 2009-12-30</h2>
-<ul>
-<li><p>
-Parse (but not necessarily <b>use</b>) in-buffer settings. The following
-in-buffer settings <b>are</b> used:
-</p>
-<ul>
-<li><p>
-Understand the #+TITLE: directive.
-</p>
-</li>
-</ul>
-<ul>
-<li><p>
-Exporting todo keywords (option todo:t)
-</p>
-</li>
-</ul>
-<ul>
-<li><p>
-Numbering headlines (option num:t)
-</p>
-</li>
-</ul>
-<ul>
-<li><p>
-Skipping text before the first headline (option skip:t)
-</p>
-</li>
-</ul>
-<ul>
-<li><p>
-Skipping tables (option |:nil)
-</p>
-</li>
-</ul>
-<ul>
-<li><p>
-Custom todo keywords
-</p>
-</li>
-</ul>
-<ul>
-<li><p>
-EXPORT_SELECT_TAGS and EXPORT_EXLUDE_TAGS for controlling parts of the tree
-to export
-</p>
-</li>
-</ul>
-</li>
-<li><p>
-Rewrite &#8220;file:(blah).org&#8221; links to &#8220;<a
-href="http:(blah).html">(blah).html</a>&#8220; links. This makes the
-inter-links to other org-mode files work.
-</p>
-</li>
-<li><p>
-Uses <th> tags inside table rows that precede table separators.
-</p>
-</li>
-<li><p>
-Bugfixes:
-</p>
-<ul>
-<li><p>
-Headings now have HTML escaped.
-</p>
-</li>
-</ul>
-</li>
-</ul>
-<h2>0.4.2 / 2009-12-29</h2>
-<ul>
-<li><p>
-Got rid of the extraneous newline at the start of code blocks.
-</p>
-</li>
-<li><p>
-Everything now shows up in code blocks, even org-mode metadata.
-</p>
-</li>
-<li><p>
-Fixed bugs:
-</p>
-<ul>
-<li><p>
-Regressed smart double quotes with HTML escaping. Added a test case and
-fixed the regression.
-</p>
-</li>
-</ul>
-</li>
-</ul>
-<h2>0.4.1 / 2009-12-29</h2>
-<ul>
-<li><p>
-HTML is now escaped by default
-</p>
-</li>
-<li><p>
-org-mode comments will show up in a code block.
-</p>
-</li>
-</ul>
-<h2>0.4.0 / 2009-12-28</h2>
-<ul>
-<li><p>
-The first thing output in HTML gets the class &#8220;title&#8220;
-</p>
-</li>
-<li><p>
-HTML output is now indented
-</p>
-</li>
-<li><p>
-Proper support for multi-paragraph list items.
-</p>
-</li>
-<li><p>
-Fixed bugs:
-</p>
-<ul>
-<li><p>
-&#8220;rake spec&#8221; wouldn&#8217;t work on Linux. Needed &#8220;require
-&#8216;rubygems&#8217;&#8221;.
-</p>
-</li>
-</ul>
-</li>
-</ul>
-<h2>0.3.0 / 2009-12-27</h2>
-<ul>
-<li><p>
-Uses rubypants to get better typography (smart quotes, elipses, etc.).
-</p>
-</li>
-<li><p>
-Fixed bugs:
-</p>
-<ul>
-<li><p>
-Tables and lists did not get properly closed at the end of file
-</p>
-</li>
-</ul>
-<ul>
-<li><p>
-You couldn&#8217;t do inline formatting inside table cells
-</p>
-</li>
-</ul>
-<ul>
-<li><p>
-Characters in PRE blocks were not HTML escaped.
-</p>
-</li>
-</ul>
-</li>
-</ul>
-<h2>0.2.0 / 2009-12-26</h2>
-<ul>
-<li><p>
-Renamed the gem to org-ruby
-</p>
-</li>
-<li><p>
-Added <tt>to_html</tt> for HTML output
-</p>
-</li>
-<li><p>
-Now supports the following inline markup: 
-</p>
-<ul>
-<li><p>
-bold
-</p>
-</li>
-</ul>
-<ul>
-<li><p>
-italic
-</p>
-</li>
-</ul>
-<ul>
-<li><p>
-code
-</p>
-</li>
-</ul>
-<ul>
-<li><p>
-verbatim
-</p>
-</li>
-</ul>
-<ul>
-<li><p>
-underline
-</p>
-</li>
-</ul>
-<ul>
-<li><p>
-strikethrough
-</p>
-</li>
-</ul>
-</li>
-<li><p>
-Continued code cleanup and refactoring
-</p>
-</li>
-</ul>
-<h2>0.1.0 / 2009-12-23</h2>
-<ul>
-<li><p>
-Added support for block code
-</p>
-</li>
-<li><p>
-Added support for list items that wrap in the org source
-</p>
-</li>
-<li><p>
-Major code cleanup: Added <tt>OutputBuffer</tt> class that should make the
-code more maintainable.
-</p>
-</li>
-</ul>
-<h2>0.0.2 / 2009-12-21</h2>
-<ul>
-<li><p>
-Initial version. Handles tables (but not headers), headlines, paragraphs,
-block quotes, strong &amp; emphasis formatting.
-</p>
-</li>
-</ul>
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
 
-	</div>
+  <ul>
+  
+    <li class="file"><a href="./History_txt.html">History</a>
+  
+    <li class="file"><a href="./README_rdoc.html">README</a>
+  
+    <li class="file"><a href="./announcement_txt.html">announcement</a>
+  
+  </ul>
+</nav>
 
-	<div id="validator-badges">
-		<p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
-		<p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
-			Rdoc Generator</a> 1.1.6</small>.</p>
-	</div>
-</body>
-</html>
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="./Orgmode.html">Orgmode</a>
+  
+    <li><a href="./Orgmode/Headline.html">Orgmode::Headline</a>
+  
+    <li><a href="./Orgmode/HtmlOutputBuffer.html">Orgmode::HtmlOutputBuffer</a>
+  
+    <li><a href="./Orgmode/Line.html">Orgmode::Line</a>
+  
+    <li><a href="./Orgmode/OutputBuffer.html">Orgmode::OutputBuffer</a>
+  
+    <li><a href="./Orgmode/Parser.html">Orgmode::Parser</a>
+  
+    <li><a href="./Orgmode/RegexpHelper.html">Orgmode::RegexpHelper</a>
+  
+    <li><a href="./Orgmode/TextileOutputBuffer.html">Orgmode::TextileOutputBuffer</a>
+  
+    <li><a href="./Tilt.html">Tilt</a>
+  
+    <li><a href="./Tilt/OrgTemplate.html">Tilt::OrgTemplate</a>
+  
+    <li><a href="./OrgRuby.html">OrgRuby</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation" class="description">
+  
+<h2 id="label-0.6.1+%2F+2012-04-14">0.6.1 / 2012-04-14</h2>
+<ul><li>
+<p>Added encoding directive to support Ruby 1.9.2</p>
+</li><li>
+<p>Headlines with the COMMENT keyword, and the PROPERTIES drawer are not
+exported</p>
+</li><li>
+<p>Angle links in org-mode are embedded in anchor tags on html output</p>
+</li><li>
+<p>#+BEGIN/END_SRC lang code blocks are embedded in code tags with class that
+specifies the coding language</p>
+</li><li>
+<p>Fixed bug in code blocks when a colon was at the beginning</p>
+</li><li>
+<p>More than five dashes create an horizontal rule in html output</p>
+</li></ul>
+
+<h2 id="label-0.6.0+%2F+2011-09-03">0.6.0 / 2011-09-03</h2>
+<ul><li>
+<p>Added support for a “header offset” – turns one star into an H2, etc.
+(thanks, niku)</p>
+</li><li>
+<p>The anchor text for a link can now be an image, and will get an img tag
+(thanks, punchagan)</p>
+</li><li>
+<p>Fixed bug in tables; only the first row is a header even if others have
+divider lines (thanks, leathekd)</p>
+</li><li>
+<p>Fixed bug in the list regular expression; lists require a space after the
+item delimiter (thanks, punchagan)</p>
+</li><li>
+<p>Lots from ruediger:</p>
+<ul><li>
+<p>subscript / superscript</p>
+</li><li>
+<p>definition lists</p>
+</li><li>
+<p>centered text</p>
+</li><li>
+<p>symbol replacement</p>
+</li></ul>
+</li></ul>
+
+<h2 id="label-0.5.3+%2F+2010-02-15">0.5.3 / 2010-02-15</h2>
+<ul><li>
+<p>Minor enhancement: Displays inline images</p>
+</li></ul>
+
+<h2 id="label-0.5.2+%2F+2010-01-05">0.5.2 / 2010-01-05</h2>
+<ul><li>
+<p>Refactored to improve layering.</p>
+</li></ul>
+
+<h2 id="label-0.5.1+%2F+2009-12-30">0.5.1 / 2009-12-30</h2>
+<ul><li>
+<p>Minor enhancement: Recognize lines starting with “:” as examples.</p>
+</li><li>
+<p>Minor enhancement: Recognize #+BEGIN_SRC as source blocks</p>
+</li><li>
+<p>Minor enhancement: Add “src” and “example” classes to &lt;pre&gt; blocks.</p>
+</li></ul>
+
+<h2 id="label-0.5.0+%2F+2009-12-30">0.5.0 / 2009-12-30</h2>
+<ul><li>
+<p>Parse (but not necessarily <strong>use</strong>) in-buffer settings. The
+following in-buffer settings <strong>are</strong> used:</p>
+<ul><li>
+<p>Understand the #+TITLE: directive.</p>
+</li><li>
+<p>Exporting todo keywords (option todo:t)</p>
+</li><li>
+<p>Numbering headlines (option num:t)</p>
+</li><li>
+<p>Skipping text before the first headline (option skip:t)</p>
+</li><li>
+<p>Skipping tables (option |:nil)</p>
+</li><li>
+<p>Custom todo keywords</p>
+</li><li>
+<p>EXPORT_SELECT_TAGS and EXPORT_EXLUDE_TAGS for controlling parts of the tree
+to export</p>
+</li></ul>
+</li><li>
+<p>Rewrite “file:(blah).org” links to “<a
+href="http:(blah).html">(blah).html</a>” links. This makes the inter-links
+to other org-mode files work.</p>
+</li><li>
+<p>Uses &lt;th&gt; tags inside table rows that precede table separators.</p>
+</li><li>
+<p>Bugfixes:</p>
+<ul><li>
+<p>Headings now have HTML escaped.</p>
+</li></ul>
+</li></ul>
+
+<h2 id="label-0.4.2+%2F+2009-12-29">0.4.2 / 2009-12-29</h2>
+<ul><li>
+<p>Got rid of the extraneous newline at the start of code blocks.</p>
+</li><li>
+<p>Everything now shows up in code blocks, even org-mode metadata.</p>
+</li><li>
+<p>Fixed bugs:</p>
+<ul><li>
+<p>Regressed smart double quotes with HTML escaping. Added a test case and
+fixed the regression.</p>
+</li></ul>
+</li></ul>
+
+<h2 id="label-0.4.1+%2F+2009-12-29">0.4.1 / 2009-12-29</h2>
+<ul><li>
+<p>HTML is now escaped by default</p>
+</li><li>
+<p>org-mode comments will show up in a code block.</p>
+</li></ul>
+
+<h2 id="label-0.4.0+%2F+2009-12-28">0.4.0 / 2009-12-28</h2>
+<ul><li>
+<p>The first thing output in HTML gets the class “title”</p>
+</li><li>
+<p>HTML output is now indented</p>
+</li><li>
+<p>Proper support for multi-paragraph list items.</p>
+</li><li>
+<p>Fixed bugs:</p>
+<ul><li>
+<p>"rake spec" wouldn't work on Linux. Needed "require 'rubygems'".</p>
+</li></ul>
+</li></ul>
+
+<h2 id="label-0.3.0+%2F+2009-12-27">0.3.0 / 2009-12-27</h2>
+<ul><li>
+<p>Uses rubypants to get better typography (smart quotes, elipses, etc.).</p>
+</li><li>
+<p>Fixed bugs:</p>
+<ul><li>
+<p>Tables and lists did not get properly closed at the end of file</p>
+</li><li>
+<p>You couldn’t do inline formatting inside table cells</p>
+</li><li>
+<p>Characters in PRE blocks were not HTML escaped.</p>
+</li></ul>
+</li></ul>
+
+<h2 id="label-0.2.0+%2F+2009-12-26">0.2.0 / 2009-12-26</h2>
+<ul><li>
+<p>Renamed the gem to org-ruby</p>
+</li><li>
+<p>Added <code>to_html</code> for HTML output</p>
+</li><li>
+<p>Now supports the following inline markup:</p>
+<ul><li>
+<p>bold</p>
+</li><li>
+<p>italic</p>
+</li><li>
+<p>code</p>
+</li><li>
+<p>verbatim</p>
+</li><li>
+<p>underline</p>
+</li><li>
+<p>strikethrough</p>
+</li></ul>
+</li><li>
+<p>Continued code cleanup and refactoring</p>
+</li></ul>
+
+<h2 id="label-0.1.0+%2F+2009-12-23">0.1.0 / 2009-12-23</h2>
+<ul><li>
+<p>Added support for block code</p>
+</li><li>
+<p>Added support for list items that wrap in the org source</p>
+</li><li>
+<p>Major code cleanup: Added <code>OutputBuffer</code> class that should make
+the code more maintainable.</p>
+</li></ul>
+
+<h2 id="label-0.0.2+%2F+2009-12-21">0.0.2 / 2009-12-21</h2>
+<ul><li>
+<p>Initial version. Handles tables (but not headers), headlines, paragraphs,
+block quotes, strong &amp; emphasis formatting.</p>
+</li></ul>
+
+</div>
+
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.12.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
 
