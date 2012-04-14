@@ -1,9 +1,11 @@
-== 0.6.1 / 2012-02-25
+== 0.6.1 / 2012-04-14
 
 * Added encoding directive to support Ruby 1.9.2
 * Headlines with the COMMENT keyword, and the PROPERTIES drawer are not exported
 * Angle links in org-mode are embedded in anchor tags on html output
 * #+BEGIN/END_SRC lang code blocks are embedded in code tags with class that specifies the coding language
+* Fixed bug in code blocks when a colon was at the beginning
+* More than five dashes create an horizontal rule in html output
 
 == 0.6.0 / 2011-09-03
 
