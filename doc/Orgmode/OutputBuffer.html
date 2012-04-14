@@ -1,809 +1,1076 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 
-  <title>Class: Orgmode::OutputBuffer</title>
+	<title>Class: Orgmode::OutputBuffer</title>
 
-  <link rel="stylesheet" href="../rdoc.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="../rdoc.css" type="text/css" media="screen" />
 
-  <script src="../js/jquery.js" type="text/javascript" charset="utf-8"></script>
-  <script src="../js/thickbox-compressed.js" type="text/javascript" charset="utf-8"></script>
-  <script src="../js/quicksearch.js" type="text/javascript" charset="utf-8"></script>
-  <script src="../js/darkfish.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/jquery.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../js/thickbox-compressed.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../js/quicksearch.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../js/darkfish.js" type="text/javascript"
+		charset="utf-8"></script>
 
 </head>
-<body id="top" class="class">
+<body class="class">
 
-  <div id="metadata">
-    <div id="home-metadata">
-      <div id="home-section" class="section">
+	<div id="metadata">
+		<div id="home-metadata">
+			<div id="home-section" class="section">
         <h3 class="section-header">
           <a href="../index.html">Home</a>
           <a href="../index.html#classes">Classes</a>
           <a href="../index.html#methods">Methods</a>
         </h3>
-      </div>
-    </div>
+			</div>
+		</div>
 
-    <div id="file-metadata">
-      <div id="file-list-section" class="section">
-        <h3 class="section-header">In Files</h3>
-        <div class="section-body">
-          <ul>
-          
-            <li><a href="../lib/org-ruby/output_buffer_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
-              class="thickbox" title="lib/org-ruby/output_buffer.rb">lib/org-ruby/output_buffer.rb</a></li>
-          
-          </ul>
-        </div>
-      </div>
+		<div id="file-metadata">
+			<div id="file-list-section" class="section">
+				<h3 class="section-header">In Files</h3>
+				<div class="section-body">
+					<ul>
+					
+						<li><a href="../lib/org-ruby/output_buffer_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+							class="thickbox" title="lib/org-ruby/output_buffer.rb">lib/org-ruby/output_buffer.rb</a></li>
+					
+					</ul>
+				</div>
+			</div>
 
-      
-    </div>
+			
+		</div>
 
-    <div id="class-metadata">
-      
-      <!-- Parent Class -->
-      <div id="parent-class-section" class="section">
-        <h3 class="section-header">Parent</h3>
-        
-        <p class="link">Object</p>
-        
-      </div>
-      
+		<div id="class-metadata">
 
-      
+			<!-- Parent Class -->
+			
+			<div id="parent-class-section" class="section">
+				<h3 class="section-header">Parent</h3>
+				
+				<p class="link">Object</p>
+				
+			</div>
+			
 
-      
+			<!-- Namespace Contents -->
+			
 
-      
-      <!-- Method Quickref -->
-      <div id="method-list-section" class="section">
-        <h3 class="section-header">Methods</h3>
-        <ul class="link-list">
-          
-          <li><a href="#method-c-new">::new</a></li>
-          
-          <li><a href="#method-i-3C-3C">#<<</a></li>
-          
-          <li><a href="#method-i-clear_accumulation_buffer-21">#clear_accumulation_buffer!</a></li>
-          
-          <li><a href="#method-i-current_mode">#current_mode</a></li>
-          
-          <li><a href="#method-i-current_mode_list-3F">#current_mode_list?</a></li>
-          
-          <li><a href="#method-i-enter_table-3F">#enter_table?</a></li>
-          
-          <li><a href="#method-i-exit_table-3F">#exit_table?</a></li>
-          
-          <li><a href="#method-i-get_next_headline_number">#get_next_headline_number</a></li>
-          
-          <li><a href="#method-i-list_indent_level">#list_indent_level</a></li>
-          
-          <li><a href="#method-i-pop_mode">#pop_mode</a></li>
-          
-          <li><a href="#method-i-prepare">#prepare</a></li>
-          
-          <li><a href="#method-i-preserve_whitespace-3F">#preserve_whitespace?</a></li>
-          
-          <li><a href="#method-i-push_mode">#push_mode</a></li>
-          
-        </ul>
-      </div>
-      
+			<!-- Method Quickref -->
+			
+			<div id="method-list-section" class="section">
+				<h3 class="section-header">Methods</h3>
+				<ul class="link-list">
+					
+					<li><a href="#method-c-new">::new</a></li>
+					
+					<li><a href="#method-i-%3C%3C">#<<</a></li>
+					
+					<li><a href="#method-i-clear_accumulation_buffer%21">#clear_accumulation_buffer!</a></li>
+					
+					<li><a href="#method-i-current_mode">#current_mode</a></li>
+					
+					<li><a href="#method-i-current_mode_list%3F">#current_mode_list?</a></li>
+					
+					<li><a href="#method-i-enter_table%3F">#enter_table?</a></li>
+					
+					<li><a href="#method-i-exit_table%3F">#exit_table?</a></li>
+					
+					<li><a href="#method-i-get_next_headline_number">#get_next_headline_number</a></li>
+					
+					<li><a href="#method-i-list_indent_level">#list_indent_level</a></li>
+					
+					<li><a href="#method-i-maintain_list_indent_stack">#maintain_list_indent_stack</a></li>
+					
+					<li><a href="#method-i-mode_is_code">#mode_is_code</a></li>
+					
+					<li><a href="#method-i-output_footnotes%21">#output_footnotes!</a></li>
+					
+					<li><a href="#method-i-pop_mode">#pop_mode</a></li>
+					
+					<li><a href="#method-i-prepare">#prepare</a></li>
+					
+					<li><a href="#method-i-preserve_whitespace%3F">#preserve_whitespace?</a></li>
+					
+					<li><a href="#method-i-push_mode">#push_mode</a></li>
+					
+					<li><a href="#method-i-should_accumulate_output%3F">#should_accumulate_output?</a></li>
+					
+				</ul>
+			</div>
+			
 
-      
-    </div>
+			<!-- Included Modules -->
+			
+		</div>
 
-    <div id="project-metadata">
-      
-      
-      <div id="fileindex-section" class="section project-section">
-        <h3 class="section-header">Files</h3>
-        <ul>
-        
-          <li class="file"><a href="../History_txt.html">History.txt</a></li>
-        
-          <li class="file"><a href="../README_rdoc.html">README.rdoc</a></li>
-        
-          <li class="file"><a href="../announcement_txt.html">announcement.txt</a></li>
-        
-        </ul>
-      </div>
-      
+		<div id="project-metadata">
+			
+			
+			<div id="fileindex-section" class="section project-section">
+				<h3 class="section-header">Files</h3>
+				<ul>
+				
+					<li class="file"><a href="../History_txt.html">History.txt</a></li>
+				
+					<li class="file"><a href="../README_rdoc.html">README.rdoc</a></li>
+				
+					<li class="file"><a href="../announcement_txt.html">announcement.txt</a></li>
+				
+				</ul>
+			</div>
+			
 
-      <div id="classindex-section" class="section project-section">
-        <h3 class="section-header">Class/Module Index
-          <span class="search-toggle"><img src="../images/find.png"
-            height="16" width="16" alt="[+]"
-            title="show/hide quicksearch" /></span></h3>
-        <form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
-        <fieldset>
-          <legend>Quicksearch</legend>
-          <input type="text" name="quicksearch" value=""
-            class="quicksearch-field" />
-        </fieldset>
-        </form>
+			<div id="classindex-section" class="section project-section">
+				<h3 class="section-header">Class Index
+					<span class="search-toggle"><img src="../images/find.png"
+						height="16" width="16" alt="[+]"
+						title="show/hide quicksearch" /></span></h3>
+				<form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+				<fieldset>
+					<legend>Quicksearch</legend>
+					<input type="text" name="quicksearch" value=""
+						class="quicksearch-field" />
+				</fieldset>
+				</form>
 
-        <ul class="link-list">
-        
-          <li><a href="../Orgmode.html">Orgmode</a></li>
-        
-          <li><a href="../Orgmode/Headline.html">Orgmode::Headline</a></li>
-        
-          <li><a href="../Orgmode/HtmlOutputBuffer.html">Orgmode::HtmlOutputBuffer</a></li>
-        
-          <li><a href="../Orgmode/Line.html">Orgmode::Line</a></li>
-        
-          <li><a href="../Orgmode/OutputBuffer.html">Orgmode::OutputBuffer</a></li>
-        
-          <li><a href="../Orgmode/Parser.html">Orgmode::Parser</a></li>
-        
-          <li><a href="../Orgmode/RegexpHelper.html">Orgmode::RegexpHelper</a></li>
-        
-          <li><a href="../Orgmode/TextileOutputBuffer.html">Orgmode::TextileOutputBuffer</a></li>
-        
-          <li><a href="../OrgRuby.html">OrgRuby</a></li>
-        
-        </ul>
-        <div id="no-class-search-results" style="display: none;">No matching classes.</div>
-      </div>
+				<ul class="link-list">
+				
+					<li><a href="../Orgmode.html">Orgmode</a></li>
+				
+					<li><a href="../Orgmode/Headline.html">Orgmode::Headline</a></li>
+				
+					<li><a href="../Orgmode/HtmlOutputBuffer.html">Orgmode::HtmlOutputBuffer</a></li>
+				
+					<li><a href="../Orgmode/Line.html">Orgmode::Line</a></li>
+				
+					<li><a href="../Orgmode/OutputBuffer.html">Orgmode::OutputBuffer</a></li>
+				
+					<li><a href="../Orgmode/Parser.html">Orgmode::Parser</a></li>
+				
+					<li><a href="../Orgmode/RegexpHelper.html">Orgmode::RegexpHelper</a></li>
+				
+					<li><a href="../Orgmode/TextileOutputBuffer.html">Orgmode::TextileOutputBuffer</a></li>
+				
+					<li><a href="../Tilt.html">Tilt</a></li>
+				
+					<li><a href="../Tilt/OrgTemplate.html">Tilt::OrgTemplate</a></li>
+				
+					<li><a href="../OrgRuby.html">OrgRuby</a></li>
+				
+				</ul>
+				<div id="no-class-search-results" style="display: none;">No matching classes.</div>
+			</div>
 
-      
-    </div>
-  </div>
+			
+		</div>
+	</div>
 
-  <div id="documentation">
-    <h1 class="class">Orgmode::OutputBuffer</h1>
+	<div id="documentation">
+		<h1 class="class">Orgmode::OutputBuffer</h1>
 
-    <div id="description" class="description">
-      
-<p>The <a href="OutputBuffer.html">OutputBuffer</a> is used to accumulate
+		<div id="description">
+			<p>
+The <a href="OutputBuffer.html">OutputBuffer</a> is used to accumulate
 multiple lines of orgmode text, and then emit them to the output all in one
 go. The class will do the final textile substitution for inline formatting
-and add a newline character prior emitting the output.</p>
+and add a newline character prior emitting the output.
+</p>
 
-    </div><!-- description -->
+		</div>
 
-    
-    <div id="5Buntitled-5D" class="documentation-section">
-      
+		<!-- Constants -->
+		
+		<div id="constants-list" class="section">
+			<h3 class="section-header">Constants</h3>
+			<dl>
+			
+				<dt><a name="Modes">Modes</a></dt>
+				
+				<dd class="description"></dd>
+				
+			
+			</dl>
+		</div>
+		
 
-      
+		<!-- Attributes -->
+		
+		<div id="attribute-method-details" class="method-section section">
+			<h3 class="section-header">Attributes</h3>
 
-      
-      <!-- Constants -->
-      <div id="constants-list" class="section">
-        <h3 class="section-header">Constants</h3>
-        <dl>
-        
-          <dt><a name="Modes">Modes</a></dt>
-          
-          <dd class="description"></dd>
-          
-        
-        </dl>
-      </div>
-      
+			
+			<div id="buffer-attribute-method" class="method-detail">
+				<a name="buffer"></a>
+				
+				<div class="method-heading attribute-method-heading">
+					<span class="method-name">buffer</span><span
+						class="attribute-access-type">[R]</span>
+				</div>
 
-      
-      <!-- Attributes -->
-      <div id="attribute-method-details" class="method-section section">
-        <h3 class="section-header">Attributes</h3>
+				<div class="method-description">
+				
+				<p>
+This is the accumulation buffer. It&#8217;s a holding pen so consecutive
+lines of the right type can get stuck together without intervening
+newlines.
+</p>
+				
+				</div>
+			</div>
+			
+			<div id="buffered-lines-attribute-method" class="method-detail">
+				<a name="buffered_lines"></a>
+				
+				<div class="method-heading attribute-method-heading">
+					<span class="method-name">buffered_lines</span><span
+						class="attribute-access-type">[R]</span>
+				</div>
 
-        
-        <div id="buffer-attribute-method" class="method-detail">
-          <a name="buffer"></a>
-          
-          <div class="method-heading attribute-method-heading">
-            <span class="method-name">buffer</span><span
-              class="attribute-access-type">[R]</span>
-          </div>
+				<div class="method-description">
+				
+				<p>
+These are the <a href="Line.html">Line</a> objects that are currently in
+the accumulation buffer.
+</p>
+				
+				</div>
+			</div>
+			
+			<div id="buffer-mode-attribute-method" class="method-detail">
+				<a name="buffer_mode"></a>
+				
+				<div class="method-heading attribute-method-heading">
+					<span class="method-name">buffer_mode</span><span
+						class="attribute-access-type">[R]</span>
+				</div>
 
-          <div class="method-description">
-          
-          <p>This is the accumulation buffer. It’s a holding pen so consecutive lines
-of the right type can get stuck together without intervening newlines.</p>
-          
-          </div>
-        </div>
-        
-        <div id="buffer_mode-attribute-method" class="method-detail">
-          <a name="buffer_mode"></a>
-          
-          <div class="method-heading attribute-method-heading">
-            <span class="method-name">buffer_mode</span><span
-              class="attribute-access-type">[R]</span>
-          </div>
+				<div class="method-description">
+				
+				<p>
+This is the output mode of the accumulation buffer.
+</p>
+				
+				</div>
+			</div>
+			
+			<div id="output-attribute-method" class="method-detail">
+				<a name="output"></a>
+				
+				<div class="method-heading attribute-method-heading">
+					<span class="method-name">output</span><span
+						class="attribute-access-type">[R]</span>
+				</div>
 
-          <div class="method-description">
-          
-          <p>This is the output mode of the accumulation buffer.</p>
-          
-          </div>
-        </div>
-        
-        <div id="buffered_lines-attribute-method" class="method-detail">
-          <a name="buffered_lines"></a>
-          
-          <div class="method-heading attribute-method-heading">
-            <span class="method-name">buffered_lines</span><span
-              class="attribute-access-type">[R]</span>
-          </div>
+				<div class="method-description">
+				
+				<p>
+This is the overall output buffer
+</p>
+				
+				</div>
+			</div>
+			
+			<div id="output-type-attribute-method" class="method-detail">
+				<a name="output_type"></a>
+				
+				<a name="output_type="></a>
+				
+				<div class="method-heading attribute-method-heading">
+					<span class="method-name">output_type</span><span
+						class="attribute-access-type">[RW]</span>
+				</div>
 
-          <div class="method-description">
-          
-          <p>These are the <a href="Line.html">Line</a> objects that are currently in
-the accumulation buffer.</p>
-          
-          </div>
-        </div>
-        
-        <div id="headline_number_stack-attribute-method" class="method-detail">
-          <a name="headline_number_stack"></a>
-          
-          <a name="headline_number_stack="></a>
-          
-          <div class="method-heading attribute-method-heading">
-            <span class="method-name">headline_number_stack</span><span
-              class="attribute-access-type">[RW]</span>
-          </div>
+				<div class="method-description">
+				
+				<p>
+This is the current type of output being accumulated. 
+</p>
+				
+				</div>
+			</div>
+			
+			<div id="headline-number-stack-attribute-method" class="method-detail">
+				<a name="headline_number_stack"></a>
+				
+				<a name="headline_number_stack="></a>
+				
+				<div class="method-heading attribute-method-heading">
+					<span class="method-name">headline_number_stack</span><span
+						class="attribute-access-type">[RW]</span>
+				</div>
 
-          <div class="method-description">
-          
-          <p>This stack is used to do proper outline numbering of headlines.</p>
-          
-          </div>
-        </div>
-        
-        <div id="output-attribute-method" class="method-detail">
-          <a name="output"></a>
-          
-          <div class="method-heading attribute-method-heading">
-            <span class="method-name">output</span><span
-              class="attribute-access-type">[R]</span>
-          </div>
+				<div class="method-description">
+				
+				<p>
+This stack is used to do proper outline numbering of headlines.
+</p>
+				
+				</div>
+			</div>
+			
+		</div>
+		
 
-          <div class="method-description">
-          
-          <p>This is the overall output buffer</p>
-          
-          </div>
-        </div>
-        
-        <div id="output_type-attribute-method" class="method-detail">
-          <a name="output_type"></a>
-          
-          <a name="output_type="></a>
-          
-          <div class="method-heading attribute-method-heading">
-            <span class="method-name">output_type</span><span
-              class="attribute-access-type">[RW]</span>
-          </div>
+		<!-- Methods -->
+		
+		<div id="public-class-method-details" class="method-section section">
+			<h3 class="section-header">Public Class Methods</h3>
 
-          <div class="method-description">
-          
-          <p>This is the current type of output being accumulated.</p>
-          
-          </div>
-        </div>
-        
-      </div><!-- attribute-method-details -->
-      
+		
+			<div id="new-method" class="method-detail ">
+				<a name="method-c-new"></a>
 
-      <!-- Methods -->
-      
-      <div id="public-class-method-details" class="method-section section">
-        <h3 class="section-header">Public Class Methods</h3>
+				<div class="method-heading">
+				
+					<span class="method-name">new</span><span
+						class="method-args">(output)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
 
-      
-        <div id="new-method" class="method-detail ">
-          <a name="method-c-new"></a>
+				<div class="method-description">
+					
+					<p>
+Creates a new <a href="OutputBuffer.html">OutputBuffer</a> object that is
+bound to an output object. The output will get flushed to =output=.
+</p>
+					
 
-          
-          <div class="method-heading">
-            <span class="method-name">new</span><span
-              class="method-args">(output)</span>
-            <span class="method-click-advice">click to toggle source</span>
-          </div>
-          
-
-          <div class="method-description">
-            
-            <p>Creates a new <a href="OutputBuffer.html">OutputBuffer</a> object that is
-bound to an output object. The output will get flushed to =output=.</p>
-            
-
-            
-            <div class="method-source-code" id="new-source">
+					
+					<div class="method-source-code"
+						id="new-source">
 <pre>
-<span class="ruby-comment"># File lib/org-ruby/output_buffer.rb, line 34</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">output</span>)
-  <span class="ruby-ivar">@output</span> = <span class="ruby-identifier">output</span>
-  <span class="ruby-ivar">@buffer</span> = <span class="ruby-string">&quot;&quot;</span>
-  <span class="ruby-ivar">@buffered_lines</span> = []
-  <span class="ruby-ivar">@buffer_mode</span> = <span class="ruby-keyword">nil</span>
-  <span class="ruby-ivar">@output_type</span> = <span class="ruby-value">:start</span>
-  <span class="ruby-ivar">@list_indent_stack</span> = []
-  <span class="ruby-ivar">@paragraph_modifier</span> = <span class="ruby-keyword">nil</span>
-  <span class="ruby-ivar">@cancel_modifier</span> = <span class="ruby-keyword">false</span>
-  <span class="ruby-ivar">@mode_stack</span> = []
-  <span class="ruby-ivar">@headline_number_stack</span> = []
+    <span class="ruby-comment cmt"># File lib/org-ruby/output_buffer.rb, line 34</span>
+34:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">output</span>)
+35:       <span class="ruby-ivar">@output</span> = <span class="ruby-identifier">output</span>
+36:       <span class="ruby-ivar">@buffer</span> = <span class="ruby-value str">&quot;&quot;</span>
+37:       <span class="ruby-ivar">@buffered_lines</span> = []
+38:       <span class="ruby-ivar">@buffer_mode</span> = <span class="ruby-keyword kw">nil</span>
+39:       <span class="ruby-ivar">@output_type</span> = <span class="ruby-value">:start</span>
+40:       <span class="ruby-ivar">@list_indent_stack</span> = []
+41:       <span class="ruby-ivar">@paragraph_modifier</span> = <span class="ruby-keyword kw">nil</span>
+42:       <span class="ruby-ivar">@cancel_modifier</span> = <span class="ruby-keyword kw">false</span>
+43:       <span class="ruby-ivar">@mode_stack</span> = []
+44:       <span class="ruby-ivar">@headline_number_stack</span> = []
+45: 
+46:       <span class="ruby-ivar">@logger</span> = <span class="ruby-constant">Logger</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">STDERR</span>)
+47:       <span class="ruby-keyword kw">if</span> <span class="ruby-constant">ENV</span>[<span class="ruby-value str">'DEBUG'</span>] <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">$DEBUG</span>
+48:         <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">level</span> = <span class="ruby-constant">Logger</span><span class="ruby-operator">::</span><span class="ruby-constant">DEBUG</span>
+49:       <span class="ruby-keyword kw">else</span>
+50:         <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">level</span> = <span class="ruby-constant">Logger</span><span class="ruby-operator">::</span><span class="ruby-constant">WARN</span>
+51:       <span class="ruby-keyword kw">end</span>
+52: 
+53:       <span class="ruby-ivar">@re_help</span> = <span class="ruby-constant">RegexpHelper</span>.<span class="ruby-identifier">new</span>
+54:       <span class="ruby-identifier">push_mode</span>(<span class="ruby-value">:normal</span>)
+55:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
 
-  <span class="ruby-ivar">@logger</span> = <span class="ruby-constant">Logger</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">STDERR</span>)
-  <span class="ruby-keyword">if</span> <span class="ruby-constant">ENV</span>[<span class="ruby-string">'DEBUG'</span>] <span class="ruby-keyword">or</span> <span class="ruby-identifier">$DEBUG</span>
-    <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">level</span> = <span class="ruby-constant">Logger</span><span class="ruby-operator">::</span><span class="ruby-constant">DEBUG</span>
-  <span class="ruby-keyword">else</span>
-    <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">level</span> = <span class="ruby-constant">Logger</span><span class="ruby-operator">::</span><span class="ruby-constant">WARN</span>
-  <span class="ruby-keyword">end</span>
+				
 
-  <span class="ruby-ivar">@re_help</span> = <span class="ruby-constant">RegexpHelper</span>.<span class="ruby-identifier">new</span>
-  <span class="ruby-identifier">push_mode</span>(<span class="ruby-value">:normal</span>)
-<span class="ruby-keyword">end</span></pre>
-            </div><!-- new-source -->
-            
-          </div>
+				
+			</div>
 
-          
+		
+		</div>
+	
+		<div id="public-instance-method-details" class="method-section section">
+			<h3 class="section-header">Public Instance Methods</h3>
 
-          
-        </div><!-- new-method -->
+		
+			<div id="--method" class="method-detail ">
+				<a name="method-i-%3C%3C"></a>
 
-      
-      </div><!-- public-class-method-details -->
-    
-      <div id="public-instance-method-details" class="method-section section">
-        <h3 class="section-header">Public Instance Methods</h3>
+				<div class="method-heading">
+				
+					<span class="method-name">&lt;&lt;</span><span
+						class="method-args">(str)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
 
-      
-        <div id="3C-3C-method" class="method-detail ">
-          <a name="method-i-3C-3C"></a>
+				<div class="method-description">
+					
+					<p>
+Accumulate the string @str@.
+</p>
+					
 
-          
-          <div class="method-heading">
-            <span class="method-name">&lt;&lt;</span><span
-              class="method-args">(str)</span>
-            <span class="method-click-advice">click to toggle source</span>
-          </div>
-          
-
-          <div class="method-description">
-            
-            <p>Accumulate the string @str@.</p>
-            
-
-            
-            <div class="method-source-code" id="3C-3C-source">
+					
+					<div class="method-source-code"
+						id="--source">
 <pre>
-<span class="ruby-comment"># File lib/org-ruby/output_buffer.rb, line 133</span>
-<span class="ruby-keyword">def</span> <span class="ruby-operator">&lt;&lt;</span> (<span class="ruby-identifier">str</span>)
-  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@buffer_mode</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@buffer_mode</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">current_mode</span> <span class="ruby-keyword">then</span>
-    <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Accumulation buffer is mixing modes: @buffer_mode == #{@buffer_mode}, current_mode == #{current_mode}&quot;</span>
-  <span class="ruby-keyword">else</span>
-    <span class="ruby-ivar">@buffer_mode</span> = <span class="ruby-identifier">current_mode</span>
-  <span class="ruby-keyword">end</span>
-  <span class="ruby-ivar">@buffer</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">str</span>
-<span class="ruby-keyword">end</span></pre>
-            </div><!-- 3C-3C-source -->
-            
-          </div>
+     <span class="ruby-comment cmt"># File lib/org-ruby/output_buffer.rb, line 136</span>
+136:     <span class="ruby-keyword kw">def</span> <span class="ruby-operator">&lt;&lt;</span> (<span class="ruby-identifier">str</span>)
+137:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@buffer_mode</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@buffer_mode</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">current_mode</span> <span class="ruby-keyword kw">then</span>
+138:         <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Accumulation buffer is mixing modes: @buffer_mode == #{@buffer_mode}, current_mode == #{current_mode}&quot;</span>
+139:       <span class="ruby-keyword kw">else</span>
+140:         <span class="ruby-ivar">@buffer_mode</span> = <span class="ruby-identifier">current_mode</span>
+141:       <span class="ruby-keyword kw">end</span>
+142:       <span class="ruby-ivar">@buffer</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">str</span>
+143:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
 
-          
+				
 
-          
-        </div><!-- 3C-3C-method -->
+				
+			</div>
 
-      
-        <div id="clear_accumulation_buffer-21-method" class="method-detail ">
-          <a name="method-i-clear_accumulation_buffer-21"></a>
+		
+			<div id="clear-accumulation-buffer--method" class="method-detail ">
+				<a name="method-i-clear_accumulation_buffer%21"></a>
 
-          
-          <div class="method-heading">
-            <span class="method-name">clear_accumulation_buffer!</span><span
-              class="method-args">()</span>
-            <span class="method-click-advice">click to toggle source</span>
-          </div>
-          
+				<div class="method-heading">
+				
+					<span class="method-name">clear_accumulation_buffer!</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
 
-          <div class="method-description">
-            
-            <p>Flushes everything currently in the accumulation buffer into the  output
+				<div class="method-description">
+					
+					<p>
+Flushes everything currently in the accumulation buffer into the  output
 buffer. Derived classes must override this to actually move content into
 the output buffer with the appropriate markup. This method just does common
-bookkeeping cleanup.</p>
-            
+bookkeeping cleanup.
+</p>
+					
 
-            
-            <div class="method-source-code" id="clear_accumulation_buffer-21-source">
+					
+					<div class="method-source-code"
+						id="clear-accumulation-buffer--source">
 <pre>
-<span class="ruby-comment"># File lib/org-ruby/output_buffer.rb, line 98</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">clear_accumulation_buffer!</span>
-  <span class="ruby-ivar">@buffer</span> = <span class="ruby-string">&quot;&quot;</span>
-  <span class="ruby-ivar">@buffer_mode</span> = <span class="ruby-keyword">nil</span>
-  <span class="ruby-ivar">@buffered_lines</span> = []
-<span class="ruby-keyword">end</span></pre>
-            </div><!-- clear_accumulation_buffer-21-source -->
-            
-          </div>
+     <span class="ruby-comment cmt"># File lib/org-ruby/output_buffer.rb, line 101</span>
+101:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">clear_accumulation_buffer!</span>
+102:       <span class="ruby-ivar">@buffer</span> = <span class="ruby-value str">&quot;&quot;</span>
+103:       <span class="ruby-ivar">@buffer_mode</span> = <span class="ruby-keyword kw">nil</span>
+104:       <span class="ruby-ivar">@buffered_lines</span> = []
+105:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
 
-          
+				
 
-          
-        </div><!-- clear_accumulation_buffer-21-method -->
+				
+			</div>
 
-      
-        <div id="current_mode-method" class="method-detail ">
-          <a name="method-i-current_mode"></a>
+		
+			<div id="current-mode-method" class="method-detail ">
+				<a name="method-i-current_mode"></a>
 
-          
-          <div class="method-heading">
-            <span class="method-name">current_mode</span><span
-              class="method-args">()</span>
-            <span class="method-click-advice">click to toggle source</span>
-          </div>
-          
+				<div class="method-heading">
+				
+					<span class="method-name">current_mode</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
 
-          <div class="method-description">
-            
-            
-            
+				<div class="method-description">
+					
+					
+					
 
-            
-            <div class="method-source-code" id="current_mode-source">
+					
+					<div class="method-source-code"
+						id="current-mode-source">
 <pre>
-<span class="ruby-comment"># File lib/org-ruby/output_buffer.rb, line 59</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">current_mode</span>
-  <span class="ruby-ivar">@mode_stack</span>.<span class="ruby-identifier">last</span>
-<span class="ruby-keyword">end</span></pre>
-            </div><!-- current_mode-source -->
-            
-          </div>
+    <span class="ruby-comment cmt"># File lib/org-ruby/output_buffer.rb, line 59</span>
+59:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">current_mode</span>
+60:       <span class="ruby-ivar">@mode_stack</span>.<span class="ruby-identifier">last</span>
+61:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
 
-          
+				
 
-          
-        </div><!-- current_mode-method -->
+				
+			</div>
 
-      
-        <div id="current_mode_list-3F-method" class="method-detail ">
-          <a name="method-i-current_mode_list-3F"></a>
+		
+			<div id="current-mode-list--method" class="method-detail ">
+				<a name="method-i-current_mode_list%3F"></a>
 
-          
-          <div class="method-heading">
-            <span class="method-name">current_mode_list?</span><span
-              class="method-args">()</span>
-            <span class="method-click-advice">click to toggle source</span>
-          </div>
-          
+				<div class="method-heading">
+				
+					<span class="method-name">current_mode_list?</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
 
-          <div class="method-description">
-            
-            
-            
+				<div class="method-description">
+					
+					
+					
 
-            
-            <div class="method-source-code" id="current_mode_list-3F-source">
+					
+					<div class="method-source-code"
+						id="current-mode-list--source">
 <pre>
-<span class="ruby-comment"># File lib/org-ruby/output_buffer.rb, line 63</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">current_mode_list?</span>
-  (<span class="ruby-identifier">current_mode</span> <span class="ruby-operator">==</span> <span class="ruby-value">:ordered_list</span>) <span class="ruby-keyword">or</span> (<span class="ruby-identifier">current_mode</span> <span class="ruby-operator">==</span> <span class="ruby-value">:unordered_list</span>)
-<span class="ruby-keyword">end</span></pre>
-            </div><!-- current_mode_list-3F-source -->
-            
-          </div>
+    <span class="ruby-comment cmt"># File lib/org-ruby/output_buffer.rb, line 63</span>
+63:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">current_mode_list?</span>
+64:       (<span class="ruby-identifier">current_mode</span> <span class="ruby-operator">==</span> <span class="ruby-value">:ordered_list</span>) <span class="ruby-keyword kw">or</span> (<span class="ruby-identifier">current_mode</span> <span class="ruby-operator">==</span> <span class="ruby-value">:unordered_list</span>)
+65:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
 
-          
+				
 
-          
-        </div><!-- current_mode_list-3F-method -->
+				
+			</div>
 
-      
-        <div id="enter_table-3F-method" class="method-detail ">
-          <a name="method-i-enter_table-3F"></a>
+		
+			<div id="enter-table--method" class="method-detail ">
+				<a name="method-i-enter_table%3F"></a>
 
-          
-          <div class="method-heading">
-            <span class="method-name">enter_table?</span><span
-              class="method-args">()</span>
-            <span class="method-click-advice">click to toggle source</span>
-          </div>
-          
+				<div class="method-heading">
+				
+					<span class="method-name">enter_table?</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
 
-          <div class="method-description">
-            
-            <p>Tests if we are entering a table mode.</p>
-            
+				<div class="method-description">
+					
+					<p>
+Tests if we are entering a table mode.
+</p>
+					
 
-            
-            <div class="method-source-code" id="enter_table-3F-source">
+					
+					<div class="method-source-code"
+						id="enter-table--source">
 <pre>
-<span class="ruby-comment"># File lib/org-ruby/output_buffer.rb, line 121</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">enter_table?</span>
-  ((<span class="ruby-ivar">@output_type</span> <span class="ruby-operator">==</span> <span class="ruby-value">:table_row</span>) <span class="ruby-operator">||</span> (<span class="ruby-ivar">@output_type</span> <span class="ruby-operator">==</span> <span class="ruby-value">:table_header</span>) <span class="ruby-operator">||</span> (<span class="ruby-ivar">@output_type</span> <span class="ruby-operator">==</span> <span class="ruby-value">:table_separator</span>)) <span class="ruby-operator">&amp;&amp;</span>
-    (<span class="ruby-identifier">current_mode</span> <span class="ruby-operator">!=</span> <span class="ruby-value">:table</span>)
-<span class="ruby-keyword">end</span></pre>
-            </div><!-- enter_table-3F-source -->
-            
-          </div>
+     <span class="ruby-comment cmt"># File lib/org-ruby/output_buffer.rb, line 124</span>
+124:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">enter_table?</span>
+125:       ((<span class="ruby-ivar">@output_type</span> <span class="ruby-operator">==</span> <span class="ruby-value">:table_row</span>) <span class="ruby-operator">||</span> (<span class="ruby-ivar">@output_type</span> <span class="ruby-operator">==</span> <span class="ruby-value">:table_header</span>) <span class="ruby-operator">||</span> (<span class="ruby-ivar">@output_type</span> <span class="ruby-operator">==</span> <span class="ruby-value">:table_separator</span>)) <span class="ruby-operator">&amp;&amp;</span>
+126:         (<span class="ruby-identifier">current_mode</span> <span class="ruby-operator">!=</span> <span class="ruby-value">:table</span>)
+127:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
 
-          
+				
 
-          
-        </div><!-- enter_table-3F-method -->
+				
+			</div>
 
-      
-        <div id="exit_table-3F-method" class="method-detail ">
-          <a name="method-i-exit_table-3F"></a>
+		
+			<div id="exit-table--method" class="method-detail ">
+				<a name="method-i-exit_table%3F"></a>
 
-          
-          <div class="method-heading">
-            <span class="method-name">exit_table?</span><span
-              class="method-args">()</span>
-            <span class="method-click-advice">click to toggle source</span>
-          </div>
-          
+				<div class="method-heading">
+				
+					<span class="method-name">exit_table?</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
 
-          <div class="method-description">
-            
-            <p>Tests if we are existing a table mode.</p>
-            
+				<div class="method-description">
+					
+					<p>
+Tests if we are existing a table mode.
+</p>
+					
 
-            
-            <div class="method-source-code" id="exit_table-3F-source">
+					
+					<div class="method-source-code"
+						id="exit-table--source">
 <pre>
-<span class="ruby-comment"># File lib/org-ruby/output_buffer.rb, line 127</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">exit_table?</span>
-  ((<span class="ruby-ivar">@output_type</span> <span class="ruby-operator">!=</span> <span class="ruby-value">:table_row</span>) <span class="ruby-operator">&amp;&amp;</span> (<span class="ruby-ivar">@output_type</span> <span class="ruby-operator">!=</span> <span class="ruby-value">:table_header</span>) <span class="ruby-operator">&amp;&amp;</span> (<span class="ruby-ivar">@output_type</span> <span class="ruby-operator">!=</span> <span class="ruby-value">:table_separator</span>)) <span class="ruby-operator">&amp;&amp;</span>
-    (<span class="ruby-identifier">current_mode</span> <span class="ruby-operator">==</span> <span class="ruby-value">:table</span>)
-<span class="ruby-keyword">end</span></pre>
-            </div><!-- exit_table-3F-source -->
-            
-          </div>
+     <span class="ruby-comment cmt"># File lib/org-ruby/output_buffer.rb, line 130</span>
+130:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">exit_table?</span>
+131:       ((<span class="ruby-ivar">@output_type</span> <span class="ruby-operator">!=</span> <span class="ruby-value">:table_row</span>) <span class="ruby-operator">&amp;&amp;</span> (<span class="ruby-ivar">@output_type</span> <span class="ruby-operator">!=</span> <span class="ruby-value">:table_header</span>) <span class="ruby-operator">&amp;&amp;</span> (<span class="ruby-ivar">@output_type</span> <span class="ruby-operator">!=</span> <span class="ruby-value">:table_separator</span>)) <span class="ruby-operator">&amp;&amp;</span>
+132:         (<span class="ruby-identifier">current_mode</span> <span class="ruby-operator">==</span> <span class="ruby-value">:table</span>)
+133:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
 
-          
+				
 
-          
-        </div><!-- exit_table-3F-method -->
+				
+			</div>
 
-      
-        <div id="get_next_headline_number-method" class="method-detail ">
-          <a name="method-i-get_next_headline_number"></a>
+		
+			<div id="get-next-headline-number-method" class="method-detail ">
+				<a name="method-i-get_next_headline_number"></a>
 
-          
-          <div class="method-heading">
-            <span class="method-name">get_next_headline_number</span><span
-              class="method-args">(level)</span>
-            <span class="method-click-advice">click to toggle source</span>
-          </div>
-          
+				<div class="method-heading">
+				
+					<span class="method-name">get_next_headline_number</span><span
+						class="method-args">(level)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
 
-          <div class="method-description">
-            
-            <p>Gets the next headline number for a given level. The intent is this
+				<div class="method-description">
+					
+					<p>
+Gets the next headline number for a given level. The intent is this
 function is called sequentially for each headline that needs to get
-numbered. It does standard outline numbering.</p>
-            
+numbered. It does standard outline numbering.
+</p>
+					
 
-            
-            <div class="method-source-code" id="get_next_headline_number-source">
+					
+					<div class="method-source-code"
+						id="get-next-headline-number-source">
 <pre>
-<span class="ruby-comment"># File lib/org-ruby/output_buffer.rb, line 107</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_next_headline_number</span>(<span class="ruby-identifier">level</span>)
-  <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Headline level not valid: #{level}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">level</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-value">0</span>
-  <span class="ruby-keyword">while</span> <span class="ruby-identifier">level</span> <span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@headline_number_stack</span>.<span class="ruby-identifier">length</span> <span class="ruby-keyword">do</span>
-    <span class="ruby-ivar">@headline_number_stack</span>.<span class="ruby-identifier">push</span> <span class="ruby-value">0</span>
-  <span class="ruby-keyword">end</span>
-  <span class="ruby-keyword">while</span> <span class="ruby-identifier">level</span> <span class="ruby-operator">&lt;</span> <span class="ruby-ivar">@headline_number_stack</span>.<span class="ruby-identifier">length</span> <span class="ruby-keyword">do</span>
-    <span class="ruby-ivar">@headline_number_stack</span>.<span class="ruby-identifier">pop</span>
-  <span class="ruby-keyword">end</span>
-  <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;Oops, shouldn't happen&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">level</span> <span class="ruby-operator">==</span> <span class="ruby-ivar">@headline_number_stack</span>.<span class="ruby-identifier">length</span>
-  <span class="ruby-ivar">@headline_number_stack</span>[<span class="ruby-ivar">@headline_number_stack</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>] <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
-  <span class="ruby-ivar">@headline_number_stack</span>.<span class="ruby-identifier">join</span>(<span class="ruby-string">&quot;.&quot;</span>)
-<span class="ruby-keyword">end</span></pre>
-            </div><!-- get_next_headline_number-source -->
-            
-          </div>
+     <span class="ruby-comment cmt"># File lib/org-ruby/output_buffer.rb, line 110</span>
+110:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_next_headline_number</span>(<span class="ruby-identifier">level</span>)
+111:       <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Headline level not valid: #{level}&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">level</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-value">0</span>
+112:       <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">level</span> <span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@headline_number_stack</span>.<span class="ruby-identifier">length</span> <span class="ruby-keyword kw">do</span>
+113:         <span class="ruby-ivar">@headline_number_stack</span>.<span class="ruby-identifier">push</span> <span class="ruby-value">0</span>
+114:       <span class="ruby-keyword kw">end</span>
+115:       <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">level</span> <span class="ruby-operator">&lt;</span> <span class="ruby-ivar">@headline_number_stack</span>.<span class="ruby-identifier">length</span> <span class="ruby-keyword kw">do</span>
+116:         <span class="ruby-ivar">@headline_number_stack</span>.<span class="ruby-identifier">pop</span>
+117:       <span class="ruby-keyword kw">end</span>
+118:       <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;Oops, shouldn't happen&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">level</span> <span class="ruby-operator">==</span> <span class="ruby-ivar">@headline_number_stack</span>.<span class="ruby-identifier">length</span>
+119:       <span class="ruby-ivar">@headline_number_stack</span>[<span class="ruby-ivar">@headline_number_stack</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>] <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+120:       <span class="ruby-ivar">@headline_number_stack</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot;.&quot;</span>)
+121:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
 
-          
+				
 
-          
-        </div><!-- get_next_headline_number-method -->
+				
+			</div>
 
-      
-        <div id="list_indent_level-method" class="method-detail ">
-          <a name="method-i-list_indent_level"></a>
+		
+			<div id="list-indent-level-method" class="method-detail ">
+				<a name="method-i-list_indent_level"></a>
 
-          
-          <div class="method-heading">
-            <span class="method-name">list_indent_level</span><span
-              class="method-args">()</span>
-            <span class="method-click-advice">click to toggle source</span>
-          </div>
-          
+				<div class="method-heading">
+				
+					<span class="method-name">list_indent_level</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
 
-          <div class="method-description">
-            
-            <p>Gets the current list indent level.</p>
-            
+				<div class="method-description">
+					
+					<p>
+Gets the current list indent level. 
+</p>
+					
 
-            
-            <div class="method-source-code" id="list_indent_level-source">
+					
+					<div class="method-source-code"
+						id="list-indent-level-source">
 <pre>
-<span class="ruby-comment"># File lib/org-ruby/output_buffer.rb, line 143</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">list_indent_level</span>
-  <span class="ruby-ivar">@list_indent_stack</span>.<span class="ruby-identifier">length</span>
-<span class="ruby-keyword">end</span></pre>
-            </div><!-- list_indent_level-source -->
-            
-          </div>
+     <span class="ruby-comment cmt"># File lib/org-ruby/output_buffer.rb, line 146</span>
+146:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">list_indent_level</span>
+147:       <span class="ruby-ivar">@list_indent_stack</span>.<span class="ruby-identifier">length</span>
+148:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
 
-          
+				
 
-          
-        </div><!-- list_indent_level-method -->
+				
+			</div>
 
-      
-        <div id="pop_mode-method" class="method-detail ">
-          <a name="method-i-pop_mode"></a>
+		
+			<div id="pop-mode-method" class="method-detail ">
+				<a name="method-i-pop_mode"></a>
 
-          
-          <div class="method-heading">
-            <span class="method-name">pop_mode</span><span
-              class="method-args">(mode = nil)</span>
-            <span class="method-click-advice">click to toggle source</span>
-          </div>
-          
+				<div class="method-heading">
+				
+					<span class="method-name">pop_mode</span><span
+						class="method-args">(mode = nil)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
 
-          <div class="method-description">
-            
-            
-            
+				<div class="method-description">
+					
+					
+					
 
-            
-            <div class="method-source-code" id="pop_mode-source">
+					
+					<div class="method-source-code"
+						id="pop-mode-source">
 <pre>
-<span class="ruby-comment"># File lib/org-ruby/output_buffer.rb, line 72</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">pop_mode</span>(<span class="ruby-identifier">mode</span> = <span class="ruby-keyword">nil</span>)
-  <span class="ruby-identifier">m</span> = <span class="ruby-ivar">@mode_stack</span>.<span class="ruby-identifier">pop</span>
-  <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">warn</span> <span class="ruby-node">&quot;Modes don't match. Expected to pop #{mode}, but popped #{m}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">mode</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">mode</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">m</span>
-  <span class="ruby-identifier">m</span>
-<span class="ruby-keyword">end</span></pre>
-            </div><!-- pop_mode-source -->
-            
-          </div>
+    <span class="ruby-comment cmt"># File lib/org-ruby/output_buffer.rb, line 72</span>
+72:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">pop_mode</span>(<span class="ruby-identifier">mode</span> = <span class="ruby-keyword kw">nil</span>)
+73:       <span class="ruby-identifier">m</span> = <span class="ruby-ivar">@mode_stack</span>.<span class="ruby-identifier">pop</span>
+74:       <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">warn</span> <span class="ruby-node">&quot;Modes don't match. Expected to pop #{mode}, but popped #{m}&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">mode</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">mode</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">m</span>
+75:       <span class="ruby-identifier">m</span>
+76:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
 
-          
+				
 
-          
-        </div><!-- pop_mode-method -->
+				
+			</div>
 
-      
-        <div id="prepare-method" class="method-detail ">
-          <a name="method-i-prepare"></a>
+		
+			<div id="prepare-method" class="method-detail ">
+				<a name="method-i-prepare"></a>
 
-          
-          <div class="method-heading">
-            <span class="method-name">prepare</span><span
-              class="method-args">(line)</span>
-            <span class="method-click-advice">click to toggle source</span>
-          </div>
-          
+				<div class="method-heading">
+				
+					<span class="method-name">prepare</span><span
+						class="method-args">(line)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
 
-          <div class="method-description">
-            
-            <p>Prepares the output buffer to receive content from a line. As a side
-effect, this may flush the current accumulated text.</p>
-            
+				<div class="method-description">
+					
+					<p>
+Prepares the output buffer to receive content from a line. As a side
+effect, this may flush the current accumulated text.
+</p>
+					
 
-            
-            <div class="method-source-code" id="prepare-source">
+					
+					<div class="method-source-code"
+						id="prepare-source">
 <pre>
-<span class="ruby-comment"># File lib/org-ruby/output_buffer.rb, line 80</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">prepare</span>(<span class="ruby-identifier">line</span>)
-  <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;Looking at #{line.paragraph_type}: #{line.to_s}&quot;</span>
-  <span class="ruby-keyword">if</span> <span class="ruby-keyword">not</span> <span class="ruby-identifier">should_accumulate_output?</span>(<span class="ruby-identifier">line</span>) <span class="ruby-keyword">then</span>
-    <span class="ruby-identifier">flush!</span>
-    <span class="ruby-identifier">maintain_list_indent_stack</span>(<span class="ruby-identifier">line</span>)
-    <span class="ruby-ivar">@output_type</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">paragraph_type</span> 
-  <span class="ruby-keyword">end</span>
-  <span class="ruby-identifier">push_mode</span>(<span class="ruby-value">:inline_example</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">inline_example?</span> <span class="ruby-keyword">and</span> <span class="ruby-identifier">current_mode</span> <span class="ruby-operator">!=</span> <span class="ruby-value">:inline_example</span>
-  <span class="ruby-identifier">pop_mode</span>(<span class="ruby-value">:inline_example</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">current_mode</span> <span class="ruby-operator">==</span> <span class="ruby-value">:inline_example</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">line</span>.<span class="ruby-identifier">inline_example?</span>
-  <span class="ruby-identifier">push_mode</span>(<span class="ruby-value">:table</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">enter_table?</span>
-  <span class="ruby-identifier">pop_mode</span>(<span class="ruby-value">:table</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">exit_table?</span>
-  <span class="ruby-ivar">@buffered_lines</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">line</span>)
-<span class="ruby-keyword">end</span></pre>
-            </div><!-- prepare-source -->
-            
-          </div>
+    <span class="ruby-comment cmt"># File lib/org-ruby/output_buffer.rb, line 80</span>
+80:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">prepare</span>(<span class="ruby-identifier">line</span>)
+81:       <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;Looking at #{line.paragraph_type}: #{line.to_s}&quot;</span>
+82:       <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">not</span> <span class="ruby-identifier">should_accumulate_output?</span>(<span class="ruby-identifier">line</span>) <span class="ruby-keyword kw">then</span>
+83:         <span class="ruby-ivar">@block_lang</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">block_lang</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">begin_block?</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">code_block_type?</span>
+84:         <span class="ruby-identifier">flush!</span>
+85:         <span class="ruby-identifier">maintain_list_indent_stack</span>(<span class="ruby-identifier">line</span>)
+86:         <span class="ruby-ivar">@output_type</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">paragraph_type</span> 
+87:       <span class="ruby-keyword kw">end</span>
+88:       <span class="ruby-identifier">push_mode</span>(<span class="ruby-value">:inline_example</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">inline_example?</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">current_mode</span> <span class="ruby-operator">!=</span> <span class="ruby-value">:inline_example</span> <span class="ruby-keyword kw">and</span> <span class="ruby-keyword kw">not</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">property_drawer?</span>
+89:       <span class="ruby-identifier">pop_mode</span>(<span class="ruby-value">:inline_example</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">current_mode</span> <span class="ruby-operator">==</span> <span class="ruby-value">:inline_example</span> <span class="ruby-keyword kw">and</span> <span class="ruby-operator">!</span><span class="ruby-identifier">line</span>.<span class="ruby-identifier">inline_example?</span>
+90:       <span class="ruby-identifier">push_mode</span>(<span class="ruby-value">:property_drawer</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">property_drawer?</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">current_mode</span> <span class="ruby-operator">!=</span> <span class="ruby-value">:property_drawer</span>
+91:       <span class="ruby-identifier">pop_mode</span>(<span class="ruby-value">:property_drawer</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">current_mode</span> <span class="ruby-operator">==</span> <span class="ruby-value">:property_drawer</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">property_drawer_end_block?</span>
+92:       <span class="ruby-identifier">push_mode</span>(<span class="ruby-value">:table</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">enter_table?</span>
+93:       <span class="ruby-identifier">pop_mode</span>(<span class="ruby-value">:table</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">exit_table?</span>
+94:       <span class="ruby-ivar">@buffered_lines</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">line</span>)
+95:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
 
-          
+				
 
-          
-        </div><!-- prepare-method -->
+				
+			</div>
 
-      
-        <div id="preserve_whitespace-3F-method" class="method-detail ">
-          <a name="method-i-preserve_whitespace-3F"></a>
+		
+			<div id="preserve-whitespace--method" class="method-detail ">
+				<a name="method-i-preserve_whitespace%3F"></a>
 
-          
-          <div class="method-heading">
-            <span class="method-name">preserve_whitespace?</span><span
-              class="method-args">()</span>
-            <span class="method-click-advice">click to toggle source</span>
-          </div>
-          
+				<div class="method-heading">
+				
+					<span class="method-name">preserve_whitespace?</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
 
-          <div class="method-description">
-            
-            <p>Test if we’re in an output mode in which whitespace is significant.</p>
-            
+				<div class="method-description">
+					
+					<p>
+Test if we&#8217;re in an output mode in which whitespace is significant.
+</p>
+					
 
-            
-            <div class="method-source-code" id="preserve_whitespace-3F-source">
+					
+					<div class="method-source-code"
+						id="preserve-whitespace--source">
 <pre>
-<span class="ruby-comment"># File lib/org-ruby/output_buffer.rb, line 148</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">preserve_whitespace?</span>
-  <span class="ruby-identifier">mode_is_code</span> <span class="ruby-identifier">current_mode</span>
-<span class="ruby-keyword">end</span></pre>
-            </div><!-- preserve_whitespace-3F-source -->
-            
-          </div>
+     <span class="ruby-comment cmt"># File lib/org-ruby/output_buffer.rb, line 151</span>
+151:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">preserve_whitespace?</span>
+152:       <span class="ruby-identifier">mode_is_code</span> <span class="ruby-identifier">current_mode</span>
+153:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
 
-          
+				
 
-          
-        </div><!-- preserve_whitespace-3F-method -->
+				
+			</div>
 
-      
-        <div id="push_mode-method" class="method-detail ">
-          <a name="method-i-push_mode"></a>
+		
+			<div id="push-mode-method" class="method-detail ">
+				<a name="method-i-push_mode"></a>
 
-          
-          <div class="method-heading">
-            <span class="method-name">push_mode</span><span
-              class="method-args">(mode)</span>
-            <span class="method-click-advice">click to toggle source</span>
-          </div>
-          
+				<div class="method-heading">
+				
+					<span class="method-name">push_mode</span><span
+						class="method-args">(mode)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
 
-          <div class="method-description">
-            
-            
-            
+				<div class="method-description">
+					
+					
+					
 
-            
-            <div class="method-source-code" id="push_mode-source">
+					
+					<div class="method-source-code"
+						id="push-mode-source">
 <pre>
-<span class="ruby-comment"># File lib/org-ruby/output_buffer.rb, line 67</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">push_mode</span>(<span class="ruby-identifier">mode</span>)
-  <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Not a recognized mode: #{mode}&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-constant">Modes</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">mode</span>)
-  <span class="ruby-ivar">@mode_stack</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">mode</span>)
-<span class="ruby-keyword">end</span></pre>
-            </div><!-- push_mode-source -->
-            
-          </div>
+    <span class="ruby-comment cmt"># File lib/org-ruby/output_buffer.rb, line 67</span>
+67:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">push_mode</span>(<span class="ruby-identifier">mode</span>)
+68:       <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Not a recognized mode: #{mode}&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">Modes</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">mode</span>)
+69:       <span class="ruby-ivar">@mode_stack</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">mode</span>)
+70:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
 
-          
+				
 
-          
-        </div><!-- push_mode-method -->
+				
+			</div>
 
-      
-      </div><!-- public-instance-method-details -->
-    
-    </div><!-- 5Buntitled-5D -->
-  
+		
+		</div>
+	
+		<div id="private-instance-method-details" class="method-section section">
+			<h3 class="section-header">Private Instance Methods</h3>
 
-  </div><!-- documentation -->
+		
+			<div id="maintain-list-indent-stack-method" class="method-detail ">
+				<a name="method-i-maintain_list_indent_stack"></a>
 
-  <div id="validator-badges">
-    <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
-    <p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
-      Rdoc Generator</a> 2</small>.</p>
-  </div>
+				<div class="method-heading">
+				
+					<span class="method-name">maintain_list_indent_stack</span><span
+						class="method-args">(line)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="maintain-list-indent-stack-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/org-ruby/output_buffer.rb, line 167</span>
+167:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">maintain_list_indent_stack</span>(<span class="ruby-identifier">line</span>)
+168:       <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">line</span>.<span class="ruby-identifier">plain_list?</span>) <span class="ruby-keyword kw">then</span>
+169:         <span class="ruby-keyword kw">while</span> (<span class="ruby-keyword kw">not</span> <span class="ruby-ivar">@list_indent_stack</span>.<span class="ruby-identifier">empty?</span>                 <span class="ruby-keyword kw">and</span> (<span class="ruby-ivar">@list_indent_stack</span>.<span class="ruby-identifier">last</span> <span class="ruby-operator">&gt;</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">indent</span>)) 
+170:           <span class="ruby-ivar">@list_indent_stack</span>.<span class="ruby-identifier">pop</span>
+171:           <span class="ruby-identifier">pop_mode</span>
+172:         <span class="ruby-keyword kw">end</span>
+173:         <span class="ruby-keyword kw">if</span> (<span class="ruby-ivar">@list_indent_stack</span>.<span class="ruby-identifier">empty?</span>              <span class="ruby-keyword kw">or</span> <span class="ruby-ivar">@list_indent_stack</span>.<span class="ruby-identifier">last</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">indent</span>)
+174:           <span class="ruby-ivar">@list_indent_stack</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">line</span>.<span class="ruby-identifier">indent</span>)
+175:           <span class="ruby-identifier">push_mode</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">paragraph_type</span>
+176:         <span class="ruby-keyword kw">end</span>
+177:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">blank?</span> <span class="ruby-keyword kw">then</span>
+178: 
+179:         <span class="ruby-comment cmt"># Nothing</span>
+180: 
+181:       <span class="ruby-keyword kw">elsif</span> ((<span class="ruby-identifier">line</span>.<span class="ruby-identifier">paragraph_type</span> <span class="ruby-operator">==</span> <span class="ruby-value">:paragraph</span>) <span class="ruby-keyword kw">and</span>
+182:              (<span class="ruby-keyword kw">not</span> <span class="ruby-ivar">@list_indent_stack</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-keyword kw">and</span>
+183:               <span class="ruby-identifier">line</span>.<span class="ruby-identifier">indent</span> <span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@list_indent_stack</span>.<span class="ruby-identifier">last</span>))
+184: 
+185:         <span class="ruby-comment cmt"># Nothing -- output this paragraph inside</span>
+186:         <span class="ruby-comment cmt"># the list block (ul/ol)</span>
+187: 
+188:       <span class="ruby-keyword kw">else</span>
+189:         <span class="ruby-ivar">@list_indent_stack</span> = []
+190:         <span class="ruby-keyword kw">while</span> ((<span class="ruby-identifier">current_mode</span> <span class="ruby-operator">==</span> <span class="ruby-value">:ordered_list</span>) <span class="ruby-keyword kw">or</span>
+191:                (<span class="ruby-identifier">current_mode</span> <span class="ruby-operator">==</span> <span class="ruby-value">:definition_list</span>) <span class="ruby-keyword kw">or</span>
+192:                (<span class="ruby-identifier">current_mode</span> <span class="ruby-operator">==</span> <span class="ruby-value">:unordered_list</span>))
+193:           <span class="ruby-identifier">pop_mode</span>
+194:         <span class="ruby-keyword kw">end</span>
+195:       <span class="ruby-keyword kw">end</span>
+196:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="mode-is-code-method" class="method-detail ">
+				<a name="method-i-mode_is_code"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">mode_is_code</span><span
+						class="method-args">(mode)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="mode-is-code-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/org-ruby/output_buffer.rb, line 158</span>
+158:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">mode_is_code</span>(<span class="ruby-identifier">mode</span>)
+159:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">mode</span>
+160:       <span class="ruby-keyword kw">when</span> <span class="ruby-value">:src</span>, <span class="ruby-value">:inline_example</span>, <span class="ruby-value">:example</span>
+161:         <span class="ruby-keyword kw">true</span>
+162:       <span class="ruby-keyword kw">else</span>
+163:         <span class="ruby-keyword kw">false</span>
+164:       <span class="ruby-keyword kw">end</span>
+165:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="output-footnotes--method" class="method-detail ">
+				<a name="method-i-output_footnotes%21"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">output_footnotes!</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="output-footnotes--source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/org-ruby/output_buffer.rb, line 200</span>
+200:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">output_footnotes!</span>
+201:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span>
+202:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="should-accumulate-output--method" class="method-detail ">
+				<a name="method-i-should_accumulate_output%3F"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">should_accumulate_output?</span><span
+						class="method-args">(line)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Tests if the current line should be accumulated in the current output
+buffer.  (Extraneous line breaks in the orgmode buffer are removed by
+accumulating lines in the output buffer without line breaks.)
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="should-accumulate-output--source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/org-ruby/output_buffer.rb, line 208</span>
+208:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">should_accumulate_output?</span>(<span class="ruby-identifier">line</span>)
+209: 
+210:       <span class="ruby-comment cmt"># Special case: Preserve line breaks in block code mode.</span>
+211:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">preserve_whitespace?</span>
+212: 
+213:       <span class="ruby-comment cmt"># Special case: Multiple blank lines get accumulated.</span>
+214:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">paragraph_type</span> <span class="ruby-operator">==</span> <span class="ruby-value">:blank</span> <span class="ruby-keyword kw">and</span> <span class="ruby-ivar">@output_type</span> <span class="ruby-operator">==</span> <span class="ruby-value">:blank</span>
+215:       
+216:       <span class="ruby-comment cmt"># Currently only &quot;paragraphs&quot; get accumulated with previous output.</span>
+217:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">paragraph_type</span> <span class="ruby-operator">==</span> <span class="ruby-value">:paragraph</span>
+218:       <span class="ruby-keyword kw">if</span> ((<span class="ruby-ivar">@output_type</span> <span class="ruby-operator">==</span> <span class="ruby-value">:ordered_list</span>) <span class="ruby-keyword kw">or</span>
+219:           (<span class="ruby-ivar">@output_type</span> <span class="ruby-operator">==</span> <span class="ruby-value">:definition_list</span>) <span class="ruby-keyword kw">or</span>
+220:           (<span class="ruby-ivar">@output_type</span> <span class="ruby-operator">==</span> <span class="ruby-value">:unordered_list</span>)) <span class="ruby-keyword kw">then</span>
+221: 
+222:         <span class="ruby-comment cmt"># If the previous output type was a list item, then we only put a paragraph in it</span>
+223:         <span class="ruby-comment cmt"># if its indent level is greater than the list indent level.</span>
+224: 
+225:         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">indent</span> <span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@list_indent_stack</span>.<span class="ruby-identifier">last</span>
+226:       <span class="ruby-keyword kw">end</span>
+227: 
+228:       <span class="ruby-comment cmt"># Only accumulate paragraphs with lists &amp; paragraphs.</span>
+229:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">unless</span>
+230:         ((<span class="ruby-ivar">@output_type</span> <span class="ruby-operator">==</span> <span class="ruby-value">:paragraph</span>) <span class="ruby-keyword kw">or</span>
+231:          (<span class="ruby-ivar">@output_type</span> <span class="ruby-operator">==</span> <span class="ruby-value">:ordered_list</span>) <span class="ruby-keyword kw">or</span>
+232:          (<span class="ruby-ivar">@output_type</span> <span class="ruby-operator">==</span> <span class="ruby-value">:definition_list</span>) <span class="ruby-keyword kw">or</span>
+233:          (<span class="ruby-ivar">@output_type</span> <span class="ruby-operator">==</span> <span class="ruby-value">:unordered_list</span>))
+234:       <span class="ruby-keyword kw">true</span>
+235:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+		</div>
+	
+
+	</div>
+
+
+	<div id="rdoc-debugging-section-dump" class="debugging-section">
+	
+		<p>Disabled; run with --debug to generate this.</p>
+	
+	</div>
+
+	<div id="validator-badges">
+		<p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+		<p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+			Rdoc Generator</a> 1.1.6</small>.</p>
+	</div>
 
 </body>
 </html>

@@ -1,0 +1,7 @@
+#+TITLE: Fou
+
+not center
+#+BEGIN_CENTER
+center
+#+END_CENTER
+not center, again

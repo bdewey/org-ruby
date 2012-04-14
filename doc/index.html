@@ -1,306 +1,400 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
-  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 
-  <title>org-ruby-0.6.0 Documentation</title>
+	<title> org-ruby-0.6.1 Documentation</title>
 
-  <link type="text/css" media="screen" href="rdoc.css" rel="stylesheet" />
+	<link type="text/css" media="screen" href="rdoc.css" rel="stylesheet" />
 
-  <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
-  <script src="js/thickbox-compressed.js" type="text/javascript" charset="utf-8"></script>
-  <script src="js/quicksearch.js" type="text/javascript" charset="utf-8"></script>
-  <script src="js/darkfish.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/thickbox-compressed.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/quicksearch.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/darkfish.js" type="text/javascript" charset="utf-8"></script>
 
 </head>
 <body class="indexpage">
 
-  
-  <h1>org-ruby-0.6.0 Documentation</h1>
+	
+	<h1> org-ruby-0.6.1 Documentation</h1>
 
-  
-  <div id="main">
-    
-<p>org-ruby</p>
-
-<pre>by Brian Dewey
-http://github.com/bdewey/org-ruby</pre>
-
+	
+	<div id="main">
+		<p>
+org-ruby
+</p>
+<pre>
+    by Brian Dewey
+    http://github.com/bdewey/org-ruby
+</pre>
 <h2>DESCRIPTION:</h2>
-
-<p>This gem contains Ruby routines for parsing org-mode files.The most
+<p>
+This gem contains Ruby routines for parsing org-mode files.The most
 significant thing this library does today is convert org-mode files to HTML
 or textile. Currently, you cannot do much to customize the conversion. The
-supplied textile conversion is optimized for extracting “content” from
-the orgfile as opposed to “metadata.”</p>
-
+supplied textile conversion is optimized for extracting
+&#8220;content&#8221; from the orgfile as opposed to
+&#8220;metadata.&#8221; 
+</p>
 <h2>FEATURES/PROBLEMS:</h2>
-<ul><li>
-<p>Converts org-mode files to HTML or Textile</p>
-</li><li>
-<p>Supports tables, block quotes, and block code</p>
-</li><li>
-<p>Supports bold, italic, underline, strikethrough, and code inline
-formatting.</p>
-</li><li>
-<p>Supports hyperlinks that are in double-brackets</p>
-</li><li>
-<p>Upcoming: Handle export options specified in the org buffer.</p>
-</li></ul>
-
+<ul>
+<li><p>
+Converts org-mode files to HTML or Textile
+</p>
+</li>
+<li><p>
+Supports tables, block quotes, and block code
+</p>
+</li>
+<li><p>
+Supports bold, italic, underline, strikethrough, and code inline
+formatting.
+</p>
+</li>
+<li><p>
+Supports hyperlinks that are in double-brackets
+</p>
+</li>
+<li><p>
+Supports <tt>.org</tt> views in Rails through <a href="Tilt.html">Tilt</a>.
+</p>
+</li>
+<li><p>
+Upcoming: Handle export options specified in the org buffer.
+</p>
+</li>
+</ul>
 <h2>SYNOPSIS:</h2>
-
-<p>From the command line:</p>
-
-<pre>org-ruby sample.org</pre>
-
-<p>…will output a HTML version of sample.org.</p>
-
-<pre>org-ruby --translate textile sample.org</pre>
-
-<p>…will output a textile version of sample.org.</p>
-
-<p>From Ruby code:</p>
-
-<pre>Orgmode::Parser.new(data)</pre>
-
-<p>…will construct a new <tt>Parser</tt> object.</p>
-
+<p>
+From the command line:
+</p>
+<pre>
+     org-ruby sample.org
+</pre>
+<p>
+&#8230;will output a HTML version of sample.org.
+</p>
+<pre>
+     org-ruby --translate textile sample.org
+</pre>
+<p>
+&#8230;will output a textile version of sample.org.
+</p>
+<p>
+From Ruby code:
+</p>
+<pre>
+     Orgmode::Parser.new(data)
+</pre>
+<p>
+&#8230;will construct a new <tt>Parser</tt> object.
+</p>
 <h2>INSTALL:</h2>
-
-<p>sudo gem install org-ruby</p>
-
+<p>
+sudo gem install org-ruby
+</p>
 <h2>LICENSE:</h2>
-
-<p>(The MIT License)</p>
-
-<p>Copyright © 2009 Brian Dewey</p>
-
-<p>Permission is hereby granted, free of charge, to any person obtaining a
+<p>
+(The MIT License)
+</p>
+<p>
+Copyright &#169; 2009 Brian Dewey
+</p>
+<p>
+Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the
-‘Software’), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to permit
-persons to whom the Software is furnished to do so, subject to the
-following conditions:</p>
+&#8216;Software&#8217;), to deal in the Software without restriction,
+including without limitation the rights to use, copy, modify, merge,
+publish, distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to the
+following conditions:
+</p>
+<p>
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+</p>
+<p>
+THE SOFTWARE IS PROVIDED &#8216;AS IS&#8217;, WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+USE OR OTHER DEALINGS IN THE SOFTWARE.
+</p>
 
-<p>The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.</p>
+	</div>
+	
 
-<p>THE SOFTWARE IS PROVIDED ‘AS IS’, WITHOUT WARRANTY OF ANY KIND, EXPRESS
-OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-DEALINGS IN THE SOFTWARE.</p>
+	
+	
+	<h2>Files</h2>
+	<ul>
+		
+			<li class="file"><a href="History_txt.html">History.txt</a></li>
+		
+			<li class="file"><a href="README_rdoc.html">README.rdoc</a></li>
+		
+			<li class="file"><a href="announcement_txt.html">announcement.txt</a></li>
+		
+	</ul>
+	
 
-  </div>
-  
+	<h2 id="classes">Classes/Modules</h2>
+	<ul>
+		
+		<li class="module"><a href="Orgmode.html">Orgmode</a></li>
+		
+		<li class="class"><a href="Orgmode/Headline.html">Orgmode::Headline</a></li>
+		
+		<li class="class"><a href="Orgmode/HtmlOutputBuffer.html">Orgmode::HtmlOutputBuffer</a></li>
+		
+		<li class="class"><a href="Orgmode/Line.html">Orgmode::Line</a></li>
+		
+		<li class="class"><a href="Orgmode/OutputBuffer.html">Orgmode::OutputBuffer</a></li>
+		
+		<li class="class"><a href="Orgmode/Parser.html">Orgmode::Parser</a></li>
+		
+		<li class="class"><a href="Orgmode/RegexpHelper.html">Orgmode::RegexpHelper</a></li>
+		
+		<li class="class"><a href="Orgmode/TextileOutputBuffer.html">Orgmode::TextileOutputBuffer</a></li>
+		
+		<li class="module"><a href="Tilt.html">Tilt</a></li>
+		
+		<li class="class"><a href="Tilt/OrgTemplate.html">Tilt::OrgTemplate</a></li>
+		
+		<li class="module"><a href="OrgRuby.html">OrgRuby</a></li>
+		
+	</ul>
 
-  
-  
-  <h2>Files</h2>
-  <ul>
-    
-      <li class="file"><a href="History_txt.html">History.txt</a></li>
-    
-      <li class="file"><a href="README_rdoc.html">README.rdoc</a></li>
-    
-      <li class="file"><a href="announcement_txt.html">announcement.txt</a></li>
-    
-  </ul>
-  
+	<h2 id="methods">Methods</h2>
+	<ul>
+		
+			<li><a href="Tilt/OrgTemplate.html#method-c-engine_initialized%3F">::engine_initialized? &mdash; Tilt::OrgTemplate</a></li>
+		
+			<li><a href="Orgmode/Headline.html#method-c-headline%3F">::headline? &mdash; Orgmode::Headline</a></li>
+		
+			<li><a href="OrgRuby.html#method-c-libpath">::libpath &mdash; OrgRuby</a></li>
+		
+			<li><a href="Orgmode/Parser.html#method-c-load">::load &mdash; Orgmode::Parser</a></li>
+		
+			<li><a href="Orgmode/Headline.html#method-c-new">::new &mdash; Orgmode::Headline</a></li>
+		
+			<li><a href="Orgmode/Parser.html#method-c-new">::new &mdash; Orgmode::Parser</a></li>
+		
+			<li><a href="Orgmode/OutputBuffer.html#method-c-new">::new &mdash; Orgmode::OutputBuffer</a></li>
+		
+			<li><a href="Orgmode/Line.html#method-c-new">::new &mdash; Orgmode::Line</a></li>
+		
+			<li><a href="Orgmode/TextileOutputBuffer.html#method-c-new">::new &mdash; Orgmode::TextileOutputBuffer</a></li>
+		
+			<li><a href="Orgmode/RegexpHelper.html#method-c-new">::new &mdash; Orgmode::RegexpHelper</a></li>
+		
+			<li><a href="Orgmode/HtmlOutputBuffer.html#method-c-new">::new &mdash; Orgmode::HtmlOutputBuffer</a></li>
+		
+			<li><a href="OrgRuby.html#method-c-path">::path &mdash; OrgRuby</a></li>
+		
+			<li><a href="OrgRuby.html#method-c-require_all_libs_relative_to">::require_all_libs_relative_to &mdash; OrgRuby</a></li>
+		
+			<li><a href="Orgmode.html#method-c-special_symbols_to_html">::special_symbols_to_html &mdash; Orgmode</a></li>
+		
+			<li><a href="Orgmode.html#method-c-special_symbols_to_textile">::special_symbols_to_textile &mdash; Orgmode</a></li>
+		
+			<li><a href="Orgmode/Line.html#method-c-to_textile">::to_textile &mdash; Orgmode::Line</a></li>
+		
+			<li><a href="Orgmode/Parser.html#method-c-translate">::translate &mdash; Orgmode::Parser</a></li>
+		
+			<li><a href="OrgRuby.html#method-c-version">::version &mdash; OrgRuby</a></li>
+		
+			<li><a href="Orgmode/OutputBuffer.html#method-i-%3C%3C">#<< &mdash; Orgmode::OutputBuffer</a></li>
+		
+			<li><a href="Orgmode/Line.html#method-i-begin_block%3F">#begin_block? &mdash; Orgmode::Line</a></li>
+		
+			<li><a href="Orgmode/Line.html#method-i-blank%3F">#blank? &mdash; Orgmode::Line</a></li>
+		
+			<li><a href="Orgmode/Line.html#method-i-block_lang">#block_lang &mdash; Orgmode::Line</a></li>
+		
+			<li><a href="Orgmode/Line.html#method-i-block_type">#block_type &mdash; Orgmode::Line</a></li>
+		
+			<li><a href="Orgmode/HtmlOutputBuffer.html#method-i-buffer_mode_is_table%3F">#buffer_mode_is_table? &mdash; Orgmode::HtmlOutputBuffer</a></li>
+		
+			<li><a href="Orgmode/RegexpHelper.html#method-i-build_org_emphasis_regexp">#build_org_emphasis_regexp &mdash; Orgmode::RegexpHelper</a></li>
+		
+			<li><a href="Orgmode/RegexpHelper.html#method-i-build_org_link_regexp">#build_org_link_regexp &mdash; Orgmode::RegexpHelper</a></li>
+		
+			<li><a href="Orgmode/Line.html#method-i-check_assignment_or_regexp">#check_assignment_or_regexp &mdash; Orgmode::Line</a></li>
+		
+			<li><a href="Orgmode/OutputBuffer.html#method-i-clear_accumulation_buffer%21">#clear_accumulation_buffer! &mdash; Orgmode::OutputBuffer</a></li>
+		
+			<li><a href="Orgmode/Line.html#method-i-code_block_type%3F">#code_block_type? &mdash; Orgmode::Line</a></li>
+		
+			<li><a href="Orgmode/Line.html#method-i-comment%3F">#comment? &mdash; Orgmode::Line</a></li>
+		
+			<li><a href="Orgmode/Headline.html#method-i-comment_headline%3F">#comment_headline? &mdash; Orgmode::Headline</a></li>
+		
+			<li><a href="Orgmode/OutputBuffer.html#method-i-current_mode">#current_mode &mdash; Orgmode::OutputBuffer</a></li>
+		
+			<li><a href="Orgmode/OutputBuffer.html#method-i-current_mode_list%3F">#current_mode_list? &mdash; Orgmode::OutputBuffer</a></li>
+		
+			<li><a href="Orgmode/Parser.html#method-i-custom_keyword_regexp">#custom_keyword_regexp &mdash; Orgmode::Parser</a></li>
+		
+			<li><a href="Orgmode/Line.html#method-i-definition_list%3F">#definition_list? &mdash; Orgmode::Line</a></li>
+		
+			<li><a href="Orgmode/Line.html#method-i-end_block%3F">#end_block? &mdash; Orgmode::Line</a></li>
+		
+			<li><a href="Orgmode/OutputBuffer.html#method-i-enter_table%3F">#enter_table? &mdash; Orgmode::OutputBuffer</a></li>
+		
+			<li><a href="Orgmode/HtmlOutputBuffer.html#method-i-escape_buffer%21">#escape_buffer! &mdash; Orgmode::HtmlOutputBuffer</a></li>
+		
+			<li><a href="Tilt/OrgTemplate.html#method-i-evaluate">#evaluate &mdash; Tilt::OrgTemplate</a></li>
+		
+			<li><a href="Orgmode/OutputBuffer.html#method-i-exit_table%3F">#exit_table? &mdash; Orgmode::OutputBuffer</a></li>
+		
+			<li><a href="Orgmode/Parser.html#method-i-export_exclude_tags">#export_exclude_tags &mdash; Orgmode::Parser</a></li>
+		
+			<li><a href="Orgmode/Parser.html#method-i-export_footnotes%3F">#export_footnotes? &mdash; Orgmode::Parser</a></li>
+		
+			<li><a href="Orgmode/Parser.html#method-i-export_heading_number%3F">#export_heading_number? &mdash; Orgmode::Parser</a></li>
+		
+			<li><a href="Orgmode/Parser.html#method-i-export_select_tags">#export_select_tags &mdash; Orgmode::Parser</a></li>
+		
+			<li><a href="Orgmode/Parser.html#method-i-export_tables%3F">#export_tables? &mdash; Orgmode::Parser</a></li>
+		
+			<li><a href="Orgmode/Parser.html#method-i-export_todo%3F">#export_todo? &mdash; Orgmode::Parser</a></li>
+		
+			<li><a href="Orgmode/TextileOutputBuffer.html#method-i-flush%21">#flush! &mdash; Orgmode::TextileOutputBuffer</a></li>
+		
+			<li><a href="Orgmode/HtmlOutputBuffer.html#method-i-flush%21">#flush! &mdash; Orgmode::HtmlOutputBuffer</a></li>
+		
+			<li><a href="Orgmode/OutputBuffer.html#method-i-get_next_headline_number">#get_next_headline_number &mdash; Orgmode::OutputBuffer</a></li>
+		
+			<li><a href="Orgmode/Line.html#method-i-horizontal_rule%3F">#horizontal_rule? &mdash; Orgmode::Line</a></li>
+		
+			<li><a href="Orgmode/Line.html#method-i-in_buffer_setting%3F">#in_buffer_setting? &mdash; Orgmode::Line</a></li>
+		
+			<li><a href="Tilt/OrgTemplate.html#method-i-initialize_engine">#initialize_engine &mdash; Tilt::OrgTemplate</a></li>
+		
+			<li><a href="Orgmode/Line.html#method-i-inline_example%3F">#inline_example? &mdash; Orgmode::Line</a></li>
+		
+			<li><a href="Orgmode/TextileOutputBuffer.html#method-i-inline_formatting">#inline_formatting &mdash; Orgmode::TextileOutputBuffer</a></li>
+		
+			<li><a href="Orgmode/HtmlOutputBuffer.html#method-i-inline_formatting">#inline_formatting &mdash; Orgmode::HtmlOutputBuffer</a></li>
+		
+			<li><a href="Orgmode/OutputBuffer.html#method-i-list_indent_level">#list_indent_level &mdash; Orgmode::OutputBuffer</a></li>
+		
+			<li><a href="Orgmode/OutputBuffer.html#method-i-maintain_list_indent_stack">#maintain_list_indent_stack &mdash; Orgmode::OutputBuffer</a></li>
+		
+			<li><a href="Orgmode/Parser.html#method-i-mark_trees_for_export">#mark_trees_for_export &mdash; Orgmode::Parser</a></li>
+		
+			<li><a href="Orgmode/RegexpHelper.html#method-i-match_all">#match_all &mdash; Orgmode::RegexpHelper</a></li>
+		
+			<li><a href="Orgmode/Line.html#method-i-metadata%3F">#metadata? &mdash; Orgmode::Line</a></li>
+		
+			<li><a href="Orgmode/OutputBuffer.html#method-i-mode_is_code">#mode_is_code &mdash; Orgmode::OutputBuffer</a></li>
+		
+			<li><a href="Orgmode/Line.html#method-i-nonprinting%3F">#nonprinting? &mdash; Orgmode::Line</a></li>
+		
+			<li><a href="Orgmode/Line.html#method-i-ordered_list%3F">#ordered_list? &mdash; Orgmode::Line</a></li>
+		
+			<li><a href="Orgmode/HtmlOutputBuffer.html#method-i-output_footnotes%21">#output_footnotes! &mdash; Orgmode::HtmlOutputBuffer</a></li>
+		
+			<li><a href="Orgmode/TextileOutputBuffer.html#method-i-output_footnotes%21">#output_footnotes! &mdash; Orgmode::TextileOutputBuffer</a></li>
+		
+			<li><a href="Orgmode/OutputBuffer.html#method-i-output_footnotes%21">#output_footnotes! &mdash; Orgmode::OutputBuffer</a></li>
+		
+			<li><a href="Orgmode/HtmlOutputBuffer.html#method-i-output_indentation">#output_indentation &mdash; Orgmode::HtmlOutputBuffer</a></li>
+		
+			<li><a href="Orgmode/Line.html#method-i-output_text">#output_text &mdash; Orgmode::Line</a></li>
+		
+			<li><a href="Orgmode/Headline.html#method-i-output_text">#output_text &mdash; Orgmode::Headline</a></li>
+		
+			<li><a href="Orgmode/Headline.html#method-i-paragraph_type">#paragraph_type &mdash; Orgmode::Headline</a></li>
+		
+			<li><a href="Orgmode/Line.html#method-i-paragraph_type">#paragraph_type &mdash; Orgmode::Line</a></li>
+		
+			<li><a href="Orgmode/Headline.html#method-i-parse_keywords">#parse_keywords &mdash; Orgmode::Headline</a></li>
+		
+			<li><a href="Orgmode/Line.html#method-i-plain_list%3F">#plain_list? &mdash; Orgmode::Line</a></li>
+		
+			<li><a href="Orgmode/Line.html#method-i-plain_text%3F">#plain_text? &mdash; Orgmode::Line</a></li>
+		
+			<li><a href="Orgmode/OutputBuffer.html#method-i-pop_mode">#pop_mode &mdash; Orgmode::OutputBuffer</a></li>
+		
+			<li><a href="Orgmode/TextileOutputBuffer.html#method-i-pop_mode">#pop_mode &mdash; Orgmode::TextileOutputBuffer</a></li>
+		
+			<li><a href="Orgmode/HtmlOutputBuffer.html#method-i-pop_mode">#pop_mode &mdash; Orgmode::HtmlOutputBuffer</a></li>
+		
+			<li><a href="Orgmode/OutputBuffer.html#method-i-prepare">#prepare &mdash; Orgmode::OutputBuffer</a></li>
+		
+			<li><a href="Tilt/OrgTemplate.html#method-i-prepare">#prepare &mdash; Tilt::OrgTemplate</a></li>
+		
+			<li><a href="Orgmode/OutputBuffer.html#method-i-preserve_whitespace%3F">#preserve_whitespace? &mdash; Orgmode::OutputBuffer</a></li>
+		
+			<li><a href="Orgmode/Line.html#method-i-property_drawer%3F">#property_drawer? &mdash; Orgmode::Line</a></li>
+		
+			<li><a href="Orgmode/Line.html#method-i-property_drawer_begin_block%3F">#property_drawer_begin_block? &mdash; Orgmode::Line</a></li>
+		
+			<li><a href="Orgmode/Line.html#method-i-property_drawer_end_block%3F">#property_drawer_end_block? &mdash; Orgmode::Line</a></li>
+		
+			<li><a href="Orgmode/Line.html#method-i-property_drawer_item%3F">#property_drawer_item? &mdash; Orgmode::Line</a></li>
+		
+			<li><a href="Orgmode/OutputBuffer.html#method-i-push_mode">#push_mode &mdash; Orgmode::OutputBuffer</a></li>
+		
+			<li><a href="Orgmode/HtmlOutputBuffer.html#method-i-push_mode">#push_mode &mdash; Orgmode::HtmlOutputBuffer</a></li>
+		
+			<li><a href="Orgmode/TextileOutputBuffer.html#method-i-push_mode">#push_mode &mdash; Orgmode::TextileOutputBuffer</a></li>
+		
+			<li><a href="Orgmode/RegexpHelper.html#method-i-rewrite_emphasis">#rewrite_emphasis &mdash; Orgmode::RegexpHelper</a></li>
+		
+			<li><a href="Orgmode/RegexpHelper.html#method-i-rewrite_footnote">#rewrite_footnote &mdash; Orgmode::RegexpHelper</a></li>
+		
+			<li><a href="Orgmode/RegexpHelper.html#method-i-rewrite_images">#rewrite_images &mdash; Orgmode::RegexpHelper</a></li>
+		
+			<li><a href="Orgmode/RegexpHelper.html#method-i-rewrite_links">#rewrite_links &mdash; Orgmode::RegexpHelper</a></li>
+		
+			<li><a href="Orgmode/RegexpHelper.html#method-i-rewrite_subp">#rewrite_subp &mdash; Orgmode::RegexpHelper</a></li>
+		
+			<li><a href="Orgmode/OutputBuffer.html#method-i-should_accumulate_output%3F">#should_accumulate_output? &mdash; Orgmode::OutputBuffer</a></li>
+		
+			<li><a href="Orgmode/Parser.html#method-i-skip_header_lines%3F">#skip_header_lines? &mdash; Orgmode::Parser</a></li>
+		
+			<li><a href="Orgmode/HtmlOutputBuffer.html#method-i-skip_tables%3F">#skip_tables? &mdash; Orgmode::HtmlOutputBuffer</a></li>
+		
+			<li><a href="Orgmode/Parser.html#method-i-store_in_buffer_setting">#store_in_buffer_setting &mdash; Orgmode::Parser</a></li>
+		
+			<li><a href="Orgmode/Line.html#method-i-strip_ordered_list_tag">#strip_ordered_list_tag &mdash; Orgmode::Line</a></li>
+		
+			<li><a href="Orgmode/Line.html#method-i-strip_unordered_list_tag">#strip_unordered_list_tag &mdash; Orgmode::Line</a></li>
+		
+			<li><a href="Orgmode/Line.html#method-i-table%3F">#table? &mdash; Orgmode::Line</a></li>
+		
+			<li><a href="Orgmode/Line.html#method-i-table_header%3F">#table_header? &mdash; Orgmode::Line</a></li>
+		
+			<li><a href="Orgmode/Line.html#method-i-table_row%3F">#table_row? &mdash; Orgmode::Line</a></li>
+		
+			<li><a href="Orgmode/Line.html#method-i-table_separator%3F">#table_separator? &mdash; Orgmode::Line</a></li>
+		
+			<li><a href="Orgmode/Parser.html#method-i-to_html">#to_html &mdash; Orgmode::Parser</a></li>
+		
+			<li><a href="Orgmode/Line.html#method-i-to_s">#to_s &mdash; Orgmode::Line</a></li>
+		
+			<li><a href="Orgmode/Headline.html#method-i-to_textile">#to_textile &mdash; Orgmode::Headline</a></li>
+		
+			<li><a href="Orgmode/Parser.html#method-i-to_textile">#to_textile &mdash; Orgmode::Parser</a></li>
+		
+			<li><a href="Orgmode/Line.html#method-i-unordered_list%3F">#unordered_list? &mdash; Orgmode::Line</a></li>
+		
+			<li><a href="Orgmode/Parser.html#method-i-use_sub_superscripts%3F">#use_sub_superscripts? &mdash; Orgmode::Parser</a></li>
+		
+	</ul>
 
-  <h2 id="classes">Classes/Modules</h2>
-  <ul>
-    
-    <li class="module"><a href="Orgmode.html">Orgmode</a></li>
-    
-    <li class="class"><a href="Orgmode/Headline.html">Orgmode::Headline</a></li>
-    
-    <li class="class"><a href="Orgmode/HtmlOutputBuffer.html">Orgmode::HtmlOutputBuffer</a></li>
-    
-    <li class="class"><a href="Orgmode/Line.html">Orgmode::Line</a></li>
-    
-    <li class="class"><a href="Orgmode/OutputBuffer.html">Orgmode::OutputBuffer</a></li>
-    
-    <li class="class"><a href="Orgmode/Parser.html">Orgmode::Parser</a></li>
-    
-    <li class="class"><a href="Orgmode/RegexpHelper.html">Orgmode::RegexpHelper</a></li>
-    
-    <li class="class"><a href="Orgmode/TextileOutputBuffer.html">Orgmode::TextileOutputBuffer</a></li>
-    
-    <li class="module"><a href="OrgRuby.html">OrgRuby</a></li>
-    
-  </ul>
-
-  <h2 id="methods">Methods</h2>
-  <ul>
-    
-      <li><a href="Orgmode/Headline.html#method-c-headline-3F">::headline? &mdash; Orgmode::Headline</a></li>
-    
-      <li><a href="Orgmode/Parser.html#method-c-load">::load &mdash; Orgmode::Parser</a></li>
-    
-      <li><a href="Orgmode/Line.html#method-c-new">::new &mdash; Orgmode::Line</a></li>
-    
-      <li><a href="Orgmode/Parser.html#method-c-new">::new &mdash; Orgmode::Parser</a></li>
-    
-      <li><a href="Orgmode/RegexpHelper.html#method-c-new">::new &mdash; Orgmode::RegexpHelper</a></li>
-    
-      <li><a href="Orgmode/OutputBuffer.html#method-c-new">::new &mdash; Orgmode::OutputBuffer</a></li>
-    
-      <li><a href="Orgmode/TextileOutputBuffer.html#method-c-new">::new &mdash; Orgmode::TextileOutputBuffer</a></li>
-    
-      <li><a href="Orgmode/Headline.html#method-c-new">::new &mdash; Orgmode::Headline</a></li>
-    
-      <li><a href="Orgmode/HtmlOutputBuffer.html#method-c-new">::new &mdash; Orgmode::HtmlOutputBuffer</a></li>
-    
-      <li><a href="Orgmode.html#method-c-special_symbols_to_html">::special_symbols_to_html &mdash; Orgmode</a></li>
-    
-      <li><a href="Orgmode.html#method-c-special_symbols_to_textile">::special_symbols_to_textile &mdash; Orgmode</a></li>
-    
-      <li><a href="Orgmode/Line.html#method-c-to_textile">::to_textile &mdash; Orgmode::Line</a></li>
-    
-      <li><a href="Orgmode/OutputBuffer.html#method-i-3C-3C">#<< &mdash; Orgmode::OutputBuffer</a></li>
-    
-      <li><a href="Orgmode/Line.html#method-i-begin_block-3F">#begin_block? &mdash; Orgmode::Line</a></li>
-    
-      <li><a href="Orgmode/Line.html#method-i-blank-3F">#blank? &mdash; Orgmode::Line</a></li>
-    
-      <li><a href="Orgmode/Line.html#method-i-block_type">#block_type &mdash; Orgmode::Line</a></li>
-    
-      <li><a href="Orgmode/OutputBuffer.html#method-i-clear_accumulation_buffer-21">#clear_accumulation_buffer! &mdash; Orgmode::OutputBuffer</a></li>
-    
-      <li><a href="Orgmode/Line.html#method-i-code_block_type-3F">#code_block_type? &mdash; Orgmode::Line</a></li>
-    
-      <li><a href="Orgmode/Line.html#method-i-comment-3F">#comment? &mdash; Orgmode::Line</a></li>
-    
-      <li><a href="Orgmode/OutputBuffer.html#method-i-current_mode">#current_mode &mdash; Orgmode::OutputBuffer</a></li>
-    
-      <li><a href="Orgmode/OutputBuffer.html#method-i-current_mode_list-3F">#current_mode_list? &mdash; Orgmode::OutputBuffer</a></li>
-    
-      <li><a href="Orgmode/Parser.html#method-i-custom_keyword_regexp">#custom_keyword_regexp &mdash; Orgmode::Parser</a></li>
-    
-      <li><a href="Orgmode/Line.html#method-i-definition_list-3F">#definition_list? &mdash; Orgmode::Line</a></li>
-    
-      <li><a href="Orgmode/Line.html#method-i-end_block-3F">#end_block? &mdash; Orgmode::Line</a></li>
-    
-      <li><a href="Orgmode/OutputBuffer.html#method-i-enter_table-3F">#enter_table? &mdash; Orgmode::OutputBuffer</a></li>
-    
-      <li><a href="Orgmode/OutputBuffer.html#method-i-exit_table-3F">#exit_table? &mdash; Orgmode::OutputBuffer</a></li>
-    
-      <li><a href="Orgmode/Parser.html#method-i-export_exclude_tags">#export_exclude_tags &mdash; Orgmode::Parser</a></li>
-    
-      <li><a href="Orgmode/Parser.html#method-i-export_footnotes-3F">#export_footnotes? &mdash; Orgmode::Parser</a></li>
-    
-      <li><a href="Orgmode/Parser.html#method-i-export_heading_number-3F">#export_heading_number? &mdash; Orgmode::Parser</a></li>
-    
-      <li><a href="Orgmode/Parser.html#method-i-export_select_tags">#export_select_tags &mdash; Orgmode::Parser</a></li>
-    
-      <li><a href="Orgmode/Parser.html#method-i-export_tables-3F">#export_tables? &mdash; Orgmode::Parser</a></li>
-    
-      <li><a href="Orgmode/Parser.html#method-i-export_todo-3F">#export_todo? &mdash; Orgmode::Parser</a></li>
-    
-      <li><a href="Orgmode/TextileOutputBuffer.html#method-i-flush-21">#flush! &mdash; Orgmode::TextileOutputBuffer</a></li>
-    
-      <li><a href="Orgmode/HtmlOutputBuffer.html#method-i-flush-21">#flush! &mdash; Orgmode::HtmlOutputBuffer</a></li>
-    
-      <li><a href="Orgmode/OutputBuffer.html#method-i-get_next_headline_number">#get_next_headline_number &mdash; Orgmode::OutputBuffer</a></li>
-    
-      <li><a href="Orgmode/Line.html#method-i-in_buffer_setting-3F">#in_buffer_setting? &mdash; Orgmode::Line</a></li>
-    
-      <li><a href="Orgmode/Line.html#method-i-inline_example-3F">#inline_example? &mdash; Orgmode::Line</a></li>
-    
-      <li><a href="Orgmode/TextileOutputBuffer.html#method-i-inline_formatting">#inline_formatting &mdash; Orgmode::TextileOutputBuffer</a></li>
-    
-      <li><a href="Orgmode/OutputBuffer.html#method-i-list_indent_level">#list_indent_level &mdash; Orgmode::OutputBuffer</a></li>
-    
-      <li><a href="Orgmode/RegexpHelper.html#method-i-match_all">#match_all &mdash; Orgmode::RegexpHelper</a></li>
-    
-      <li><a href="Orgmode/Line.html#method-i-metadata-3F">#metadata? &mdash; Orgmode::Line</a></li>
-    
-      <li><a href="Orgmode/Line.html#method-i-nonprinting-3F">#nonprinting? &mdash; Orgmode::Line</a></li>
-    
-      <li><a href="Orgmode/Line.html#method-i-ordered_list-3F">#ordered_list? &mdash; Orgmode::Line</a></li>
-    
-      <li><a href="Orgmode/HtmlOutputBuffer.html#method-i-output_footnotes-21">#output_footnotes! &mdash; Orgmode::HtmlOutputBuffer</a></li>
-    
-      <li><a href="Orgmode/TextileOutputBuffer.html#method-i-output_footnotes-21">#output_footnotes! &mdash; Orgmode::TextileOutputBuffer</a></li>
-    
-      <li><a href="Orgmode/Line.html#method-i-output_text">#output_text &mdash; Orgmode::Line</a></li>
-    
-      <li><a href="Orgmode/Headline.html#method-i-output_text">#output_text &mdash; Orgmode::Headline</a></li>
-    
-      <li><a href="Orgmode/Line.html#method-i-paragraph_type">#paragraph_type &mdash; Orgmode::Line</a></li>
-    
-      <li><a href="Orgmode/Headline.html#method-i-paragraph_type">#paragraph_type &mdash; Orgmode::Headline</a></li>
-    
-      <li><a href="Orgmode/Line.html#method-i-plain_list-3F">#plain_list? &mdash; Orgmode::Line</a></li>
-    
-      <li><a href="Orgmode/Line.html#method-i-plain_text-3F">#plain_text? &mdash; Orgmode::Line</a></li>
-    
-      <li><a href="Orgmode/TextileOutputBuffer.html#method-i-pop_mode">#pop_mode &mdash; Orgmode::TextileOutputBuffer</a></li>
-    
-      <li><a href="Orgmode/OutputBuffer.html#method-i-pop_mode">#pop_mode &mdash; Orgmode::OutputBuffer</a></li>
-    
-      <li><a href="Orgmode/HtmlOutputBuffer.html#method-i-pop_mode">#pop_mode &mdash; Orgmode::HtmlOutputBuffer</a></li>
-    
-      <li><a href="Orgmode/OutputBuffer.html#method-i-prepare">#prepare &mdash; Orgmode::OutputBuffer</a></li>
-    
-      <li><a href="Orgmode/OutputBuffer.html#method-i-preserve_whitespace-3F">#preserve_whitespace? &mdash; Orgmode::OutputBuffer</a></li>
-    
-      <li><a href="Orgmode/HtmlOutputBuffer.html#method-i-push_mode">#push_mode &mdash; Orgmode::HtmlOutputBuffer</a></li>
-    
-      <li><a href="Orgmode/OutputBuffer.html#method-i-push_mode">#push_mode &mdash; Orgmode::OutputBuffer</a></li>
-    
-      <li><a href="Orgmode/TextileOutputBuffer.html#method-i-push_mode">#push_mode &mdash; Orgmode::TextileOutputBuffer</a></li>
-    
-      <li><a href="Orgmode/RegexpHelper.html#method-i-rewrite_emphasis">#rewrite_emphasis &mdash; Orgmode::RegexpHelper</a></li>
-    
-      <li><a href="Orgmode/RegexpHelper.html#method-i-rewrite_footnote">#rewrite_footnote &mdash; Orgmode::RegexpHelper</a></li>
-    
-      <li><a href="Orgmode/RegexpHelper.html#method-i-rewrite_images">#rewrite_images &mdash; Orgmode::RegexpHelper</a></li>
-    
-      <li><a href="Orgmode/RegexpHelper.html#method-i-rewrite_links">#rewrite_links &mdash; Orgmode::RegexpHelper</a></li>
-    
-      <li><a href="Orgmode/RegexpHelper.html#method-i-rewrite_subp">#rewrite_subp &mdash; Orgmode::RegexpHelper</a></li>
-    
-      <li><a href="Orgmode/Parser.html#method-i-skip_header_lines-3F">#skip_header_lines? &mdash; Orgmode::Parser</a></li>
-    
-      <li><a href="Orgmode/Line.html#method-i-strip_ordered_list_tag">#strip_ordered_list_tag &mdash; Orgmode::Line</a></li>
-    
-      <li><a href="Orgmode/Line.html#method-i-strip_unordered_list_tag">#strip_unordered_list_tag &mdash; Orgmode::Line</a></li>
-    
-      <li><a href="Orgmode/Line.html#method-i-table-3F">#table? &mdash; Orgmode::Line</a></li>
-    
-      <li><a href="Orgmode/Line.html#method-i-table_header-3F">#table_header? &mdash; Orgmode::Line</a></li>
-    
-      <li><a href="Orgmode/Line.html#method-i-table_row-3F">#table_row? &mdash; Orgmode::Line</a></li>
-    
-      <li><a href="Orgmode/Line.html#method-i-table_separator-3F">#table_separator? &mdash; Orgmode::Line</a></li>
-    
-      <li><a href="Orgmode/Parser.html#method-i-to_html">#to_html &mdash; Orgmode::Parser</a></li>
-    
-      <li><a href="Orgmode/Line.html#method-i-to_s">#to_s &mdash; Orgmode::Line</a></li>
-    
-      <li><a href="Orgmode/Parser.html#method-i-to_textile">#to_textile &mdash; Orgmode::Parser</a></li>
-    
-      <li><a href="Orgmode/Headline.html#method-i-to_textile">#to_textile &mdash; Orgmode::Headline</a></li>
-    
-      <li><a href="Orgmode/Line.html#method-i-unordered_list-3F">#unordered_list? &mdash; Orgmode::Line</a></li>
-    
-      <li><a href="Orgmode/Parser.html#method-i-use_sub_superscripts-3F">#use_sub_superscripts? &mdash; Orgmode::Parser</a></li>
-    
-  </ul>
-
-  <div id="validator-badges">
-    <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
-    <p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
-      Rdoc Generator</a> 2</small>.</p>
-  </div>
+	<div id="validator-badges">
+		<p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+		<p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+			Rdoc Generator</a> 1.1.6</small>.</p>
+	</div>
 </body>
 </html>

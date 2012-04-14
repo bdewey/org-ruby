@@ -1,0 +1,35 @@
+* Block Code
+
+I need to get block code examples working. In =orgmode=, they look
+like this:
+
+#+BEGIN_EXAMPLE
+
+    def initialize(output)
+      @output = output
+      @buffer = ""
+      @output_type = :start
+      @list_indent_stack = []
+      @paragraph_modifier = nil
+
+      @logger = Logger.new(STDERR)
+      @logger.level = Logger::WARN
+    end
+
+#+END_EXAMPLE
+
+And now I should be back to normal text.
+
+Putting in another paragraph for good measure.
+
+
+Code should also get cancelled by a list, thus:
+
+#+BEGIN_EXAMPLE
+This is my code!
+
+Another line!
+#+END_EXAMPLE
+
+- My list should cancel this.
+- Another list line.
