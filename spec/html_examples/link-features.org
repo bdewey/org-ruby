@@ -17,3 +17,19 @@ sections within documents, etc.
   This is a search link into code-comment.org.
 
   [[file:code-comment.org::*Code%20Comment][Code Comment]]
+
+* Correct handling of .org URIs in HTML markup routine (thanks @rayl!)
+
+- [[http://foo.com][foo.com website]]
+
+- [[http://foo.org][foo.org website]]
+
+* In these links, .org is converted to .html
+
+- [[http://foo.org/foo.org][foo.org/foo.org]]
+
+- [[http://localhost:4567/foo.org][localhost:4567/foo.org]]
+
+- [[file:path.org][file:path.org label]]
+
+- [[file:notes/path.org][file:notes/path.org label]]
