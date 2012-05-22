@@ -1,3 +1,7 @@
+== 0.6.3 / 2012-05-22
+
+* Minor enhancement: Correct handling of .org URIs in HTML markup routine (thanks, rayl)
+
 == 0.6.1 / 2012-04-14
 
 * Added encoding directive to support Ruby 1.9.2
