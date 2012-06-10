@@ -55,7 +55,7 @@ module Orgmode
       check_assignment_or_regexp(:property_drawer, PropertyDrawerRegexp)
     end
 
-    PropertyDrawerItemRegexp = /^\s*:(\w+):\s*(.*)$/i
+    PropertyDrawerItemRegexp = /^\s*:([0-9A-Za-z_\-]+):\s*(.*)$/i
 
     def property_drawer_item?
       @line =~ PropertyDrawerItemRegexp
