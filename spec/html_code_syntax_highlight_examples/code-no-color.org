@@ -1,0 +1,40 @@
+* Simple Code Syntax highlighting test
+
+#+BEGIN_SRC ruby
+class Pygments
+  class << self
+    def colorize
+      # Do colorizing stuff here
+      heredoc = <<EOF
+    Some text yay!!!
+EOF
+    end
+  end
+end
+#+END_SRC
+
+Now using EXAMPLE blocks instead:
+
+#+BEGIN_EXAMPLE
+def hello()
+  puts "hello"
+end
+#+END_EXAMPLE
+
+Small case should work as well:
+
+#+begin_example ruby
+class Hello
+  def say
+    puts "hola"
+  end
+end
+#+end_example
+
+#+begin_src ruby
+class Piano
+  def play_note(note)
+  # TODO
+  end
+end
+#+end_src

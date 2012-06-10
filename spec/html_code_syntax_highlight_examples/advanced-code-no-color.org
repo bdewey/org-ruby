@@ -1,0 +1,106 @@
+#+TITLE:     advanced-code.org
+#+AUTHOR:    Brian Dewey
+#+EMAIL:     bdewey@gmail.com
+#+DATE:      2009-12-30 Wed
+#+DESCRIPTION: More types of code support
+#+KEYWORDS: 
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:t toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:nil skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+
+Turns out there's more way to do code than just BEGIN_EXAMPLE. 
+
+* Inline examples
+
+This should work:
+
+:   fixed width? how does this work?   
+:                         ...........
+:                        ............
+:                                   .
+:                        .  .   .   .
+:                        .          ..
+:                        ....... .....
+:                            .  .
+:                            ....
+
+Two ASCII blobs.
+
+* BEGIN_SRC
+:PROPERTIES:
+:ARCHIVE_TIME: 2009-12-26 Sat 22:16
+:ARCHIVE_FILE: ~/brians-brain/content/projects/orgmode_parser.org
+:ARCHIVE_OLPATH: &lt;%= @page.title %&gt;/Future Development
+:ARCHIVE_CATEGORY: orgmode_parser
+:ARCHIVE_TODO: DONE
+:END:
+
+And this:
+
+#+BEGIN_SRC ruby
+    # Finds all emphasis matches in a string.
+    # Supply a block that will get the marker and body as parameters.
+    def match_all(str)
+      str.scan(@org_emphasis_regexp) do |match|
+        yield $2, $3
+      end
+    end
+#+END_SRC
+
+Now let's test case-insensitive code blocks.
+
+#+begin_src ruby
+    # Finds all emphasis matches in a string.
+    # Supply a block that will get the marker and body as parameters.
+    def match_all(str)
+      str.scan(@org_emphasis_regexp) do |match|
+        yield $2, $3
+      end
+    end
+#+end_src
+
+#+begin_src clojure
+(def fib-seq
+  (concat
+   [0 1]
+   ((fn rfib [a b]
+        (lazy-cons (+ a b) (rfib b (+ a b)))) 0 1)))
+ 
+user> (take 20 fib-seq)
+(0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1597 2584 4181)
+#+end_src
+
+Even if no language is set, it is still wrapped in code tags but class is empty.
+
+#+BEGIN_SRC 
+echo 'Defaults env_keeps="http_proxy https_proxy ftp_proxy"' | sudo tee -a /etc/sudoers
+#+END_SRC
+
+* It should be possible to write a colon at the beginning of an example
+
+#+BEGIN_QUOTE
+I really love to write about
+:symbols. They sure are the
+best things in the world!
+#+END_QUOTE
+
+#+BEGIN_SRC ruby
+{
+:one => 1,
+:two => 2
+}
+#+END_SRC
+
+#+BEGIN_SRC clojure
+(defproject helloworld "0.1"
+:dependencies [[org.clojure/clojure
+                 "1.1.0-master-SNAPSHOT"]
+              [org.clojure/clojure-contrib
+                 "1.0-SNAPSHOT"]]
+:main helloworld)
+#+END_SRC
