@@ -137,7 +137,7 @@ module Orgmode
       check_assignment_or_regexp(:table_separator, /^\s*\|[-\|\+]*\s*$/)
     end
 
-    # Checks if this line is a table header. 
+    # Checks if this line is a table header.
     def table_header?
       @assigned_paragraph_type == :table_header
     end
@@ -234,7 +234,7 @@ module Orgmode
     # What's tricky is lines can have assigned types, so you need to check
     # the assigned type, if present, or see if the characteristic regexp
     # for the paragraph type matches if not present.
-    # 
+    #
     # call-seq:
     #     check_assignment_or_regexp(assignment, regexp) => boolean
     #

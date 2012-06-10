@@ -57,7 +57,7 @@ module Orgmode
         css_class = " class=\"src\"" if mode == :src
         css_class = " class=\"example\"" if (mode == :example || mode == :inline_example)
         css_class = " style=\"text-align: center\"" if mode == :center
-        @logger.debug "#{mode}: <#{ModeTag[mode]}#{css_class}>\n" 
+        @logger.debug "#{mode}: <#{ModeTag[mode]}#{css_class}>\n"
         @output << "<#{ModeTag[mode]}#{css_class}>\n" unless mode == :table and skip_tables?
         # Special case to add code tags to src blogs and specify language
         if mode == :src
@@ -127,7 +127,7 @@ module Orgmode
                 output << "<span class=\"todo-keyword #{keyword}\">#{keyword} </span>"
               end
             end
-            @output << inline_formatting(@buffer) 
+            @output << inline_formatting(@buffer)
             @output << "</#{HtmlBlockTag[@output_type]}>\n"
             @title_decoration = ""
           else
@@ -217,7 +217,7 @@ module Orgmode
         link = link.sub(/^file:/i, "") # will default to HTTP
 
         unless link.match(/:\/\/[^\/]*.org$/)
-          link = link.sub(/\.org$/i, ".html")          
+          link = link.sub(/\.org$/i, ".html")
         end
 
         text = text.gsub(/([^\]]*\.(jpg|jpeg|gif|png))/xi) do |img_link|

@@ -1,4 +1,3 @@
-
 require File.expand_path(
     File.join(File.dirname(__FILE__), %w[.. lib org-ruby]))
 
@@ -17,4 +16,3 @@ RSpec.configure do |config|
   # config.mock_with :flexmock
   # config.mock_with :rr
 end
-
