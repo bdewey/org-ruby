@@ -120,7 +120,8 @@ module Orgmode
               end
             end
             table_header_set = false if !line.table?
-            mode = :code if line.begin_block? and line.block_type == "EXAMPLE"
+            mode = :code if line.begin_block? and line.block_type.casecmp("EXAMPLE") == 0
+            mode = :src_code if line.begin_block? and line.block_type.casecmp("SRC") == 0
             mode = :block_comment if line.begin_block? and line.block_type == "COMMENT"
             mode = :property_drawer if line.property_drawer_begin_block?
             if (@current_headline) then
@@ -143,10 +144,24 @@ module Orgmode
           # As long as we stay in code mode, force lines to be either blank or paragraphs.
           # Don't try to interpret structural items, like headings and tables.
           line = Line.new line, self
-          if line.end_block? and line.block_type == "EXAMPLE"
+          if line.end_block? and line.code_block?
             mode = :normal
           else
             line.assigned_paragraph_type = :paragraph unless line.blank?
+          end
+          if (@current_headline) then
+            @current_headline.body_lines << line
+          else
+            @header_lines << line
+          end
+
+        when :src_code
+
+          line = Line.new line, self
+          if line.end_block? and line.code_block?
+            mode = :normal            
+          else
+            line.assigned_paragraph_type = :src
           end
           if (@current_headline) then
             @current_headline.body_lines << line
@@ -270,8 +285,11 @@ module Orgmode
 
           output_buffer << line.output_text
 
-        else
+       when :src
 
+         output_buffer << line.output_text << "\n"
+
+        else
           if output_buffer.preserve_whitespace? then
             output_buffer << line.output_text
           else

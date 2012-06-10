@@ -164,8 +164,12 @@ module Orgmode
       $3 if @line =~ BlockRegexp
     end
 
-    def code_block_type?
+    def code_block?
       block_type =~ /^(EXAMPLE|SRC)$/i
+    end
+
+    def code_block_line?
+      @assigned_paragraph_type == :src
     end
 
     InlineExampleRegexp = /^\s*:\s/
@@ -200,6 +204,7 @@ module Orgmode
     # Determines the paragraph type of the current line.
     def paragraph_type
       return :blank if blank?
+      return :src if code_block_line? # Do not try to guess the type of this line if it is accumulating source code
       return :definition_list if definition_list? # order is important! A definition_list is also an unordered_list!
       return :ordered_list if ordered_list?
       return :unordered_list if unordered_list?

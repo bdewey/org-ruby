@@ -154,5 +154,43 @@ describe Orgmode::Parser do
       end
     end
   end
+
+  describe "Export to HTML test cases with code syntax highlight" do
+    code_syntax_examples_directory = File.join(File.dirname(__FILE__), "html_code_syntax_highlight_examples")
+
+    # Include the code syntax highlight support tests
+    if defined? CodeRay
+      # Use CodeRay for syntax highlight (pure Ruby solution)
+      org_files = File.expand_path(File.join(code_syntax_examples_directory, "*-coderay.org"))
+    elsif defined? Pygments
+      # Use pygments (so that it works with Jekyll, Gollum and possibly Github)
+      org_files = File.expand_path(File.join(code_syntax_examples_directory, "*-pygments.org"))
+    else
+      # Do not use syntax coloring for source code blocks
+      org_files = File.expand_path(File.join(code_syntax_examples_directory, "*-no-color.org"))
+    end
+    files = Dir.glob(org_files)
+
+    files.each do |file|
+      basename = File.basename(file, ".org")
+      textile_name = File.join(code_syntax_examples_directory, basename + ".html")
+      textile_name = File.expand_path(textile_name)
+
+      it "should convert #{basename}.org to HTML" do
+        expected = IO.read(textile_name)
+        expected.should be_kind_of(String)
+        parser = Orgmode::Parser.new(IO.read(file))
+        actual = parser.to_html
+        actual.should be_kind_of(String)
+        actual.should == expected
+      end
+
+      it "should render #{basename}.org to HTML using Tilt templates" do
+        expected = IO.read(textile_name)
+        template = Tilt.new(file).render
+        template.should == expected
+      end
+    end
+  end
 end
 

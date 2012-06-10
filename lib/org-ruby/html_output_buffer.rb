@@ -1,6 +1,17 @@
 require OrgRuby.libpath(*%w[org-ruby html_symbol_replace])
 require OrgRuby.libpath(*%w[org-ruby output_buffer])
 
+begin
+  require 'pygments'
+rescue LoadError
+  # Pygments is not supported so we try instead with CodeRay
+  begin
+    require 'coderay'
+  rescue LoadError
+    # No code syntax highlighting
+  end
+end
+
 module Orgmode
 
   class HtmlOutputBuffer < OutputBuffer
@@ -86,13 +97,39 @@ module Orgmode
     end
 
     def flush!
-      escape_buffer!
-      if mode_is_code(@buffer_mode) then
+      if buffer_mode_is_src_block?
+
+        # Only try to colorize #+BEGIN_SRC blocks with a specified language,
+        # but we still have to catch the cases when a lexer for the language was not available
+        if not @block_lang.empty? and (defined? CodeRay or defined? Pygments)
+          # NOTE: CodeRay and Pygments already escape the html once, so no need to escape_buffer!
+          if defined? CodeRay
+            # CodeRay might throw a warning when unsupported lang is set
+            silence_warnings do
+              @buffer = CodeRay.scan(@buffer, @block_lang.to_s).html(:wrap => nil, :css => :style)
+            end
+          elsif defined? Pygments
+            begin
+              @buffer = Pygments.highlight(@buffer, :lexer => @block_lang)
+            rescue ::RubyPython::PythonError
+              # Not supported lexer from Pygments
+            end
+          end
+        else
+          escape_buffer!
+        end
+
+        @logger.debug "FLUSH SRC CODE ==========> #{@buffer.inspect}"
+        @output << @buffer
+      elsif mode_is_code(@buffer_mode) then
+        escape_buffer!
+
         # Whitespace is significant in :code mode. Always output the buffer
         # and do not do any additional translation.
         @logger.debug "FLUSH CODE ==========> #{@buffer.inspect}"
         @output << @buffer << "\n"
       else
+        escape_buffer!
         if @buffer.length > 0 and @output_type == :horizontal_rule then
           @output << "<hr />\n"
         elsif @buffer.length > 0 and @output_type == :definition_list then
@@ -164,6 +201,10 @@ module Orgmode
 
     def buffer_mode_is_table?
       @buffer_mode == :table
+    end
+
+    def buffer_mode_is_src_block?
+      @buffer_mode == :src
     end
 
     # Escapes any HTML content in the output accumulation buffer @buffer.
@@ -244,6 +285,16 @@ module Orgmode
       end
       Orgmode.special_symbols_to_html(str)
       str
+    end
+
+    # Helper method taken from Rails
+    # https://github.com/rails/rails/blob/c2c8ef57d6f00d1c22743dc43746f95704d67a95/activesupport/lib/active_support/core_ext/kernel/reporting.rb#L10
+    def silence_warnings
+      warn_level = $VERBOSE
+      $VERBOSE = nil
+      yield
+    ensure
+      $VERBOSE = warn_level
     end
   end                           # class HtmlOutputBuffer
 end                             # module Orgmode

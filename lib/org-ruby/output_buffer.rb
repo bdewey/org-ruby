@@ -78,9 +78,16 @@ module Orgmode
     # Prepares the output buffer to receive content from a line.
     # As a side effect, this may flush the current accumulated text.
     def prepare(line)
-      @logger.debug "Looking at #{line.paragraph_type}: #{line.to_s}"
-      if not should_accumulate_output?(line) then
-        @block_lang = line.block_lang if line.begin_block? and line.code_block_type?
+      @logger.debug "Looking at #{line.paragraph_type}(#{current_mode}) : #{line.to_s}"
+      if line.begin_block? and line.code_block?
+        flush!
+        # We try to get the lang from #+BEGIN_SRC blocks
+        @block_lang = line.block_lang
+        @output_type = line.paragraph_type
+      elsif current_mode == :example and line.end_block?
+        flush!
+        @output_type = line.paragraph_type
+      elsif not should_accumulate_output?(line)
         flush!
         maintain_list_indent_stack(line)
         @output_type = line.paragraph_type 
@@ -206,6 +213,9 @@ module Orgmode
     # are removed by accumulating lines in the output buffer without
     # line breaks.)
     def should_accumulate_output?(line)
+
+      # Special case: We are accumulating source code block content for colorizing
+      return true if line.paragraph_type == :src and @output_type == :src
 
       # Special case: Preserve line breaks in block code mode.
       return false if preserve_whitespace?
