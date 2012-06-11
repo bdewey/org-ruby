@@ -1,5 +1,3 @@
-require OrgRuby.libpath(*%w[org-ruby line])
-
 module Orgmode
 
   # Represents a headline in an orgmode file.
