@@ -1,6 +1,3 @@
-require OrgRuby.libpath(*%w[org-ruby html_symbol_replace])
-require OrgRuby.libpath(*%w[org-ruby output_buffer])
-
 module Orgmode
 
   class HtmlOutputBuffer < OutputBuffer
