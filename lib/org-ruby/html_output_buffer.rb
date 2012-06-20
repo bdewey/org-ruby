@@ -65,15 +65,14 @@ module Orgmode
       if ModeTag[mode] then
         output_indentation
         css_class = ""
-        css_class = " class=\"src\"" if mode == :src
+        css_class = " class=\"src\"" if mode == :src and @block_lang.empty?
+        css_class = " class=\"src src-#{@block_lang}\"" if mode == :src and not @block_lang.empty?
         css_class = " class=\"example\"" if (mode == :example || mode == :inline_example)
         css_class = " style=\"text-align: center\"" if mode == :center
-        @logger.debug "#{mode}: <#{ModeTag[mode]}#{css_class}>\n" 
-        @output << "<#{ModeTag[mode]}#{css_class}>\n" unless mode == :table and skip_tables?
-        # Special case to add code tags to src blogs and specify language
-        if mode == :src
-          @logger.debug "<code class=\"#{@block_lang}\">\n"
-          @output << "<code class=\"#{@block_lang}\">\n"
+        unless ((mode == :table and skip_tables?) or
+                (mode == :src and defined? Pygments))
+          @logger.debug "#{mode}: <#{ModeTag[mode]}#{css_class}>\n"
+          @output << "<#{ModeTag[mode]}#{css_class}>\n"
         end
         # Entering a new mode obliterates the title decoration
         @title_decoration = ""
@@ -87,12 +86,11 @@ module Orgmode
       m = super(mode)
       if ModeTag[m] then
         output_indentation
-        if mode == :src
-          @logger.debug "</code>\n"
-          @output << "</code>\n"
+        unless ((mode == :table and skip_tables?) or
+                (mode == :src and defined? Pygments))
+          @logger.debug "</#{ModeTag[m]}>\n"
+          @output << "</#{ModeTag[m]}>\n"
         end
-        @logger.debug "</#{ModeTag[m]}>\n"
-        @output << "</#{ModeTag[m]}>\n" unless mode == :table and skip_tables?
       end
     end
 
@@ -103,16 +101,17 @@ module Orgmode
         # but we still have to catch the cases when a lexer for the language was not available
         if not @block_lang.empty? and (defined? CodeRay or defined? Pygments)
           # NOTE: CodeRay and Pygments already escape the html once, so no need to escape_buffer!
-          if defined? CodeRay
-            # CodeRay might throw a warning when unsupported lang is set
-            silence_warnings do
-              @buffer = CodeRay.scan(@buffer, @block_lang.to_s).html(:wrap => nil, :css => :style)
-            end
-          elsif defined? Pygments
+          if defined? Pygments
             begin
               @buffer = Pygments.highlight(@buffer, :lexer => @block_lang)
             rescue ::RubyPython::PythonError
-              # Not supported lexer from Pygments
+              # Not supported lexer from Pygments, we fallback on using the text lexer
+              @buffer = Pygments.highlight(@buffer, :lexer => 'text')
+            end
+          elsif defined? CodeRay
+            # CodeRay might throw a warning when unsupported lang is set
+            silence_warnings do
+              @buffer = CodeRay.scan(@buffer, @block_lang).html(:wrap => nil, :css => :style)
             end
           end
         else
