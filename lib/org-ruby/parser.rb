@@ -269,6 +269,10 @@ module Orgmode
 
           output_buffer << line.output_text
 
+        when :src
+
+          output_buffer << line.output_text << "\n"
+
         else
 
           if output_buffer.preserve_whitespace? then

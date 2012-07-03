@@ -94,12 +94,6 @@ module Orgmode
       check_assignment_or_regexp(:definition_list, DefinitionListRegexp)
     end
 
-    HorizontalRuleRegexp = /^\s*-{5,}\s*$/
-
-    def horizontal_rule?
-      check_assignment_or_regexp(:horizontal_rule, HorizontalRuleRegexp)
-    end
-
     OrderedListRegexp = /^\s*\d+(\.|\))\s+/
 
     def ordered_list?
@@ -108,6 +102,12 @@ module Orgmode
 
     def strip_ordered_list_tag
       @line.sub(OrderedListRegexp, "")
+    end
+
+    HorizontalRuleRegexp = /^\s*-{5,}\s*$/
+
+    def horizontal_rule?
+      check_assignment_or_regexp(:horizontal_rule, HorizontalRuleRegexp)
     end
 
     # Extracts meaningful text and excludes org-mode markup,
