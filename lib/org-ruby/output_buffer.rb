@@ -180,9 +180,9 @@ module Orgmode
 
         # Nothing
 
-      elsif ((line.paragraph_type == :paragraph) and
-             (not @list_indent_stack.empty? and
-              line.indent > @list_indent_stack.last))
+      elsif ((not line.plain_list?) and
+             (not @list_indent_stack.empty?) and
+             (line.indent > @list_indent_stack.last))
 
         # Nothing -- output this paragraph inside
         # the list block (ul/ol)

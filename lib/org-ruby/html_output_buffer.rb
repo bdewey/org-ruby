@@ -41,6 +41,7 @@ module Orgmode
       end
       @options = opts
       @footnotes = {}
+      @unclosed_tags = []
       @logger.debug "HTML export options: #{@options.inspect}"
     end
 
@@ -77,8 +78,20 @@ module Orgmode
           @logger.debug "</code>\n"
           @output << "</code>\n"
         end
+
+        # Need to close the floating li elements before closing the list
+        if (m == :unordered_list or
+            m == :ordered_list or
+            m == :definition_list) and 
+            (not @unclosed_tags.empty?)
+          close_floating_li_tags
+        end
+
         @logger.debug "</#{ModeTag[m]}>\n"
         @output << "</#{ModeTag[m]}>\n" unless mode == :table and skip_tables?
+
+        # In case it was a sublist, close it here
+        close_last_li_tag_maybe
       end
     end
 
@@ -110,6 +123,11 @@ module Orgmode
           unless buffer_mode_is_table? and skip_tables?
             @logger.debug "FLUSH      ==========> #{@buffer_mode}"
             output_indentation
+            if ((@buffered_lines[0].plain_list?) and 
+                (@unclosed_tags.count == @list_indent_stack.count))
+              @output << @unclosed_tags.pop
+              output_indentation
+            end
             @output << "<#{HtmlBlockTag[@output_type]}#{@title_decoration}>"
             if (@buffered_lines[0].kind_of?(Headline)) then
               headline = @buffered_lines[0]
@@ -125,7 +143,18 @@ module Orgmode
               end
             end
             @output << inline_formatting(@buffer)
-            @output << "</#{HtmlBlockTag[@output_type]}>\n"
+
+            # Only close the list when it is the last element from that list,
+            # or when starting another list
+            if (@output_type == :unordered_list or 
+                @output_type == :ordered_list   or
+                @output_type == :definition_list) and 
+                (not @list_indent_stack.empty?)
+              @unclosed_tags.push("</#{HtmlBlockTag[@output_type]}>\n")
+              @output << "\n"
+            else
+              @output << "</#{HtmlBlockTag[@output_type]}>\n"
+            end
             @title_decoration = ""
           else
             @logger.debug "SKIP       ==========> #{@buffer_mode}"
@@ -241,6 +270,30 @@ module Orgmode
       end
       Orgmode.special_symbols_to_html(str)
       str
+    end
+
+    def close_floating_li_tags
+      unless @final_list_node
+        unless @unclosed_tags.empty?
+          @output << "  " << @unclosed_tags.pop
+          output_indentation
+        end
+      end
+
+      @final_list_node = false
+    end
+
+    def close_last_li_tag_maybe
+      if (@list_indent_stack.count < @unclosed_tags.count) and not
+          (@list_indent_stack.empty? and @unclosed_tags.empty?)
+        output_indentation
+        @output << @unclosed_tags.pop
+        if (@list_indent_stack.count == @unclosed_tags.count) and not
+            (@list_indent_stack.empty? and @unclosed_tags.empty?)
+          @final_list_node = true
+          pop_mode
+        end
+      end
     end
   end                           # class HtmlOutputBuffer
 end                             # module Orgmode
