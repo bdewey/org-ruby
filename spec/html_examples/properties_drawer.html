@@ -1,33 +1,25 @@
 <h1 class="title">The mount point of the fullest disk</h1>
 <h2>query all mounted disks</h2>
-<pre class="src">
-<code class="sh">
+<pre class="src src-sh">
   df \
-</code>
 </pre>
 <h2>strip the header row</h2>
-<pre class="src">
-<code class="sh">
+<pre class="src src-sh">
   <table>
     <tr><td>sed '1d' \</tr>
   </table>
-</code>
 </pre>
 <h2>sort by the percent full</h2>
-<pre class="src">
-<code class="sh">
+<pre class="src src-sh">
   <table>
     <tr><td>awk '{print $5 " " $6}'</td><td>sort -n</td><td>tail -1 \</tr>
   </table>
-</code>
 </pre>
 <h2>extract the mount point</h2>
-<pre class="src">
-<code class="sh">
+<pre class="src src-sh">
   <table>
     <tr><td>awk '{print $2}'</tr>
   </table>
-</code>
 </pre>
 <h1>Properties drawer example</h1>
 <p>These properties are metadata so they should not be visible.</p>

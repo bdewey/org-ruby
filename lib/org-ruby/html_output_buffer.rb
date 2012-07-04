@@ -52,16 +52,12 @@ module Orgmode
       if ModeTag[mode] then
         output_indentation
         css_class = ""
-        css_class = " class=\"src\"" if mode == :src
+        css_class = " class=\"src\"" if mode == :src and @block_lang.empty?
+        css_class = " class=\"src src-#{@block_lang}\"" if mode == :src and not @block_lang.empty?
         css_class = " class=\"example\"" if (mode == :example || mode == :inline_example)
         css_class = " style=\"text-align: center\"" if mode == :center
         @logger.debug "#{mode}: <#{ModeTag[mode]}#{css_class}>\n"
         @output << "<#{ModeTag[mode]}#{css_class}>\n" unless mode == :table and skip_tables?
-        # Special case to add code tags to src blogs and specify language
-        if mode == :src
-          @logger.debug "<code class=\"#{@block_lang}\">\n"
-          @output << "<code class=\"#{@block_lang}\">\n"
-        end
         # Entering a new mode obliterates the title decoration
         @title_decoration = ""
       end
@@ -74,11 +70,6 @@ module Orgmode
       m = super(mode)
       if ModeTag[m] then
         output_indentation
-        if mode == :src
-          @logger.debug "</code>\n"
-          @output << "</code>\n"
-        end
-
         # Need to close the floating li elements before closing the list
         if (m == :unordered_list or
             m == :ordered_list or
