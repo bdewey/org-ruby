@@ -21,10 +21,20 @@ options_parser = OptionParser.new do |opts|
           "Translate the ORG file to the specified format.") do |v|
     options[:format] = v
   end
+
+  opts.on("-v", "--version", "Print version") do |v|
+    options[:version] = true
+  end
 end
 
 begin
   options_parser.parse!
+
+  if options[:version]
+    puts OrgRuby::VERSION
+    exit
+  end
+
   if (ARGV.length == 0) then
     puts options_parser
   else
