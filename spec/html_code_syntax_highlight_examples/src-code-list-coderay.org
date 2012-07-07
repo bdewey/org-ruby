@@ -1,0 +1,26 @@
+* begin src in lists should work
+
+  - Foo
+    #+begin_src ruby
+    class Hello
+      def say
+        puts 'cheers'
+      end
+    end
+    #+end_src
+
+  - Bar
+
+    #+begin_src ruby
+    puts "This should not get lumped into the above line Example"
+    #+end_src
+    
+    A paragraph should go here.
+
+    + A sublist goes here with another example
+      #+begin_src sh
+      echo "Hello"
+      #+end_src
+      
+      And this is a paragraph
+  - Hello
