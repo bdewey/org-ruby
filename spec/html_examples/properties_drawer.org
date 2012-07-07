@@ -6,24 +6,24 @@
   :END:
 
 ** query all mounted disks
-#+BEGIN_SRC sh
+#+BEGIN_EXAMPLE
   df \
-#+END_SRC
+#+END_EXAMPLE
 
 ** strip the header row
-#+BEGIN_SRC sh
+#+BEGIN_EXAMPLE
   |sed '1d' \
-#+END_SRC
+#+END_EXAMPLE
 
 ** sort by the percent full
-#+BEGIN_SRC sh
+#+BEGIN_EXAMPLE
   |awk '{print $5 " " $6}'|sort -n |tail -1 \
-#+END_SRC
+#+END_EXAMPLE
 
 ** extract the mount point
-#+BEGIN_SRC sh
+#+BEGIN_EXAMPLE
   |awk '{print $2}'
-#+END_SRC
+#+END_EXAMPLE
 
 * Properties drawer example
    :PROPERTIES:
