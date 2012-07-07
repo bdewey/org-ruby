@@ -1,0 +1,37 @@
+# Example taken from the wiki
+# http://orgmode.org/manual/noweb_002dref.html#noweb_002dref
+* The mount point of the fullest disk
+  :PROPERTIES:
+  :noweb-ref: fullest-disk
+  :END:
+
+** query all mounted disks
+#+BEGIN_EXAMPLE
+  df \
+#+END_EXAMPLE
+
+** strip the header row
+#+BEGIN_EXAMPLE
+  |sed '1d' \
+#+END_EXAMPLE
+
+** sort by the percent full
+#+BEGIN_EXAMPLE
+  |awk '{print $5 " " $6}'|sort -n |tail -1 \
+#+END_EXAMPLE
+
+** extract the mount point
+#+BEGIN_EXAMPLE
+  |awk '{print $2}'
+#+END_EXAMPLE
+
+* Properties drawer example
+   :PROPERTIES:
+   :ARCHIVE_TIME: 2009-12-26 Sat 22:16
+   :ARCHIVE_FILE: ~/brians-brain/content/projects/orgmode_parser.org
+   :ARCHIVE_OLPATH: &lt;%= @page.title %&gt;/Future Development
+   :ARCHIVE_CATEGORY: orgmode_parser
+   :ARCHIVE_TODO: DONE
+   :END:
+
+These properties are metadata so they should not be visible.

@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), %w[spec_helper])
+require 'spec_helper'
 
 describe Orgmode::Line do
 
@@ -42,7 +42,7 @@ describe Orgmode::Line do
       line.plain_list?.should be_true
     end
   end
-  
+
   ["-foo", "+foo", "1.foo", "2.foo"].each do |invalid_list|
     it "should not recognize this invalid list: '#{invalid_list}'" do
       line = Orgmode::Line.new invalid_list
@@ -119,7 +119,7 @@ describe Orgmode::Line do
       l = Orgmode::Line.new key
       l.paragraph_type.should eql(value)
       l.assigned_paragraph_type = :paragraph
-      l.paragraph_type.should eql(:paragraph) 
+      l.paragraph_type.should eql(:paragraph)
       l.assigned_paragraph_type = nil
       l.paragraph_type.should eql(value)
     end

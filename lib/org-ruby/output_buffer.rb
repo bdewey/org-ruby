@@ -23,7 +23,7 @@ module Orgmode
     # This is the overall output buffer
     attr_reader :output
 
-    # This is the current type of output being accumulated. 
+    # This is the current type of output being accumulated.
     attr_accessor :output_type
 
     # This stack is used to do proper outline numbering of headlines.
@@ -90,7 +90,7 @@ module Orgmode
       elsif not should_accumulate_output?(line)
         flush!
         maintain_list_indent_stack(line)
-        @output_type = line.paragraph_type 
+        @output_type = line.paragraph_type
       end
       push_mode(:inline_example) if line.inline_example? and current_mode != :inline_example and not line.property_drawer?
       pop_mode(:inline_example) if current_mode == :inline_example and !line.inline_example?
@@ -101,7 +101,7 @@ module Orgmode
       @buffered_lines.push(line)
     end
 
-    # Flushes everything currently in the accumulation buffer into the 
+    # Flushes everything currently in the accumulation buffer into the
     # output buffer. Derived classes must override this to actually move
     # content into the output buffer with the appropriate markup. This
     # method just does common bookkeeping cleanup.
@@ -149,7 +149,7 @@ module Orgmode
       @buffer << str
     end
 
-    # Gets the current list indent level. 
+    # Gets the current list indent level.
     def list_indent_level
       @list_indent_stack.length
     end
@@ -174,7 +174,7 @@ module Orgmode
     def maintain_list_indent_stack(line)
       if (line.plain_list?) then
         while (not @list_indent_stack.empty? \
-               and (@list_indent_stack.last > line.indent)) 
+               and (@list_indent_stack.last > line.indent))
           @list_indent_stack.pop
           pop_mode
         end
@@ -187,9 +187,9 @@ module Orgmode
 
         # Nothing
 
-      elsif ((line.paragraph_type == :paragraph) and
-             (not @list_indent_stack.empty? and
-              line.indent > @list_indent_stack.last))
+      elsif ((not line.plain_list?) and
+             (not @list_indent_stack.empty?) and
+             (line.indent > @list_indent_stack.last))
 
         # Nothing -- output this paragraph inside
         # the list block (ul/ol)
@@ -222,7 +222,7 @@ module Orgmode
 
       # Special case: Multiple blank lines get accumulated.
       return true if line.paragraph_type == :blank and @output_type == :blank
-      
+
       # Currently only "paragraphs" get accumulated with previous output.
       return false unless line.paragraph_type == :paragraph
       if ((@output_type == :ordered_list) or

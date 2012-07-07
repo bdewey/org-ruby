@@ -1,7 +1,4 @@
-
-require File.expand_path(
-    File.join(File.dirname(__FILE__), %w[.. lib org-ruby]))
-
+require 'org-ruby'
 
 RememberFile = File.join(File.dirname(__FILE__), %w[data remember.org])
 FreeformFile = File.join(File.dirname(__FILE__), %w[data freeform.org])
@@ -17,4 +14,3 @@ RSpec.configure do |config|
   # config.mock_with :flexmock
   # config.mock_with :rr
 end
-

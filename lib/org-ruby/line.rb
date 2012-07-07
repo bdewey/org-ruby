@@ -55,7 +55,7 @@ module Orgmode
       check_assignment_or_regexp(:property_drawer, PropertyDrawerRegexp)
     end
 
-    PropertyDrawerItemRegexp = /^\s*:(\w+):\s*(.*)$/i
+    PropertyDrawerItemRegexp = /^\s*:([0-9A-Za-z_\-]+):\s*(.*)$/i
 
     def property_drawer_item?
       @line =~ PropertyDrawerItemRegexp
@@ -94,12 +94,6 @@ module Orgmode
       check_assignment_or_regexp(:definition_list, DefinitionListRegexp)
     end
 
-    HorizontalRuleRegexp = /^\s*-{5,}\s*$/
-
-    def horizontal_rule?
-      check_assignment_or_regexp(:horizontal_rule, HorizontalRuleRegexp)
-    end
-
     OrderedListRegexp = /^\s*\d+(\.|\))\s+/
 
     def ordered_list?
@@ -108,6 +102,12 @@ module Orgmode
 
     def strip_ordered_list_tag
       @line.sub(OrderedListRegexp, "")
+    end
+
+    HorizontalRuleRegexp = /^\s*-{5,}\s*$/
+
+    def horizontal_rule?
+      check_assignment_or_regexp(:horizontal_rule, HorizontalRuleRegexp)
     end
 
     # Extracts meaningful text and excludes org-mode markup,
@@ -137,7 +137,7 @@ module Orgmode
       check_assignment_or_regexp(:table_separator, /^\s*\|[-\|\+]*\s*$/)
     end
 
-    # Checks if this line is a table header. 
+    # Checks if this line is a table header.
     def table_header?
       @assigned_paragraph_type == :table_header
     end
@@ -239,7 +239,7 @@ module Orgmode
     # What's tricky is lines can have assigned types, so you need to check
     # the assigned type, if present, or see if the characteristic regexp
     # for the paragraph type matches if not present.
-    # 
+    #
     # call-seq:
     #     check_assignment_or_regexp(assignment, regexp) => boolean
     #

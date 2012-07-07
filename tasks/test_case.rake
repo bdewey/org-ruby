@@ -1,6 +1,3 @@
-require File.expand_path(
-    File.join(File.dirname(__FILE__), %w[.. lib org-ruby]))
-
 namespace :testcase do
   @data_directory = File.join(File.dirname(__FILE__), "../spec/html_examples")
   

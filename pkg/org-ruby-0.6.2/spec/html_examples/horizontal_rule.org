@@ -1,5 +1,0 @@
-Useful contribution by [[http://www.neilsmithline.com][Neil-Smithline]]
-
-5 hyphens or more,
------
-will produce a horizontal rule.

@@ -1,10 +1,6 @@
 #!/usr/bin/env ruby
-
-require File.expand_path(
-    File.join(File.dirname(__FILE__), %w[.. lib org-ruby]))
+require 'org-ruby'
 require 'optparse'
-
-# Put your code here
 
 options = {}
 options_parser = OptionParser.new do |opts|

@@ -3,7 +3,7 @@ require 'logger'
 module Orgmode
 
   # = Summary
-  # 
+  #
   # This class contains helper routines to deal with the Regexp "black
   # magic" you need to properly parse org-mode files.
   #
@@ -121,7 +121,7 @@ module Orgmode
     # output format.
     #
     # = Usage
-    # 
+    #
     # Give this a block that expect the link and optional friendly
     # text. Return how that link should get formatted.
     #
@@ -161,7 +161,7 @@ module Orgmode
 
     def build_org_emphasis_regexp
       @org_emphasis_regexp = Regexp.new("([#{@pre_emphasis}]|^)\n" +
-                                        "(  [#{@markers}]  )\n" + 
+                                        "(  [#{@markers}]  )\n" +
                                         "(  [^#{@border_forbidden}]  | " +
                                         "  [^#{@border_forbidden}]#{@body_regexp}[^#{@border_forbidden}]  )\n" +
                                         "\\2\n" +

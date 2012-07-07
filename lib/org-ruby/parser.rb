@@ -1,4 +1,3 @@
-require 'rubygems'
 require 'rubypants'
 
 module Orgmode
@@ -285,9 +284,9 @@ module Orgmode
 
           output_buffer << line.output_text
 
-       when :src
+        when :src
 
-         output_buffer << line.output_text << "\n"
+          output_buffer << line.output_text << "\n"
 
         else
           if output_buffer.preserve_whitespace? then
