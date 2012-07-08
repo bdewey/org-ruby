@@ -1,3 +1,7 @@
+== 0.7.0 / 2012-07-08
+
+* Highlight source code blocks using Pygments or CodeRay when available
+
 == 0.6.4 / 2012-07-08
 
 * Fixed lists behavior when code fragments, tables and examples were present

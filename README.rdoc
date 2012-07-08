@@ -17,6 +17,7 @@ extracting "content" from the orgfile as opposed to "metadata."
 * Supports bold, italic, underline, strikethrough, and code inline formatting.
 * Supports hyperlinks that are in double-brackets
 * Supports +.org+ views in Rails through Tilt.
+* Code syntax highlight of code blocks using Pygments.rb or Coderay when available
 * Upcoming: Handle export options specified in the org buffer.
 
 == SYNOPSIS:

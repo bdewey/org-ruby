@@ -1,4 +1,4 @@
-org-ruby version 0.6.4
+org-ruby version 0.7.0
     by Brian Dewey
     http://github.com/bdewey/org-ruby
 
@@ -9,6 +9,7 @@ significant thing this library does today is convert org-mode files to
 HTML or textile. 
 
 == CHANGES
+* Highlight source code blocks using Pygments or CodeRay when available
 * Fixed lists behavior when code fragments, tables and examples were present
 * Remove code tags with lang class and use instead src-:lang like org-exporter
 * Fixed property drawers to consider properties with hyphens like :noweb-ref:
