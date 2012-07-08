@@ -24,11 +24,11 @@ sections within documents, etc.
 
 - [[http://foo.org][foo.org website]]
 
-* In these links, .org is converted to .html
-
 - [[http://foo.org/foo.org][foo.org/foo.org]]
 
 - [[http://localhost:4567/foo.org][localhost:4567/foo.org]]
+
+* In these links, .org is converted to .html
 
 - [[file:path.org][file:path.org label]]
 
