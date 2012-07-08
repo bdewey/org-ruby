@@ -1,3 +1,9 @@
+== 0.6.4 / 2012-07-08
+
+* Fixed lists behavior when code fragments, tables and examples were present
+* Remove code tags with lang class and use instead src-:lang like org-exporter
+* Fixed property drawers to consider properties with hyphens like :noweb-ref:
+
 == 0.6.3 / 2012-05-22
 
 * Minor enhancement: Correct handling of .org URIs in HTML markup routine (thanks, rayl)
