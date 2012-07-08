@@ -109,7 +109,7 @@ module Orgmode
 
         # Only try to colorize #+BEGIN_SRC blocks with a specified language,
         # but we still have to catch the cases when a lexer for the language was not available
-        if not @block_lang.empty? and (defined? CodeRay or defined? Pygments)
+        if not @block_lang.empty? and (defined? Pygments or defined? CodeRay)
           # NOTE: CodeRay and Pygments already escape the html once, so no need to escape_buffer!
           if defined? Pygments
             begin
