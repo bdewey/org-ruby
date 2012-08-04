@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name = "org-ruby"
-  s.version = "0.7.0"
+  s.version = "0.7.1"
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Brian Dewey"]
   s.date = "2012-07-08"
@@ -17,7 +17,6 @@ Gem::Specification.new do |s|
   s.rubyforge_project = "org-ruby"
   s.rubygems_version = "1.8.10"
   s.summary = "This gem contains Ruby routines for parsing org-mode files."
-  s.test_files = ["test/test_orgmode_parser.rb"]
 
   if s.respond_to? :specification_version then
     s.specification_version = 3

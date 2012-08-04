@@ -1,3 +1,8 @@
+== 0.7.1 / 2012-08-04
+
+* Make source code blocks from lisp dialects use Pygments scheme lexer
+* Bugfix: Make Coderay fallback to text lexer when unsupported lang is set
+
 == 0.7.0 / 2012-07-08
 
 * Highlight source code blocks using Pygments or CodeRay when available
