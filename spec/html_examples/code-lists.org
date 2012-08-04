@@ -74,7 +74,7 @@
   + Hello :: Hola
 	     Paragrap continues here
 	     #+begin_quote
-	     Cuando me desperté, el dinosaurio estaba allí.
+	     Cuando me desperte, el dinosaurio estaba alli.
 	     #+end_quote
   + Dog :: Perro
 	   Paragraph
