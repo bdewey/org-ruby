@@ -146,7 +146,7 @@ module Orgmode
       table_row? or table_separator? or table_header?
     end
 
-    BlockRegexp = /^\s*#\+(BEGIN|END)_(\w*)\s*(\w*)?/i
+    BlockRegexp = /^\s*#\+(BEGIN|END)_(\w*)\s*([0-9A-Za-z_\-]*)?/i
 
     def begin_block?
       @line =~ BlockRegexp && $1 =~ /BEGIN/i

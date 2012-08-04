@@ -110,18 +110,25 @@ module Orgmode
         # Only try to colorize #+BEGIN_SRC blocks with a specified language,
         # but we still have to catch the cases when a lexer for the language was not available
         if not @block_lang.empty? and (defined? Pygments or defined? CodeRay)
+          lang = normalize_lang(@block_lang)
+
           # NOTE: CodeRay and Pygments already escape the html once, so no need to escape_buffer!
           if defined? Pygments
             begin
-              @buffer = Pygments.highlight(@buffer, :lexer => @block_lang)
+              @buffer = Pygments.highlight(@buffer, :lexer => lang)
             rescue ::RubyPython::PythonError
               # Not supported lexer from Pygments, we fallback on using the text lexer
               @buffer = Pygments.highlight(@buffer, :lexer => 'text')
             end
           elsif defined? CodeRay
-            # CodeRay might throw a warning when unsupported lang is set
+            # CodeRay might throw a warning when unsupported lang is set,
+            # then fallback to using the text lexer
             silence_warnings do
-              @buffer = CodeRay.scan(@buffer, @block_lang).html(:wrap => nil, :css => :style)
+              begin
+                @buffer = CodeRay.scan(@buffer, lang).html(:wrap => nil, :css => :style)
+              rescue ArgumentError
+                @buffer = CodeRay.scan(@buffer, 'text').html(:wrap => nil, :css => :style)
+              end
             end
           end
         else
@@ -333,6 +340,15 @@ module Orgmode
           @final_list_node = true
           pop_mode
         end
+      end
+    end
+
+    def normalize_lang(lang)
+      case lang
+      when 'emacs-lisp', 'common-lisp', 'lisp'
+        'scheme'
+      else
+        lang
       end
     end
 

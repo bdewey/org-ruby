@@ -189,7 +189,7 @@ var_dump(some_var);
 
 ** Elisp example
 
-#+BEGIN_SRC scheme
+#+BEGIN_SRC emacs-lisp
 (defun hello()
   (interactive)
   (message "hello"))
