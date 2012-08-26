@@ -4,3 +4,9 @@
 - b :: world
 
 Text
+
+* Asterisk can be used for lists
+
+ * One :: The first number.
+ * Two :: The second number.
+ * Three :: The second number.

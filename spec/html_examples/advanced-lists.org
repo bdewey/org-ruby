@@ -29,3 +29,18 @@ Advanced Lists
   - Back to a list item.
     - Nested, just for grins!
     - woo hoo!
+
+* Hyphen, Plus and Asterisk can be used to create lists
+
+- One
+ * uno
+  + ichi
+ * uno
+- Two
+ + dos
+  * ni
+  * ni
+- Three
+- Four
+
+  
