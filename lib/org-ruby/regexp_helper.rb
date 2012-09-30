@@ -52,11 +52,11 @@ module Orgmode
 
     def initialize
       # Set up the emphasis regular expression.
-      @pre_emphasis = " \t\\('\""
-      @post_emphasis = "- \t.,:!?;'\"\\)"
+      @pre_emphasis = " \t\\('\"\\{"
+      @post_emphasis = "- \t\\.,:!\\?;'\"\\)\\}\\\\"
       @border_forbidden = " \t\r\n,\"'"
       @body_regexp = ".*?"
-      @markers = "*/_=~+"
+      @markers = "\\*\\/_=~\\+"
       @logger = Logger.new(STDERR)
       @logger.level = Logger::WARN
       build_org_emphasis_regexp
@@ -97,7 +97,7 @@ module Orgmode
     def rewrite_emphasis(str)
       str.gsub(@org_emphasis_regexp) do |match|
         inner = yield $2, $3
-        "#{$1}#{inner}#{$4}"
+        "#{$1}#{inner}"
       end
     end
 
@@ -161,11 +161,11 @@ module Orgmode
 
     def build_org_emphasis_regexp
       @org_emphasis_regexp = Regexp.new("([#{@pre_emphasis}]|^)\n" +
-                                        "(  [#{@markers}]  )\n" +
-                                        "(  [^#{@border_forbidden}]  | " +
-                                        "  [^#{@border_forbidden}]#{@body_regexp}[^#{@border_forbidden}]  )\n" +
+                                        "( [#{@markers}] ) (?!\\2)\n" +
+                                        "( [^#{@border_forbidden}] | " +
+                                        "[^#{@border_forbidden}]#{@body_regexp}[^#{@border_forbidden}] )\n" +
                                         "\\2\n" +
-                                        "([#{@post_emphasis}]|$)\n", Regexp::EXTENDED)
+                                        "(?=[#{@post_emphasis}]|$)\n", Regexp::EXTENDED)
       @logger.debug "Just created regexp: #{@org_emphasis_regexp}"
     end
 
