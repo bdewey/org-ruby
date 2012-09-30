@@ -33,7 +33,7 @@ http://www.gmail.com
 
 ** Within code test
 
-#+begin_src ruby :results output
+#+begin_example
 emphasis_tests = [
 "*bold*",
 "/italic/",
@@ -56,11 +56,11 @@ all = emphasis_tests.map do |a|
 end
 
 all.each {|e| puts e}
-#+end_src
+#+end_example
 
 ** Mixed together test
 
-#+begin_src ruby :results output
+#+begin_example
 emphasis_tests = ["*","/","=","~","_","+"]
 
 all = emphasis_tests.map do |a|
@@ -71,7 +71,7 @@ all = emphasis_tests.map do |a|
 end
 
 all.each {|e| puts e}
-#+end_src
+#+end_example
 
 *Answer: *42* *
 
@@ -219,7 +219,7 @@ _Answer: +42+_
 
 ** Multiline support test :: one line
 
-#+begin_src ruby :results output
+#+begin_example
 emphasis_tests = ["*","/","=","~","_","+"]
 
 all = emphasis_tests.map do |a|
@@ -229,7 +229,7 @@ all = emphasis_tests.map do |a|
 end
 
 all.each {|e| puts e}
-#+end_src
+#+end_example
 
 *Starting the line here 
 *and continuing here to close**
@@ -341,7 +341,7 @@ _and continuing here to close_+
 
 ** Multiline support test :: two lines
 
-#+begin_src ruby :results output
+#+begin_example
 emphasis_tests = ["*","/","=","~","_","+"]
 
 all = emphasis_tests.map do |a|
@@ -351,7 +351,7 @@ all = emphasis_tests.map do |a|
 end
 
 all.each {|e| puts e}
-#+end_src
+#+end_example
 
 *Starting the line here 
 *and continuing here
