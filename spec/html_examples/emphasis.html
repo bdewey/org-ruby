@@ -16,43 +16,43 @@
 <h2>All together in one line</h2>
 <p><b>bold</b> /italic/ <code>code</code> ~verbatim~ <span style="text-decoration:underline;">underline</span>  <del>strikethrough</del> <a href="http://www.bing.com">http://www.bing.com</a> <a href="http://www.google.com">http://www.google.com</a> http://www.gmail.com <a href="http://www.xkcd.com">helpful text link</a> <a href="http://farm7.static.flickr.com/6078/6084185195_552aa270b2.jpg"><img src="http://farm7.static.flickr.com/6078/6084185195_552aa270b2.jpg" /></a> <a href="http://www.xkcd.com"><img src="http://imgs.xkcd.com/comics/t_cells.png" /></a> <a href="http://www.google.com">http://www.google.com</a></p>
 <h2>Within code test</h2>
-<div class="highlight"><pre><span class="n">emphasis_tests</span> <span class="o">=</span> <span class="o">[</span>
-<span class="s2">&quot;*bold*&quot;</span><span class="p">,</span>
-<span class="s2">&quot;/italic/&quot;</span><span class="p">,</span>
-<span class="s2">&quot;=code=&quot;</span><span class="p">,</span>
-<span class="s2">&quot;~verbatim~&quot;</span><span class="p">,</span>
-<span class="s2">&quot;_underline_ &quot;</span><span class="p">,</span>
-<span class="s2">&quot;+strikethrough+&quot;</span><span class="p">,</span>
-<span class="s2">&quot;[[http://www.bing.com]]&quot;</span><span class="p">,</span>
-<span class="s2">&quot;[[http://www.google.com]]&quot;</span><span class="p">,</span>
-<span class="s2">&quot;[[http://www.xkcd.com][helpful text link]]&quot;</span><span class="p">,</span>
-<span class="s2">&quot;[[http://farm7.static.flickr.com/6078/6084185195_552aa270b2.jpg]]&quot;</span><span class="p">,</span>
-<span class="s2">&quot;[[http://www.xkcd.com][http://imgs.xkcd.com/comics/t_cells.png]]&quot;</span><span class="p">,</span>
-<span class="s2">&quot;&lt;http://www.google.com&gt;&quot;</span><span class="p">,</span>
-<span class="o">]</span>
+<pre class="src src-ruby">
+emphasis_tests = [
+"*bold*",
+"/italic/",
+"=code=",
+"~verbatim~",
+"_underline_ ",
+"+strikethrough+",
+"[[http://www.bing.com]]",
+"[[http://www.google.com]]",
+"[[http://www.xkcd.com][helpful text link]]",
+"[[http://farm7.static.flickr.com/6078/6084185195_552aa270b2.jpg]]",
+"[[http://www.xkcd.com][http://imgs.xkcd.com/comics/t_cells.png]]",
+"&lt;http://www.google.com&gt;",
+]
 
-<span class="n">all</span> <span class="o">=</span> <span class="n">emphasis_tests</span><span class="o">.</span><span class="n">map</span> <span class="k">do</span> <span class="o">|</span><span class="n">a</span><span class="o">|</span>
-  <span class="n">emphasis_tests</span><span class="o">.</span><span class="n">map</span> <span class="k">do</span> <span class="o">|</span><span class="n">b</span><span class="o">|</span>
-    <span class="o">[</span><span class="n">b</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="o">].</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-  <span class="k">end</span>
-<span class="k">end</span>
+all = emphasis_tests.map do |a|
+  emphasis_tests.map do |b|
+    [b, ' ', a, ' ', b, "\n\n"].join('')
+  end
+end
 
-<span class="n">all</span><span class="o">.</span><span class="n">each</span> <span class="p">{</span><span class="o">|</span><span class="n">e</span><span class="o">|</span> <span class="nb">puts</span> <span class="n">e</span><span class="p">}</span>
+all.each {|e| puts e}
 </pre>
-</div>
 <h2>Mixed together test</h2>
-<div class="highlight"><pre><span class="n">emphasis_tests</span> <span class="o">=</span> <span class="o">[</span><span class="s2">&quot;*&quot;</span><span class="p">,</span><span class="s2">&quot;/&quot;</span><span class="p">,</span><span class="s2">&quot;=&quot;</span><span class="p">,</span><span class="s2">&quot;~&quot;</span><span class="p">,</span><span class="s2">&quot;_&quot;</span><span class="p">,</span><span class="s2">&quot;+&quot;</span><span class="o">]</span>
+<pre class="src src-ruby">
+emphasis_tests = ["*","/","=","~","_","+"]
 
-<span class="n">all</span> <span class="o">=</span> <span class="n">emphasis_tests</span><span class="o">.</span><span class="n">map</span> <span class="k">do</span> <span class="o">|</span><span class="n">a</span><span class="o">|</span>
-  <span class="n">emphasis_tests</span><span class="o">.</span><span class="n">map</span> <span class="k">do</span> <span class="o">|</span><span class="n">b</span><span class="o">|</span>
-    <span class="o">[[</span><span class="n">a</span><span class="p">,</span> <span class="s1">&#39;Answer: &#39;</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="s1">&#39;42&#39;</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">,</span><span class="n">a</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="o">].</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">),</span>
-     <span class="o">[</span><span class="n">a</span><span class="p">,</span> <span class="s1">&#39;Answer: &#39;</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="s1">&#39;42&#39;</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span><span class="n">a</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="o">].</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">].</span><span class="n">flatten</span>
-  <span class="k">end</span>
-<span class="k">end</span>
+all = emphasis_tests.map do |a|
+  emphasis_tests.map do |b|
+    [[a, 'Answer: ', b, '42', b, ' ',a, "\n\n"].join(''),
+     [a, 'Answer: ', b, '42', b, '',a, "\n\n"].join('')].flatten
+  end
+end
 
-<span class="n">all</span><span class="o">.</span><span class="n">each</span> <span class="p">{</span><span class="o">|</span><span class="n">e</span><span class="o">|</span> <span class="nb">puts</span> <span class="n">e</span><span class="p">}</span>
+all.each {|e| puts e}
 </pre>
-</div>
 <p><b>Answer: *42</b> *</p>
 <p><b>Answer: *42*</b></p>
 <p>*Answer: <i>42</i> *</p>
@@ -126,17 +126,17 @@
 <p><del>Answer: +42</del> +</p>
 <p><del>Answer: +42+</del></p>
 <h2>Multiline support test :: one line</h2>
-<div class="highlight"><pre><span class="n">emphasis_tests</span> <span class="o">=</span> <span class="o">[</span><span class="s2">&quot;*&quot;</span><span class="p">,</span><span class="s2">&quot;/&quot;</span><span class="p">,</span><span class="s2">&quot;=&quot;</span><span class="p">,</span><span class="s2">&quot;~&quot;</span><span class="p">,</span><span class="s2">&quot;_&quot;</span><span class="p">,</span><span class="s2">&quot;+&quot;</span><span class="o">]</span>
+<pre class="src src-ruby">
+emphasis_tests = ["*","/","=","~","_","+"]
 
-<span class="n">all</span> <span class="o">=</span> <span class="n">emphasis_tests</span><span class="o">.</span><span class="n">map</span> <span class="k">do</span> <span class="o">|</span><span class="n">a</span><span class="o">|</span>
-  <span class="n">emphasis_tests</span><span class="o">.</span><span class="n">map</span> <span class="k">do</span> <span class="o">|</span><span class="n">b</span><span class="o">|</span>
-    <span class="o">[</span><span class="n">a</span><span class="p">,</span> <span class="s1">&#39;Starting the line here &#39;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="s1">&#39;and continuing here to close&#39;</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="o">].</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-  <span class="k">end</span>
-<span class="k">end</span>
+all = emphasis_tests.map do |a|
+  emphasis_tests.map do |b|
+    [a, 'Starting the line here ', "\n", b, 'and continuing here to close', b, a, "\n\n"].join('')
+  end
+end
 
-<span class="n">all</span><span class="o">.</span><span class="n">each</span> <span class="p">{</span><span class="o">|</span><span class="n">e</span><span class="o">|</span> <span class="nb">puts</span> <span class="n">e</span><span class="p">}</span>
+all.each {|e| puts e}
 </pre>
-</div>
 <p><b>Starting the line here *and continuing here to close*</b></p>
 <p><b>Starting the line here /and continuing here to close/</b></p>
 <p><b>Starting the line here =and continuing here to close=</b></p>
@@ -174,17 +174,17 @@
 <p><del>Starting the line here _and continuing here to close_</del></p>
 <p><del>Starting the line here +and continuing here to close+</del></p>
 <h2>Multiline support test :: two lines</h2>
-<div class="highlight"><pre><span class="n">emphasis_tests</span> <span class="o">=</span> <span class="o">[</span><span class="s2">&quot;*&quot;</span><span class="p">,</span><span class="s2">&quot;/&quot;</span><span class="p">,</span><span class="s2">&quot;=&quot;</span><span class="p">,</span><span class="s2">&quot;~&quot;</span><span class="p">,</span><span class="s2">&quot;_&quot;</span><span class="p">,</span><span class="s2">&quot;+&quot;</span><span class="o">]</span>
+<pre class="src src-ruby">
+emphasis_tests = ["*","/","=","~","_","+"]
 
-<span class="n">all</span> <span class="o">=</span> <span class="n">emphasis_tests</span><span class="o">.</span><span class="n">map</span> <span class="k">do</span> <span class="o">|</span><span class="n">a</span><span class="o">|</span>
-  <span class="n">emphasis_tests</span><span class="o">.</span><span class="n">map</span> <span class="k">do</span> <span class="o">|</span><span class="n">b</span><span class="o">|</span>
-    <span class="o">[</span><span class="n">a</span><span class="p">,</span> <span class="s1">&#39;Starting the line here &#39;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="s1">&#39;and continuing here&#39;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s1">&#39;to close&#39;</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="o">].</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-  <span class="k">end</span>
-<span class="k">end</span>
+all = emphasis_tests.map do |a|
+  emphasis_tests.map do |b|
+    [a, 'Starting the line here ', "\n", b, 'and continuing here', "\n", 'to close', b, a, "\n\n"].join('')
+  end
+end
 
-<span class="n">all</span><span class="o">.</span><span class="n">each</span> <span class="p">{</span><span class="o">|</span><span class="n">e</span><span class="o">|</span> <span class="nb">puts</span> <span class="n">e</span><span class="p">}</span>
+all.each {|e| puts e}
 </pre>
-</div>
 <p><b>Starting the line here *and continuing here to close*</b></p>
 <p><b>Starting the line here /and continuing here to close/</b></p>
 <p><b>Starting the line here =and continuing here to close=</b></p>
