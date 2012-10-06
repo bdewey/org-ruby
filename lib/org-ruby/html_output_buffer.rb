@@ -116,7 +116,7 @@ module Orgmode
           if defined? Pygments
             begin
               @buffer = Pygments.highlight(@buffer, :lexer => lang)
-            rescue ::RubyPython::PythonError
+            rescue
               # Not supported lexer from Pygments, we fallback on using the text lexer
               @buffer = Pygments.highlight(@buffer, :lexer => 'text')
             end
