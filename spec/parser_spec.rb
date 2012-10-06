@@ -77,6 +77,15 @@ describe Orgmode::Parser do
     p.export_tables?.should be_false
   end
 
+  context "with a table that begins with a separator line" do
+    let(:parser) { Orgmode::Parser.new(data) }
+    let(:data) { Pathname.new(File.dirname(__FILE__)).join('data', 'tables.org').read }
+
+    it "should parse without errors" do
+      parser.headlines.size.should == 2
+    end
+  end
+
   describe "Custom keyword parser" do
     fname = File.join(File.dirname(__FILE__), %w[html_examples custom-todo.org])
     p = Orgmode::Parser.load(fname)
