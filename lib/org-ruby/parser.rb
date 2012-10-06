@@ -158,7 +158,7 @@ module Orgmode
 
           line = Line.new line, self
           if line.end_block? and line.code_block?
-            mode = :normal            
+            mode = :normal
           else
             line.assigned_paragraph_type = :src
           end
@@ -195,9 +195,11 @@ module Orgmode
     # Saves the loaded orgmode file as a textile file.
     def to_textile
       output = ""
-      output << Line.to_textile(@header_lines)
+      output_buffer = TextileOutputBuffer.new(output)
+
+      Parser.translate(@header_lines, output_buffer)
       @headlines.each do |headline|
-        output << headline.to_textile
+        Parser.translate(headline.body_lines, output_buffer)
       end
       output
     end
@@ -248,6 +250,7 @@ module Orgmode
     # Converts an array of lines to the appropriate format.
     # Writes the output to +output_buffer+.
     def self.translate(lines, output_buffer)
+      output_buffer.output_type = :start
       lines.each do |line|
 
         # See if we're carrying paragraph payload, and output
