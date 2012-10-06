@@ -109,7 +109,7 @@ module Orgmode
 
         # Only try to colorize #+BEGIN_SRC blocks with a specified language,
         # but we still have to catch the cases when a lexer for the language was not available
-        if not @block_lang.empty? and (defined? Pygments or defined? CodeRay)
+        if defined? Pygments or defined? CodeRay
           lang = normalize_lang(@block_lang)
 
           # NOTE: CodeRay and Pygments already escape the html once, so no need to escape_buffer!
@@ -347,6 +347,8 @@ module Orgmode
       case lang
       when 'emacs-lisp', 'common-lisp', 'lisp'
         'scheme'
+      when ''
+        'text'
       else
         lang
       end

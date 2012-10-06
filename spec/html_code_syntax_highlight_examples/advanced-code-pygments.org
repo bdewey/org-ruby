@@ -108,8 +108,8 @@ best things in the world!
 
 ** No language selected
 
-#+BEGIN_SRC 
-Nothing to see here
+#+BEGIN_SRC          
+<script>alert('hello world')</script>
 #+END_SRC
 
 ** CSS example
