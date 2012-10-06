@@ -92,7 +92,13 @@ module Orgmode
             (@output_type == :definition_list and not @support_definition_list) then
           @output << "*" * @list_indent_stack.length << " "
         end
-        @output << inline_formatting(@buffer) << "\n"
+        if (@buffered_lines[0].kind_of?(Headline)) then
+          headline = @buffered_lines[0]
+          raise "Cannot be more than one headline!" if @buffered_lines.length > 1
+          @output << "h#{headline.level}. #{headline.headline_text}\n"
+        else
+          @output << inline_formatting(@buffer) << "\n"
+        end
       end
       clear_accumulation_buffer!
     end

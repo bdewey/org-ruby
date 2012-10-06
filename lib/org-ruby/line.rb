@@ -223,12 +223,6 @@ module Orgmode
       return :paragraph
     end
 
-    def self.to_textile(lines)
-      output = ""
-      output_buffer = TextileOutputBuffer.new(output)
-      Parser.translate(lines, output_buffer)
-    end
-
     ######################################################################
     private
 

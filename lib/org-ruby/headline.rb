@@ -85,13 +85,6 @@ module Orgmode
       :"heading#{@level}"
     end
 
-    # Converts this headline and its body to textile.
-    def to_textile
-      output = "h#{@level}. #{@headline_text}\n"
-      output << Line.to_textile(@body_lines[1..-1])
-      output
-    end
-
     ######################################################################
     private
 
