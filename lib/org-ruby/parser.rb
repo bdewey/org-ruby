@@ -99,7 +99,9 @@ module Orgmode
       mode = :normal
       previous_line = nil
       table_header_set = false
-      @lines.map { |line| Line.new line, self }.each do |line|
+      @lines.each do |text|
+        line = Line.new text, self
+
         case mode
         when :normal
 

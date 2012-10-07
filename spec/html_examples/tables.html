@@ -33,3 +33,9 @@
   <tr><td>Ten</td><td>Eleven</td><td>Twelve</td></tr>
 </table>
 <p>Only the first row should be a header row.</p>
+<h1>Fix error when table starts with hline (Thanks @til!)</h1>
+<table>
+  <tr><th>foo</th><th>bar</th></tr>
+  <tr><td>1</td><td>2</td></tr>
+</table>
+<p>https://github.com/bdewey/org-ruby/pull/34</p>
