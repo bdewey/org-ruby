@@ -99,15 +99,16 @@ module Orgmode
       mode = :normal
       previous_line = nil
       table_header_set = false
-      @lines.each do |line|
+      @lines.each do |text|
+        line = Line.new text, self
+
         case mode
         when :normal
 
-          if (Headline.headline? line) then
-            @current_headline = Headline.new line, self, offset
+          if (Headline.headline? line.line) then
+            @current_headline = Headline.new line.line, self, offset
             @headlines << @current_headline
           else
-            line = Line.new line, self
             # If there is a setting on this line, remember it.
             line.in_buffer_setting? do |key, value|
               store_in_buffer_setting key, value
@@ -131,7 +132,7 @@ module Orgmode
           end
 
         when :block_comment
-          line = Line.new line, self
+
           if line.end_block? and line.block_type == "COMMENT"
             mode = :normal
           else
@@ -142,7 +143,6 @@ module Orgmode
 
           # As long as we stay in code mode, force lines to be either blank or paragraphs.
           # Don't try to interpret structural items, like headings and tables.
-          line = Line.new line, self
           if line.end_block? and line.code_block?
             mode = :normal
           else
@@ -156,7 +156,6 @@ module Orgmode
 
         when :src_code
 
-          line = Line.new line, self
           if line.end_block? and line.code_block?
             mode = :normal
           else
@@ -170,7 +169,6 @@ module Orgmode
 
         when :property_drawer
 
-          line = Line.new line, self
           if line.property_drawer_end_block?
             mode = :normal
           else
@@ -182,6 +180,7 @@ module Orgmode
             @header_lines << line
           end
         end                     # case
+
         previous_line = line
       end                       # @lines.each
     end                         # initialize

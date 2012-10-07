@@ -1,0 +1,6 @@
+* a table with hline at the beginning
+|-----+-----|
+| foo | bar |
+|-----+-----|
+|   1 |   2 |
+* not a table
