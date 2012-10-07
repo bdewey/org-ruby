@@ -1,4 +1,4 @@
-org-ruby version 0.7.1
+org-ruby version 0.7.2
     by Brian Dewey
     http://github.com/bdewey/org-ruby
 
@@ -9,5 +9,8 @@ significant thing this library does today is convert org-mode files to
 HTML or textile. 
 
 == CHANGES
-* Make source code blocks from lisp dialects use Pygments scheme lexer
-* Bugfix: Make Coderay fallback to text lexer when unsupported lang is set
+
+* Many fixes to the regular expressions used for emphasis, contributed by [[http://github.com/vonavi][vonavi]]
+* Bug fix for when a table starts with a headline, thanks to [[http://github/til][til]]
+* Asterisk can be used for definition lists too
+* Use text lexer as default option for Pygments and Coderay when no language is specified

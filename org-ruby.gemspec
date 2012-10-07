@@ -2,10 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name = "org-ruby"
-  s.version = "0.7.1"
+  s.version = "0.7.2"
+
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Brian Dewey"]
-  s.date = "2012-07-08"
+  s.date = "2012-10-07"
   s.description = "This gem contains Ruby routines for parsing org-mode files.The most\nsignificant thing this library does today is convert org-mode files to\nHTML or textile. Currently, you cannot do much to customize the\nconversion. The supplied textile conversion is optimized for\nextracting \"content\" from the orgfile as opposed to \"metadata.\" "
   s.email = "bdewey@gmail.com"
   s.executables = ["org-ruby"]
