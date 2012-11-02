@@ -1,6 +1,7 @@
 h1. Block Code
 
-I need to get block code examples working. In @orgmode@, they look like this: 
+I need to get block code examples working. In @orgmode@, they look
+like this:
 
 bc.. 
     def initialize(output)
@@ -15,15 +16,15 @@ bc..
     end
 
 
-p. And now I should be back to normal text. 
+p. And now I should be back to normal text.
 
-Putting in another paragraph for good measure. 
+Putting in another paragraph for good measure.
 
-Code should also get cancelled by a list, thus: 
+Code should also get cancelled by a list, thus:
 
 bc.. This is my code!
 
 Another line!
 
-* My list should cancel this. 
-* Another list line. 
+* My list should cancel this.
+* Another list line.

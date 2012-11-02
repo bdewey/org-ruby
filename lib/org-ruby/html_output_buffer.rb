@@ -88,7 +88,7 @@ module Orgmode
         # Need to close the floating li elements before closing the list
         if (m == :unordered_list or
             m == :ordered_list or
-            m == :definition_list) and 
+            m == :definition_list) and
             (not @unclosed_tags.empty?)
           close_floating_li_tags
         end
@@ -105,6 +105,7 @@ module Orgmode
     end
 
     def flush!
+      @buffer = @buffer.rstrip
       if buffer_mode_is_src_block?
 
         # Only try to colorize #+BEGIN_SRC blocks with a specified language,
@@ -166,7 +167,7 @@ module Orgmode
           unless buffer_mode_is_table? and skip_tables?
             @logger.debug "FLUSH      ==========> #{@buffer_mode}"
             output_indentation
-            if ((@buffered_lines[0].plain_list?) and 
+            if ((@buffered_lines[0].plain_list?) and
                 (@unclosed_tags.count == @list_indent_stack.count))
               @output << @unclosed_tags.pop
               output_indentation
@@ -189,9 +190,9 @@ module Orgmode
 
             # Only close the list when it is the last element from that list,
             # or when starting another list
-            if (@output_type == :unordered_list or 
+            if (@output_type == :unordered_list or
                 @output_type == :ordered_list   or
-                @output_type == :definition_list) and 
+                @output_type == :definition_list) and
                 (not @list_indent_stack.empty?)
               @unclosed_tags.push("</#{HtmlBlockTag[@output_type]}>\n")
               @output << "\n"

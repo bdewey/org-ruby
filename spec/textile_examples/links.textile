@@ -1,10 +1,10 @@
-LINKS 
+LINKS
 
-"http://www.bing.com":http://www.bing.com 
+"http://www.bing.com":http://www.bing.com
 
 h1. Supported Link Styles
 
-* "http://www.hotmail.com":http://www.hotmail.com => Simple 
-* "Hotmail":http://www.hotmail.com => With link text 
-* "with spaces":http://url/with%20spaces 
-* "http://url/with spaces":http://url/with%20spaces 
+* "http://www.hotmail.com":http://www.hotmail.com => Simple
+* "Hotmail":http://www.hotmail.com => With link text
+* "with spaces":http://url/with%20spaces
+* "http://url/with spaces":http://url/with%20spaces

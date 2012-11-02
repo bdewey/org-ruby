@@ -74,6 +74,7 @@ module Orgmode
 
     # Flushes the current buffer
     def flush!
+      @buffer = @buffer.rstrip
       @logger.debug "FLUSH ==========> #{@output_type}"
       if (@output_type == :blank) then
         @output << "\n"

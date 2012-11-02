@@ -1,11 +1,11 @@
-BLOCKQUOTE 
+BLOCKQUOTE
 
-Testing that I can have block quotes: 
-
-
-bq. _Example:_ 
-
-bq. This is blockquote text. 
+Testing that I can have block quotes:
 
 
-And now I'm back to normal text! 
+bq. _Example:_
+
+bq. This is blockquote text.
+
+
+And now I'm back to normal text!
