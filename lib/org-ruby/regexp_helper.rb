@@ -39,13 +39,11 @@ module Orgmode
     # body-regexp  A regexp like \".\" to match a body character.  Don't use
     #              non-shy groups here, and don't allow newline here.
     # newline      The maximum number of newlines allowed in an emphasis exp.
-    #
-    # I currently don't use +newline+ because I've thrown this information
-    # away by this point in the code. TODO -- revisit?
     attr_reader   :pre_emphasis
     attr_reader   :post_emphasis
     attr_reader   :border_forbidden
     attr_reader   :body_regexp
+    attr_reader   :max_newlines
     attr_reader   :markers
 
     attr_reader   :org_emphasis_regexp
@@ -56,6 +54,9 @@ module Orgmode
       @post_emphasis = "- \t\\.,:!\\?;'\"\\)\\}\\\\"
       @border_forbidden = " \t\r\n,\"'"
       @body_regexp = ".*?"
+      @max_newlines = 1
+      @body_regexp = "#{@body_regexp}" +
+                     "(?:\n#{@body_regexp}){0,#{@max_newlines}}" if @max_newlines > 0
       @markers = "\\*\\/_=~\\+"
       @logger = Logger.new(STDERR)
       @logger.level = Logger::WARN
@@ -160,12 +161,12 @@ module Orgmode
     private
 
     def build_org_emphasis_regexp
-      @org_emphasis_regexp = Regexp.new("([#{@pre_emphasis}]|^)\n" +
-                                        "( [#{@markers}] ) (?!\\2)\n" +
-                                        "( [^#{@border_forbidden}] | " +
-                                        "[^#{@border_forbidden}]#{@body_regexp}[^#{@border_forbidden}] )\n" +
-                                        "\\2\n" +
-                                        "(?=[#{@post_emphasis}]|$)\n", Regexp::EXTENDED)
+      @org_emphasis_regexp = Regexp.new("([#{@pre_emphasis}]|^)" +
+                                        "([#{@markers}])(?!\\2)" +
+                                        "([^#{@border_forbidden}]|" +
+                                        "[^#{@border_forbidden}]#{@body_regexp}" +
+                                        "[^#{@border_forbidden}])\\2" +
+                                        "(?=[#{@post_emphasis}]|$)")
       @logger.debug "Just created regexp: #{@org_emphasis_regexp}"
     end
 

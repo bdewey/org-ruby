@@ -278,23 +278,19 @@ module Orgmode
 
           output_buffer << line.line.lstrip
 
-        when :unordered_list, :ordered_list, :definition_list
+        when :unordered_list, :ordered_list, :definition_list, :src
 
-          output_buffer << line.output_text << " "
+          output_buffer << line.output_text << "\n"
 
         when :inline_example
 
           output_buffer << line.output_text
 
-        when :src
-
-          output_buffer << line.output_text << "\n"
-
         else
           if output_buffer.preserve_whitespace? then
             output_buffer << line.output_text
           else
-            output_buffer << line.output_text.strip << " "
+            output_buffer << line.output_text.strip << "\n"
           end
         end
       end
