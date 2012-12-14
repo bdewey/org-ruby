@@ -15,30 +15,26 @@ module Orgmode
 
     HtmlBlockTag = {
       :paragraph => "p",
-      :ordered_list => "li",
-      :unordered_list => "li",
+      :unordered_list => "ul",
+      :ordered_list => "ol",
+      :list_item => "li",
+      :definition_list => "dl",
       :definition_term => "dt",
       :definition_descr => "dd",
+      :table => "table",
       :table_row => "tr",
       :table_header => "tr",
+      :blockquote => "blockquote",
+      :example => "pre",
+      :src => "pre",
+      :inline_example => "pre",
+      :center => "div",
       :heading1 => "h1",
       :heading2 => "h2",
       :heading3 => "h3",
       :heading4 => "h4",
       :heading5 => "h5",
       :heading6 => "h6"
-    }
-
-    ModeTag = {
-      :unordered_list => "ul",
-      :ordered_list => "ol",
-      :definition_list => "dl",
-      :table => "table",
-      :blockquote => "blockquote",
-      :example => "pre",
-      :src => "pre",
-      :inline_example => "pre",
-      :center => "div"
     }
 
     attr_reader :options
@@ -57,12 +53,13 @@ module Orgmode
     end
 
     # Output buffer is entering a new mode. Use this opportunity to
-    # write out one of the block tags in the ModeTag constant to put
-    # this information in the HTML stream.
-    def push_mode(mode)
-      if ModeTag[mode] then
+    # write out one of the block tags in the HtmlBlockTag constant to
+    # put this information in the HTML stream.
+    def push_mode(mode, line)
+      @list_indent_stack.push(line.indent)
+      if HtmlBlockTag[mode] then
         output_indentation
-        css_class = ""
+        css_class = @title_decoration
         css_class = " class=\"src\"" if mode == :src and @block_lang.empty?
         css_class = " class=\"src src-#{@block_lang}\"" if mode == :src and not @block_lang.empty?
         css_class = " class=\"example\"" if (mode == :example || mode == :inline_example)
@@ -70,8 +67,8 @@ module Orgmode
 
         unless ((mode == :table and skip_tables?) or
                 (mode == :src and defined? Pygments))
-          @logger.debug "#{mode}: <#{ModeTag[mode]}#{css_class}>\n"
-          @output << "<#{ModeTag[mode]}#{css_class}>\n"
+          @logger.debug "#{mode}: <#{HtmlBlockTag[mode]}#{css_class}>\n"
+          @output << "<#{HtmlBlockTag[mode]}#{css_class}>"
         end
         # Entering a new mode obliterates the title decoration
         @title_decoration = ""
@@ -83,29 +80,18 @@ module Orgmode
     # entering this mode.
     def pop_mode(mode = nil)
       m = super(mode)
-      if ModeTag[m] then
+      if HtmlBlockTag[m] then
         output_indentation
-        # Need to close the floating li elements before closing the list
-        if (m == :unordered_list or
-            m == :ordered_list or
-            m == :definition_list) and
-            (not @unclosed_tags.empty?)
-          close_floating_li_tags
-        end
-
         unless ((mode == :table and skip_tables?) or
                 (mode == :src and defined? Pygments))
-          @logger.debug "</#{ModeTag[m]}>\n"
-          @output << "</#{ModeTag[m]}>\n"
+          @logger.debug "</#{HtmlBlockTag[m]}>\n"
+          @output << "</#{HtmlBlockTag[m]}>\n"
         end
-
-        # In case it was a sublist, close it here
-        close_last_li_tag_maybe
       end
+      @list_indent_stack.pop
     end
 
     def flush!
-      @buffer = @buffer.rstrip
       if buffer_mode_is_src_block?
 
         # Only try to colorize #+BEGIN_SRC blocks with a specified language,
@@ -166,13 +152,6 @@ module Orgmode
         elsif @buffer.length > 0 then
           unless buffer_mode_is_table? and skip_tables?
             @logger.debug "FLUSH      ==========> #{@buffer_mode}"
-            output_indentation
-            if ((@buffered_lines[0].plain_list?) and
-                (@unclosed_tags.count == @list_indent_stack.count))
-              @output << @unclosed_tags.pop
-              output_indentation
-            end
-            @output << "<#{HtmlBlockTag[@output_type]}#{@title_decoration}>"
             if (@buffered_lines[0].kind_of?(Headline)) then
               headline = @buffered_lines[0]
               raise "Cannot be more than one headline!" if @buffered_lines.length > 1
@@ -187,19 +166,6 @@ module Orgmode
               end
             end
             @output << inline_formatting(@buffer)
-
-            # Only close the list when it is the last element from that list,
-            # or when starting another list
-            if (@output_type == :unordered_list or
-                @output_type == :ordered_list   or
-                @output_type == :definition_list) and
-                (not @list_indent_stack.empty?)
-              @unclosed_tags.push("</#{HtmlBlockTag[@output_type]}>\n")
-              @output << "\n"
-            else
-              @output << "</#{HtmlBlockTag[@output_type]}>\n"
-            end
-            @title_decoration = ""
           else
             @logger.debug "SKIP       ==========> #{@buffer_mode}"
           end
@@ -248,7 +214,7 @@ module Orgmode
     end
 
     def output_indentation
-      indent = "  " * (@mode_stack.length - 1)
+      indent = "  " * (@list_indent_stack.length - 1)
       @output << indent
     end
 
@@ -264,7 +230,6 @@ module Orgmode
 
     # Applies inline formatting rules to a string.
     def inline_formatting(str)
-      str.rstrip!
       str = @re_help.rewrite_emphasis(str) do |marker, s|
         "#{Tags[marker][:open]}#{s}#{Tags[marker][:close]}"
       end
@@ -318,30 +283,6 @@ module Orgmode
       end
       Orgmode.special_symbols_to_html(str)
       str
-    end
-
-    def close_floating_li_tags
-      unless @final_list_node
-        unless @unclosed_tags.empty?
-          @output << "  " << @unclosed_tags.pop
-          output_indentation
-        end
-      end
-
-      @final_list_node = false
-    end
-
-    def close_last_li_tag_maybe
-      if (@list_indent_stack.count < @unclosed_tags.count) and not
-          (@list_indent_stack.empty? and @unclosed_tags.empty?)
-        output_indentation
-        @output << @unclosed_tags.pop
-        if (@list_indent_stack.count == @unclosed_tags.count) and not
-            (@list_indent_stack.empty? and @unclosed_tags.empty?)
-          @final_list_node = true
-          pop_mode
-        end
-      end
     end
 
     def normalize_lang(lang)

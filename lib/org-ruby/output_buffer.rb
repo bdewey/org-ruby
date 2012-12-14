@@ -51,10 +51,9 @@ module Orgmode
       end
 
       @re_help = RegexpHelper.new
-      push_mode(:normal)
     end
 
-    Modes = [:normal, :ordered_list, :unordered_list, :definition_list, :blockquote, :src, :example, :table, :inline_example, :center, :property_drawer]
+    HeadingModes = [:heading1, :heading2, :heading3, :heading4, :heading5, :heading6]
 
     def current_mode
       @mode_stack.last
@@ -65,7 +64,6 @@ module Orgmode
     end
 
     def push_mode(mode)
-      raise "Not a recognized mode: #{mode}" unless Modes.include?(mode)
       @mode_stack.push(mode)
     end
 
@@ -83,20 +81,18 @@ module Orgmode
         flush!
         # We try to get the lang from #+BEGIN_SRC blocks
         @block_lang = line.block_lang
-        @output_type = line.paragraph_type
       elsif current_mode == :example and line.end_block?
         flush!
-        @output_type = line.paragraph_type
       elsif not should_accumulate_output?(line)
         flush!
-        maintain_list_indent_stack(line)
-        @output_type = line.paragraph_type
+        maintain_mode_stack(line)
       end
-      push_mode(:inline_example) if line.inline_example? and current_mode != :inline_example and not line.property_drawer?
+      @output_type = line.paragraph_type
+      push_mode(:inline_example, line) if line.inline_example? and current_mode != :inline_example and not line.property_drawer?
       pop_mode(:inline_example) if current_mode == :inline_example and !line.inline_example?
-      push_mode(:property_drawer) if line.property_drawer? and current_mode != :property_drawer
+      push_mode(:property_drawer, line) if line.property_drawer? and current_mode != :property_drawer
       pop_mode(:property_drawer) if current_mode == :property_drawer and line.property_drawer_end_block?
-      push_mode(:table) if enter_table?
+      push_mode(:table, line) if enter_table?
       pop_mode(:table) if exit_table?
       @buffered_lines.push(line)
     end
@@ -171,36 +167,43 @@ module Orgmode
       end
     end
 
-    def maintain_list_indent_stack(line)
-      if (line.plain_list?) then
-        while (not @list_indent_stack.empty? \
-               and (@list_indent_stack.last > line.indent))
-          @list_indent_stack.pop
-          pop_mode
+    def maintain_mode_stack(line)
+      # Always close heading line
+      pop_mode if HeadingModes.include?(current_mode)
+
+      if ((not line.paragraph_type == :blank) or
+          @output_type == :blank)
+        # Close previous tags on demand. Two blank lines close all tags.
+        while ((not @list_indent_stack.empty?) and
+               @list_indent_stack.last >= line.indent)
+          unless (line.plain_list? and
+                  current_mode == line.paragraph_type and
+                  @list_indent_stack.last == line.indent)
+            pop_mode
+          else
+            break
+          end
         end
-        if (@list_indent_stack.empty? \
-            or @list_indent_stack.last < line.indent)
-          @list_indent_stack.push(line.indent)
-          push_mode line.paragraph_type
+        # Open plain list.
+        if line.plain_list?
+          if (@list_indent_stack.empty? or
+              @list_indent_stack.last < line.indent)
+            push_mode(line.paragraph_type, line)
+            @output << "\n"
+          end
         end
-      elsif line.blank? then
-
-        # Nothing
-
-      elsif ((not line.plain_list?) and
-             (not @list_indent_stack.empty?) and
-             (line.indent > @list_indent_stack.last))
-
-        # Nothing -- output this paragraph inside
-        # the list block (ul/ol)
-
-      else
-        @list_indent_stack = []
-        while ((current_mode == :ordered_list) or
-               (current_mode == :definition_list) or
-               (current_mode == :unordered_list))
-          pop_mode
+        # Open tag preceding text, including list item.
+        if (@list_indent_stack.empty? or
+            @list_indent_stack.last <= line.indent)
+          if (line.paragraph_type == :ordered_list or
+              line.paragraph_type == :unordered_list)
+            push_mode(:list_item, line)
+          elsif not line.paragraph_type == :blank
+            push_mode(line.paragraph_type, line)
+          end
         end
+      else # If blank line, close preceding paragraph
+        pop_mode if current_mode == :paragraph
       end
     end
 
@@ -209,39 +212,26 @@ module Orgmode
     end
 
     # Tests if the current line should be accumulated in the current
-    # output buffer.  (Extraneous line breaks in the orgmode buffer
-    # are removed by accumulating lines in the output buffer without
-    # line breaks.)
+    # output buffer.
     def should_accumulate_output?(line)
+      # Special case: Assing mode if not yet done.
+      return false if not current_mode
 
       # Special case: We are accumulating source code block content for colorizing
       return true if line.paragraph_type == :src and @output_type == :src
 
-      # Special case: Preserve line breaks in block code mode.
-      return false if preserve_whitespace?
+      # Special case: Multiple "paragraphs" get accumulated.
+      return true if (line.paragraph_type == :paragraph and
+                      current_mode == :paragraph)
 
-      # Special case: Multiple blank lines get accumulated.
-      return true if line.paragraph_type == :blank and @output_type == :blank
+      # If the current mode is not paragraph, then we only put a
+      # paragraph in it if its indent level is greater than the indent
+      # level of the current mode and no blank lines before.
+      return true if (line.paragraph_type == :paragraph and
+                      (not @output_type == :blank) and
+                      line.indent > @list_indent_stack.last)
 
-      # Currently only "paragraphs" get accumulated with previous output.
-      return false unless line.paragraph_type == :paragraph
-      if ((@output_type == :ordered_list) or
-          (@output_type == :definition_list) or
-          (@output_type == :unordered_list)) then
-
-        # If the previous output type was a list item, then we only put a paragraph in it
-        # if its indent level is greater than the list indent level.
-
-        return false unless line.indent > @list_indent_stack.last
-      end
-
-      # Only accumulate paragraphs with lists & paragraphs.
-      return false unless
-        ((@output_type == :paragraph) or
-         (@output_type == :ordered_list) or
-         (@output_type == :definition_list) or
-         (@output_type == :unordered_list))
-      true
+      false
     end
   end                           # class OutputBuffer
 end                             # module Orgmode

@@ -262,10 +262,10 @@ module Orgmode
 
         when :begin_block
 
-          output_buffer.push_mode(:blockquote) if line.block_type.casecmp("QUOTE") == 0
-          output_buffer.push_mode(:src) if line.block_type.casecmp("SRC") == 0
-          output_buffer.push_mode(:example) if line.block_type.casecmp("EXAMPLE") == 0
-          output_buffer.push_mode(:center) if line.block_type.casecmp("CENTER") == 0
+          output_buffer.push_mode(:blockquote, line) if line.block_type.casecmp("QUOTE") == 0
+          output_buffer.push_mode(:src, line) if line.block_type.casecmp("SRC") == 0
+          output_buffer.push_mode(:example, line) if line.block_type.casecmp("EXAMPLE") == 0
+          output_buffer.push_mode(:center, line) if line.block_type.casecmp("CENTER") == 0
 
         when :end_block
 
@@ -295,7 +295,7 @@ module Orgmode
         end
       end
       output_buffer.flush!
-      output_buffer.pop_mode until output_buffer.current_mode == :normal
+      output_buffer.pop_mode while output_buffer.current_mode
       output_buffer.output_footnotes!
       output_buffer.output
     end
