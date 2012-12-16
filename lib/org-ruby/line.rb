@@ -14,6 +14,9 @@ module Orgmode
     # Backpointer to the parser that owns this line.
     attr_reader :parser
 
+    # Paragraph type determined for the line
+    attr_reader :paragraph_type
+
     # A line can have its type assigned instead of inferred from its
     # content. For example, something that parses as a "table" on its
     # own ("| one | two|\n") may just be a paragraph if it's inside
@@ -26,6 +29,7 @@ module Orgmode
       @line = line
       @indent = 0
       @line =~ /\s*/
+      determine_paragraph_type
       @assigned_paragraph_type = nil
       @indent = $&.length unless blank?
     end
@@ -202,25 +206,45 @@ module Orgmode
     end
 
     # Determines the paragraph type of the current line.
-    def paragraph_type
-      return :blank if blank?
-      return :src if code_block_line? # Do not try to guess the type of this line if it is accumulating source code
-      return :definition_list if definition_list? # order is important! A definition_list is also an unordered_list!
-      return :ordered_list if ordered_list?
-      return :unordered_list if unordered_list?
-      return :property_drawer_begin_block if property_drawer_begin_block?
-      return :property_drawer_end_block if property_drawer_end_block?
-      return :property_drawer_item if property_drawer_item?
-      return :metadata if metadata?
-      return :begin_block if begin_block?
-      return :end_block if end_block?
-      return :comment if comment?
-      return :table_separator if table_separator?
-      return :table_row if table_row?
-      return :table_header if table_header?
-      return :inline_example if inline_example?
-      return :horizontal_rule if horizontal_rule?
-      return :paragraph
+    def determine_paragraph_type
+      @paragraph_type = \
+      case
+      when blank?
+        :blank
+      when code_block_line? # Do not try to guess the type of this line if it is accumulating source code
+        :src
+      when definition_list? # order is important! A definition_list is also an unordered_list!
+        :definition_list
+      when ordered_list?
+        :ordered_list
+      when unordered_list?
+        :unordered_list
+      when property_drawer_begin_block?
+        :property_drawer_begin_block
+      when property_drawer_end_block?
+        :property_drawer_end_block
+      when property_drawer_item?
+        :property_drawer_item
+      when metadata?
+        :metadata
+      when begin_block?
+        :begin_block
+      when end_block?
+        :end_block
+      when comment?
+        :comment
+      when table_separator?
+        :table_separator
+      when table_row?
+        :table_row
+      when table_header?
+        :table_header
+      when inline_example?
+        :inline_example
+      when horizontal_rule?
+        :horizontal_rule
+      else :paragraph
+      end
     end
 
     ######################################################################
