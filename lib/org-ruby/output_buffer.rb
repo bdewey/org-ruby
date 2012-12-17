@@ -170,6 +170,8 @@ module Orgmode
     def maintain_mode_stack(line)
       # Always close heading line
       pop_mode if HeadingModes.include?(current_mode)
+      # Always close paragraph mode
+      pop_mode if current_mode == :paragraph
 
       if ((not line.paragraph_type == :blank) or
           @output_type == :blank)
@@ -214,22 +216,24 @@ module Orgmode
     # Tests if the current line should be accumulated in the current
     # output buffer.
     def should_accumulate_output?(line)
-      # Special case: Assing mode if not yet done.
+      # Special case: Assign mode if not yet done.
       return false if not current_mode
 
       # Special case: We are accumulating source code block content for colorizing
       return true if line.paragraph_type == :src and @output_type == :src
 
-      # Special case: Multiple "paragraphs" get accumulated.
-      return true if (line.paragraph_type == :paragraph and
-                      current_mode == :paragraph)
+      # Special case: Blank line at least splits paragraphs
+      return false if @output_type == :blank
 
-      # If the current mode is not paragraph, then we only put a
-      # paragraph in it if its indent level is greater than the indent
-      # level of the current mode and no blank lines before.
-      return true if (line.paragraph_type == :paragraph and
-                      (not @output_type == :blank) and
-                      line.indent > @list_indent_stack.last)
+      if line.paragraph_type == :paragraph
+        # Paragraph gets accumulated only if its indent level is
+        # greater than the indent level of the previous modes.
+        @list_indent_stack[0..-2].each do |indent|
+          return false if line.indent <= indent
+        end
+        # Special case: Multiple "paragraphs" get accumulated.
+        return true if current_mode == :paragraph
+      end
 
       false
     end
