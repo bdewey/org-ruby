@@ -135,7 +135,7 @@ module Orgmode
         escape_buffer!
         if @buffer.length > 0 and @output_type == :horizontal_rule then
           @output << "<hr />\n"
-        elsif @buffer.length > 0 and @output_type == :definition_list then
+        elsif @buffer.length > 0 and @output_type == :definition_item then
           unless buffer_mode_is_table? and skip_tables?
             output_indentation
             d = @buffer.split("::", 2)
@@ -182,7 +182,7 @@ module Orgmode
       @footnotes.each do |name, defi|
         @output << "<p class=\"footnote\"><sup><a class=\"footnum\" name=\"fn.#{name}\" href=\"#fnr.#{name}\">#{name}</a></sup>" \
                 << inline_formatting(defi) \
-                << "</p>\n"
+                << "\n</p>\n"
       end
 
       @output << "</div>\n</div>\n"

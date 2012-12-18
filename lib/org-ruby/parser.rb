@@ -276,9 +276,9 @@ module Orgmode
 
         when :table_row, :table_header
 
-          output_buffer << line.line.lstrip
+          output_buffer << line.line.lstrip << "\n"
 
-        when :unordered_list, :ordered_list, :definition_list, :src
+        when :src
 
           output_buffer << line.output_text << "\n"
 

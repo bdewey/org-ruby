@@ -214,11 +214,9 @@ module Orgmode
       when code_block_line? # Do not try to guess the type of this line if it is accumulating source code
         :src
       when definition_list? # order is important! A definition_list is also an unordered_list!
-        :definition_list
-      when ordered_list?
-        :ordered_list
-      when unordered_list?
-        :unordered_list
+        :definition_item
+      when (ordered_list? or unordered_list?)
+        :list_item
       when property_drawer_begin_block?
         :property_drawer_begin_block
       when property_drawer_end_block?
@@ -245,6 +243,13 @@ module Orgmode
         :horizontal_rule
       else :paragraph
       end
+    end
+
+    def major_mode
+      return :definition_list if definition_list? # order is important! A definition_list is also an unordered_list!
+      return :ordered_list if ordered_list?
+      return :unordered_list if unordered_list?
+      return :table if table?
     end
 
     ######################################################################

@@ -87,13 +87,15 @@ module Orgmode
         flush!
         maintain_mode_stack(line)
       end
-      @output_type = line.paragraph_type
+      if line.assigned_paragraph_type
+        @output_type = line.assigned_paragraph_type
+      else
+        @output_type = line.paragraph_type
+      end
       push_mode(:inline_example, line) if line.inline_example? and current_mode != :inline_example and not line.property_drawer?
       pop_mode(:inline_example) if current_mode == :inline_example and !line.inline_example?
       push_mode(:property_drawer, line) if line.property_drawer? and current_mode != :property_drawer
       pop_mode(:property_drawer) if current_mode == :property_drawer and line.property_drawer_end_block?
-      push_mode(:table, line) if enter_table?
-      pop_mode(:table) if exit_table?
       @buffered_lines.push(line)
     end
 
@@ -121,18 +123,6 @@ module Orgmode
       raise "Oops, shouldn't happen" unless level == @headline_number_stack.length
       @headline_number_stack[@headline_number_stack.length - 1] += 1
       @headline_number_stack.join(".")
-    end
-
-    # Tests if we are entering a table mode.
-    def enter_table?
-      ((@output_type == :table_row) || (@output_type == :table_header) || (@output_type == :table_separator)) &&
-        (current_mode != :table)
-    end
-
-    # Tests if we are existing a table mode.
-    def exit_table?
-      ((@output_type != :table_row) && (@output_type != :table_header) && (@output_type != :table_separator)) &&
-        (current_mode == :table)
     end
 
     # Accumulate the string @str@.
@@ -178,31 +168,25 @@ module Orgmode
         # Close previous tags on demand. Two blank lines close all tags.
         while ((not @list_indent_stack.empty?) and
                @list_indent_stack.last >= line.indent)
-          unless (line.plain_list? and
-                  current_mode == line.paragraph_type and
-                  @list_indent_stack.last == line.indent)
+          unless (@list_indent_stack.last == line.indent and
+                  current_mode == line.major_mode)
             pop_mode
           else
             break
           end
         end
-        # Open plain list.
-        if line.plain_list?
+        # Opens the major mode of line if it exists.
+        if line.major_mode
           if (@list_indent_stack.empty? or
               @list_indent_stack.last < line.indent)
-            push_mode(line.paragraph_type, line)
+            push_mode(line.major_mode, line)
             @output << "\n"
           end
         end
         # Open tag preceding text, including list item.
         if (@list_indent_stack.empty? or
             @list_indent_stack.last <= line.indent)
-          if (line.paragraph_type == :ordered_list or
-              line.paragraph_type == :unordered_list)
-            push_mode(:list_item, line)
-          elsif not line.paragraph_type == :blank
-            push_mode(line.paragraph_type, line)
-          end
+          push_mode(line.paragraph_type, line)
         end
       else # If blank line, close preceding paragraph
         pop_mode if current_mode == :paragraph
@@ -219,6 +203,10 @@ module Orgmode
       # Special case: Assign mode if not yet done.
       return false if not current_mode
 
+      # Special case: Don't accumulate headings and horizontal rules.
+      return false if (HeadingModes.include?(current_mode) or
+                       current_mode == :horizontal_rule)
+
       # Special case: We are accumulating source code block content for colorizing
       return true if line.paragraph_type == :src and @output_type == :src
 
@@ -232,7 +220,7 @@ module Orgmode
           return false if line.indent <= indent
         end
         # Special case: Multiple "paragraphs" get accumulated.
-        return true if current_mode == :paragraph
+        return true unless current_mode == :comment
       end
 
       false
