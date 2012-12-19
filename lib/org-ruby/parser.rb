@@ -266,7 +266,11 @@ module Orgmode
 
         when :table_row, :table_header
 
-          output_buffer << line.line.lstrip << "\n"
+          if output_buffer.preserve_whitespace?
+            output_buffer << line.line << "\n"
+          else
+            output_buffer << line.line.lstrip << "\n"
+          end
 
         when :src
 

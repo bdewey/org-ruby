@@ -55,18 +55,19 @@ module Orgmode
     # Output buffer is entering a new mode. Use this opportunity to
     # write out one of the block tags in the HtmlBlockTag constant to
     # put this information in the HTML stream.
-    def push_mode(mode, line)
-      @list_indent_stack.push(line.indent)
+    def push_mode(mode, indent = 0)
+      @list_indent_stack.push(indent)
       if HtmlBlockTag[mode] then
-        output_indentation
         css_class = @title_decoration
         css_class = " class=\"src\"" if mode == :src and @block_lang.empty?
         css_class = " class=\"src src-#{@block_lang}\"" if mode == :src and not @block_lang.empty?
         css_class = " class=\"example\"" if (mode == :example || mode == :inline_example)
         css_class = " style=\"text-align: center\"" if mode == :center
 
-        unless ((mode == :table and skip_tables?) or
+        skip = ((mode_is_table?(mode) and skip_tables?) or
                 (mode == :src and defined? Pygments))
+        unless skip
+          output_indentation
           @logger.debug "#{mode}: <#{HtmlBlockTag[mode]}#{css_class}>\n"
           @output << "<#{HtmlBlockTag[mode]}#{css_class}>"
         end
@@ -74,6 +75,7 @@ module Orgmode
         @title_decoration = ""
       end
       super(mode)
+      skip
     end
 
     # We are leaving a mode. Close any tags that were opened when
@@ -81,9 +83,9 @@ module Orgmode
     def pop_mode(mode = nil)
       m = super(mode)
       if HtmlBlockTag[m] then
-        output_indentation
-        unless ((mode == :table and skip_tables?) or
-                (mode == :src and defined? Pygments))
+        unless ((mode_is_table?(m) and skip_tables?) or
+                (m == :src and defined? Pygments))
+          output_indentation
           @logger.debug "</#{HtmlBlockTag[m]}>\n"
           @output << "</#{HtmlBlockTag[m]}>\n"
         end
@@ -135,8 +137,8 @@ module Orgmode
         escape_buffer!
         if @buffer.length > 0 and @output_type == :horizontal_rule then
           @output << "<hr />\n"
-        elsif @buffer.length > 0 and @output_type == :definition_item then
-          unless buffer_mode_is_table? and skip_tables?
+        elsif @buffer.length > 0 and @buffer_mode == :definition_item then
+          unless mode_is_table?(@buffer_mode) and skip_tables?
             output_indentation
             d = @buffer.split("::", 2)
             @output << "<#{HtmlBlockTag[:definition_term]}#{@title_decoration}>" << inline_formatting(d[0].strip) \
@@ -150,7 +152,7 @@ module Orgmode
             @title_decoration = ""
           end
         elsif @buffer.length > 0 then
-          unless buffer_mode_is_table? and skip_tables?
+          unless mode_is_table?(@buffer_mode) and skip_tables?
             @logger.debug "FLUSH      ==========> #{@buffer_mode}"
             if (@buffered_lines[0].kind_of?(Headline)) then
               headline = @buffered_lines[0]
@@ -198,8 +200,9 @@ module Orgmode
       @options[:skip_tables]
     end
 
-    def buffer_mode_is_table?
-      @buffer_mode == :table
+    def mode_is_table?(mode)
+      (mode == :table or mode == :table_row or
+       mode == :table_separator or mode == :table_header)
     end
 
     def buffer_mode_is_src_block?

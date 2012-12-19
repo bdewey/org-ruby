@@ -78,12 +78,12 @@ module Orgmode
     # As a side effect, this may flush the current accumulated text.
     def prepare(line)
       @logger.debug "Looking at #{line.paragraph_type}(#{current_mode}) : #{line.to_s}"
+      # We try to get the lang from #+BEGIN_SRC blocks
+      @block_lang = line.block_lang if line.code_block?
       if not should_accumulate_output?(line)
         flush!
         maintain_mode_stack(line)
       end
-      # We try to get the lang from #+BEGIN_SRC blocks
-      @block_lang = line.block_lang if line.code_block?
       if line.assigned_paragraph_type
         @output_type = line.assigned_paragraph_type
       else
@@ -179,14 +179,13 @@ module Orgmode
         if line.major_mode
           if (@list_indent_stack.empty? or
               @list_indent_stack.last < line.indent)
-            push_mode(line.major_mode, line)
-            @output << "\n"
+            @output << "\n" unless push_mode(line.major_mode, line.indent)
           end
         end
         # Open tag that precedes text immediately
         if (@list_indent_stack.empty? or
             @list_indent_stack.last <= line.indent)
-          push_mode(line.paragraph_type, line) unless line.begin_block?
+          push_mode(line.paragraph_type, line.indent) unless line.begin_block?
         end
       else # If blank line, close preceding paragraph
         pop_mode if current_mode == :paragraph

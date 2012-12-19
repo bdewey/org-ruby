@@ -258,8 +258,6 @@ module Orgmode
         :ordered_list
       when unordered_list?
         :unordered_list
-      when property_drawer?
-        :property_drawer
       when table?
         :table
       when (begin_block? and block_type.casecmp("QUOTE") == 0)
