@@ -78,26 +78,17 @@ module Orgmode
     # As a side effect, this may flush the current accumulated text.
     def prepare(line)
       @logger.debug "Looking at #{line.paragraph_type}(#{current_mode}) : #{line.to_s}"
-      if mode_is_code(current_mode)
-        if line.end_block?
-          flush!
-          maintain_mode_stack(line)
-        end
-        # We try to get the lang from #+BEGIN_SRC blocks
-        @block_lang = line.block_lang if line.code_block?
-      elsif not should_accumulate_output?(line)
+      if not should_accumulate_output?(line)
         flush!
         maintain_mode_stack(line)
       end
+      # We try to get the lang from #+BEGIN_SRC blocks
+      @block_lang = line.block_lang if line.code_block?
       if line.assigned_paragraph_type
         @output_type = line.assigned_paragraph_type
       else
         @output_type = line.paragraph_type
       end
-      push_mode(:inline_example, line) if line.inline_example? and current_mode != :inline_example and not line.property_drawer?
-      pop_mode(:inline_example) if current_mode == :inline_example and !line.inline_example?
-      push_mode(:property_drawer, line) if line.property_drawer? and current_mode != :property_drawer
-      pop_mode(:property_drawer) if current_mode == :property_drawer and line.property_drawer_end_block?
       @buffered_lines.push(line)
     end
 
@@ -177,6 +168,7 @@ module Orgmode
           if BlockModes.include?(current_mode)
             # Special case: Only end-block line closes the block
             pop_mode if line.end_block?
+            break
           elsif current_mode != line.major_mode # item can't close its major mode
             pop_mode
           else
@@ -211,17 +203,21 @@ module Orgmode
       # Special case: Assign mode if not yet done.
       return false if not current_mode
 
-      # Special case: Don't accumulate headings and horizontal rules.
-      return false if (HeadingModes.include?(current_mode) or
-                       current_mode == :horizontal_rule)
+      # Special case: We are accumulating code block content
+      return true if mode_is_code(current_mode) and not line.end_block?
 
-      # Special case: We are accumulating source code block content for colorizing
-      return true if line.paragraph_type == :src and @output_type == :src
+      # Special case: Don't accumulate output when block starts or ends
+      return false if @output_type == :begin_block or @output_type == :end_block
+
+      # Special case: Don't accumulate headings, comments and horizontal rules.
+      return false if (HeadingModes.include?(@output_type) or
+                       @output_type == :comment or
+                       @output_type == :horizontal_rule)
 
       # Special case: Blank line at least splits paragraphs
       return false if @output_type == :blank
 
-      if line.paragraph_type == :paragraph and current_mode != :comment
+      if line.paragraph_type == :paragraph
         # Paragraph gets accumulated only if its indent level is
         # greater than the indent level of the previous modes.
         @list_indent_stack[0..-2].each do |indent|
