@@ -54,6 +54,7 @@ module Orgmode
     end
 
     HeadingModes = [:heading1, :heading2, :heading3, :heading4, :heading5, :heading6]
+    BlockModes   = [:blockquote, :center, :example, :src]
 
     def current_mode
       @mode_stack.last
@@ -77,12 +78,13 @@ module Orgmode
     # As a side effect, this may flush the current accumulated text.
     def prepare(line)
       @logger.debug "Looking at #{line.paragraph_type}(#{current_mode}) : #{line.to_s}"
-      if line.begin_block? and line.code_block?
-        flush!
+      if mode_is_code(current_mode)
+        if line.end_block?
+          flush!
+          maintain_mode_stack(line)
+        end
         # We try to get the lang from #+BEGIN_SRC blocks
-        @block_lang = line.block_lang
-      elsif current_mode == :example and line.end_block?
-        flush!
+        @block_lang = line.block_lang if line.code_block?
       elsif not should_accumulate_output?(line)
         flush!
         maintain_mode_stack(line)
@@ -167,9 +169,15 @@ module Orgmode
           @output_type == :blank)
         # Close previous tags on demand. Two blank lines close all tags.
         while ((not @list_indent_stack.empty?) and
-               @list_indent_stack.last >= line.indent)
-          unless (@list_indent_stack.last == line.indent and
-                  current_mode == line.major_mode)
+               @list_indent_stack.last > line.indent)
+          pop_mode
+        end
+        while ((not @list_indent_stack.empty?) and
+               @list_indent_stack.last == line.indent)
+          if BlockModes.include?(current_mode)
+            # Special case: Only end-block line closes the block
+            pop_mode if line.end_block?
+          elsif current_mode != line.major_mode # item can't close its major mode
             pop_mode
           else
             break
@@ -183,10 +191,10 @@ module Orgmode
             @output << "\n"
           end
         end
-        # Open tag preceding text, including list item.
+        # Open tag that precedes text immediately
         if (@list_indent_stack.empty? or
             @list_indent_stack.last <= line.indent)
-          push_mode(line.paragraph_type, line)
+          push_mode(line.paragraph_type, line) unless line.begin_block?
         end
       else # If blank line, close preceding paragraph
         pop_mode if current_mode == :paragraph
@@ -213,14 +221,14 @@ module Orgmode
       # Special case: Blank line at least splits paragraphs
       return false if @output_type == :blank
 
-      if line.paragraph_type == :paragraph
+      if line.paragraph_type == :paragraph and current_mode != :comment
         # Paragraph gets accumulated only if its indent level is
         # greater than the indent level of the previous modes.
         @list_indent_stack[0..-2].each do |indent|
           return false if line.indent <= indent
         end
         # Special case: Multiple "paragraphs" get accumulated.
-        return true unless current_mode == :comment
+        return true
       end
 
       false

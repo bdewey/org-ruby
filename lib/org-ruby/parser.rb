@@ -258,21 +258,11 @@ module Orgmode
         case line.paragraph_type
         when :metadata, :table_separator, :blank, :comment, :property_drawer_item, :property_drawer_begin_block, :property_drawer_end_block
 
-          output_buffer << line.line if output_buffer.preserve_whitespace?
+          output_buffer << line.line << "\n" if output_buffer.preserve_whitespace?
 
-        when :begin_block
+        when :begin_block, :end_block
 
-          output_buffer.push_mode(:blockquote, line) if line.block_type.casecmp("QUOTE") == 0
-          output_buffer.push_mode(:src, line) if line.block_type.casecmp("SRC") == 0
-          output_buffer.push_mode(:example, line) if line.block_type.casecmp("EXAMPLE") == 0
-          output_buffer.push_mode(:center, line) if line.block_type.casecmp("CENTER") == 0
-
-        when :end_block
-
-          output_buffer.pop_mode(:blockquote) if line.block_type.casecmp("QUOTE") == 0
-          output_buffer.pop_mode(:src) if line.block_type.casecmp("SRC") == 0
-          output_buffer.pop_mode(:example) if line.block_type.casecmp("EXAMPLE") == 0
-          output_buffer.pop_mode(:center) if line.block_type.casecmp("CENTER") == 0
+          # Nothing
 
         when :table_row, :table_header
 
@@ -288,7 +278,7 @@ module Orgmode
 
         else
           if output_buffer.preserve_whitespace? then
-            output_buffer << line.output_text
+            output_buffer << line.output_text << "\n"
           else
             output_buffer << line.output_text.strip << "\n"
           end

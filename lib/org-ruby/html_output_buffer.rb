@@ -130,7 +130,7 @@ module Orgmode
         # Whitespace is significant in :code mode. Always output the buffer
         # and do not do any additional translation.
         @logger.debug "FLUSH CODE ==========> #{@buffer.inspect}"
-        @output << @buffer << "\n"
+        @output << @buffer
       else
         escape_buffer!
         if @buffer.length > 0 and @output_type == :horizontal_rule then
@@ -177,7 +177,7 @@ module Orgmode
     def output_footnotes!
       return false unless @options[:export_footnotes] and not @footnotes.empty?
 
-      @output << "<div id=\"footnotes\">\n<h2 class=\"footnotes\">Footnotes: </h2>\n<div id=\"text-footnotes\">\n"
+      @output << "<div id=\"footnotes\">\n<h2 class=\"footnotes\">Footnotes:\n</h2>\n<div id=\"text-footnotes\">\n"
 
       @footnotes.each do |name, defi|
         @output << "<p class=\"footnote\"><sup><a class=\"footnum\" name=\"fn.#{name}\" href=\"#fnr.#{name}\">#{name}</a></sup>" \

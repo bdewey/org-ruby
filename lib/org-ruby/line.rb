@@ -14,8 +14,11 @@ module Orgmode
     # Backpointer to the parser that owns this line.
     attr_reader :parser
 
-    # Paragraph type determined for the line
+    # Paragraph type determined for the line.
     attr_reader :paragraph_type
+
+    # Major modes assosiate paragraphs with a table, list and so on.
+    attr_reader :major_mode
 
     # A line can have its type assigned instead of inferred from its
     # content. For example, something that parses as a "table" on its
@@ -30,6 +33,7 @@ module Orgmode
       @indent = 0
       @line =~ /\s*/
       determine_paragraph_type
+      determine_major_mode
       @assigned_paragraph_type = nil
       @indent = $&.length unless blank?
     end
@@ -245,11 +249,26 @@ module Orgmode
       end
     end
 
-    def major_mode
-      return :definition_list if definition_list? # order is important! A definition_list is also an unordered_list!
-      return :ordered_list if ordered_list?
-      return :unordered_list if unordered_list?
-      return :table if table?
+    def determine_major_mode
+      @major_mode = \
+      case
+      when definition_list? # order is important! A definition_list is also an unordered_list!
+        :definition_list
+      when ordered_list?
+        :ordered_list
+      when unordered_list?
+        :unordered_list
+      when table?
+        :table
+      when (begin_block? and block_type.casecmp("QUOTE") == 0)
+        :blockquote
+      when (begin_block? and block_type.casecmp("CENTER") == 0)
+        :center
+      when (begin_block? and block_type.casecmp("EXAMPLE") == 0)
+        :example
+      when (begin_block? and block_type.casecmp("SRC") == 0)
+        :src
+      end
     end
 
     ######################################################################
