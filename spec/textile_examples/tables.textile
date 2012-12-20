@@ -1,18 +1,19 @@
-TABLES
+p. TABLES
 
-Different types of ORG tables.
+p. Different types of ORG tables.
 
 h1. Simple table, no header.
 
 | Cell one   | Cell two  |
 | Cell three | Cell four |
 
+
 h1. Indented table
 
 | Cell one |
 | Cell two |
 
-And here's some paragraph content. The line breaks will need to get
+p. And here's some paragraph content. The line breaks will need to get
 removed here, but not for the tables.
 
 h1. Table with header
@@ -21,7 +22,7 @@ h1. Table with header
 | Four  | Five  | Six   |
 | Seven | Eight | Nine  |
 
-The separator row should not get printed out.
+p. The separator row should not get printed out.
 
 h1. Table with complete box
 
@@ -29,7 +30,7 @@ h1. Table with complete box
 | Four  | Five  | Six   |
 | Seven | Eight | Nine  |
 
-Only the first row should be a header row.
+p. Only the first row should be a header row.
 
 h1. Table with extra lines
 
@@ -38,4 +39,4 @@ h1. Table with extra lines
 | Seven | Eight  | Nine   |
 | Ten   | Eleven | Twelve |
 
-Only the first row should be a header row.
+p. Only the first row should be a header row.

@@ -1,11 +1,11 @@
 h1. Lists
 
-I want to make sure I have great support for lists.
+p. I want to make sure I have great support for lists.
 
 * This is an unordered list
 * This continues the unordered list
 
-And this is a paragraph *after* the list.
+p. And this is a paragraph *after* the list.
 
 h2. Wrapping within the list
 
@@ -32,5 +32,5 @@ line to keep @textile@ happy.
 h2. Edge cases
 
 * This is a single-line list.
-And this is a *separate paragraph.* Note the indentation in the org
+p. And this is a *separate paragraph.* Note the indentation in the org
 file.
