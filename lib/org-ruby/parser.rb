@@ -276,9 +276,9 @@ module Orgmode
 
           output_buffer << line.output_text << "\n"
 
-        when :inline_example
+        when :example_line
 
-          output_buffer << line.output_text
+          output_buffer << line.output_text << "\n"
 
         else
           if output_buffer.preserve_whitespace? then

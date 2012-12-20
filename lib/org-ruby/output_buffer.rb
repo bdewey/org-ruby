@@ -53,9 +53,6 @@ module Orgmode
       @re_help = RegexpHelper.new
     end
 
-    HeadingModes = [:heading1, :heading2, :heading3, :heading4, :heading5, :heading6]
-    BlockModes   = [:blockquote, :center, :example, :src]
-
     def current_mode
       @mode_stack.last
     end
@@ -79,7 +76,7 @@ module Orgmode
     def prepare(line)
       @logger.debug "Looking at #{line.paragraph_type}(#{current_mode}) : #{line.to_s}"
       # We try to get the lang from #+BEGIN_SRC blocks
-      @block_lang = line.block_lang if line.code_block?
+      @block_lang = line.block_lang if line.begin_block?
       if not should_accumulate_output?(line)
         flush!
         maintain_mode_stack(line)
@@ -135,24 +132,38 @@ module Orgmode
 
     # Test if we're in an output mode in which whitespace is significant.
     def preserve_whitespace?
-      mode_is_code current_mode
+      mode_is_code? current_mode
     end
 
     ######################################################################
     private
 
-    def mode_is_code(mode)
-      case mode
-      when :src, :inline_example, :example
-        true
-      else
-        false
-      end
+    def mode_is_heading?(mode)
+      [:heading1, :heading2, :heading3,
+       :heading4, :heading5, :heading6].include? mode
+    end
+
+    def mode_is_block?(mode)
+      [:blockquote, :center, :example, :src].include? mode
+    end
+
+    def mode_is_code?(mode)
+      [:example, :inline_example, :src].include? mode
+    end
+
+    def boundary_of_block?(line)
+      # Boundary of inline example
+      return true if ((line.paragraph_type == :example_line) ^
+                      (@output_type == :example_line))
+      # Boundary of begin...end block
+      return true if (@output_type == :begin_block and
+                      not mode_is_code?(current_mode))
+      return true if @output_type == :end_block
     end
 
     def maintain_mode_stack(line)
       # Always close heading line
-      pop_mode if HeadingModes.include?(current_mode)
+      pop_mode if mode_is_heading? current_mode
       # Always close paragraph mode
       pop_mode if current_mode == :paragraph
 
@@ -165,7 +176,7 @@ module Orgmode
         end
         while ((not @list_indent_stack.empty?) and
                @list_indent_stack.last == line.indent)
-          if BlockModes.include?(current_mode)
+          if mode_is_block? current_mode
             # Special case: Only end-block line closes the block
             pop_mode if line.end_block?
             break
@@ -187,8 +198,8 @@ module Orgmode
             @list_indent_stack.last <= line.indent)
           push_mode(line.paragraph_type, line.indent) unless line.begin_block?
         end
-      else # If blank line, close preceding paragraph
-        pop_mode if current_mode == :paragraph
+      else # If blank line, close preceding paragraph or inline example
+        pop_mode if current_mode == :paragraph or current_mode == :inline_example
       end
     end
 
@@ -202,14 +213,12 @@ module Orgmode
       # Special case: Assign mode if not yet done.
       return false if not current_mode
 
-      # Special case: We are accumulating code block content
-      return true if mode_is_code(current_mode) and not line.end_block?
-
-      # Special case: Don't accumulate output when block starts or ends
-      return false if @output_type == :begin_block or @output_type == :end_block
+      # Special case: Handles accumulating block content
+      return false if boundary_of_block?(line)
+      return true if mode_is_code?(current_mode) and not line.end_block?
 
       # Special case: Don't accumulate headings, comments and horizontal rules.
-      return false if (HeadingModes.include?(@output_type) or
+      return false if (mode_is_heading?(@output_type) or
                        @output_type == :comment or
                        @output_type == :horizontal_rule)
 
@@ -218,9 +227,9 @@ module Orgmode
 
       if line.paragraph_type == :paragraph
         # Paragraph gets accumulated only if its indent level is
-        # greater than the indent level of the previous modes.
-        @list_indent_stack[0..-2].each do |indent|
-          return false if line.indent <= indent
+        # greater than the indent level of the previous mode.
+        if (@mode_stack[-2] and not mode_is_block? @mode_stack[-2])
+          return false if line.indent <= @list_indent_stack[-2]
         end
         # Special case: Multiple "paragraphs" get accumulated.
         return true

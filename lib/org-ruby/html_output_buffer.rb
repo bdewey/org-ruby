@@ -55,7 +55,7 @@ module Orgmode
     # Output buffer is entering a new mode. Use this opportunity to
     # write out one of the block tags in the HtmlBlockTag constant to
     # put this information in the HTML stream.
-    def push_mode(mode, indent = 0)
+    def push_mode(mode, indent)
       @list_indent_stack.push(indent)
       if HtmlBlockTag[mode] then
         css_class = @title_decoration
@@ -109,6 +109,7 @@ module Orgmode
               # Not supported lexer from Pygments, we fallback on using the text lexer
               @buffer = Pygments.highlight(@buffer, :lexer => 'text')
             end
+            @buffer << "\n"
           elsif defined? CodeRay
             # CodeRay might throw a warning when unsupported lang is set,
             # then fallback to using the text lexer
@@ -126,7 +127,7 @@ module Orgmode
 
         @logger.debug "FLUSH SRC CODE ==========> #{@buffer.inspect}"
         @output << @buffer
-      elsif mode_is_code(@buffer_mode) then
+      elsif mode_is_code?(@buffer_mode) then
         escape_buffer!
 
         # Whitespace is significant in :code mode. Always output the buffer
