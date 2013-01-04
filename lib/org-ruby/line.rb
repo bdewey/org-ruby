@@ -262,13 +262,13 @@ module Orgmode
         :table
       when inline_example?
         :inline_example
-      when (begin_block? and block_type.casecmp("QUOTE") == 0)
+      when (block_type and block_type.casecmp("QUOTE") == 0)
         :blockquote
-      when (begin_block? and block_type.casecmp("CENTER") == 0)
+      when (block_type and block_type.casecmp("CENTER") == 0)
         :center
-      when (begin_block? and block_type.casecmp("EXAMPLE") == 0)
+      when (block_type and block_type.casecmp("EXAMPLE") == 0)
         :example
-      when (begin_block? and block_type.casecmp("SRC") == 0)
+      when (block_type and block_type.casecmp("SRC") == 0)
         :src
       end
     end
