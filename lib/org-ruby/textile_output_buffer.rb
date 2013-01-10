@@ -19,7 +19,7 @@ module Orgmode
         @add_paragraph = false
         @output << "\n"
       end
-      true
+      false
     end
 
     def pop_mode(mode = nil)

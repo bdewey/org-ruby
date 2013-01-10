@@ -56,26 +56,25 @@ module Orgmode
     # write out one of the block tags in the HtmlBlockTag constant to
     # put this information in the HTML stream.
     def push_mode(mode, indent)
+      super(mode)
       @list_indent_stack.push(indent)
-      if HtmlBlockTag[mode] then
+
+      skip_tag = ((mode_is_table?(mode) and skip_tables?) or
+                  (mode == :src and defined? Pygments))
+      if HtmlBlockTag[mode] and not skip_tag
         css_class = @title_decoration
         css_class = " class=\"src\"" if mode == :src and @block_lang.empty?
         css_class = " class=\"src src-#{@block_lang}\"" if mode == :src and not @block_lang.empty?
         css_class = " class=\"example\"" if (mode == :example || mode == :inline_example)
         css_class = " style=\"text-align: center\"" if mode == :center
 
-        skip = ((mode_is_table?(mode) and skip_tables?) or
-                (mode == :src and defined? Pygments))
-        unless skip
-          output_indentation
-          @logger.debug "#{mode}: <#{HtmlBlockTag[mode]}#{css_class}>\n"
-          @output << "<#{HtmlBlockTag[mode]}#{css_class}>"
-        end
+        output_indentation
+        @logger.debug "#{mode}: <#{HtmlBlockTag[mode]}#{css_class}>\n"
+        @output << "<#{HtmlBlockTag[mode]}#{css_class}>"
         # Entering a new mode obliterates the title decoration
         @title_decoration = ""
       end
-      super(mode)
-      skip
+      not skip_tag
     end
 
     # We are leaving a mode. Close any tags that were opened when

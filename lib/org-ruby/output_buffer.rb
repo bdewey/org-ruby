@@ -181,12 +181,14 @@ module Orgmode
                (not mode_is_block? current_mode))
           pop_mode
         end
+      end
 
+      unless line.paragraph_type == :blank
         # Opens the major mode of line if it exists.
         if line.major_mode
           if (@list_indent_stack.empty? or
               @list_indent_stack.last < line.indent)
-            @output << "\n" unless push_mode(line.major_mode, line.indent)
+            @output << "\n" if push_mode(line.major_mode, line.indent)
           end
         end
         # Open tag that precedes text immediately
@@ -194,12 +196,12 @@ module Orgmode
             @list_indent_stack.last <= line.indent)
           push_mode(line.paragraph_type, line.indent) unless line.block_type
         end
+      end
 
-        # Special case: Only end-block line closes the block
-        if mode_is_block? current_mode
-          pop_mode if (line.end_block? and
-                       line.major_mode == current_mode)
-        end
+      # Special case: Only end-block line closes the block
+      if mode_is_block? current_mode
+        pop_mode if (line.end_block? and
+                     line.major_mode == current_mode)
       end
     end
 
