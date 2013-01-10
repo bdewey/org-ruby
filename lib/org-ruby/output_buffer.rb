@@ -132,7 +132,7 @@ module Orgmode
 
     # Test if we're in an output mode in which whitespace is significant.
     def preserve_whitespace?
-      mode_is_code? current_mode
+      mode_is_code? current_mode or current_mode == :inline_example
     end
 
     ######################################################################
@@ -148,7 +148,7 @@ module Orgmode
     end
 
     def mode_is_code?(mode)
-      [:example, :inline_example, :src].include? mode
+      [:example, :src].include? mode
     end
 
     def boundary_of_block?(line)
@@ -194,7 +194,11 @@ module Orgmode
         # Open tag that precedes text immediately
         if (@list_indent_stack.empty? or
             @list_indent_stack.last <= line.indent)
-          push_mode(line.paragraph_type, line.indent) unless line.block_type
+          # Don't push intrinsic mode of a block and inline example
+          unless (line.block_type or
+                  line.paragraph_type == :example_line)
+            push_mode(line.paragraph_type, line.indent)
+          end
         end
       end
 
@@ -215,12 +219,13 @@ module Orgmode
       # Special case: Assign mode if not yet done.
       return false unless current_mode
 
-      # Special case: Handles accumulating block content
+      # Special case: Handles accumulating block content and example lines
       if mode_is_code? current_mode
         return true unless (line.end_block? and
                             line.major_mode == current_mode)
       end
       return false if boundary_of_block?(line)
+      return true if current_mode == :inline_example
 
       # Special case: Don't accumulate headings, comments and horizontal rules.
       return false if (mode_is_heading?(@output_type) or
