@@ -62,11 +62,18 @@ module Orgmode
       skip_tag = ((mode_is_table?(mode) and skip_tables?) or
                   (mode == :src and defined? Pygments))
       if HtmlBlockTag[mode] and not skip_tag
-        css_class = @title_decoration
-        css_class = " class=\"src\"" if mode == :src and @block_lang.empty?
-        css_class = " class=\"src src-#{@block_lang}\"" if mode == :src and not @block_lang.empty?
-        css_class = " class=\"example\"" if (mode == :example || mode == :inline_example)
-        css_class = " style=\"text-align: center\"" if mode == :center
+        css_class = case
+                    when (mode == :src and @block_lang.empty?)
+                      " class=\"src\""
+                    when (mode == :src and not @block_lang.empty?)
+                      " class=\"src src-#{@block_lang}\""
+                    when (mode == :example || mode == :inline_example)
+                      " class=\"example\""
+                    when mode == :center
+                      " style=\"text-align: center\""
+                    else
+                      @title_decoration
+                    end
 
         output_indentation
         @logger.debug "#{mode}: <#{HtmlBlockTag[mode]}#{css_class}>\n"
