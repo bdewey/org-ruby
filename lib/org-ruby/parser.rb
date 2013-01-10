@@ -255,34 +255,12 @@ module Orgmode
         # See if we're carrying paragraph payload, and output
         # it if we're about to switch to some other output type.
         output_buffer.prepare(line)
-        case line.paragraph_type
-        when :metadata, :table_separator, :blank, :comment, :property_drawer_item, :property_drawer_begin_block, :property_drawer_end_block
-
-          output_buffer << line.line << "\n" if output_buffer.preserve_whitespace?
-
-        when :begin_block, :end_block
-
-          # Nothing
-
-        when :table_row, :table_header
-
-          if output_buffer.preserve_whitespace?
-            output_buffer << line.line << "\n"
-          else
-            output_buffer << line.line.lstrip << "\n"
-          end
-
-        when :src
-
+        if output_buffer.preserve_whitespace? and not line.begin_block?
           output_buffer << line.output_text << "\n"
-
-        when :example_line
-
-          output_buffer << line.output_text << "\n"
-
         else
-          if output_buffer.preserve_whitespace? then
-            output_buffer << line.output_text << "\n"
+          case line.paragraph_type
+          when :metadata, :table_separator, :blank, :comment, :property_drawer_item, :property_drawer_begin_block, :property_drawer_end_block, :begin_block, :end_block
+            # Nothing
           else
             output_buffer << line.output_text.strip << "\n"
           end
