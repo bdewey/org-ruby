@@ -156,8 +156,7 @@ module Orgmode
       return true if ((line.paragraph_type == :inline_example) ^
                       (@output_type == :inline_example))
       # Boundary of begin...end block
-      return true if (@output_type == :begin_block or
-                      @output_type == :end_block)
+      return true if mode_is_block? @output_type
     end
 
     def maintain_mode_stack(line)
@@ -166,43 +165,42 @@ module Orgmode
                    current_mode == :paragraph or
                    current_mode == :inline_example)
 
+      # End-block line closes every mode within block
+      if line.end_block? and @mode_stack.include? line.paragraph_type
+        pop_mode until current_mode == line.paragraph_type
+      end
+
       if ((not line.paragraph_type == :blank) or
           @output_type == :blank)
         # Close previous tags on demand. Two blank lines close all tags.
         while ((not @list_indent_stack.empty?) and
-               @list_indent_stack.last > line.indent)
-          pop_mode
-        end
-        while ((not @list_indent_stack.empty?) and
-               @list_indent_stack.last == line.indent and
-               # item can't close its major mode
-               line.major_mode != current_mode and
-               # don't allow an arbitrary line to close block
+               @list_indent_stack.last >= line.indent and
+               # Don't allow an arbitrary line to close block
                (not mode_is_block? current_mode))
-          pop_mode
-        end
-      end
-
-      unless line.paragraph_type == :blank
-        # Opens the major mode of line if it exists.
-        if line.major_mode
-          if (@list_indent_stack.empty? or
-              @list_indent_stack.last < line.indent)
-            push_mode(line.major_mode, line.indent)
+          # Item can't close its major mode
+          if (@list_indent_stack.last == line.indent and
+              line.major_mode == current_mode)
+            break
+          else
+            pop_mode
           end
         end
-        # Open tag that precedes text immediately
-        if (@list_indent_stack.empty? or
-            @list_indent_stack.last <= line.indent)
-          # Don't push intrinsic mode of a block
-          push_mode(line.paragraph_type, line.indent) unless line.block_type
-        end
       end
 
-      # Special case: Only end-block line closes the block
-      if mode_is_block? current_mode
-        pop_mode if (line.end_block? and
-                     line.major_mode == current_mode)
+      # Special case: Only end-block line closes block
+      pop_mode if line.end_block? and line.paragraph_type == current_mode
+
+      unless line.paragraph_type == :blank
+        if (@list_indent_stack.empty? or
+            @list_indent_stack.last <= line.indent or
+            mode_is_block? current_mode)
+          # Opens the major mode of line if it exists
+          if @list_indent_stack.last != line.indent or mode_is_block? current_mode
+            push_mode(line.major_mode, line.indent) if line.major_mode
+          end
+          # Opens tag that precedes text immediately
+          push_mode(line.paragraph_type, line.indent) unless line.end_block?
+        end
       end
     end
 
@@ -219,7 +217,7 @@ module Orgmode
       # Special case: Handles accumulating block content and example lines
       if mode_is_code? current_mode
         return true unless (line.end_block? and
-                            line.major_mode == current_mode)
+                            line.paragraph_type == current_mode)
       end
       return false if boundary_of_block?(line)
       return true if current_mode == :inline_example

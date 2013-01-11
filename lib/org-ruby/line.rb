@@ -229,10 +229,14 @@ module Orgmode
         :property_drawer_item
       when metadata?
         :metadata
-      when begin_block?
-        :begin_block
-      when end_block?
-        :end_block
+      when (block_type and block_type.casecmp("QUOTE") == 0)
+        :blockquote
+      when (block_type and block_type.casecmp("CENTER") == 0)
+        :center
+      when (block_type and block_type.casecmp("EXAMPLE") == 0)
+        :example
+      when (block_type and block_type.casecmp("SRC") == 0)
+        :src
       when comment?
         :comment
       when table_separator?
@@ -260,14 +264,6 @@ module Orgmode
         :unordered_list
       when table?
         :table
-      when (block_type and block_type.casecmp("QUOTE") == 0)
-        :blockquote
-      when (block_type and block_type.casecmp("CENTER") == 0)
-        :center
-      when (block_type and block_type.casecmp("EXAMPLE") == 0)
-        :example
-      when (block_type and block_type.casecmp("SRC") == 0)
-        :src
       end
     end
 

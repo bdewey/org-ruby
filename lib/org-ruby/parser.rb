@@ -259,7 +259,7 @@ module Orgmode
           output_buffer << "\n" << line.output_text
         else
           case line.paragraph_type
-          when :metadata, :table_separator, :blank, :comment, :property_drawer_item, :property_drawer_begin_block, :property_drawer_end_block, :begin_block, :end_block
+          when :metadata, :table_separator, :blank, :comment, :property_drawer_item, :property_drawer_begin_block, :property_drawer_end_block, :blockquote, :center, :example, :src
             # Nothing
           else
             output_buffer << "\n" << line.output_text.strip
