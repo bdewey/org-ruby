@@ -8,40 +8,37 @@ module Orgmode
   # add a newline character prior emitting the output.
   class OutputBuffer
 
-    # This is the accumulation buffer. It's a holding pen so
-    # consecutive lines of the right type can get stuck together
-    # without intervening newlines.
-    attr_reader :buffer
-
-    # These are the Line objects that are currently in the accumulation
-    # buffer.
-    attr_reader :buffered_lines
-
-    # This is the output mode of the accumulation buffer.
-    attr_reader :buffer_mode
-
     # This is the overall output buffer
     attr_reader :output
 
     # This is the current type of output being accumulated.
     attr_accessor :output_type
 
-    # This stack is used to do proper outline numbering of headlines.
-    attr_accessor :headline_number_stack
-
     # Creates a new OutputBuffer object that is bound to an output object.
     # The output will get flushed to =output=.
     def initialize(output)
-      @output = output
+      # This is the accumulation buffer. It's a holding pen so
+      # consecutive lines of the right type can get stuck together
+      # without intervening newlines.
       @buffer = ""
+
+      # These are the Line objects that are currently in the
+      # accumulation buffer.
       @buffered_lines = []
+
+      # This is the output mode of the accumulation buffer.
       @buffer_mode = nil
+
+      # This stack is used to do proper outline numbering of
+      # headlines.
+      @headline_number_stack = []
+
+      @output = output
       @output_type = :start
       @list_indent_stack = []
       @paragraph_modifier = nil
       @cancel_modifier = false
       @mode_stack = []
-      @headline_number_stack = []
 
       @logger = Logger.new(STDERR)
       if ENV['DEBUG'] or $DEBUG
@@ -71,9 +68,9 @@ module Orgmode
       m
     end
 
-    # Prepares the output buffer to receive content from a line.
-    # As a side effect, this may flush the current accumulated text.
-    def prepare(line)
+    def insert(line)
+      # Prepares the output buffer to receive content from a line.
+      # As a side effect, this may flush the current accumulated text.
       @logger.debug "Looking at #{line.paragraph_type}(#{current_mode}) : #{line.to_s}"
       # We try to get the lang from #+BEGIN_SRC blocks
       @block_lang = line.block_lang if line.begin_block?
@@ -86,7 +83,19 @@ module Orgmode
       else
         @output_type = line.paragraph_type
       end
+
+      # Adds the current line to the output buffer
       @buffered_lines.push(line)
+      if preserve_whitespace? and not line.begin_block?
+        self << "\n" << line.output_text
+      else
+        case line.paragraph_type
+        when :metadata, :table_separator, :blank, :comment, :property_drawer_item, :property_drawer_begin_block, :property_drawer_end_block, :blockquote, :center, :example, :src
+          # Nothing
+        else
+          self << "\n" << line.output_text.strip
+        end
+      end
     end
 
     # Flushes everything currently in the accumulation buffer into the

@@ -251,20 +251,7 @@ module Orgmode
     def self.translate(lines, output_buffer)
       output_buffer.output_type = :start
       lines.each do |line|
-
-        # See if we're carrying paragraph payload, and output
-        # it if we're about to switch to some other output type.
-        output_buffer.prepare(line)
-        if output_buffer.preserve_whitespace? and not line.begin_block?
-          output_buffer << "\n" << line.output_text
-        else
-          case line.paragraph_type
-          when :metadata, :table_separator, :blank, :comment, :property_drawer_item, :property_drawer_begin_block, :property_drawer_end_block, :blockquote, :center, :example, :src
-            # Nothing
-          else
-            output_buffer << "\n" << line.output_text.strip
-          end
-        end
+        output_buffer.insert(line)
       end
       output_buffer.flush!
       output_buffer.pop_mode while output_buffer.current_mode
