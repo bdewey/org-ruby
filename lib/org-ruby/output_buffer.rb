@@ -153,8 +153,8 @@ module Orgmode
 
     def boundary_of_block?(line)
       # Boundary of inline example
-      return true if ((line.paragraph_type == :example_line) ^
-                      (@output_type == :example_line))
+      return true if ((line.paragraph_type == :inline_example) ^
+                      (@output_type == :inline_example))
       # Boundary of begin...end block
       return true if (@output_type == :begin_block or
                       @output_type == :end_block)
@@ -194,11 +194,8 @@ module Orgmode
         # Open tag that precedes text immediately
         if (@list_indent_stack.empty? or
             @list_indent_stack.last <= line.indent)
-          # Don't push intrinsic mode of a block and inline example
-          unless (line.block_type or
-                  line.paragraph_type == :example_line)
-            push_mode(line.paragraph_type, line.indent)
-          end
+          # Don't push intrinsic mode of a block
+          push_mode(line.paragraph_type, line.indent) unless line.block_type
         end
       end
 

@@ -242,7 +242,7 @@ module Orgmode
       when table_header?
         :table_header
       when inline_example?
-        :example_line
+        :inline_example
       when horizontal_rule?
         :horizontal_rule
       else :paragraph
@@ -260,8 +260,6 @@ module Orgmode
         :unordered_list
       when table?
         :table
-      when inline_example?
-        :inline_example
       when (block_type and block_type.casecmp("QUOTE") == 0)
         :blockquote
       when (block_type and block_type.casecmp("CENTER") == 0)
