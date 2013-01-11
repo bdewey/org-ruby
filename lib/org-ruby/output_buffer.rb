@@ -188,7 +188,7 @@ module Orgmode
         if line.major_mode
           if (@list_indent_stack.empty? or
               @list_indent_stack.last < line.indent)
-            @output << "\n" if push_mode(line.major_mode, line.indent)
+            push_mode(line.major_mode, line.indent)
           end
         end
         # Open tag that precedes text immediately

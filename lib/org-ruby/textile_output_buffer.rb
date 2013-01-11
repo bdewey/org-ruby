@@ -14,12 +14,11 @@ module Orgmode
     def push_mode(mode, indent)
       @list_indent_stack.push(indent)
       super(mode)
-      @output << "bc.. " if mode_is_code? mode
+      @output << "bc. " if mode_is_code? mode
       if mode == :center or mode == :blockquote
         @add_paragraph = false
         @output << "\n"
       end
-      false
     end
 
     def pop_mode(mode = nil)
@@ -85,7 +84,8 @@ module Orgmode
       @logger.debug "FLUSH ==========> #{@output_type}"
       if @output_type == :blank and not preserve_whitespace?
         @output << "\n"
-      elsif (@buffer.length > 0) then
+      elsif @buffer.length > 0
+        @buffer.gsub!(/\A\n*/, "")
         @output << "p. " if @add_paragraph and current_mode == :paragraph
         if @mode_stack[0] and current_mode == :paragraph
           @output << "p=. " if @mode_stack[0] == :center
@@ -106,7 +106,7 @@ module Orgmode
           raise "Cannot be more than one headline!" if @buffered_lines.length > 1
           @output << "h#{headline.level}. #{headline.headline_text}\n"
         else
-          @output << inline_formatting(@buffer)
+          @output << inline_formatting(@buffer) << "\n"
         end
       end
       clear_accumulation_buffer!

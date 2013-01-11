@@ -47,6 +47,7 @@ module Orgmode
         @title_decoration = ""
       end
       @options = opts
+      @indentation = :start
       @footnotes = {}
       @unclosed_tags = []
       @logger.debug "HTML export options: #{@options.inspect}"
@@ -59,47 +60,58 @@ module Orgmode
       super(mode)
       @list_indent_stack.push(indent)
 
-      skip_tag = ((mode_is_table?(mode) and skip_tables?) or
-                  (mode == :src and defined? Pygments))
-      if HtmlBlockTag[mode] and not skip_tag
-        css_class = case
-                    when (mode == :src and @block_lang.empty?)
-                      " class=\"src\""
-                    when (mode == :src and not @block_lang.empty?)
-                      " class=\"src src-#{@block_lang}\""
-                    when (mode == :example || mode == :inline_example)
-                      " class=\"example\""
-                    when mode == :center
-                      " style=\"text-align: center\""
-                    else
-                      @title_decoration
-                    end
+      if HtmlBlockTag[mode]
+        unless ((mode_is_table?(mode) and skip_tables?) or
+                (mode == :src and defined? Pygments))
+          css_class = case
+                      when (mode == :src and @block_lang.empty?)
+                        " class=\"src\""
+                      when (mode == :src and not @block_lang.empty?)
+                        " class=\"src src-#{@block_lang}\""
+                      when (mode == :example || mode == :inline_example)
+                        " class=\"example\""
+                      when mode == :center
+                        " style=\"text-align: center\""
+                      else
+                        @title_decoration
+                      end
 
-        output_indentation
-        @logger.debug "#{mode}: <#{HtmlBlockTag[mode]}#{css_class}>\n"
-        @output << "<#{HtmlBlockTag[mode]}#{css_class}>"
-        # Entering a new mode obliterates the title decoration
-        @title_decoration = ""
+          @output << "\n" unless @indentation == :start
+          @indentation = :output
+          output_indentation
+          @logger.debug "#{mode}: <#{HtmlBlockTag[mode]}#{css_class}>"
+          @output << "<#{HtmlBlockTag[mode]}#{css_class}>"
+          # Entering a new mode obliterates the title decoration
+          @title_decoration = ""
+        end
       end
-      not skip_tag
     end
 
     # We are leaving a mode. Close any tags that were opened when
     # entering this mode.
     def pop_mode(mode = nil)
       m = super(mode)
-      if HtmlBlockTag[m] then
+      if HtmlBlockTag[m]
         unless ((mode_is_table?(m) and skip_tables?) or
                 (m == :src and defined? Pygments))
-          output_indentation
-          @logger.debug "</#{HtmlBlockTag[m]}>\n"
-          @output << "</#{HtmlBlockTag[m]}>\n"
+          if @indentation
+            @output << "\n"
+            output_indentation
+          end
+          @indentation = :output
+          @logger.debug "</#{HtmlBlockTag[m]}>"
+          @output << "</#{HtmlBlockTag[m]}>"
         end
       end
       @list_indent_stack.pop
     end
 
     def flush!
+      if @buffer.length > 0 and not preserve_whitespace?
+        @buffer.lstrip!
+        @indentation = nil
+      end
+
       if buffer_mode_is_src_block?
 
         # Only try to colorize #+BEGIN_SRC blocks with a specified language,
@@ -109,13 +121,13 @@ module Orgmode
 
           # NOTE: CodeRay and Pygments already escape the html once, so no need to escape_buffer!
           if defined? Pygments
+            @output << "\n"
             begin
               @buffer = Pygments.highlight(@buffer, :lexer => lang)
             rescue
               # Not supported lexer from Pygments, we fallback on using the text lexer
               @buffer = Pygments.highlight(@buffer, :lexer => 'text')
             end
-            @buffer << "\n"
           elsif defined? CodeRay
             # CodeRay might throw a warning when unsupported lang is set,
             # then fallback to using the text lexer
@@ -143,18 +155,21 @@ module Orgmode
       else
         escape_buffer!
         if @buffer.length > 0 and @output_type == :horizontal_rule then
-          @output << "<hr />\n"
+          @output << "\n"
+          @indentation = :output
+          output_indentation
+          @output << "<hr />"
         elsif @buffer.length > 0 and @buffer_mode == :definition_item then
           unless mode_is_table?(@buffer_mode) and skip_tables?
+            @output << "\n"
+            @indentation = :output
             output_indentation
             d = @buffer.split("::", 2)
             @output << "<#{HtmlBlockTag[:definition_term]}#{@title_decoration}>" << inline_formatting(d[0].strip) \
                     << "</#{HtmlBlockTag[:definition_term]}>"
             if d.length > 1 then
               @output << "<#{HtmlBlockTag[:definition_descr]}#{@title_decoration}>" << inline_formatting(d[1].strip) \
-                      << "</#{HtmlBlockTag[:definition_descr]}>\n"
-            else
-              @output << "\n"
+                      << "</#{HtmlBlockTag[:definition_descr]}>"
             end
             @title_decoration = ""
           end
@@ -167,11 +182,11 @@ module Orgmode
               if @options[:export_heading_number] then
                 level = headline.level
                 heading_number = get_next_headline_number(level)
-                output << "<span class=\"heading-number heading-number-#{level}\">#{heading_number} </span>"
+                @output << "<span class=\"heading-number heading-number-#{level}\">#{heading_number} </span>"
               end
               if @options[:export_todo] and headline.keyword then
                 keyword = headline.keyword
-                output << "<span class=\"todo-keyword #{keyword}\">#{keyword} </span>"
+                @output << "<span class=\"todo-keyword #{keyword}\">#{keyword} </span>"
               end
             end
             @output << inline_formatting(@buffer)
@@ -186,7 +201,7 @@ module Orgmode
     def output_footnotes!
       return false unless @options[:export_footnotes] and not @footnotes.empty?
 
-      @output << "<div id=\"footnotes\">\n<h2 class=\"footnotes\">Footnotes:\n</h2>\n<div id=\"text-footnotes\">\n"
+      @output << "\n<div id=\"footnotes\">\n<h2 class=\"footnotes\">Footnotes:</h2>\n<div id=\"text-footnotes\">\n"
 
       @footnotes.each do |name, defi|
         @output << "<p class=\"footnote\"><sup><a class=\"footnum\" name=\"fn.#{name}\" href=\"#fnr.#{name}\">#{name}</a></sup>" \
