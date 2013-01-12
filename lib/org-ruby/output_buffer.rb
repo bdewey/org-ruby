@@ -93,7 +93,9 @@ module Orgmode
         when :metadata, :table_separator, :blank, :comment, :property_drawer_item, :property_drawer_begin_block, :property_drawer_end_block, :blockquote, :center, :example, :src
           # Nothing
         else
-          self << "\n" << line.output_text.strip
+          self << "\n"
+          buffer_indentation
+          self << line.output_text.strip
         end
       end
     end
@@ -250,6 +252,10 @@ module Orgmode
       end
 
       false
+    end
+
+    def buffer_indentation
+      return false
     end
   end                           # class OutputBuffer
 end                             # module Orgmode

@@ -238,6 +238,11 @@ module Orgmode
       @buffer.gsub!(/>/, "&gt;")
     end
 
+    def buffer_indentation
+      indent = "  " * @list_indent_stack.length
+      self << indent
+    end
+
     def output_indentation
       indent = "  " * (@list_indent_stack.length - 1)
       @output << indent
