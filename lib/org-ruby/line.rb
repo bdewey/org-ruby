@@ -17,7 +17,7 @@ module Orgmode
     # Paragraph type determined for the line.
     attr_reader :paragraph_type
 
-    # Major modes assosiate paragraphs with a table, list and so on.
+    # Major modes associate paragraphs with a table, list and so on.
     attr_reader :major_mode
 
     # A line can have its type assigned instead of inferred from its
