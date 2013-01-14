@@ -74,8 +74,8 @@ describe Orgmode::Line do
 
   it "should return paragraph type" do
     Orgmode::Line.new("").paragraph_type.should eql(:blank)
-    Orgmode::Line.new("1. foo").paragraph_type.should eql(:ordered_list)
-    Orgmode::Line.new("- [ ] checkbox").paragraph_type.should eql(:unordered_list)
+    Orgmode::Line.new("1. foo").paragraph_type.should eql(:list_item)
+    Orgmode::Line.new("- [ ] checkbox").paragraph_type.should eql(:list_item)
     Orgmode::Line.new("hello!").paragraph_type.should eql(:paragraph)
   end
 
