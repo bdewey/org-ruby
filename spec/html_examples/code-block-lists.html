@@ -1,0 +1,72 @@
+<h1 class="title">Code blocks in lists</h1>
+<h2>No spaces in code block</h2>
+<pre class="example">
+- List starts
+ + Block without indentation
+   #+begin_example
+puts "test"
+   #+end_example
+- List continues here
+ + and finished here
+</pre>
+<ul>
+  <li>List starts
+  <ul>
+    <li>Block without indentation
+    <pre class="example">
+puts "test"
+    </pre>
+    </li>
+    <ul>
+      </li>
+      <li>List continues here
+      <ul>
+        <li>and finished here
+        </li>
+      </ul>
+      </li>
+    </ul>
+  </ul>
+</ul>
+<h2>Code block indented</h2>
+<pre class="example">
+- List starts
+ + Block without indentation
+   #+begin_example ruby
+  puts "test"
+   #+end_example
+- List continues here
+ + and finished here
+</pre>
+<ul>
+  <li>List starts
+  <ul>
+    <li>Block without indentation
+    <pre class="example">
+  puts "test"
+    </pre>
+    </li>
+  </ul>
+  </li>
+  <li>List continues here
+  <ul>
+    <li>and finished here
+    </li>
+  </ul>
+  </li>
+</ul>
+<h2>Indentation level in example block</h2>
+<pre class="example">
+- Indentation of a begin_example code block
+ #+begin_example
+   (+ 3 5)
+ #+end_example
+
+</pre>
+<ul>
+  <li>Indentation of a begin_example code block
+  <pre class="example">
+    (+ 3 5)
+  </pre>
+  </li>
+</ul>
