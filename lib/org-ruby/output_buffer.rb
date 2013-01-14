@@ -8,40 +8,37 @@ module Orgmode
   # add a newline character prior emitting the output.
   class OutputBuffer
 
-    # This is the accumulation buffer. It's a holding pen so
-    # consecutive lines of the right type can get stuck together
-    # without intervening newlines.
-    attr_reader :buffer
-
-    # These are the Line objects that are currently in the accumulation
-    # buffer.
-    attr_reader :buffered_lines
-
-    # This is the output mode of the accumulation buffer.
-    attr_reader :buffer_mode
-
     # This is the overall output buffer
     attr_reader :output
 
     # This is the current type of output being accumulated.
     attr_accessor :output_type
 
-    # This stack is used to do proper outline numbering of headlines.
-    attr_accessor :headline_number_stack
-
     # Creates a new OutputBuffer object that is bound to an output object.
     # The output will get flushed to =output=.
     def initialize(output)
-      @output = output
+      # This is the accumulation buffer. It's a holding pen so
+      # consecutive lines of the right type can get stuck together
+      # without intervening newlines.
       @buffer = ""
+
+      # These are the Line objects that are currently in the
+      # accumulation buffer.
       @buffered_lines = []
+
+      # This is the output mode of the accumulation buffer.
       @buffer_mode = nil
+
+      # This stack is used to do proper outline numbering of
+      # headlines.
+      @headline_number_stack = []
+
+      @output = output
       @output_type = :start
       @list_indent_stack = []
       @paragraph_modifier = nil
       @cancel_modifier = false
       @mode_stack = []
-      @headline_number_stack = []
 
       @logger = Logger.new(STDERR)
       if ENV['DEBUG'] or $DEBUG
@@ -51,10 +48,7 @@ module Orgmode
       end
 
       @re_help = RegexpHelper.new
-      push_mode(:normal)
     end
-
-    Modes = [:normal, :ordered_list, :unordered_list, :definition_list, :blockquote, :src, :example, :table, :inline_example, :center, :property_drawer]
 
     def current_mode
       @mode_stack.last
@@ -65,7 +59,6 @@ module Orgmode
     end
 
     def push_mode(mode)
-      raise "Not a recognized mode: #{mode}" unless Modes.include?(mode)
       @mode_stack.push(mode)
     end
 
@@ -75,30 +68,36 @@ module Orgmode
       m
     end
 
-    # Prepares the output buffer to receive content from a line.
-    # As a side effect, this may flush the current accumulated text.
-    def prepare(line)
+    def insert(line)
+      # Prepares the output buffer to receive content from a line.
+      # As a side effect, this may flush the current accumulated text.
       @logger.debug "Looking at #{line.paragraph_type}(#{current_mode}) : #{line.to_s}"
-      if line.begin_block? and line.code_block?
+      # We try to get the lang from #+BEGIN_SRC blocks
+      @block_lang = line.block_lang if line.begin_block?
+      unless should_accumulate_output?(line)
         flush!
-        # We try to get the lang from #+BEGIN_SRC blocks
-        @block_lang = line.block_lang
-        @output_type = line.paragraph_type
-      elsif current_mode == :example and line.end_block?
-        flush!
-        @output_type = line.paragraph_type
-      elsif not should_accumulate_output?(line)
-        flush!
-        maintain_list_indent_stack(line)
+        maintain_mode_stack(line)
+      end
+      if line.assigned_paragraph_type
+        @output_type = line.assigned_paragraph_type
+      else
         @output_type = line.paragraph_type
       end
-      push_mode(:inline_example) if line.inline_example? and current_mode != :inline_example and not line.property_drawer?
-      pop_mode(:inline_example) if current_mode == :inline_example and !line.inline_example?
-      push_mode(:property_drawer) if line.property_drawer? and current_mode != :property_drawer
-      pop_mode(:property_drawer) if current_mode == :property_drawer and line.property_drawer_end_block?
-      push_mode(:table) if enter_table?
-      pop_mode(:table) if exit_table?
+
+      # Adds the current line to the output buffer
       @buffered_lines.push(line)
+      if preserve_whitespace? and not line.begin_block?
+        self << "\n" << line.output_text
+      else
+        case line.paragraph_type
+        when :metadata, :table_separator, :blank, :comment, :property_drawer_item, :property_drawer_begin_block, :property_drawer_end_block, :blockquote, :center, :example, :src
+          # Nothing
+        else
+          self << "\n"
+          buffer_indentation
+          self << line.output_text.strip
+        end
+      end
     end
 
     # Flushes everything currently in the accumulation buffer into the
@@ -127,18 +126,6 @@ module Orgmode
       @headline_number_stack.join(".")
     end
 
-    # Tests if we are entering a table mode.
-    def enter_table?
-      ((@output_type == :table_row) || (@output_type == :table_header) || (@output_type == :table_separator)) &&
-        (current_mode != :table)
-    end
-
-    # Tests if we are existing a table mode.
-    def exit_table?
-      ((@output_type != :table_row) && (@output_type != :table_header) && (@output_type != :table_separator)) &&
-        (current_mode == :table)
-    end
-
     # Accumulate the string @str@.
     def << (str)
       if @buffer_mode && @buffer_mode != current_mode then
@@ -156,50 +143,74 @@ module Orgmode
 
     # Test if we're in an output mode in which whitespace is significant.
     def preserve_whitespace?
-      mode_is_code current_mode
+      mode_is_code? current_mode or current_mode == :inline_example
     end
 
     ######################################################################
     private
 
-    def mode_is_code(mode)
-      case mode
-      when :src, :inline_example, :example
-        true
-      else
-        false
-      end
+    def mode_is_heading?(mode)
+      [:heading1, :heading2, :heading3,
+       :heading4, :heading5, :heading6].include? mode
     end
 
-    def maintain_list_indent_stack(line)
-      if (line.plain_list?) then
-        while (not @list_indent_stack.empty? \
-               and (@list_indent_stack.last > line.indent))
-          @list_indent_stack.pop
-          pop_mode
+    def mode_is_block?(mode)
+      [:blockquote, :center, :example, :src].include? mode
+    end
+
+    def mode_is_code?(mode)
+      [:example, :src].include? mode
+    end
+
+    def boundary_of_block?(line)
+      # Boundary of inline example
+      return true if ((line.paragraph_type == :inline_example) ^
+                      (@output_type == :inline_example))
+      # Boundary of begin...end block
+      return true if mode_is_block? @output_type
+    end
+
+    def maintain_mode_stack(line)
+      # Always close a heading line, paragraph and inline example
+      pop_mode if (mode_is_heading? current_mode or
+                   current_mode == :paragraph or
+                   current_mode == :inline_example)
+
+      # End-block line closes every mode within block
+      if line.end_block? and @mode_stack.include? line.paragraph_type
+        pop_mode until current_mode == line.paragraph_type
+      end
+
+      if ((not line.paragraph_type == :blank) or
+          @output_type == :blank)
+        # Close previous tags on demand. Two blank lines close all tags.
+        while ((not @list_indent_stack.empty?) and
+               @list_indent_stack.last >= line.indent and
+               # Don't allow an arbitrary line to close block
+               (not mode_is_block? current_mode))
+          # Item can't close its major mode
+          if (@list_indent_stack.last == line.indent and
+              line.major_mode == current_mode)
+            break
+          else
+            pop_mode
+          end
         end
-        if (@list_indent_stack.empty? \
-            or @list_indent_stack.last < line.indent)
-          @list_indent_stack.push(line.indent)
-          push_mode line.paragraph_type
-        end
-      elsif line.blank? then
+      end
 
-        # Nothing
+      # Special case: Only end-block line closes block
+      pop_mode if line.end_block? and line.paragraph_type == current_mode
 
-      elsif ((not line.plain_list?) and
-             (not @list_indent_stack.empty?) and
-             (line.indent > @list_indent_stack.last))
-
-        # Nothing -- output this paragraph inside
-        # the list block (ul/ol)
-
-      else
-        @list_indent_stack = []
-        while ((current_mode == :ordered_list) or
-               (current_mode == :definition_list) or
-               (current_mode == :unordered_list))
-          pop_mode
+      unless line.paragraph_type == :blank
+        if (@list_indent_stack.empty? or
+            @list_indent_stack.last <= line.indent or
+            mode_is_block? current_mode)
+          # Opens the major mode of line if it exists
+          if @list_indent_stack.last != line.indent or mode_is_block? current_mode
+            push_mode(line.major_mode, line.indent) if line.major_mode
+          end
+          # Opens tag that precedes text immediately
+          push_mode(line.paragraph_type, line.indent) unless line.end_block?
         end
       end
     end
@@ -209,39 +220,42 @@ module Orgmode
     end
 
     # Tests if the current line should be accumulated in the current
-    # output buffer.  (Extraneous line breaks in the orgmode buffer
-    # are removed by accumulating lines in the output buffer without
-    # line breaks.)
+    # output buffer.
     def should_accumulate_output?(line)
+      # Special case: Assign mode if not yet done.
+      return false unless current_mode
 
-      # Special case: We are accumulating source code block content for colorizing
-      return true if line.paragraph_type == :src and @output_type == :src
+      # Special case: Handles accumulating block content and example lines
+      if mode_is_code? current_mode
+        return true unless (line.end_block? and
+                            line.paragraph_type == current_mode)
+      end
+      return false if boundary_of_block?(line)
+      return true if current_mode == :inline_example
 
-      # Special case: Preserve line breaks in block code mode.
-      return false if preserve_whitespace?
+      # Special case: Don't accumulate headings, comments and horizontal rules.
+      return false if (mode_is_heading?(@output_type) or
+                       @output_type == :comment or
+                       @output_type == :horizontal_rule)
 
-      # Special case: Multiple blank lines get accumulated.
-      return true if line.paragraph_type == :blank and @output_type == :blank
+      # Special case: Blank line at least splits paragraphs
+      return false if @output_type == :blank
 
-      # Currently only "paragraphs" get accumulated with previous output.
-      return false unless line.paragraph_type == :paragraph
-      if ((@output_type == :ordered_list) or
-          (@output_type == :definition_list) or
-          (@output_type == :unordered_list)) then
-
-        # If the previous output type was a list item, then we only put a paragraph in it
-        # if its indent level is greater than the list indent level.
-
-        return false unless line.indent > @list_indent_stack.last
+      if line.paragraph_type == :paragraph
+        # Paragraph gets accumulated only if its indent level is
+        # greater than the indent level of the previous mode.
+        if @mode_stack[-2] and not mode_is_block? @mode_stack[-2]
+          return false if line.indent <= @list_indent_stack[-2]
+        end
+        # Special case: Multiple "paragraphs" get accumulated.
+        return true
       end
 
-      # Only accumulate paragraphs with lists & paragraphs.
-      return false unless
-        ((@output_type == :paragraph) or
-         (@output_type == :ordered_list) or
-         (@output_type == :definition_list) or
-         (@output_type == :unordered_list))
-      true
+      false
+    end
+
+    def buffer_indentation
+      return false
     end
   end                           # class OutputBuffer
 end                             # module Orgmode

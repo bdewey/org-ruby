@@ -15,30 +15,26 @@ module Orgmode
 
     HtmlBlockTag = {
       :paragraph => "p",
-      :ordered_list => "li",
-      :unordered_list => "li",
+      :unordered_list => "ul",
+      :ordered_list => "ol",
+      :list_item => "li",
+      :definition_list => "dl",
       :definition_term => "dt",
       :definition_descr => "dd",
+      :table => "table",
       :table_row => "tr",
       :table_header => "tr",
+      :blockquote => "blockquote",
+      :example => "pre",
+      :src => "pre",
+      :inline_example => "pre",
+      :center => "div",
       :heading1 => "h1",
       :heading2 => "h2",
       :heading3 => "h3",
       :heading4 => "h4",
       :heading5 => "h5",
       :heading6 => "h6"
-    }
-
-    ModeTag = {
-      :unordered_list => "ul",
-      :ordered_list => "ol",
-      :definition_list => "dl",
-      :table => "table",
-      :blockquote => "blockquote",
-      :example => "pre",
-      :src => "pre",
-      :inline_example => "pre",
-      :center => "div"
     }
 
     attr_reader :options
@@ -51,61 +47,71 @@ module Orgmode
         @title_decoration = ""
       end
       @options = opts
+      @indentation = :start
       @footnotes = {}
       @unclosed_tags = []
       @logger.debug "HTML export options: #{@options.inspect}"
     end
 
     # Output buffer is entering a new mode. Use this opportunity to
-    # write out one of the block tags in the ModeTag constant to put
-    # this information in the HTML stream.
-    def push_mode(mode)
-      if ModeTag[mode] then
-        output_indentation
-        css_class = ""
-        css_class = " class=\"src\"" if mode == :src and @block_lang.empty?
-        css_class = " class=\"src src-#{@block_lang}\"" if mode == :src and not @block_lang.empty?
-        css_class = " class=\"example\"" if (mode == :example || mode == :inline_example)
-        css_class = " style=\"text-align: center\"" if mode == :center
-
-        unless ((mode == :table and skip_tables?) or
-                (mode == :src and defined? Pygments))
-          @logger.debug "#{mode}: <#{ModeTag[mode]}#{css_class}>\n"
-          @output << "<#{ModeTag[mode]}#{css_class}>\n"
-        end
-        # Entering a new mode obliterates the title decoration
-        @title_decoration = ""
-      end
+    # write out one of the block tags in the HtmlBlockTag constant to
+    # put this information in the HTML stream.
+    def push_mode(mode, indent)
       super(mode)
+      @list_indent_stack.push(indent)
+
+      if HtmlBlockTag[mode]
+        unless ((mode_is_table?(mode) and skip_tables?) or
+                (mode == :src and defined? Pygments))
+          css_class = case
+                      when (mode == :src and @block_lang.empty?)
+                        " class=\"src\""
+                      when (mode == :src and not @block_lang.empty?)
+                        " class=\"src src-#{@block_lang}\""
+                      when (mode == :example || mode == :inline_example)
+                        " class=\"example\""
+                      when mode == :center
+                        " style=\"text-align: center\""
+                      else
+                        @title_decoration
+                      end
+
+          @output << "\n" unless @indentation == :start
+          @indentation = :output
+          output_indentation
+          @logger.debug "#{mode}: <#{HtmlBlockTag[mode]}#{css_class}>"
+          @output << "<#{HtmlBlockTag[mode]}#{css_class}>"
+          # Entering a new mode obliterates the title decoration
+          @title_decoration = ""
+        end
+      end
     end
 
     # We are leaving a mode. Close any tags that were opened when
     # entering this mode.
     def pop_mode(mode = nil)
       m = super(mode)
-      if ModeTag[m] then
-        output_indentation
-        # Need to close the floating li elements before closing the list
-        if (m == :unordered_list or
-            m == :ordered_list or
-            m == :definition_list) and
-            (not @unclosed_tags.empty?)
-          close_floating_li_tags
+      if HtmlBlockTag[m]
+        unless ((mode_is_table?(m) and skip_tables?) or
+                (m == :src and defined? Pygments))
+          if @indentation
+            @output << "\n"
+            output_indentation
+          end
+          @indentation = :output
+          @logger.debug "</#{HtmlBlockTag[m]}>"
+          @output << "</#{HtmlBlockTag[m]}>"
         end
-
-        unless ((mode == :table and skip_tables?) or
-                (mode == :src and defined? Pygments))
-          @logger.debug "</#{ModeTag[m]}>\n"
-          @output << "</#{ModeTag[m]}>\n"
-        end
-
-        # In case it was a sublist, close it here
-        close_last_li_tag_maybe
       end
+      @list_indent_stack.pop
     end
 
     def flush!
-      @buffer = @buffer.rstrip
+      if @buffer.length > 0 and not preserve_whitespace?
+        @buffer.lstrip!
+        @indentation = nil
+      end
+
       if buffer_mode_is_src_block?
 
         # Only try to colorize #+BEGIN_SRC blocks with a specified language,
@@ -115,6 +121,7 @@ module Orgmode
 
           # NOTE: CodeRay and Pygments already escape the html once, so no need to escape_buffer!
           if defined? Pygments
+            @output << "\n"
             begin
               @buffer = Pygments.highlight(@buffer, :lexer => lang)
             rescue
@@ -138,68 +145,51 @@ module Orgmode
 
         @logger.debug "FLUSH SRC CODE ==========> #{@buffer.inspect}"
         @output << @buffer
-      elsif mode_is_code(@buffer_mode) then
+      elsif mode_is_code?(@buffer_mode) then
         escape_buffer!
 
         # Whitespace is significant in :code mode. Always output the buffer
         # and do not do any additional translation.
         @logger.debug "FLUSH CODE ==========> #{@buffer.inspect}"
-        @output << @buffer << "\n"
+        @output << @buffer
       else
         escape_buffer!
         if @buffer.length > 0 and @output_type == :horizontal_rule then
-          @output << "<hr />\n"
-        elsif @buffer.length > 0 and @output_type == :definition_list then
-          unless buffer_mode_is_table? and skip_tables?
+          @output << "\n"
+          @indentation = :output
+          output_indentation
+          @output << "<hr />"
+        elsif @buffer.length > 0 and @buffer_mode == :definition_item then
+          unless mode_is_table?(@buffer_mode) and skip_tables?
+            @output << "\n"
+            @indentation = :output
             output_indentation
             d = @buffer.split("::", 2)
             @output << "<#{HtmlBlockTag[:definition_term]}#{@title_decoration}>" << inline_formatting(d[0].strip) \
                     << "</#{HtmlBlockTag[:definition_term]}>"
             if d.length > 1 then
               @output << "<#{HtmlBlockTag[:definition_descr]}#{@title_decoration}>" << inline_formatting(d[1].strip) \
-                      << "</#{HtmlBlockTag[:definition_descr]}>\n"
-            else
-              @output << "\n"
+                      << "</#{HtmlBlockTag[:definition_descr]}>"
             end
             @title_decoration = ""
           end
         elsif @buffer.length > 0 then
-          unless buffer_mode_is_table? and skip_tables?
+          unless mode_is_table?(@buffer_mode) and skip_tables?
             @logger.debug "FLUSH      ==========> #{@buffer_mode}"
-            output_indentation
-            if ((@buffered_lines[0].plain_list?) and
-                (@unclosed_tags.count == @list_indent_stack.count))
-              @output << @unclosed_tags.pop
-              output_indentation
-            end
-            @output << "<#{HtmlBlockTag[@output_type]}#{@title_decoration}>"
             if (@buffered_lines[0].kind_of?(Headline)) then
               headline = @buffered_lines[0]
               raise "Cannot be more than one headline!" if @buffered_lines.length > 1
               if @options[:export_heading_number] then
                 level = headline.level
                 heading_number = get_next_headline_number(level)
-                output << "<span class=\"heading-number heading-number-#{level}\">#{heading_number} </span>"
+                @output << "<span class=\"heading-number heading-number-#{level}\">#{heading_number} </span>"
               end
               if @options[:export_todo] and headline.keyword then
                 keyword = headline.keyword
-                output << "<span class=\"todo-keyword #{keyword}\">#{keyword} </span>"
+                @output << "<span class=\"todo-keyword #{keyword}\">#{keyword} </span>"
               end
             end
             @output << inline_formatting(@buffer)
-
-            # Only close the list when it is the last element from that list,
-            # or when starting another list
-            if (@output_type == :unordered_list or
-                @output_type == :ordered_list   or
-                @output_type == :definition_list) and
-                (not @list_indent_stack.empty?)
-              @unclosed_tags.push("</#{HtmlBlockTag[@output_type]}>\n")
-              @output << "\n"
-            else
-              @output << "</#{HtmlBlockTag[@output_type]}>\n"
-            end
-            @title_decoration = ""
           else
             @logger.debug "SKIP       ==========> #{@buffer_mode}"
           end
@@ -211,12 +201,12 @@ module Orgmode
     def output_footnotes!
       return false unless @options[:export_footnotes] and not @footnotes.empty?
 
-      @output << "<div id=\"footnotes\">\n<h2 class=\"footnotes\">Footnotes: </h2>\n<div id=\"text-footnotes\">\n"
+      @output << "\n<div id=\"footnotes\">\n<h2 class=\"footnotes\">Footnotes:</h2>\n<div id=\"text-footnotes\">\n"
 
       @footnotes.each do |name, defi|
         @output << "<p class=\"footnote\"><sup><a class=\"footnum\" name=\"fn.#{name}\" href=\"#fnr.#{name}\">#{name}</a></sup>" \
                 << inline_formatting(defi) \
-                << "</p>\n"
+                << "\n</p>\n"
       end
 
       @output << "</div>\n</div>\n"
@@ -232,8 +222,9 @@ module Orgmode
       @options[:skip_tables]
     end
 
-    def buffer_mode_is_table?
-      @buffer_mode == :table
+    def mode_is_table?(mode)
+      (mode == :table or mode == :table_row or
+       mode == :table_separator or mode == :table_header)
     end
 
     def buffer_mode_is_src_block?
@@ -247,8 +238,13 @@ module Orgmode
       @buffer.gsub!(/>/, "&gt;")
     end
 
+    def buffer_indentation
+      indent = "  " * @list_indent_stack.length
+      self << indent
+    end
+
     def output_indentation
-      indent = "  " * (@mode_stack.length - 1)
+      indent = "  " * (@list_indent_stack.length - 1)
       @output << indent
     end
 
@@ -264,7 +260,6 @@ module Orgmode
 
     # Applies inline formatting rules to a string.
     def inline_formatting(str)
-      str.rstrip!
       str = @re_help.rewrite_emphasis(str) do |marker, s|
         "#{Tags[marker][:open]}#{s}#{Tags[marker][:close]}"
       end
@@ -318,30 +313,6 @@ module Orgmode
       end
       Orgmode.special_symbols_to_html(str)
       str
-    end
-
-    def close_floating_li_tags
-      unless @final_list_node
-        unless @unclosed_tags.empty?
-          @output << "  " << @unclosed_tags.pop
-          output_indentation
-        end
-      end
-
-      @final_list_node = false
-    end
-
-    def close_last_li_tag_maybe
-      if (@list_indent_stack.count < @unclosed_tags.count) and not
-          (@list_indent_stack.empty? and @unclosed_tags.empty?)
-        output_indentation
-        @output << @unclosed_tags.pop
-        if (@list_indent_stack.count == @unclosed_tags.count) and not
-            (@list_indent_stack.empty? and @unclosed_tags.empty?)
-          @final_list_node = true
-          pop_mode
-        end
-      end
     end
 
     def normalize_lang(lang)

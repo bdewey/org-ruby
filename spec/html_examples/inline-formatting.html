@@ -1,35 +1,30 @@
 <p class="title">Inline Formatting</p>
 <p>I want to make sure I handle all inline formatting. I need to handle
-<b>bold</b>, <i>italic</i>, <code>code</code>, <code>verbatim</code>, <span style="text-decoration:underline;">underline</span>, <del>strikethrough</del>.</p>
+  <b>bold</b>, <i>italic</i>, <code>code</code>, <code>verbatim</code>, <span style="text-decoration:underline;">underline</span>, <del>strikethrough</del>.</p>
 <p>In addition, I need to make sure I can handle links. We&#8217;ve got simple
-links, like this:</p>
+  links, like this:</p>
 <ul>
-  <li><a href="http://www.bing.com">http://www.bing.com</a>
-  </li>
-  <li><a href="http://www.google.com">http://www.google.com</a>
-  </li>
-  <li>http://www.gmail.com
-  </li>
+  <li><a href="http://www.bing.com">http://www.bing.com</a></li>
+  <li><a href="http://www.google.com">http://www.google.com</a></li>
+  <li>http://www.gmail.com</li>
 </ul>
 <p>Note the last one <b>is not</b> a link, as the source doesn&#8217;t include it in
-double-brackets and I don&#8217;t auto-recognize URLs.</p>
+  double-brackets and I don&#8217;t auto-recognize URLs.</p>
 <p>I should also handle links with <a href="http://www.xkcd.com">helpful text</a>.</p>
 <p>Helpful addition from <a href="https://github.com/punchagan">punchagan</a>, we now
-recognize when the link goes to an image and make the link anchor be the
-image, like this:</p>
+  recognize when the link goes to an image and make the link anchor be the
+  image, like this:</p>
 <ul>
-  <li><a href="http://farm7.static.flickr.com/6078/6084185195_552aa270b2.jpg"><img src="http://farm7.static.flickr.com/6078/6084185195_552aa270b2.jpg" /></a>
-  </li>
+  <li><a href="http://farm7.static.flickr.com/6078/6084185195_552aa270b2.jpg"><img src="http://farm7.static.flickr.com/6078/6084185195_552aa270b2.jpg" /></a></li>
 </ul>
 <p>Also, if you make the descriptive text be an image, then it will get formatted
-with an image tag, like so:</p>
+  with an image tag, like so:</p>
 <ul>
-  <li><a href="http://www.xkcd.com"><img src="http://imgs.xkcd.com/comics/t_cells.png" /></a>
-  </li>
+  <li><a href="http://www.xkcd.com"><img src="http://imgs.xkcd.com/comics/t_cells.png" /></a></li>
 </ul>
 <p>Helpful addition from <a href="https://github.com/wallyqs">wallyqs</a>:</p>
 <p>While &#8220;naked&#8221; links don&#8217;t work (like http://www.google.com), angle links
-do work. This should look like a link: <a href="http://www.google.com">http://www.google.com</a>.</p>
+  do work. This should look like a link: <a href="http://www.google.com">http://www.google.com</a>.</p>
 <p>It should be possible to use both kind of links on the same paragraph:</p>
 <p>This is an angle link <a href="http://google.com">http://google.com</a> and this is a bracket link <a href="https://github.com/bdewey/org-ruby">to a repository</a>.</p>
 <p>This is a bracket link <a href="https://github.com/bdewey/org-ruby">to a repository</a> and this is an angle link <a href="http://google.com">http://google.com</a>.</p>

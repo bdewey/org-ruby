@@ -3,7 +3,7 @@
 <h1><span class="heading-number heading-number-1">1 </span>Inline examples</h1>
 <p>This should work:</p>
 <pre class="example">
-  fixed width? how does this work?
+  fixed width? how does this work?   
                         ...........
                        ............
                                   .
@@ -23,7 +23,8 @@
       str.scan(@org_emphasis_regexp) do |match|
         yield $2, $3
       end
-    end</pre>
+    end
+</pre>
 <p>Now let&#8217;s test case-insensitive code blocks.</p>
 <pre class="src src-ruby">
     # Finds all emphasis matches in a string.
@@ -32,7 +33,8 @@
       str.scan(@org_emphasis_regexp) do |match|
         yield $2, $3
       end
-    end</pre>
+    end
+</pre>
 <pre class="src src-clojure">
 (def fib-seq
   (concat
@@ -41,25 +43,29 @@
         (lazy-cons (+ a b) (rfib b (+ a b)))) 0 1)))
  
 user&gt; (take 20 fib-seq)
-(0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1597 2584 4181)</pre>
+(0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1597 2584 4181)
+</pre>
 <p>Even if no language is set, it is still wrapped in code tags but class is empty.</p>
 <pre class="src">
-echo 'Defaults env_keeps="http_proxy https_proxy ftp_proxy"' | sudo tee -a /etc/sudoers</pre>
+echo 'Defaults env_keeps="http_proxy https_proxy ftp_proxy"' | sudo tee -a /etc/sudoers
+</pre>
 <h1><span class="heading-number heading-number-1">3 </span>It should be possible to write a colon at the beginning of an example</h1>
 <blockquote>
   <p>I really love to write about
-:symbols. They sure are the
-best things in the world!</p>
+    :symbols. They sure are the
+    best things in the world!</p>
 </blockquote>
 <pre class="src src-ruby">
 {
 :one =&gt; 1,
 :two =&gt; 2
-}</pre>
+}
+</pre>
 <pre class="src src-clojure">
 (defproject helloworld "0.1"
 :dependencies [[org.clojure/clojure
                  "1.1.0-master-SNAPSHOT"]
               [org.clojure/clojure-contrib
                  "1.0-SNAPSHOT"]]
-:main helloworld)</pre>
+:main helloworld)
+</pre>

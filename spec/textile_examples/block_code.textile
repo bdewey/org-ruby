@@ -1,10 +1,9 @@
 h1. Block Code
 
-I need to get block code examples working. In @orgmode@, they look
+p. I need to get block code examples working. In @orgmode@, they look
 like this:
 
-bc.. 
-    def initialize(output)
+bc.     def initialize(output)
       @output = output
       @buffer = ""
       @output_type = :start
@@ -18,11 +17,12 @@ bc..
 
 p. And now I should be back to normal text.
 
-Putting in another paragraph for good measure.
+p. Putting in another paragraph for good measure.
 
-Code should also get cancelled by a list, thus:
 
-bc.. This is my code!
+p. Code should also get cancelled by a list, thus:
+
+bc. This is my code!
 
 Another line!
 

@@ -1,6 +1,6 @@
-LINKS
+p. LINKS
 
-"http://www.bing.com":http://www.bing.com
+p. "http://www.bing.com":http://www.bing.com
 
 h1. Supported Link Styles
 

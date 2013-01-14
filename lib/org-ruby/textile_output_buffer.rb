@@ -6,21 +6,28 @@ module Orgmode
 
     def initialize(output)
       super(output)
-      @add_paragraph = false
+      @add_paragraph = true
       @support_definition_list = true # TODO this should be an option
       @footnotes = {}
     end
 
-    def push_mode(mode)
+    def push_mode(mode, indent)
+      @list_indent_stack.push(indent)
       super(mode)
-      @output << "bc.. " if mode_is_code(mode)
-      @output << "\np=. " if mode == :center
+      @output << "bc. " if mode_is_code? mode
+      if mode == :center or mode == :blockquote
+        @add_paragraph = false
+        @output << "\n"
+      end
     end
 
     def pop_mode(mode = nil)
       m = super(mode)
-      @add_paragraph = (mode_is_code(m))
-      @output << "\n" if mode == :center
+      @list_indent_stack.pop
+      if m == :center or m == :blockquote
+        @add_paragraph = true
+        @output << "\n"
+      end
       m
     end
 
@@ -74,24 +81,25 @@ module Orgmode
 
     # Flushes the current buffer
     def flush!
-      @buffer = @buffer.rstrip
       @logger.debug "FLUSH ==========> #{@output_type}"
-      if (@output_type == :blank) then
+      if @output_type == :blank and not preserve_whitespace?
         @output << "\n"
-      elsif (@buffer.length > 0) then
-        if @add_paragraph then
-          @output << "p. " if @output_type == :paragraph
-          @add_paragraph = false
+      elsif @buffer.length > 0
+        @buffer.gsub!(/\A\n*/, "")
+        @output << "p. " if @add_paragraph and current_mode == :paragraph
+        if @mode_stack[0] and current_mode == :paragraph
+          @output << "p=. " if @mode_stack[0] == :center
+          @output << "bq. " if @mode_stack[0] == :blockquote
         end
-        @output << "bq. " if current_mode == :blockquote
-        if @output_type == :definition_list and @support_definition_list then
-          @output << "-" * @list_indent_stack.length << " "
+        if current_mode == :definition_item and @support_definition_list
+          @output << "-" * @mode_stack.count(:definition_item) << " "
           @buffer.sub!("::", ":=")
-        elsif @output_type == :ordered_list then
-          @output << "#" * @list_indent_stack.length << " "
-        elsif @output_type == :unordered_list or \
-            (@output_type == :definition_list and not @support_definition_list) then
-          @output << "*" * @list_indent_stack.length << " "
+        elsif current_mode == :list_item
+          if @mode_stack[-2] == :ordered_list
+            @output << "#" * @mode_stack.count(:list_item) << " "
+          else # corresponds to unordered list
+            @output << "*" * @mode_stack.count(:list_item) << " "
+          end
         end
         if (@buffered_lines[0].kind_of?(Headline)) then
           headline = @buffered_lines[0]

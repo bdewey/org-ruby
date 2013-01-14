@@ -1,6 +1,6 @@
 
-not center
+p. not center
 
 p=. center
 
-not center, again
+p. not center, again

@@ -251,51 +251,10 @@ module Orgmode
     def self.translate(lines, output_buffer)
       output_buffer.output_type = :start
       lines.each do |line|
-
-        # See if we're carrying paragraph payload, and output
-        # it if we're about to switch to some other output type.
-        output_buffer.prepare(line)
-        case line.paragraph_type
-        when :metadata, :table_separator, :blank, :comment, :property_drawer_item, :property_drawer_begin_block, :property_drawer_end_block
-
-          output_buffer << line.line if output_buffer.preserve_whitespace?
-
-        when :begin_block
-
-          output_buffer.push_mode(:blockquote) if line.block_type.casecmp("QUOTE") == 0
-          output_buffer.push_mode(:src) if line.block_type.casecmp("SRC") == 0
-          output_buffer.push_mode(:example) if line.block_type.casecmp("EXAMPLE") == 0
-          output_buffer.push_mode(:center) if line.block_type.casecmp("CENTER") == 0
-
-        when :end_block
-
-          output_buffer.pop_mode(:blockquote) if line.block_type.casecmp("QUOTE") == 0
-          output_buffer.pop_mode(:src) if line.block_type.casecmp("SRC") == 0
-          output_buffer.pop_mode(:example) if line.block_type.casecmp("EXAMPLE") == 0
-          output_buffer.pop_mode(:center) if line.block_type.casecmp("CENTER") == 0
-
-        when :table_row, :table_header
-
-          output_buffer << line.line.lstrip
-
-        when :unordered_list, :ordered_list, :definition_list, :src
-
-          output_buffer << line.output_text << "\n"
-
-        when :inline_example
-
-          output_buffer << line.output_text
-
-        else
-          if output_buffer.preserve_whitespace? then
-            output_buffer << line.output_text
-          else
-            output_buffer << line.output_text.strip << "\n"
-          end
-        end
+        output_buffer.insert(line)
       end
       output_buffer.flush!
-      output_buffer.pop_mode until output_buffer.current_mode == :normal
+      output_buffer.pop_mode while output_buffer.current_mode
       output_buffer.output_footnotes!
       output_buffer.output
     end
