@@ -26,9 +26,6 @@ module Orgmode
       # accumulation buffer.
       @buffered_lines = []
 
-      # This is the output mode of the accumulation buffer.
-      @buffer_mode = nil
-
       # This stack is used to do proper outline numbering of
       # headlines.
       @headline_number_stack = []
@@ -36,8 +33,6 @@ module Orgmode
       @output = output
       @output_type = :start
       @list_indent_stack = []
-      @paragraph_modifier = nil
-      @cancel_modifier = false
       @mode_stack = []
 
       @logger = Logger.new(STDERR)
@@ -52,10 +47,6 @@ module Orgmode
 
     def current_mode
       @mode_stack.last
-    end
-
-    def current_mode_list?
-      (current_mode == :ordered_list) or (current_mode == :unordered_list)
     end
 
     def push_mode(mode)
@@ -78,11 +69,7 @@ module Orgmode
         flush!
         maintain_mode_stack(line)
       end
-      if line.assigned_paragraph_type
-        @output_type = line.assigned_paragraph_type
-      else
-        @output_type = line.paragraph_type
-      end
+      @output_type = line.assigned_paragraph_type || line.paragraph_type
 
       # Adds the current line to the output buffer
       @buffered_lines.push(line)
@@ -106,7 +93,6 @@ module Orgmode
     # method just does common bookkeeping cleanup.
     def clear_accumulation_buffer!
       @buffer = ""
-      @buffer_mode = nil
       @buffered_lines = []
     end
 
@@ -128,11 +114,6 @@ module Orgmode
 
     # Accumulate the string @str@.
     def << (str)
-      if @buffer_mode && @buffer_mode != current_mode then
-        raise "Accumulation buffer is mixing modes: @buffer_mode == #{@buffer_mode}, current_mode == #{current_mode}"
-      else
-        @buffer_mode = current_mode
-      end
       @buffer << str
     end
 
