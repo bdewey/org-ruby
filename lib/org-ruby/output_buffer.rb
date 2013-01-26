@@ -152,9 +152,10 @@ module Orgmode
     end
 
     def maintain_mode_stack(line)
-      # Always close a heading line, paragraph and inline example
+      # Always close the following lines
       pop_mode if (mode_is_heading? current_mode or
                    current_mode == :paragraph or
+                   current_mode == :horizontal_rule or
                    current_mode == :inline_example)
 
       # End-block line closes every mode within block
