@@ -76,9 +76,12 @@ module Orgmode
                         @title_decoration
                       end
 
-          @output << "\n" unless @indentation == :start
+          unless @indentation == :start
+            @output << "\n"
+            output_indentation
+          end
           @indentation = :output
-          output_indentation
+
           @logger.debug "#{mode}: <#{HtmlBlockTag[mode]}#{css_class}>"
           @output << "<#{HtmlBlockTag[mode]}#{css_class}>"
           # Entering a new mode obliterates the title decoration
@@ -167,17 +170,16 @@ module Orgmode
           end
           @output << inline_formatting(@buffer)
 
-        when current_mode == :definition_item
-          @output << "\n"
-          @indentation = :output
-          output_indentation
+        when current_mode == :definition_term
           d = @buffer.split("::", 2)
-          @output << "<#{HtmlBlockTag[:definition_term]}#{@title_decoration}>" << inline_formatting(d[0].strip) \
-          << "</#{HtmlBlockTag[:definition_term]}>"
-          if d.length > 1
-            @output << "<#{HtmlBlockTag[:definition_descr]}#{@title_decoration}>" << inline_formatting(d[1].strip) \
-            << "</#{HtmlBlockTag[:definition_descr]}>"
-          end
+          @output << inline_formatting(d[0].strip)
+          indent = @list_indent_stack.last
+          pop_mode
+
+          @indentation = :start
+          push_mode(:definition_descr, indent)
+          @output << inline_formatting(d[1].strip)
+          @indentation = nil
 
         when @output_type == :horizontal_rule
           @output << "\n"
