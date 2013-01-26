@@ -15,8 +15,8 @@ module Orgmode
 
     HtmlBlockTag = {
       :paragraph => "p",
-      :unordered_list => "ul",
       :ordered_list => "ol",
+      :unordered_list => "ul",
       :list_item => "li",
       :definition_list => "dl",
       :definition_term => "dt",
@@ -47,7 +47,7 @@ module Orgmode
         @title_decoration = ""
       end
       @options = opts
-      @indentation = :start
+      @add_newline = :start
       @footnotes = {}
       @unclosed_tags = []
       @logger.debug "HTML export options: #{@options.inspect}"
@@ -76,11 +76,11 @@ module Orgmode
                         @title_decoration
                       end
 
-          unless @indentation == :start
+          unless @add_newline == :start
             @output << "\n"
             output_indentation
           end
-          @indentation = :output
+          @add_newline = true
 
           @logger.debug "#{mode}: <#{HtmlBlockTag[mode]}#{css_class}>"
           @output << "<#{HtmlBlockTag[mode]}#{css_class}>"
@@ -97,11 +97,11 @@ module Orgmode
       if HtmlBlockTag[m]
         unless ((mode_is_table?(m) and skip_tables?) or
                 (m == :src and defined? Pygments))
-          if @indentation
+          if @add_newline
             @output << "\n"
             output_indentation
           end
-          @indentation = :output
+          @add_newline = true
           @logger.debug "</#{HtmlBlockTag[m]}>"
           @output << "</#{HtmlBlockTag[m]}>"
         end
@@ -152,7 +152,7 @@ module Orgmode
       when @buffer.length > 0
         @buffer.lstrip!
         escape_buffer!
-        @indentation = nil
+        @add_newline = nil
         @logger.debug "FLUSH      ==========> #{current_mode}"
 
         case
@@ -176,15 +176,17 @@ module Orgmode
           indent = @list_indent_stack.last
           pop_mode
 
-          @indentation = :start
+          @add_newline = :start
           push_mode(:definition_descr, indent)
           @output << inline_formatting(d[1].strip)
-          @indentation = nil
+          @add_newline = nil
 
-        when @output_type == :horizontal_rule
-          @output << "\n"
-          @indentation = :output
-          output_indentation
+        when current_mode == :horizontal_rule
+          unless @add_newline == :start
+            @output << "\n"
+            output_indentation
+          end
+          @add_newline = true
           @output << "<hr />"
 
         else
@@ -232,7 +234,7 @@ module Orgmode
 
     def buffer_indentation
       indent = "  " * @list_indent_stack.length
-      self << indent
+      @buffer << indent
     end
 
     def output_indentation

@@ -74,15 +74,15 @@ module Orgmode
       # Adds the current line to the output buffer
       @buffered_lines.push(line)
       if preserve_whitespace? and not line.begin_block?
-        self << "\n" << line.output_text
+        @buffer << "\n" << line.output_text
       else
         case line.paragraph_type
         when :metadata, :table_separator, :blank, :comment, :property_drawer_item, :property_drawer_begin_block, :property_drawer_end_block, :blockquote, :center, :example, :src
           # Nothing
         else
-          self << "\n"
+          @buffer << "\n"
           buffer_indentation
-          self << line.output_text.strip
+          @buffer << line.output_text.strip
         end
       end
     end
@@ -110,11 +110,6 @@ module Orgmode
       raise "Oops, shouldn't happen" unless level == @headline_number_stack.length
       @headline_number_stack[@headline_number_stack.length - 1] += 1
       @headline_number_stack.join(".")
-    end
-
-    # Accumulate the string @str@.
-    def << (str)
-      @buffer << str
     end
 
     # Gets the current list indent level.
