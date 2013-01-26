@@ -203,7 +203,7 @@ module Orgmode
                 << "\n</p>\n"
       end
 
-      @output << "</div>\n</div>\n"
+      @output << "</div>\n</div>"
 
       return true
     end
