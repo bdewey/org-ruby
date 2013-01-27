@@ -15,8 +15,8 @@ module Orgmode
 
     HtmlBlockTag = {
       :paragraph => "p",
-      :unordered_list => "ul",
       :ordered_list => "ol",
+      :unordered_list => "ul",
       :list_item => "li",
       :definition_list => "dl",
       :definition_term => "dt",
@@ -47,7 +47,7 @@ module Orgmode
         @title_decoration = ""
       end
       @options = opts
-      @indentation = :start
+      @new_paragraph = :start
       @footnotes = {}
       @unclosed_tags = []
       @logger.debug "HTML export options: #{@options.inspect}"
@@ -76,9 +76,9 @@ module Orgmode
                         @title_decoration
                       end
 
-          @output << "\n" unless @indentation == :start
-          @indentation = :output
-          output_indentation
+          add_paragraph unless @new_paragraph == :start
+          @new_paragraph = true
+
           @logger.debug "#{mode}: <#{HtmlBlockTag[mode]}#{css_class}>"
           @output << "<#{HtmlBlockTag[mode]}#{css_class}>"
           # Entering a new mode obliterates the title decoration
@@ -94,11 +94,8 @@ module Orgmode
       if HtmlBlockTag[m]
         unless ((mode_is_table?(m) and skip_tables?) or
                 (m == :src and defined? Pygments))
-          if @indentation
-            @output << "\n"
-            output_indentation
-          end
-          @indentation = :output
+          add_paragraph if @new_paragraph
+          @new_paragraph = true
           @logger.debug "</#{HtmlBlockTag[m]}>"
           @output << "</#{HtmlBlockTag[m]}>"
         end
@@ -107,92 +104,84 @@ module Orgmode
     end
 
     def flush!
-      if @buffer.length > 0 and not preserve_whitespace?
-        @buffer.lstrip!
-        @indentation = nil
-      end
+      case
+      when preserve_whitespace?
+        # NOTE: CodeRay and Pygments already escape the html once, so
+        # no need to escape_buffer!
+        case
+        when (current_mode == :src and defined? Pygments)
+          lang = normalize_lang(@block_lang)
+          @output << "\n"
 
-      if buffer_mode_is_src_block?
-
-        # Only try to colorize #+BEGIN_SRC blocks with a specified language,
-        # but we still have to catch the cases when a lexer for the language was not available
-        if defined? Pygments or defined? CodeRay
+          begin
+            @buffer = Pygments.highlight(@buffer, :lexer => lang)
+          rescue
+            # Not supported lexer from Pygments, we fallback on using the text lexer
+            @buffer = Pygments.highlight(@buffer, :lexer => 'text')
+          end
+        when (current_mode == :src and defined? CodeRay)
           lang = normalize_lang(@block_lang)
 
-          # NOTE: CodeRay and Pygments already escape the html once, so no need to escape_buffer!
-          if defined? Pygments
-            @output << "\n"
+          # CodeRay might throw a warning when unsupported lang is set,
+          # then fallback to using the text lexer
+          silence_warnings do
             begin
-              @buffer = Pygments.highlight(@buffer, :lexer => lang)
-            rescue
-              # Not supported lexer from Pygments, we fallback on using the text lexer
-              @buffer = Pygments.highlight(@buffer, :lexer => 'text')
-            end
-          elsif defined? CodeRay
-            # CodeRay might throw a warning when unsupported lang is set,
-            # then fallback to using the text lexer
-            silence_warnings do
-              begin
-                @buffer = CodeRay.scan(@buffer, lang).html(:wrap => nil, :css => :style)
-              rescue ArgumentError
-                @buffer = CodeRay.scan(@buffer, 'text').html(:wrap => nil, :css => :style)
-              end
+              @buffer = CodeRay.scan(@buffer, lang).html(:wrap => nil, :css => :style)
+            rescue ArgumentError
+              @buffer = CodeRay.scan(@buffer, 'text').html(:wrap => nil, :css => :style)
             end
           end
         else
           escape_buffer!
         end
 
-        @logger.debug "FLUSH SRC CODE ==========> #{@buffer.inspect}"
-        @output << @buffer
-      elsif mode_is_code?(@buffer_mode) then
-        escape_buffer!
-
-        # Whitespace is significant in :code mode. Always output the buffer
-        # and do not do any additional translation.
+        # Whitespace is significant in :code mode. Always output the
+        # buffer and do not do any additional translation.
         @logger.debug "FLUSH CODE ==========> #{@buffer.inspect}"
         @output << @buffer
-      else
+
+      when (mode_is_table? current_mode and skip_tables?)
+        @logger.debug "SKIP       ==========> #{current_mode}"
+
+      when @buffer.length > 0
+        @buffer.lstrip!
         escape_buffer!
-        if @buffer.length > 0 and @output_type == :horizontal_rule then
-          @output << "\n"
-          @indentation = :output
-          output_indentation
+        @new_paragraph = nil
+        @logger.debug "FLUSH      ==========> #{current_mode}"
+
+        case
+        when @buffered_lines[0].kind_of?(Headline)
+          headline = @buffered_lines[0]
+          raise "Cannot be more than one headline!" if @buffered_lines.length > 1
+          if @options[:export_heading_number] then
+            level = headline.level
+            heading_number = get_next_headline_number(level)
+            @output << "<span class=\"heading-number heading-number-#{level}\">#{heading_number} </span>"
+          end
+          if @options[:export_todo] and headline.keyword then
+            keyword = headline.keyword
+            @output << "<span class=\"todo-keyword #{keyword}\">#{keyword} </span>"
+          end
+          @output << inline_formatting(@buffer)
+
+        when current_mode == :definition_term
+          d = @buffer.split("::", 2)
+          @output << inline_formatting(d[0].strip)
+          indent = @list_indent_stack.last
+          pop_mode
+
+          @new_paragraph = :start
+          push_mode(:definition_descr, indent)
+          @output << inline_formatting(d[1].strip)
+          @new_paragraph = nil
+
+        when current_mode == :horizontal_rule
+          add_paragraph unless @new_paragraph == :start
+          @new_paragraph = true
           @output << "<hr />"
-        elsif @buffer.length > 0 and @buffer_mode == :definition_item then
-          unless mode_is_table?(@buffer_mode) and skip_tables?
-            @output << "\n"
-            @indentation = :output
-            output_indentation
-            d = @buffer.split("::", 2)
-            @output << "<#{HtmlBlockTag[:definition_term]}#{@title_decoration}>" << inline_formatting(d[0].strip) \
-                    << "</#{HtmlBlockTag[:definition_term]}>"
-            if d.length > 1 then
-              @output << "<#{HtmlBlockTag[:definition_descr]}#{@title_decoration}>" << inline_formatting(d[1].strip) \
-                      << "</#{HtmlBlockTag[:definition_descr]}>"
-            end
-            @title_decoration = ""
-          end
-        elsif @buffer.length > 0 then
-          unless mode_is_table?(@buffer_mode) and skip_tables?
-            @logger.debug "FLUSH      ==========> #{@buffer_mode}"
-            if (@buffered_lines[0].kind_of?(Headline)) then
-              headline = @buffered_lines[0]
-              raise "Cannot be more than one headline!" if @buffered_lines.length > 1
-              if @options[:export_heading_number] then
-                level = headline.level
-                heading_number = get_next_headline_number(level)
-                @output << "<span class=\"heading-number heading-number-#{level}\">#{heading_number} </span>"
-              end
-              if @options[:export_todo] and headline.keyword then
-                keyword = headline.keyword
-                @output << "<span class=\"todo-keyword #{keyword}\">#{keyword} </span>"
-              end
-            end
-            @output << inline_formatting(@buffer)
-          else
-            @logger.debug "SKIP       ==========> #{@buffer_mode}"
-          end
+
+        else
+          @output << inline_formatting(@buffer)
         end
       end
       clear_accumulation_buffer!
@@ -209,7 +198,7 @@ module Orgmode
                 << "\n</p>\n"
       end
 
-      @output << "</div>\n</div>\n"
+      @output << "</div>\n</div>"
 
       return true
     end
@@ -227,10 +216,6 @@ module Orgmode
        mode == :table_separator or mode == :table_header)
     end
 
-    def buffer_mode_is_src_block?
-      @buffer_mode == :src
-    end
-
     # Escapes any HTML content in the output accumulation buffer @buffer.
     def escape_buffer!
       @buffer.gsub!(/&/, "&amp;")
@@ -240,12 +225,12 @@ module Orgmode
 
     def buffer_indentation
       indent = "  " * @list_indent_stack.length
-      self << indent
+      @buffer << indent
     end
 
-    def output_indentation
+    def add_paragraph
       indent = "  " * (@list_indent_stack.length - 1)
-      @output << indent
+      @output << "\n" << indent
     end
 
     Tags = {

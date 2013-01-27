@@ -218,7 +218,7 @@ module Orgmode
       when code_block_line? # Do not try to guess the type of this line if it is accumulating source code
         :src
       when definition_list? # order is important! A definition_list is also an unordered_list!
-        :definition_item
+        :definition_term
       when (ordered_list? or unordered_list?)
         :list_item
       when property_drawer_begin_block?

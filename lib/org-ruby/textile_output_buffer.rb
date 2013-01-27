@@ -82,32 +82,39 @@ module Orgmode
     # Flushes the current buffer
     def flush!
       @logger.debug "FLUSH ==========> #{@output_type}"
-      if @output_type == :blank and not preserve_whitespace?
-        @output << "\n"
-      elsif @buffer.length > 0
-        @buffer.gsub!(/\A\n*/, "")
-        @output << "p. " if @add_paragraph and current_mode == :paragraph
-        if @mode_stack[0] and current_mode == :paragraph
+      @buffer.gsub!(/\A\n*/, "")
+
+      case
+      when preserve_whitespace?
+        @output << @buffer << "\n"
+
+      when @buffer.length > 0
+        case
+        when @buffered_lines[0].kind_of?(Headline)
+          headline = @buffered_lines[0]
+          raise "Cannot be more than one headline!" if @buffered_lines.length > 1
+          @output << "h#{headline.level}. "
+
+        when current_mode == :paragraph
+          @output << "p. " if @add_paragraph
           @output << "p=. " if @mode_stack[0] == :center
           @output << "bq. " if @mode_stack[0] == :blockquote
-        end
-        if current_mode == :definition_item and @support_definition_list
-          @output << "-" * @mode_stack.count(:definition_item) << " "
-          @buffer.sub!("::", ":=")
-        elsif current_mode == :list_item
+
+        when current_mode == :list_item
           if @mode_stack[-2] == :ordered_list
             @output << "#" * @mode_stack.count(:list_item) << " "
           else # corresponds to unordered list
             @output << "*" * @mode_stack.count(:list_item) << " "
           end
+
+        when (current_mode == :definition_term and @support_definition_list)
+          @output << "-" * @mode_stack.count(:definition_term) << " "
+          @buffer.sub!("::", ":=")
         end
-        if (@buffered_lines[0].kind_of?(Headline)) then
-          headline = @buffered_lines[0]
-          raise "Cannot be more than one headline!" if @buffered_lines.length > 1
-          @output << "h#{headline.level}. #{headline.headline_text}\n"
-        else
-          @output << inline_formatting(@buffer) << "\n"
-        end
+        @output << inline_formatting(@buffer) << "\n"
+
+      when @output_type == :blank
+        @output << "\n"
       end
       clear_accumulation_buffer!
     end
