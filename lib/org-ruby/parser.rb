@@ -239,6 +239,8 @@ module Orgmode
           Parser.translate(headline.body_lines, output_buffer)
         end
       end
+      output << "\n"
+
       rp = RubyPants.new(output)
       rp.to_html
     end
