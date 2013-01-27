@@ -47,7 +47,7 @@ module Orgmode
         @title_decoration = ""
       end
       @options = opts
-      @add_newline = :start
+      @new_paragraph = :start
       @footnotes = {}
       @unclosed_tags = []
       @logger.debug "HTML export options: #{@options.inspect}"
@@ -76,11 +76,8 @@ module Orgmode
                         @title_decoration
                       end
 
-          unless @add_newline == :start
-            @output << "\n"
-            output_indentation
-          end
-          @add_newline = true
+          add_paragraph unless @new_paragraph == :start
+          @new_paragraph = true
 
           @logger.debug "#{mode}: <#{HtmlBlockTag[mode]}#{css_class}>"
           @output << "<#{HtmlBlockTag[mode]}#{css_class}>"
@@ -97,11 +94,8 @@ module Orgmode
       if HtmlBlockTag[m]
         unless ((mode_is_table?(m) and skip_tables?) or
                 (m == :src and defined? Pygments))
-          if @add_newline
-            @output << "\n"
-            output_indentation
-          end
-          @add_newline = true
+          add_paragraph if @new_paragraph
+          @new_paragraph = true
           @logger.debug "</#{HtmlBlockTag[m]}>"
           @output << "</#{HtmlBlockTag[m]}>"
         end
@@ -152,7 +146,7 @@ module Orgmode
       when @buffer.length > 0
         @buffer.lstrip!
         escape_buffer!
-        @add_newline = nil
+        @new_paragraph = nil
         @logger.debug "FLUSH      ==========> #{current_mode}"
 
         case
@@ -176,17 +170,14 @@ module Orgmode
           indent = @list_indent_stack.last
           pop_mode
 
-          @add_newline = :start
+          @new_paragraph = :start
           push_mode(:definition_descr, indent)
           @output << inline_formatting(d[1].strip)
-          @add_newline = nil
+          @new_paragraph = nil
 
         when current_mode == :horizontal_rule
-          unless @add_newline == :start
-            @output << "\n"
-            output_indentation
-          end
-          @add_newline = true
+          add_paragraph unless @new_paragraph == :start
+          @new_paragraph = true
           @output << "<hr />"
 
         else
@@ -237,9 +228,9 @@ module Orgmode
       @buffer << indent
     end
 
-    def output_indentation
+    def add_paragraph
       indent = "  " * (@list_indent_stack.length - 1)
-      @output << indent
+      @output << "\n" << indent
     end
 
     Tags = {
