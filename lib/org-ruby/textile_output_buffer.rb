@@ -15,7 +15,7 @@ module Orgmode
       @list_indent_stack.push(indent)
       super(mode)
       @output << "bc. " if mode_is_code? mode
-      if mode == :center or mode == :blockquote
+      if mode == :center or mode == :quote
         @add_paragraph = false
         @output << "\n"
       end
@@ -24,7 +24,7 @@ module Orgmode
     def pop_mode(mode = nil)
       m = super(mode)
       @list_indent_stack.pop
-      if m == :center or m == :blockquote
+      if m == :center or m == :quote
         @add_paragraph = true
         @output << "\n"
       end
@@ -98,7 +98,7 @@ module Orgmode
         when current_mode == :paragraph
           @output << "p. " if @add_paragraph
           @output << "p=. " if @mode_stack[0] == :center
-          @output << "bq. " if @mode_stack[0] == :blockquote
+          @output << "bq. " if @mode_stack[0] == :quote
 
         when current_mode == :list_item
           if @mode_stack[-2] == :ordered_list

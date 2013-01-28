@@ -24,7 +24,7 @@ module Orgmode
       :table => "table",
       :table_row => "tr",
       :table_header => "tr",
-      :blockquote => "blockquote",
+      :quote => "blockquote",
       :example => "pre",
       :src => "pre",
       :inline_example => "pre",

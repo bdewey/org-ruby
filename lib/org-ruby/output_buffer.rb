@@ -77,7 +77,7 @@ module Orgmode
         @buffer << "\n" << line.output_text
       else
         case line.paragraph_type
-        when :metadata, :table_separator, :blank, :comment, :property_drawer_item, :property_drawer_begin_block, :property_drawer_end_block, :blockquote, :center, :example, :src
+        when :metadata, :table_separator, :blank, :comment, :property_drawer_item, :property_drawer_begin_block, :property_drawer_end_block, :quote, :center, :example, :src
           # Nothing
         else
           @buffer << "\n"
@@ -131,7 +131,7 @@ module Orgmode
     end
 
     def mode_is_block?(mode)
-      [:blockquote, :center, :example, :src].include? mode
+      [:quote, :center, :example, :src].include? mode
     end
 
     def mode_is_code?(mode)

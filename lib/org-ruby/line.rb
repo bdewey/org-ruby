@@ -229,14 +229,14 @@ module Orgmode
         :property_drawer_item
       when metadata?
         :metadata
-      when (block_type and block_type.casecmp("QUOTE") == 0)
-        :blockquote
-      when (block_type and block_type.casecmp("CENTER") == 0)
-        :center
-      when (block_type and block_type.casecmp("EXAMPLE") == 0)
-        :example
-      when (block_type and block_type.casecmp("SRC") == 0)
-        :src
+      when block_type
+        case block_type.upcase
+        when "QUOTE"   then :quote
+        when "CENTER"  then :center
+        when "EXAMPLE" then :example
+        when "SRC"     then :src
+        when "COMMENT" then :comment
+        end
       when comment?
         :comment
       when table_separator?

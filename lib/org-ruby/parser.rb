@@ -102,10 +102,8 @@ module Orgmode
       @lines.each do |text|
         line = Line.new text, self
 
-        case mode
-        when :normal
-
-          if (Headline.headline? line.line) then
+        if mode == :normal
+          if Headline.headline? line.line
             @current_headline = Headline.new line.line, self, offset
             @headlines << @current_headline
           else
@@ -120,66 +118,38 @@ module Orgmode
               end
             end
             table_header_set = false if !line.table?
-            mode = :code if line.begin_block? and line.block_type.casecmp("EXAMPLE") == 0
-            mode = :src_code if line.begin_block? and line.block_type.casecmp("SRC") == 0
-            mode = :block_comment if line.begin_block? and line.block_type == "COMMENT"
+            mode = line.paragraph_type if line.begin_block?
             mode = :property_drawer if line.property_drawer_begin_block?
-            if (@current_headline) then
+            if @current_headline
               @current_headline.body_lines << line
             else
               @header_lines << line
             end
           end
 
-        when :block_comment
+        else
+          mode = :normal if line.end_block? and mode == line.paragraph_type
+          mode = :normal if line.property_drawer_end_block? and mode == :property_drawer
 
-          if line.end_block? and line.block_type == "COMMENT"
-            mode = :normal
-          else
-            line.assigned_paragraph_type = :comment
+          case mode
+          when :example, :src
+            # As long as we stay in code mode, force lines to be paragraphs.
+            # Don't try to interpret structural items, like headings and tables.
+            line.assigned_paragraph_type = :paragraph
+          when :quote, :center
+            if Headline.headline? line.line
+              line = Headline.new line.line, self, offset
+            end
           end
 
-        when :code
-
-          # As long as we stay in code mode, force lines to be either blank or paragraphs.
-          # Don't try to interpret structural items, like headings and tables.
-          if line.end_block? and line.code_block?
-            mode = :normal
-          else
-            line.assigned_paragraph_type = :paragraph unless line.blank?
+          unless mode == :comment
+            if @current_headline
+              @current_headline.body_lines << line
+            else
+              @header_lines << line
+            end
           end
-          if (@current_headline) then
-            @current_headline.body_lines << line
-          else
-            @header_lines << line
-          end
-
-        when :src_code
-
-          if line.end_block? and line.code_block?
-            mode = :normal
-          else
-            line.assigned_paragraph_type = :src
-          end
-          if (@current_headline) then
-            @current_headline.body_lines << line
-          else
-            @header_lines << line
-          end
-
-        when :property_drawer
-
-          if line.property_drawer_end_block?
-            mode = :normal
-          else
-            line.assigned_paragraph_type = :property_drawer unless line.blank?
-          end
-          if (@current_headline) then
-            @current_headline.body_lines << line
-          else
-            @header_lines << line
-          end
-        end                     # case
+        end
 
         previous_line = line
       end                       # @lines.each
@@ -252,9 +222,7 @@ module Orgmode
     # Writes the output to +output_buffer+.
     def self.translate(lines, output_buffer)
       output_buffer.output_type = :start
-      lines.each do |line|
-        output_buffer.insert(line)
-      end
+      lines.each { |line| output_buffer.insert(line) }
       output_buffer.flush!
       output_buffer.pop_mode while output_buffer.current_mode
       output_buffer.output_footnotes!
