@@ -17,23 +17,23 @@
 <h1><span class="heading-number heading-number-1">2 </span>BEGIN_SRC</h1>
 <p>And this:</p>
 <pre class="src src-ruby">
-    <span style="color:#777"># Finds all emphasis matches in a string.</span>
-    <span style="color:#777"># Supply a block that will get the marker and body as parameters.</span>
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">match_all</span>(str)
-      str.scan(<span style="color:#33B">@org_emphasis_regexp</span>) <span style="color:#080;font-weight:bold">do</span> |match|
-        <span style="color:#080;font-weight:bold">yield</span> <span style="color:#d70">$2</span>, <span style="color:#d70">$3</span>
-      <span style="color:#080;font-weight:bold">end</span>
-    <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#777"># Finds all emphasis matches in a string.</span>
+<span style="color:#777"># Supply a block that will get the marker and body as parameters.</span>
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">match_all</span>(str)
+  str.scan(<span style="color:#33B">@org_emphasis_regexp</span>) <span style="color:#080;font-weight:bold">do</span> |match|
+    <span style="color:#080;font-weight:bold">yield</span> <span style="color:#d70">$2</span>, <span style="color:#d70">$3</span>
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span>
 </pre>
 <p>Now let&#8217;s test case-insensitive code blocks.</p>
 <pre class="src src-ruby">
-    <span style="color:#777"># Finds all emphasis matches in a string.</span>
-    <span style="color:#777"># Supply a block that will get the marker and body as parameters.</span>
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">match_all</span>(str)
-      str.scan(<span style="color:#33B">@org_emphasis_regexp</span>) <span style="color:#080;font-weight:bold">do</span> |match|
-        <span style="color:#080;font-weight:bold">yield</span> <span style="color:#d70">$2</span>, <span style="color:#d70">$3</span>
-      <span style="color:#080;font-weight:bold">end</span>
-    <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#777"># Finds all emphasis matches in a string.</span>
+<span style="color:#777"># Supply a block that will get the marker and body as parameters.</span>
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">match_all</span>(str)
+  str.scan(<span style="color:#33B">@org_emphasis_regexp</span>) <span style="color:#080;font-weight:bold">do</span> |match|
+    <span style="color:#080;font-weight:bold">yield</span> <span style="color:#d70">$2</span>, <span style="color:#d70">$3</span>
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span>
 </pre>
 <pre class="src src-clojure">
 (<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">fib-seq</span>
@@ -76,12 +76,12 @@ Nothing to see here
 </pre>
 <h2><span class="heading-number heading-number-2">4.2 </span>CSS example</h2>
 <pre class="src src-css">
- <span style="color:#339;font-weight:bold">*</span> {
-  <span style="color:#777">/* apply a natural box layout model to all elements */</span>
-  <span style="color:#606">box-sizing</span>: <span style="color:#088">border-box</span>; 
-  <span style="color:#606">-moz-box-sizing</span>: <span style="color:#088">border-box</span>; 
-  <span style="color:#606">-webkit-box-sizing</span>: <span style="color:#088">border-box</span>; 
- }
+<span style="color:#339;font-weight:bold">*</span> {
+ <span style="color:#777">/* apply a natural box layout model to all elements */</span>
+ <span style="color:#606">box-sizing</span>: <span style="color:#088">border-box</span>; 
+ <span style="color:#606">-moz-box-sizing</span>: <span style="color:#088">border-box</span>; 
+ <span style="color:#606">-webkit-box-sizing</span>: <span style="color:#088">border-box</span>; 
+}
 </pre>
 <h2><span class="heading-number heading-number-2">4.3 </span>HTML example</h2>
 <pre class="src src-html">

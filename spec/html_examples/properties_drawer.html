@@ -1,19 +1,19 @@
 <h1 class="title">The mount point of the fullest disk</h1>
 <h2>query all mounted disks</h2>
 <pre class="example">
-  df \
+df \
 </pre>
 <h2>strip the header row</h2>
 <pre class="example">
-  |sed '1d' \
+|sed '1d' \
 </pre>
 <h2>sort by the percent full</h2>
 <pre class="example">
-  |awk '{print $5 " " $6}'|sort -n |tail -1 \
+|awk '{print $5 " " $6}'|sort -n |tail -1 \
 </pre>
 <h2>extract the mount point</h2>
 <pre class="example">
-  |awk '{print $2}'
+|awk '{print $2}'
 </pre>
 <h1>Properties drawer example</h1>
 <p>These properties are metadata so they should not be visible.</p>
