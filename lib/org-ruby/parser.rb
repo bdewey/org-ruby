@@ -101,53 +101,42 @@ module Orgmode
       table_header_set = false
       @lines.each do |text|
         line = Line.new text, self
+        mode = :normal if line.end_block? and mode == line.paragraph_type
+        mode = :normal if line.property_drawer_end_block? and mode == :property_drawer
+
+        case mode
+        when :normal, :quote, :center
+          if Headline.headline? line.line
+            line = Headline.new line.line, self, offset
+          elsif line.table_separator?
+            if previous_line and previous_line.paragraph_type == :table_row and !table_header_set
+              previous_line.assigned_paragraph_type = :table_header
+              table_header_set = true
+            end
+          end
+          table_header_set = false if !line.table?
+        when :example, :src
+          # As long as we stay in code mode, force lines to be paragraphs.
+          # Don't try to interpret structural items, like headings and tables.
+          line.assigned_paragraph_type = :paragraph
+        end
 
         if mode == :normal
-          if Headline.headline? line.line
-            @current_headline = Headline.new line.line, self, offset
-            @headlines << @current_headline
+          @headlines << @current_headline = line if Headline.headline? line.line
+          # If there is a setting on this line, remember it.
+          line.in_buffer_setting? do |key, value|
+            store_in_buffer_setting key, value
+          end
+
+          mode = line.paragraph_type if line.begin_block?
+          mode = :property_drawer if line.property_drawer_begin_block?
+        end
+
+        unless mode == :comment
+          if @current_headline
+            @current_headline.body_lines << line
           else
-            # If there is a setting on this line, remember it.
-            line.in_buffer_setting? do |key, value|
-              store_in_buffer_setting key, value
-            end
-            if line.table_separator? then
-              if previous_line and previous_line.paragraph_type == :table_row and !table_header_set
-                previous_line.assigned_paragraph_type = :table_header
-                table_header_set = true
-              end
-            end
-            table_header_set = false if !line.table?
-            mode = line.paragraph_type if line.begin_block?
-            mode = :property_drawer if line.property_drawer_begin_block?
-            if @current_headline
-              @current_headline.body_lines << line
-            else
-              @header_lines << line
-            end
-          end
-
-        else
-          mode = :normal if line.end_block? and mode == line.paragraph_type
-          mode = :normal if line.property_drawer_end_block? and mode == :property_drawer
-
-          case mode
-          when :example, :src
-            # As long as we stay in code mode, force lines to be paragraphs.
-            # Don't try to interpret structural items, like headings and tables.
-            line.assigned_paragraph_type = :paragraph
-          when :quote, :center
-            if Headline.headline? line.line
-              line = Headline.new line.line, self, offset
-            end
-          end
-
-          unless mode == :comment
-            if @current_headline
-              @current_headline.body_lines << line
-            else
-              @header_lines << line
-            end
+            @header_lines << line
           end
         end
 

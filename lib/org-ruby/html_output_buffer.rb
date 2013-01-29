@@ -23,7 +23,6 @@ module Orgmode
       :definition_descr => "dd",
       :table => "table",
       :table_row => "tr",
-      :table_header => "tr",
       :quote => "blockquote",
       :example => "pre",
       :src => "pre",
