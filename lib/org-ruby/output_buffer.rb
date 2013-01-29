@@ -22,10 +22,6 @@ module Orgmode
       # without intervening newlines.
       @buffer = ""
 
-      # These are the Line objects that are currently in the
-      # accumulation buffer.
-      @buffered_lines = []
-
       # This stack is used to do proper outline numbering of
       # headlines.
       @headline_number_stack = []
@@ -69,10 +65,10 @@ module Orgmode
         flush!
         maintain_mode_stack(line)
       end
+      add_line_attributes(line) if line.kind_of? Headline
       @output_type = line.assigned_paragraph_type || line.paragraph_type
 
       # Adds the current line to the output buffer
-      @buffered_lines.push(line)
       if preserve_whitespace? and not line.begin_block?
         @buffer << "\n" << line.output_text
       else
@@ -85,15 +81,6 @@ module Orgmode
           @buffer << line.output_text.strip
         end
       end
-    end
-
-    # Flushes everything currently in the accumulation buffer into the
-    # output buffer. Derived classes must override this to actually move
-    # content into the output buffer with the appropriate markup. This
-    # method just does common bookkeeping cleanup.
-    def clear_accumulation_buffer!
-      @buffer = ""
-      @buffered_lines = []
     end
 
     # Gets the next headline number for a given level. The intent is

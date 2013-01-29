@@ -149,22 +149,8 @@ module Orgmode
         @new_paragraph = nil
         @logger.debug "FLUSH      ==========> #{current_mode}"
 
-        case
-        when @buffered_lines[0].kind_of?(Headline)
-          headline = @buffered_lines[0]
-          raise "Cannot be more than one headline!" if @buffered_lines.length > 1
-          if @options[:export_heading_number] then
-            level = headline.level
-            heading_number = get_next_headline_number(level)
-            @output << "<span class=\"heading-number heading-number-#{level}\">#{heading_number} </span>"
-          end
-          if @options[:export_todo] and headline.keyword then
-            keyword = headline.keyword
-            @output << "<span class=\"todo-keyword #{keyword}\">#{keyword} </span>"
-          end
-          @output << inline_formatting(@buffer)
-
-        when current_mode == :definition_term
+        case current_mode
+        when :definition_term
           d = @buffer.split("::", 2)
           @output << inline_formatting(d[0].strip)
           indent = @list_indent_stack.last
@@ -175,7 +161,7 @@ module Orgmode
           @output << inline_formatting(d[1].strip)
           @new_paragraph = nil
 
-        when current_mode == :horizontal_rule
+        when :horizontal_rule
           add_paragraph unless @new_paragraph == :start
           @new_paragraph = true
           @output << "<hr />"
@@ -184,7 +170,19 @@ module Orgmode
           @output << inline_formatting(@buffer)
         end
       end
-      clear_accumulation_buffer!
+      @buffer = ""
+    end
+
+    def add_line_attributes headline
+      if @options[:export_heading_number] then
+        level = headline.level
+        heading_number = get_next_headline_number(level)
+        @output << "<span class=\"heading-number heading-number-#{level}\">#{heading_number} </span>"
+      end
+      if @options[:export_todo] and headline.keyword then
+        keyword = headline.keyword
+        @output << "<span class=\"todo-keyword #{keyword}\">#{keyword} </span>"
+      end
     end
 
     def output_footnotes!

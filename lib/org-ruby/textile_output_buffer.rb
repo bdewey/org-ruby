@@ -89,36 +89,35 @@ module Orgmode
         @output << @buffer << "\n"
 
       when @buffer.length > 0
-        case
-        when @buffered_lines[0].kind_of?(Headline)
-          headline = @buffered_lines[0]
-          raise "Cannot be more than one headline!" if @buffered_lines.length > 1
-          @output << "h#{headline.level}. "
-
-        when current_mode == :paragraph
+        case current_mode
+        when :paragraph
           @output << "p. " if @add_paragraph
           @output << "p=. " if @mode_stack[0] == :center
           @output << "bq. " if @mode_stack[0] == :quote
 
-        when current_mode == :list_item
+        when :list_item
           if @mode_stack[-2] == :ordered_list
             @output << "#" * @mode_stack.count(:list_item) << " "
           else # corresponds to unordered list
             @output << "*" * @mode_stack.count(:list_item) << " "
           end
 
-        when (current_mode == :definition_term and @support_definition_list)
-          @output << "-" * @mode_stack.count(:definition_term) << " "
-          @buffer.sub!("::", ":=")
+        when :definition_term
+          if @support_definition_list
+            @output << "-" * @mode_stack.count(:definition_term) << " "
+            @buffer.sub!("::", ":=")
+          end
         end
         @output << inline_formatting(@buffer) << "\n"
 
       when @output_type == :blank
         @output << "\n"
       end
-      clear_accumulation_buffer!
+      @buffer = ""
     end
 
-
+    def add_line_attributes headline
+      @output << "h#{headline.level}. "
+    end
   end                           # class TextileOutputBuffer
 end                             # module Orgmode
