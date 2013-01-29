@@ -13,6 +13,11 @@ module Orgmode
 
   class HtmlOutputBuffer < OutputBuffer
 
+    # The amount of whitespaces to be stripped at the beginning of
+    # each line in code block. Each array's element corresponds to a
+    # code block.
+    attr_accessor :code_indent_stack
+
     HtmlBlockTag = {
       :paragraph => "p",
       :ordered_list => "ol",
@@ -105,12 +110,14 @@ module Orgmode
     def flush!
       case
       when preserve_whitespace?
+        strip_code_block if mode_is_code? current_mode
+
         # NOTE: CodeRay and Pygments already escape the html once, so
         # no need to escape_buffer!
         case
         when (current_mode == :src and defined? Pygments)
-          lang = normalize_lang(@block_lang)
-          @output << "\n"
+          lang = normalize_lang @block_lang
+          @output << "\n" unless @new_paragraph == :start
 
           begin
             @buffer = Pygments.highlight(@buffer, :lexer => lang)
@@ -119,7 +126,7 @@ module Orgmode
             @buffer = Pygments.highlight(@buffer, :lexer => 'text')
           end
         when (current_mode == :src and defined? CodeRay)
-          lang = normalize_lang(@block_lang)
+          lang = normalize_lang @block_lang
 
           # CodeRay might throw a warning when unsupported lang is set,
           # then fallback to using the text lexer
@@ -316,6 +323,12 @@ module Orgmode
       yield
     ensure
       $VERBOSE = warn_level
+    end
+
+    def strip_code_block
+      code_indent = @code_indent_stack.shift
+      strip_regexp = Regexp.new('\n' + ' ' * code_indent)
+      @buffer.gsub!(strip_regexp, "\n")
     end
   end                           # class HtmlOutputBuffer
 end                             # module Orgmode
