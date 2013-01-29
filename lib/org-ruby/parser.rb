@@ -138,7 +138,7 @@ module Orgmode
           @headlines << @current_headline = line if Headline.headline? line.line
           # If there is a setting on this line, remember it.
           line.in_buffer_setting? do |key, value|
-            store_in_buffer_setting key, value
+            store_in_buffer_setting key.upcase, value
           end
 
           mode = line.paragraph_type if line.begin_block?
@@ -179,7 +179,7 @@ module Orgmode
     def to_html
       mark_trees_for_export
       export_options = {
-        :decorate_title => true,
+        :decorate_title => @in_buffer_settings["TITLE"],
         :export_heading_number => export_heading_number?,
         :export_todo => export_todo?,
         :use_sub_superscripts =>  use_sub_superscripts?,
