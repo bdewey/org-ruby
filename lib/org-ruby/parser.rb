@@ -168,9 +168,9 @@ module Orgmode
       output = ""
       output_buffer = TextileOutputBuffer.new(output)
 
-      Parser.translate(@header_lines, output_buffer)
+      translate(@header_lines, output_buffer)
       @headlines.each do |headline|
-        Parser.translate(headline.body_lines, output_buffer)
+        translate(headline.body_lines, output_buffer)
       end
       output
     end
@@ -195,9 +195,9 @@ module Orgmode
         # If we're given a new title, then just create a new line
         # for that title.
         title = Line.new(@in_buffer_settings["TITLE"], self)
-        Parser.translate([title], output_buffer)
+        translate([title], output_buffer)
       end
-      Parser.translate(@header_lines, output_buffer) unless skip_header_lines?
+      translate(@header_lines, output_buffer) unless skip_header_lines?
 
       # If we've output anything at all, remove the :decorate_title option.
       export_options.delete(:decorate_title) if (output.length > 0)
@@ -207,9 +207,9 @@ module Orgmode
         when :exclude
           # NOTHING
         when :headline_only
-          Parser.translate(headline.body_lines[0, 1], output_buffer)
+          translate(headline.body_lines[0, 1], output_buffer)
         when :all
-          Parser.translate(headline.body_lines, output_buffer)
+          translate(headline.body_lines, output_buffer)
         end
       end
       output << "\n"
@@ -223,7 +223,7 @@ module Orgmode
 
     # Converts an array of lines to the appropriate format.
     # Writes the output to +output_buffer+.
-    def self.translate(lines, output_buffer)
+    def translate(lines, output_buffer)
       output_buffer.output_type = :start
       lines.each { |line| output_buffer.insert(line) }
       output_buffer.flush!

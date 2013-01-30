@@ -110,7 +110,7 @@ module Orgmode
     def flush!
       case
       when preserve_whitespace?
-        strip_code_block if mode_is_code? current_mode
+        strip_code_block! if mode_is_code? current_mode
 
         # NOTE: CodeRay and Pygments already escape the html once, so
         # no need to escape_buffer!
@@ -325,7 +325,7 @@ module Orgmode
       $VERBOSE = warn_level
     end
 
-    def strip_code_block
+    def strip_code_block!
       code_indent = @code_indent_stack.shift
       strip_regexp = Regexp.new('\n' + ' ' * code_indent)
       @buffer.gsub!(strip_regexp, "\n")
