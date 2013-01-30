@@ -17,23 +17,23 @@
 <h1><span class="heading-number heading-number-1">2 </span>BEGIN_SRC</h1>
 <p>And this:</p>
 <pre class="src src-ruby">
-    # Finds all emphasis matches in a string.
-    # Supply a block that will get the marker and body as parameters.
-    def match_all(str)
-      str.scan(@org_emphasis_regexp) do |match|
-        yield $2, $3
-      end
-    end
+# Finds all emphasis matches in a string.
+# Supply a block that will get the marker and body as parameters.
+def match_all(str)
+  str.scan(@org_emphasis_regexp) do |match|
+    yield $2, $3
+  end
+end
 </pre>
 <p>Now let&#8217;s test case-insensitive code blocks.</p>
 <pre class="src src-ruby">
-    # Finds all emphasis matches in a string.
-    # Supply a block that will get the marker and body as parameters.
-    def match_all(str)
-      str.scan(@org_emphasis_regexp) do |match|
-        yield $2, $3
-      end
-    end
+# Finds all emphasis matches in a string.
+# Supply a block that will get the marker and body as parameters.
+def match_all(str)
+  str.scan(@org_emphasis_regexp) do |match|
+    yield $2, $3
+  end
+end
 </pre>
 <pre class="src src-clojure">
 (def fib-seq

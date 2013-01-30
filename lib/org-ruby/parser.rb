@@ -101,85 +101,45 @@ module Orgmode
       table_header_set = false
       @lines.each do |text|
         line = Line.new text, self
+        mode = :normal if line.end_block? and mode == line.paragraph_type
+        mode = :normal if line.property_drawer_end_block? and mode == :property_drawer
 
         case mode
-        when :normal
-
-          if (Headline.headline? line.line) then
-            @current_headline = Headline.new line.line, self, offset
-            @headlines << @current_headline
-          else
-            # If there is a setting on this line, remember it.
-            line.in_buffer_setting? do |key, value|
-              store_in_buffer_setting key, value
-            end
-            if line.table_separator? then
-              if previous_line and previous_line.paragraph_type == :table_row and !table_header_set
-                previous_line.assigned_paragraph_type = :table_header
-                table_header_set = true
-              end
-            end
-            table_header_set = false if !line.table?
-            mode = :code if line.begin_block? and line.block_type.casecmp("EXAMPLE") == 0
-            mode = :src_code if line.begin_block? and line.block_type.casecmp("SRC") == 0
-            mode = :block_comment if line.begin_block? and line.block_type == "COMMENT"
-            mode = :property_drawer if line.property_drawer_begin_block?
-            if (@current_headline) then
-              @current_headline.body_lines << line
-            else
-              @header_lines << line
+        when :normal, :quote, :center
+          if Headline.headline? line.line
+            line = Headline.new line.line, self, offset
+          elsif line.table_separator?
+            if previous_line and previous_line.paragraph_type == :table_row and !table_header_set
+              previous_line.assigned_paragraph_type = :table_header
+              table_header_set = true
             end
           end
+          table_header_set = false if !line.table?
 
-        when :block_comment
-
-          if line.end_block? and line.block_type == "COMMENT"
-            mode = :normal
-          else
-            line.assigned_paragraph_type = :comment
-          end
-
-        when :code
-
-          # As long as we stay in code mode, force lines to be either blank or paragraphs.
+        when :example, :src
+          # As long as we stay in code mode, force lines to be paragraphs.
           # Don't try to interpret structural items, like headings and tables.
-          if line.end_block? and line.code_block?
-            mode = :normal
-          else
-            line.assigned_paragraph_type = :paragraph unless line.blank?
+          line.assigned_paragraph_type = :paragraph
+        end
+
+        if mode == :normal
+          @headlines << @current_headline = line if Headline.headline? line.line
+          # If there is a setting on this line, remember it.
+          line.in_buffer_setting? do |key, value|
+            store_in_buffer_setting key.upcase, value
           end
-          if (@current_headline) then
+
+          mode = line.paragraph_type if line.begin_block?
+          mode = :property_drawer if line.property_drawer_begin_block?
+        end
+
+        unless mode == :comment
+          if @current_headline
             @current_headline.body_lines << line
           else
             @header_lines << line
           end
-
-        when :src_code
-
-          if line.end_block? and line.code_block?
-            mode = :normal
-          else
-            line.assigned_paragraph_type = :src
-          end
-          if (@current_headline) then
-            @current_headline.body_lines << line
-          else
-            @header_lines << line
-          end
-
-        when :property_drawer
-
-          if line.property_drawer_end_block?
-            mode = :normal
-          else
-            line.assigned_paragraph_type = :property_drawer unless line.blank?
-          end
-          if (@current_headline) then
-            @current_headline.body_lines << line
-          else
-            @header_lines << line
-          end
-        end                     # case
+        end
 
         previous_line = line
       end                       # @lines.each
@@ -196,9 +156,9 @@ module Orgmode
       output = ""
       output_buffer = TextileOutputBuffer.new(output)
 
-      Parser.translate(@header_lines, output_buffer)
+      translate(@header_lines, output_buffer)
       @headlines.each do |headline|
-        Parser.translate(headline.body_lines, output_buffer)
+        translate(headline.body_lines, output_buffer)
       end
       output
     end
@@ -207,7 +167,7 @@ module Orgmode
     def to_html
       mark_trees_for_export
       export_options = {
-        :decorate_title => true,
+        :decorate_title => @in_buffer_settings["TITLE"],
         :export_heading_number => export_heading_number?,
         :export_todo => export_todo?,
         :use_sub_superscripts =>  use_sub_superscripts?,
@@ -222,9 +182,9 @@ module Orgmode
         # If we're given a new title, then just create a new line
         # for that title.
         title = Line.new(@in_buffer_settings["TITLE"], self)
-        Parser.translate([title], output_buffer)
+        translate([title], output_buffer)
       end
-      Parser.translate(@header_lines, output_buffer) unless skip_header_lines?
+      translate(@header_lines, output_buffer) unless skip_header_lines?
 
       # If we've output anything at all, remove the :decorate_title option.
       export_options.delete(:decorate_title) if (output.length > 0)
@@ -234,9 +194,9 @@ module Orgmode
         when :exclude
           # NOTHING
         when :headline_only
-          Parser.translate(headline.body_lines[0, 1], output_buffer)
+          translate(headline.body_lines[0, 1], output_buffer)
         when :all
-          Parser.translate(headline.body_lines, output_buffer)
+          translate(headline.body_lines, output_buffer)
         end
       end
       output << "\n"
@@ -250,11 +210,9 @@ module Orgmode
 
     # Converts an array of lines to the appropriate format.
     # Writes the output to +output_buffer+.
-    def self.translate(lines, output_buffer)
+    def translate(lines, output_buffer)
       output_buffer.output_type = :start
-      lines.each do |line|
-        output_buffer.insert(line)
-      end
+      lines.each { |line| output_buffer.insert(line) }
       output_buffer.flush!
       output_buffer.pop_mode while output_buffer.current_mode
       output_buffer.output_footnotes!

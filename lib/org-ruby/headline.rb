@@ -45,7 +45,6 @@ module Orgmode
     def initialize(line, parser = nil, offset=0)
       super(line, parser)
       @body_lines = []
-      @body_lines << self       # Make @body_lines contain the headline?
       @tags = []
       @export_state = :exclude
       if (@line =~ LineRegexp) then
