@@ -16,22 +16,22 @@
 <p>Two ASCII blobs.</p>
 <h1><span class="heading-number heading-number-1">2 </span>BEGIN_SRC</h1>
 <p>And this:</p>
-<div class="highlight"><pre>    <span class="c1"># Finds all emphasis matches in a string.</span>
-    <span class="c1"># Supply a block that will get the marker and body as parameters.</span>
-    <span class="k">def</span> <span class="nf">match_all</span><span class="p">(</span><span class="n">str</span><span class="p">)</span>
-      <span class="n">str</span><span class="o">.</span><span class="n">scan</span><span class="p">(</span><span class="vi">@org_emphasis_regexp</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">match</span><span class="o">|</span>
-        <span class="k">yield</span> <span class="vg">$2</span><span class="p">,</span> <span class="vg">$3</span>
-      <span class="k">end</span>
-    <span class="k">end</span>
+<div class="highlight"><pre><span class="c1"># Finds all emphasis matches in a string.</span>
+<span class="c1"># Supply a block that will get the marker and body as parameters.</span>
+<span class="k">def</span> <span class="nf">match_all</span><span class="p">(</span><span class="n">str</span><span class="p">)</span>
+  <span class="n">str</span><span class="o">.</span><span class="n">scan</span><span class="p">(</span><span class="vi">@org_emphasis_regexp</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">match</span><span class="o">|</span>
+    <span class="k">yield</span> <span class="vg">$2</span><span class="p">,</span> <span class="vg">$3</span>
+  <span class="k">end</span>
+<span class="k">end</span>
 </pre></div>
 <p>Now let&#8217;s test case-insensitive code blocks.</p>
-<div class="highlight"><pre>    <span class="c1"># Finds all emphasis matches in a string.</span>
-    <span class="c1"># Supply a block that will get the marker and body as parameters.</span>
-    <span class="k">def</span> <span class="nf">match_all</span><span class="p">(</span><span class="n">str</span><span class="p">)</span>
-      <span class="n">str</span><span class="o">.</span><span class="n">scan</span><span class="p">(</span><span class="vi">@org_emphasis_regexp</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">match</span><span class="o">|</span>
-        <span class="k">yield</span> <span class="vg">$2</span><span class="p">,</span> <span class="vg">$3</span>
-      <span class="k">end</span>
-    <span class="k">end</span>
+<div class="highlight"><pre><span class="c1"># Finds all emphasis matches in a string.</span>
+<span class="c1"># Supply a block that will get the marker and body as parameters.</span>
+<span class="k">def</span> <span class="nf">match_all</span><span class="p">(</span><span class="n">str</span><span class="p">)</span>
+  <span class="n">str</span><span class="o">.</span><span class="n">scan</span><span class="p">(</span><span class="vi">@org_emphasis_regexp</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">match</span><span class="o">|</span>
+    <span class="k">yield</span> <span class="vg">$2</span><span class="p">,</span> <span class="vg">$3</span>
+  <span class="k">end</span>
+<span class="k">end</span>
 </pre></div>
 <div class="highlight"><pre><span class="p">(</span><span class="k">def </span><span class="nv">fib-seq</span>
   <span class="p">(</span><span class="nf">concat</span>
@@ -68,12 +68,12 @@
 <div class="highlight"><pre>&lt;script&gt;alert(&#39;hello world&#39;)&lt;/script&gt;
 </pre></div>
 <h2><span class="heading-number heading-number-2">4.2 </span>CSS example</h2>
-<div class="highlight"><pre> <span class="o">*</span> <span class="p">{</span>
-  <span class="c">/* apply a natural box layout model to all elements */</span>
-  <span class="n">box</span><span class="o">-</span><span class="n">sizing</span><span class="o">:</span> <span class="k">border</span><span class="o">-</span><span class="n">box</span><span class="p">;</span> 
-  <span class="o">-</span><span class="n">moz</span><span class="o">-</span><span class="n">box</span><span class="o">-</span><span class="n">sizing</span><span class="o">:</span> <span class="k">border</span><span class="o">-</span><span class="n">box</span><span class="p">;</span> 
-  <span class="o">-</span><span class="n">webkit</span><span class="o">-</span><span class="n">box</span><span class="o">-</span><span class="n">sizing</span><span class="o">:</span> <span class="k">border</span><span class="o">-</span><span class="n">box</span><span class="p">;</span> 
- <span class="p">}</span>
+<div class="highlight"><pre><span class="o">*</span> <span class="p">{</span>
+ <span class="c">/* apply a natural box layout model to all elements */</span>
+ <span class="n">box</span><span class="o">-</span><span class="n">sizing</span><span class="o">:</span> <span class="k">border</span><span class="o">-</span><span class="n">box</span><span class="p">;</span> 
+ <span class="o">-</span><span class="n">moz</span><span class="o">-</span><span class="n">box</span><span class="o">-</span><span class="n">sizing</span><span class="o">:</span> <span class="k">border</span><span class="o">-</span><span class="n">box</span><span class="p">;</span> 
+ <span class="o">-</span><span class="n">webkit</span><span class="o">-</span><span class="n">box</span><span class="o">-</span><span class="n">sizing</span><span class="o">:</span> <span class="k">border</span><span class="o">-</span><span class="n">box</span><span class="p">;</span> 
+<span class="p">}</span>
 </pre></div>
 <h2><span class="heading-number heading-number-2">4.3 </span>HTML example</h2>
 <div class="highlight"><pre><span class="nt">&lt;html&gt;</span>

@@ -22,10 +22,6 @@ module Orgmode
       # without intervening newlines.
       @buffer = ""
 
-      # These are the Line objects that are currently in the
-      # accumulation buffer.
-      @buffered_lines = []
-
       # This stack is used to do proper outline numbering of
       # headlines.
       @headline_number_stack = []
@@ -34,6 +30,7 @@ module Orgmode
       @output_type = :start
       @list_indent_stack = []
       @mode_stack = []
+      @code_block_indent = nil
 
       @logger = Logger.new(STDERR)
       if ENV['DEBUG'] or $DEBUG
@@ -69,15 +66,24 @@ module Orgmode
         flush!
         maintain_mode_stack(line)
       end
-      @output_type = line.assigned_paragraph_type || line.paragraph_type
+      add_line_attributes(line) if line.kind_of? Headline
+
+      if mode_is_code? current_mode and not line.begin_block?
+        # Determines the amount of whitespaces to be stripped at the
+        # beginning of each line in code block.
+        if @code_block_indent
+          @code_block_indent = [@code_block_indent, line.indent].min
+        else
+          @code_block_indent = line.indent
+        end
+      end
 
       # Adds the current line to the output buffer
-      @buffered_lines.push(line)
       if preserve_whitespace? and not line.begin_block?
         @buffer << "\n" << line.output_text
       else
         case line.paragraph_type
-        when :metadata, :table_separator, :blank, :comment, :property_drawer_item, :property_drawer_begin_block, :property_drawer_end_block, :blockquote, :center, :example, :src
+        when :metadata, :table_separator, :blank, :comment, :property_drawer_item, :property_drawer_begin_block, :property_drawer_end_block, :quote, :center, :example, :src
           # Nothing
         else
           @buffer << "\n"
@@ -85,15 +91,8 @@ module Orgmode
           @buffer << line.output_text.strip
         end
       end
-    end
 
-    # Flushes everything currently in the accumulation buffer into the
-    # output buffer. Derived classes must override this to actually move
-    # content into the output buffer with the appropriate markup. This
-    # method just does common bookkeeping cleanup.
-    def clear_accumulation_buffer!
-      @buffer = ""
-      @buffered_lines = []
+      @output_type = line.assigned_paragraph_type || line.paragraph_type
     end
 
     # Gets the next headline number for a given level. The intent is
@@ -131,7 +130,7 @@ module Orgmode
     end
 
     def mode_is_block?(mode)
-      [:blockquote, :center, :example, :src].include? mode
+      [:quote, :center, :example, :src].include? mode
     end
 
     def mode_is_code?(mode)
