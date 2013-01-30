@@ -30,6 +30,7 @@ module Orgmode
       @output_type = :start
       @list_indent_stack = []
       @mode_stack = []
+      @code_block_indent = nil
 
       @logger = Logger.new(STDERR)
       if ENV['DEBUG'] or $DEBUG
@@ -66,7 +67,16 @@ module Orgmode
         maintain_mode_stack(line)
       end
       add_line_attributes(line) if line.kind_of? Headline
-      @output_type = line.assigned_paragraph_type || line.paragraph_type
+
+      if mode_is_code? current_mode and not line.begin_block?
+        # Determines the amount of whitespaces to be stripped at the
+        # beginning of each line in code block.
+        if @code_block_indent
+          @code_block_indent = [@code_block_indent, line.indent].min
+        else
+          @code_block_indent = line.indent
+        end
+      end
 
       # Adds the current line to the output buffer
       if preserve_whitespace? and not line.begin_block?
@@ -81,6 +91,8 @@ module Orgmode
           @buffer << line.output_text.strip
         end
       end
+
+      @output_type = line.assigned_paragraph_type || line.paragraph_type
     end
 
     # Gets the next headline number for a given level. The intent is

@@ -96,8 +96,6 @@ module Orgmode
       @header_lines = []
       @in_buffer_settings = { }
       @options = { }
-      @code_indent_stack = []
-      @code_indent = nil
       mode = :normal
       previous_line = nil
       table_header_set = false
@@ -118,17 +116,7 @@ module Orgmode
           end
           table_header_set = false if !line.table?
 
-          if @code_indent
-            @code_indent_stack.push @code_indent
-            @code_indent = nil
-          end
         when :example, :src
-          if @code_indent
-            @code_indent = [@code_indent, line.indent].min
-          else
-            @code_indent = line.indent
-          end
-
           # As long as we stay in code mode, force lines to be paragraphs.
           # Don't try to interpret structural items, like headings and tables.
           line.assigned_paragraph_type = :paragraph
@@ -188,7 +176,6 @@ module Orgmode
       export_options[:skip_tables] = true if not export_tables?
       output = ""
       output_buffer = HtmlOutputBuffer.new(output, export_options)
-      output_buffer.code_indent_stack = @code_indent_stack
 
       if @in_buffer_settings["TITLE"] then
 

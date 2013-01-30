@@ -13,11 +13,6 @@ module Orgmode
 
   class HtmlOutputBuffer < OutputBuffer
 
-    # The amount of whitespaces to be stripped at the beginning of
-    # each line in code block. Each array's element corresponds to a
-    # code block.
-    attr_accessor :code_indent_stack
-
     HtmlBlockTag = {
       :paragraph => "p",
       :ordered_list => "ol",
@@ -326,9 +321,9 @@ module Orgmode
     end
 
     def strip_code_block!
-      code_indent = @code_indent_stack.shift
-      strip_regexp = Regexp.new('\n' + ' ' * code_indent)
+      strip_regexp = Regexp.new('\n' + ' ' * @code_block_indent)
       @buffer.gsub!(strip_regexp, "\n")
+      @code_block_indent = nil
     end
   end                           # class HtmlOutputBuffer
 end                             # module Orgmode
