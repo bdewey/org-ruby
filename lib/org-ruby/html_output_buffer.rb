@@ -158,14 +158,14 @@ module Orgmode
 
         case current_mode
         when :definition_term
-          d = @buffer.rpartition(/\s+::(\s+|$)/)
+          d = @buffer.rpartition(/\s+::($|\s+)/)
           @output << inline_formatting(d[0].strip)
           indent = @list_indent_stack.last
           pop_mode
 
           @new_paragraph = :start
           push_mode(:definition_descr, indent)
-          @output << inline_formatting(d[2].strip)
+          @output << inline_formatting(d[2])
           @new_paragraph = nil
 
         when :horizontal_rule
