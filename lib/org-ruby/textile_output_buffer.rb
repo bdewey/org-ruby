@@ -43,29 +43,30 @@ module Orgmode
 
     # Handles inline formatting for textile.
     def inline_formatting(input)
-      input = @re_help.rewrite_emphasis(input) do |marker, body|
+      @re_help.rewrite_emphasis input do |marker, body|
         m = TextileMap[marker]
         "#{m}#{body}#{m}"
       end
-      input = @re_help.rewrite_subp(input) do |type, text|
+      @re_help.rewrite_subp input do |type, text|
         if type == "_" then
           "~#{text}~"
         elsif type == "^" then
           "^#{text}^"
         end
       end
-      input = @re_help.rewrite_links(input) do |link, text|
+      @re_help.rewrite_links input do |link, text|
         text ||= link
-        link = link.gsub(/ /, "%20")
+        link = link.gsub(/ /, "%%20")
         "\"#{text}\":#{link}"
       end
-      input = @re_help.rewrite_footnote(input) do |name, defi|
+      @re_help.rewrite_footnote input do |name, defi|
         # textile only support numerical names! Use hash as a workarround
         name = name.hash.to_s unless name.to_i.to_s == name # check if number
         @footnotes[name] = defi if defi
         "[#{name}]"
       end
       Orgmode.special_symbols_to_textile(input)
+      input = @re_help.restore_code_snippets input
       input
     end
 

@@ -244,11 +244,11 @@ module Orgmode
 
     # Applies inline formatting rules to a string.
     def inline_formatting(str)
-      str = @re_help.rewrite_emphasis(str) do |marker, s|
+      @re_help.rewrite_emphasis str do |marker, s|
         "#{Tags[marker][:open]}#{s}#{Tags[marker][:close]}"
       end
       if @options[:use_sub_superscripts] then
-        str = @re_help.rewrite_subp(str) do |type, text|
+        @re_help.rewrite_subp str do |type, text|
           if type == "_" then
             "<sub>#{text}</sub>"
           elsif type == "^" then
@@ -256,10 +256,10 @@ module Orgmode
           end
         end
       end
-      str = @re_help.rewrite_images(str) do |link|
+      @re_help.rewrite_images str do |link|
         "<a href=\"#{link}\"><img src=\"#{link}\" /></a>"
       end
-      str = @re_help.rewrite_links(str) do |link, text|
+      @re_help.rewrite_links str do |link, text|
         text ||= link
         link = link.sub(/^file:(.*)::(.*?)$/) do
 
@@ -289,13 +289,14 @@ module Orgmode
         str.gsub!(/\s*\|\s*/, "</th><th>")
       end
       if @options[:export_footnotes] then
-        str = @re_help.rewrite_footnote(str) do |name, defi|
+        @re_help.rewrite_footnote str do |name, defi|
           # TODO escape name for url?
           @footnotes[name] = defi if defi
           "<sup><a class=\"footref\" name=\"fnr.#{name}\" href=\"#fn.#{name}\">#{name}</a></sup>"
         end
       end
       Orgmode.special_symbols_to_html(str)
+      str = @re_help.restore_code_snippets str
       str
     end
 

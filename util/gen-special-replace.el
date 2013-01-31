@@ -17,6 +17,8 @@
         (let ((symb (nth to entity)))
           ;; escape backslashes and quotation marks
           (setq symb (replace-regexp-in-string "\\(\\\\\\|\\\"\\)" "\\\\\\&" symb))
+          ;; escape percent marks from further formatting
+          (setq symb (replace-regexp-in-string "%" "%%" symb))
           (insert "\n    \"" (car entity) "\" => \"" symb "\","))))
     ;; remove last comma from the sequence
     (search-backward ",")
