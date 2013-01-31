@@ -356,6 +356,8 @@ module Orgmode
         if $2 == "{}" then "#{HtmlEntities[$1]}"
         else "#{HtmlEntities[$1]}#{$2}"
         end
+      else
+        $&
       end
     end
   end

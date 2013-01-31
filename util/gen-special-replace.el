@@ -37,6 +37,8 @@
    "        if $2 == \"{}\" then \"#{" (capitalize what) "Entities[$1]}\"\n"
    "        else \"#{" (capitalize what) "Entities[$1]}#{$2}\"\n"
    "        end\n"
+   "      else\n"
+   "        $&\n"
    "      end\n"
    "    end\n"
    "  end\n"

@@ -357,6 +357,8 @@ module Orgmode
         if $2 == "{}" then "#{TextileEntities[$1]}"
         else "#{TextileEntities[$1]}#{$2}"
         end
+      else
+        $&
       end
     end
   end
