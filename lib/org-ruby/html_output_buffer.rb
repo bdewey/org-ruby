@@ -45,6 +45,7 @@ module Orgmode
       else
         @title_decoration = ""
       end
+      @buffer_tag = "HTML"
       @options = opts
       @new_paragraph = :start
       @footnotes = {}
@@ -143,6 +144,11 @@ module Orgmode
 
       when (mode_is_table? current_mode and skip_tables?)
         @logger.debug "SKIP       ==========> #{current_mode}"
+
+      when (current_mode == :raw_text and @buffer.length > 0)
+        @new_paragraph = true
+        @output << "\n" unless @new_paragraph == :start
+        @output << @buffer
 
       when @buffer.length > 0
         @buffer.lstrip!
