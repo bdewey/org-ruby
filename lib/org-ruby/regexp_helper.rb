@@ -153,13 +153,10 @@ module Orgmode
     # +result+.
     def rewrite_links str # :yields: link, text
       str.gsub! @org_link_regexp do |match|
-        yield $1, nil
-      end
-      str.gsub! @org_link_text_regexp do |match|
-        yield $1, $2
+        yield $1, $3
       end
       str.gsub! @org_angle_link_text_regexp do |match|
-        yield "#{$2}:#{$3}", nil
+        yield $2, nil
       end
     end
 
@@ -190,17 +187,14 @@ module Orgmode
 
     def build_org_link_regexp
       @org_link_regexp = /\[\[
-                             ([^\]]*) # This is the URL
-                          \]\]/x
+                             ([^\]\[]+) # This is the URL
+                          \](\[
+                             ([^\]\[]+) # This is the friendly text
+                          \])?\]/x
       @org_img_regexp = /\[\[
-          ([^\]]*\.(jpg|jpeg|gif|png)) # Like a normal URL, but must end with a specified extension
+          ([^\]\[]+\.(jpg|jpeg|gif|png)) # Like a normal URL, but must end with a specified extension
         \]\]/xi
-      @org_link_text_regexp = /\[\[
-                                 ([^\]]*) # This is the URL
-                               \]\[
-                                 ([^\]]*) # This is the friendly text
-                               \]\]/x
-      @org_angle_link_text_regexp = /(<|&lt;)(\w+):([^\]\t\n\r<> ][^\]\t\n\r<> ]*)(>|&gt;)/x
+      @org_angle_link_text_regexp = /(<|&lt;)(\w+:[^\]\s<>]+?)(>|&gt;)/
     end
   end                           # class Emphasis
 end                             # module Orgmode
