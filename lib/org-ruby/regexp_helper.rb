@@ -58,6 +58,7 @@ module Orgmode
       @body_regexp = "#{@body_regexp}" +
                      "(?:\n#{@body_regexp}){0,#{@max_newlines}}" if @max_newlines > 0
       @markers = "\\*\\/_=~\\+"
+      @code_snippet_stack = []
       @logger = Logger.new(STDERR)
       @logger.level = Logger::WARN
       build_org_emphasis_regexp
@@ -95,23 +96,32 @@ module Orgmode
     # replace "*bold*", "/italic/", and "=code=",
     # respectively. (Clearly this sample string will use HTML-like
     # syntax, assuming +map+ is defined appropriately.)
-    def rewrite_emphasis(str)
-      str.gsub(@org_emphasis_regexp) do |match|
-        inner = yield $2, $3
+    def rewrite_emphasis str
+      # escape the percent signs for safe restoring code snippets
+      str.gsub!(/%/, "%%")
+      format_str = "%s"
+      str.gsub! @org_emphasis_regexp do |match|
+        # preserve the code snippet from further formatting
+        inner = if $2 == "=" or $2 == "~"
+                  @code_snippet_stack.push $3
+                  yield $2, format_str
+                else
+                  yield $2, $3
+                end
         "#{$1}#{inner}"
       end
     end
 
     # rewrite subscript and superscript (_{foo} and ^{bar})
-    def rewrite_subp(str) # :yields: type ("_" for subscript and "^" for superscript), text
-      str.gsub(@org_subp_regexp) do |match|
+    def rewrite_subp str # :yields: type ("_" for subscript and "^" for superscript), text
+      str.gsub! @org_subp_regexp do |match|
         yield $1, $2
       end
     end
 
     # rewrite footnotes
-    def rewrite_footnote(str) # :yields: name, definition or nil
-      str.gsub(@org_footnote_regexp) do |match|
+    def rewrite_footnote str # :yields: name, definition or nil
+      str.gsub! @org_footnote_regexp do |match|
         yield $1, $3
       end
     end
@@ -141,21 +151,26 @@ module Orgmode
     # +http://www.hotmail.com+. In both cases, the block returns an
     # HTML-style link, and that is how things will get recorded in
     # +result+.
-    def rewrite_links(str) #  :yields: link, text
-      str.gsub(@org_link_regexp) do |match|
-        yield $1, nil
-      end.gsub(@org_link_text_regexp) do |match|
-          yield $1, $2
-      end.gsub(@org_angle_link_text_regexp) do |match|
-          yield "#{$2}:#{$3}", nil
+    def rewrite_links str # :yields: link, text
+      str.gsub! @org_link_regexp do |match|
+        yield $1, $3
+      end
+      str.gsub! @org_angle_link_text_regexp do |match|
+        yield $2, nil
       end
     end
 
     # Rewrites all of the inline image tags.
-    def rewrite_images(str) #  :yields: image_link
-      str.gsub(@org_img_regexp) do |match|
+    def rewrite_images str # :yields: image_link
+      str.gsub! @org_img_regexp do |match|
         yield $1
       end
+    end
+
+    def restore_code_snippets str
+      str = str % @code_snippet_stack
+      @code_snippet_stack = []
+      str
     end
 
     private
@@ -172,17 +187,14 @@ module Orgmode
 
     def build_org_link_regexp
       @org_link_regexp = /\[\[
-                             ([^\]]*) # This is the URL
-                          \]\]/x
+                             ([^\]\[]+) # This is the URL
+                          \](\[
+                             ([^\]\[]+) # This is the friendly text
+                          \])?\]/x
       @org_img_regexp = /\[\[
-          ([^\]]*\.(jpg|jpeg|gif|png)) # Like a normal URL, but must end with a specified extension
+          ([^\]\[]+\.(jpg|jpeg|gif|png)) # Like a normal URL, but must end with a specified extension
         \]\]/xi
-      @org_link_text_regexp = /\[\[
-                                 ([^\]]*) # This is the URL
-                               \]\[
-                                 ([^\]]*) # This is the friendly text
-                               \]\]/x
-      @org_angle_link_text_regexp = /(<|&lt;)(\w+):([^\]\t\n\r<> ][^\]\t\n\r<> ]*)(>|&gt;)/x
+      @org_angle_link_text_regexp = /(<|&lt;)(\w+:[^\]\s<>]+?)(>|&gt;)/
     end
   end                           # class Emphasis
 end                             # module Orgmode

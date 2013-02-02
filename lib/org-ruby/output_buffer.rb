@@ -85,6 +85,8 @@ module Orgmode
         case line.paragraph_type
         when :metadata, :table_separator, :blank, :comment, :property_drawer_item, :property_drawer_begin_block, :property_drawer_end_block, :quote, :center, :example, :src
           # Nothing
+        when :raw_text
+          @buffer << "\n" << line.output_text if line.raw_text_tag == @buffer_tag
         else
           @buffer << "\n"
           buffer_indentation
@@ -150,7 +152,8 @@ module Orgmode
       pop_mode if (mode_is_heading? current_mode or
                    current_mode == :paragraph or
                    current_mode == :horizontal_rule or
-                   current_mode == :inline_example)
+                   current_mode == :inline_example or
+                   current_mode == :raw_text)
 
       # End-block line closes every mode within block
       if line.end_block? and @mode_stack.include? line.paragraph_type
@@ -197,7 +200,7 @@ module Orgmode
 
     # Tests if the current line should be accumulated in the current
     # output buffer.
-    def should_accumulate_output?(line)
+    def should_accumulate_output? line
       # Special case: Assign mode if not yet done.
       return false unless current_mode
 
@@ -206,13 +209,14 @@ module Orgmode
         return true unless (line.end_block? and
                             line.paragraph_type == current_mode)
       end
-      return false if boundary_of_block?(line)
+      return false if boundary_of_block? line
       return true if current_mode == :inline_example
 
-      # Special case: Don't accumulate headings, comments and horizontal rules.
-      return false if (mode_is_heading?(@output_type) or
+      # Special case: Don't accumulate the following lines.
+      return false if (mode_is_heading? @output_type or
                        @output_type == :comment or
-                       @output_type == :horizontal_rule)
+                       @output_type == :horizontal_rule or
+                       @output_type == :raw_text)
 
       # Special case: Blank line at least splits paragraphs
       return false if @output_type == :blank

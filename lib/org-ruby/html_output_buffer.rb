@@ -45,6 +45,7 @@ module Orgmode
       else
         @title_decoration = ""
       end
+      @buffer_tag = "HTML"
       @options = opts
       @new_paragraph = :start
       @footnotes = {}
@@ -144,6 +145,11 @@ module Orgmode
       when (mode_is_table? current_mode and skip_tables?)
         @logger.debug "SKIP       ==========> #{current_mode}"
 
+      when (current_mode == :raw_text and @buffer.length > 0)
+        @buffer.gsub!(/\A\n/, "") if @new_paragraph == :start
+        @new_paragraph = true
+        @output << @buffer
+
       when @buffer.length > 0
         @buffer.lstrip!
         escape_buffer!
@@ -152,14 +158,14 @@ module Orgmode
 
         case current_mode
         when :definition_term
-          d = @buffer.split("::", 2)
+          d = @buffer.rpartition(/\s+::($|\s+)/)
           @output << inline_formatting(d[0].strip)
           indent = @list_indent_stack.last
           pop_mode
 
           @new_paragraph = :start
           push_mode(:definition_descr, indent)
-          @output << inline_formatting(d[1].strip)
+          @output << inline_formatting(d[2])
           @new_paragraph = nil
 
         when :horizontal_rule
@@ -244,11 +250,11 @@ module Orgmode
 
     # Applies inline formatting rules to a string.
     def inline_formatting(str)
-      str = @re_help.rewrite_emphasis(str) do |marker, s|
+      @re_help.rewrite_emphasis str do |marker, s|
         "#{Tags[marker][:open]}#{s}#{Tags[marker][:close]}"
       end
       if @options[:use_sub_superscripts] then
-        str = @re_help.rewrite_subp(str) do |type, text|
+        @re_help.rewrite_subp str do |type, text|
           if type == "_" then
             "<sub>#{text}</sub>"
           elsif type == "^" then
@@ -256,10 +262,10 @@ module Orgmode
           end
         end
       end
-      str = @re_help.rewrite_images(str) do |link|
+      @re_help.rewrite_images str do |link|
         "<a href=\"#{link}\"><img src=\"#{link}\" /></a>"
       end
-      str = @re_help.rewrite_links(str) do |link, text|
+      @re_help.rewrite_links str do |link, text|
         text ||= link
         link = link.sub(/^file:(.*)::(.*?)$/) do
 
@@ -289,13 +295,14 @@ module Orgmode
         str.gsub!(/\s*\|\s*/, "</th><th>")
       end
       if @options[:export_footnotes] then
-        str = @re_help.rewrite_footnote(str) do |name, defi|
+        @re_help.rewrite_footnote str do |name, defi|
           # TODO escape name for url?
           @footnotes[name] = defi if defi
           "<sup><a class=\"footref\" name=\"fnr.#{name}\" href=\"#fn.#{name}\">#{name}</a></sup>"
         end
       end
       Orgmode.special_symbols_to_html(str)
+      str = @re_help.restore_code_snippets str
       str
     end
 
