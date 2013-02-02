@@ -86,7 +86,7 @@ module Orgmode
         when :metadata, :table_separator, :blank, :comment, :property_drawer_item, :property_drawer_begin_block, :property_drawer_end_block, :quote, :center, :example, :src
           # Nothing
         when :raw_text
-          @buffer << line.output_text if line.raw_text_tag == @buffer_tag
+          @buffer << "\n" << line.output_text if line.raw_text_tag == @buffer_tag
         else
           @buffer << "\n"
           buffer_indentation

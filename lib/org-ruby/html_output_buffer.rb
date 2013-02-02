@@ -146,8 +146,8 @@ module Orgmode
         @logger.debug "SKIP       ==========> #{current_mode}"
 
       when (current_mode == :raw_text and @buffer.length > 0)
+        @buffer.gsub!(/\A\n/, "") if @new_paragraph == :start
         @new_paragraph = true
-        @output << "\n" unless @new_paragraph == :start
         @output << @buffer
 
       when @buffer.length > 0
