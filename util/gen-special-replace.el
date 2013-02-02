@@ -11,19 +11,18 @@
               org-entities))
         (to (if (string= what "html") 3
               6))) ; use utf8 for textile
-    (insert "  " (capitalize what) "Entities = {")
-    (dolist (entity ll)
-      (when (listp entity)
-        (let ((symb (nth to entity)))
-          ;; escape backslashes and quotation marks
-          (setq symb (replace-regexp-in-string "\\(\\\\\\|\\\"\\)" "\\\\\\&" symb))
-          ;; escape percent marks from further formatting
-          (setq symb (replace-regexp-in-string "%" "%%" symb))
-          (insert "\n    \"" (car entity) "\" => \"" symb "\","))))
-    ;; remove last comma from the sequence
-    (search-backward ",")
-    (replace-match "")
-    (insert "\n  }\n")))
+    (insert "  " (capitalize what) "Entities = {\n"
+            (mapconcat
+             (lambda (entity)
+               (let ((symb (nth to entity)))
+                 ;; escape backslashes and quotation marks
+                 (setq symb (replace-regexp-in-string "\\(\\\\\\|\\\"\\)" "\\\\\\&" symb))
+                 ;; escape percent marks from further formatting
+                 (setq symb (replace-regexp-in-string "%" "%%" symb))
+                 (concat "    \"" (car entity) "\" => \"" symb "\"")))
+             (remove-if-not 'listp ll)
+             ",\n")
+            "\n  }\n")))
 
 (defun generate-replace-header (what)
   (insert
