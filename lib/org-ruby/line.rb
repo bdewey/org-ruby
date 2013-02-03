@@ -96,7 +96,7 @@ module Orgmode
       @line.sub(UnorderedListRegexp, "")
     end
 
-    DefinitionListRegexp = /^\s*(-|\+|\s+[*])\s*(.*?)::/
+    DefinitionListRegexp = /^\s*(-|\+|\s+[*])\s+(.*?)\s+::($|\s+)/
 
     def definition_list?
       check_assignment_or_regexp(:definition_list, DefinitionListRegexp)
@@ -124,6 +124,7 @@ module Orgmode
       return strip_ordered_list_tag if ordered_list?
       return strip_unordered_list_tag if unordered_list?
       return @line.sub(InlineExampleRegexp, "") if inline_example?
+      return strip_raw_text_tag if raw_text?
       return line
     end
 
@@ -188,6 +189,21 @@ module Orgmode
       check_assignment_or_regexp(:inline_example, InlineExampleRegexp)
     end
 
+    RawTextRegexp = /^(\s*)#\+(\w+):\s*/
+
+    # Checks if this line is raw text.
+    def raw_text?
+      check_assignment_or_regexp(:raw_text, RawTextRegexp)
+    end
+
+    def raw_text_tag
+      $2.upcase if @line =~ RawTextRegexp
+    end
+
+    def strip_raw_text_tag
+      @line.sub(RawTextRegexp) { |match| $1 }
+    end
+
     InBufferSettingRegexp = /^#\+(\w+):\s*(.*)$/
 
     # call-seq:
@@ -237,6 +253,8 @@ module Orgmode
         when "SRC"     then :src
         when "COMMENT" then :comment
         end
+      when raw_text? # order is important! Raw text can be also a comment
+        :raw_text
       when comment?
         :comment
       when table_separator?

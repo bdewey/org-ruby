@@ -1,7 +1,381 @@
-<p>ENTITIES</p>
+<p class="title">ENTITIES</p>
 <p><code>Org-ruby</code> supports &#8220;smart double quotes,&#8221; &#8216;smart single quotes,&#8217;
   apostrophes for contractions like won&#8217;t and can&#8217;t, and other
   things&#8230; like elipses. Oh &#8211; and dashes.</p>
-<p>Question: What does org-mode do for ampersands, like R&amp;R? or &amp;lt;?
-  Answer: Those get escaped, too.</p>
+<ul>
+  <li>Question: What does org-mode do for ampersands, like R&amp;R? or &amp;lt;?</li>
+  <li>Answer: Those get escaped, too. &#9786;</li>
+</ul>
 <h1>&lt;Even in headlines! funner &amp; funner!&gt;</h1>
+<p>&laquo; They &alpha; should &beta; be &gamma;
+  able &delta; to &eta; exist &theta; in &epsilon;
+  the same line &radic; &raquo;.</p>
+<pre class="example">
+\laquo They won't appear in in example blocks. \raquo
+</pre>
+<div style="text-align: center">
+  <p>&lceil; &mdash; &mdash; &mdash; &mdash; &mdash; &mdash; &rceil;</p>
+  <p>Though they appear in center blocks</p>
+  <p>&lfloor; &mdash; &mdash; &mdash; &mdash; &mdash; &mdash; &rfloor;</p>
+</div>
+<p>To work they have to be separated, like &hearts; &hearts;, not like &hearts;\hearts.</p>
+<h1>List of entities supported</h1>
+<pre class="example">
+# Script to generate the list of currently supported entities
+require 'org-ruby'
+
+Orgmode::HtmlEntities.each_pair do |entity, _|
+  puts "- Writing =\\#{entity}=, results in: \\#{entity}"
+end
+</pre>
+<pre class="example">
+bundle exec ruby /tmp/print_entities.rb
+</pre>
+<ul>
+  <li>Writing <code>\Agrave</code>, results in: &Agrave;</li>
+  <li>Writing <code>\agrave</code>, results in: &agrave;</li>
+  <li>Writing <code>\Aacute</code>, results in: &Aacute;</li>
+  <li>Writing <code>\aacute</code>, results in: &aacute;</li>
+  <li>Writing <code>\Acirc</code>, results in: &Acirc;</li>
+  <li>Writing <code>\acirc</code>, results in: &acirc;</li>
+  <li>Writing <code>\Atilde</code>, results in: &Atilde;</li>
+  <li>Writing <code>\atilde</code>, results in: &atilde;</li>
+  <li>Writing <code>\Auml</code>, results in: &Auml;</li>
+  <li>Writing <code>\auml</code>, results in: &auml;</li>
+  <li>Writing <code>\Aring</code>, results in: &Aring;</li>
+  <li>Writing <code>\AA</code>, results in: &Aring;</li>
+  <li>Writing <code>\aring</code>, results in: &aring;</li>
+  <li>Writing <code>\AElig</code>, results in: &AElig;</li>
+  <li>Writing <code>\aelig</code>, results in: &aelig;</li>
+  <li>Writing <code>\Ccedil</code>, results in: &Ccedil;</li>
+  <li>Writing <code>\ccedil</code>, results in: &ccedil;</li>
+  <li>Writing <code>\Egrave</code>, results in: &Egrave;</li>
+  <li>Writing <code>\egrave</code>, results in: &egrave;</li>
+  <li>Writing <code>\Eacute</code>, results in: &Eacute;</li>
+  <li>Writing <code>\eacute</code>, results in: &eacute;</li>
+  <li>Writing <code>\Ecirc</code>, results in: &Ecirc;</li>
+  <li>Writing <code>\ecirc</code>, results in: &ecirc;</li>
+  <li>Writing <code>\Euml</code>, results in: &Euml;</li>
+  <li>Writing <code>\euml</code>, results in: &euml;</li>
+  <li>Writing <code>\Igrave</code>, results in: &Igrave;</li>
+  <li>Writing <code>\igrave</code>, results in: &igrave;</li>
+  <li>Writing <code>\Iacute</code>, results in: &Iacute;</li>
+  <li>Writing <code>\iacute</code>, results in: &iacute;</li>
+  <li>Writing <code>\Icirc</code>, results in: &Icirc;</li>
+  <li>Writing <code>\icirc</code>, results in: &icirc;</li>
+  <li>Writing <code>\Iuml</code>, results in: &Iuml;</li>
+  <li>Writing <code>\iuml</code>, results in: &iuml;</li>
+  <li>Writing <code>\Ntilde</code>, results in: &Ntilde;</li>
+  <li>Writing <code>\ntilde</code>, results in: &ntilde;</li>
+  <li>Writing <code>\Ograve</code>, results in: &Ograve;</li>
+  <li>Writing <code>\ograve</code>, results in: &ograve;</li>
+  <li>Writing <code>\Oacute</code>, results in: &Oacute;</li>
+  <li>Writing <code>\oacute</code>, results in: &oacute;</li>
+  <li>Writing <code>\Ocirc</code>, results in: &Ocirc;</li>
+  <li>Writing <code>\ocirc</code>, results in: &ocirc;</li>
+  <li>Writing <code>\Otilde</code>, results in: &Otilde;</li>
+  <li>Writing <code>\otilde</code>, results in: &otilde;</li>
+  <li>Writing <code>\Ouml</code>, results in: &Ouml;</li>
+  <li>Writing <code>\ouml</code>, results in: &ouml;</li>
+  <li>Writing <code>\Oslash</code>, results in: &Oslash;</li>
+  <li>Writing <code>\oslash</code>, results in: &oslash;</li>
+  <li>Writing <code>\OElig</code>, results in: &OElig;</li>
+  <li>Writing <code>\oelig</code>, results in: &oelig;</li>
+  <li>Writing <code>\Scaron</code>, results in: &Scaron;</li>
+  <li>Writing <code>\scaron</code>, results in: &scaron;</li>
+  <li>Writing <code>\szlig</code>, results in: &szlig;</li>
+  <li>Writing <code>\Ugrave</code>, results in: &Ugrave;</li>
+  <li>Writing <code>\ugrave</code>, results in: &ugrave;</li>
+  <li>Writing <code>\Uacute</code>, results in: &Uacute;</li>
+  <li>Writing <code>\uacute</code>, results in: &uacute;</li>
+  <li>Writing <code>\Ucirc</code>, results in: &Ucirc;</li>
+  <li>Writing <code>\ucirc</code>, results in: &ucirc;</li>
+  <li>Writing <code>\Uuml</code>, results in: &Uuml;</li>
+  <li>Writing <code>\uuml</code>, results in: &uuml;</li>
+  <li>Writing <code>\Yacute</code>, results in: &Yacute;</li>
+  <li>Writing <code>\yacute</code>, results in: &yacute;</li>
+  <li>Writing <code>\Yuml</code>, results in: &Yuml;</li>
+  <li>Writing <code>\yuml</code>, results in: &yuml;</li>
+  <li>Writing <code>\fnof</code>, results in: &fnof;</li>
+  <li>Writing <code>\real</code>, results in: &real;</li>
+  <li>Writing <code>\image</code>, results in: &image;</li>
+  <li>Writing <code>\weierp</code>, results in: &weierp;</li>
+  <li>Writing <code>\Alpha</code>, results in: &Alpha;</li>
+  <li>Writing <code>\alpha</code>, results in: &alpha;</li>
+  <li>Writing <code>\Beta</code>, results in: &Beta;</li>
+  <li>Writing <code>\beta</code>, results in: &beta;</li>
+  <li>Writing <code>\Gamma</code>, results in: &Gamma;</li>
+  <li>Writing <code>\gamma</code>, results in: &gamma;</li>
+  <li>Writing <code>\Delta</code>, results in: &Delta;</li>
+  <li>Writing <code>\delta</code>, results in: &delta;</li>
+  <li>Writing <code>\Epsilon</code>, results in: &Epsilon;</li>
+  <li>Writing <code>\epsilon</code>, results in: &epsilon;</li>
+  <li>Writing <code>\varepsilon</code>, results in: &epsilon;</li>
+  <li>Writing <code>\Zeta</code>, results in: &Zeta;</li>
+  <li>Writing <code>\zeta</code>, results in: &zeta;</li>
+  <li>Writing <code>\Eta</code>, results in: &Eta;</li>
+  <li>Writing <code>\eta</code>, results in: &eta;</li>
+  <li>Writing <code>\Theta</code>, results in: &Theta;</li>
+  <li>Writing <code>\theta</code>, results in: &theta;</li>
+  <li>Writing <code>\thetasym</code>, results in: &thetasym;</li>
+  <li>Writing <code>\vartheta</code>, results in: &thetasym;</li>
+  <li>Writing <code>\Iota</code>, results in: &Iota;</li>
+  <li>Writing <code>\iota</code>, results in: &iota;</li>
+  <li>Writing <code>\Kappa</code>, results in: &Kappa;</li>
+  <li>Writing <code>\kappa</code>, results in: &kappa;</li>
+  <li>Writing <code>\Lambda</code>, results in: &Lambda;</li>
+  <li>Writing <code>\lambda</code>, results in: &lambda;</li>
+  <li>Writing <code>\Mu</code>, results in: &Mu;</li>
+  <li>Writing <code>\mu</code>, results in: &mu;</li>
+  <li>Writing <code>\nu</code>, results in: &nu;</li>
+  <li>Writing <code>\Nu</code>, results in: &Nu;</li>
+  <li>Writing <code>\Xi</code>, results in: &Xi;</li>
+  <li>Writing <code>\xi</code>, results in: &xi;</li>
+  <li>Writing <code>\Omicron</code>, results in: &Omicron;</li>
+  <li>Writing <code>\omicron</code>, results in: &omicron;</li>
+  <li>Writing <code>\Pi</code>, results in: &Pi;</li>
+  <li>Writing <code>\pi</code>, results in: &pi;</li>
+  <li>Writing <code>\Rho</code>, results in: &Rho;</li>
+  <li>Writing <code>\rho</code>, results in: &rho;</li>
+  <li>Writing <code>\Sigma</code>, results in: &Sigma;</li>
+  <li>Writing <code>\sigma</code>, results in: &sigma;</li>
+  <li>Writing <code>\sigmaf</code>, results in: &sigmaf;</li>
+  <li>Writing <code>\varsigma</code>, results in: &sigmaf;</li>
+  <li>Writing <code>\Tau</code>, results in: &Tau;</li>
+  <li>Writing <code>\Upsilon</code>, results in: &Upsilon;</li>
+  <li>Writing <code>\upsih</code>, results in: &upsih;</li>
+  <li>Writing <code>\upsilon</code>, results in: &upsilon;</li>
+  <li>Writing <code>\Phi</code>, results in: &Phi;</li>
+  <li>Writing <code>\phi</code>, results in: &phi;</li>
+  <li>Writing <code>\Chi</code>, results in: &Chi;</li>
+  <li>Writing <code>\chi</code>, results in: &chi;</li>
+  <li>Writing <code>\acutex</code>, results in: &acute;x</li>
+  <li>Writing <code>\Psi</code>, results in: &Psi;</li>
+  <li>Writing <code>\psi</code>, results in: &psi;</li>
+  <li>Writing <code>\tau</code>, results in: &tau;</li>
+  <li>Writing <code>\Omega</code>, results in: &Omega;</li>
+  <li>Writing <code>\omega</code>, results in: &omega;</li>
+  <li>Writing <code>\piv</code>, results in: &piv;</li>
+  <li>Writing <code>\partial</code>, results in: &part;</li>
+  <li>Writing <code>\alefsym</code>, results in: &alefsym;</li>
+  <li>Writing <code>\ETH</code>, results in: &ETH;</li>
+  <li>Writing <code>\eth</code>, results in: &eth;</li>
+  <li>Writing <code>\THORN</code>, results in: &THORN;</li>
+  <li>Writing <code>\thorn</code>, results in: &thorn;</li>
+  <li>Writing <code>\dots</code>, results in: &hellip;</li>
+  <li>Writing <code>\hellip</code>, results in: &hellip;</li>
+  <li>Writing <code>\middot</code>, results in: &middot;</li>
+  <li>Writing <code>\iexcl</code>, results in: &iexcl;</li>
+  <li>Writing <code>\iquest</code>, results in: &iquest;</li>
+  <li>Writing <code>\shy</code>, results in: &shy;</li>
+  <li>Writing <code>\ndash</code>, results in: &ndash;</li>
+  <li>Writing <code>\mdash</code>, results in: &mdash;</li>
+  <li>Writing <code>\quot</code>, results in: &quot;</li>
+  <li>Writing <code>\acute</code>, results in: &acute;</li>
+  <li>Writing <code>\ldquo</code>, results in: &ldquo;</li>
+  <li>Writing <code>\rdquo</code>, results in: &rdquo;</li>
+  <li>Writing <code>\bdquo</code>, results in: &bdquo;</li>
+  <li>Writing <code>\lsquo</code>, results in: &lsquo;</li>
+  <li>Writing <code>\rsquo</code>, results in: &rsquo;</li>
+  <li>Writing <code>\sbquo</code>, results in: &sbquo;</li>
+  <li>Writing <code>\laquo</code>, results in: &laquo;</li>
+  <li>Writing <code>\raquo</code>, results in: &raquo;</li>
+  <li>Writing <code>\lsaquo</code>, results in: &lsaquo;</li>
+  <li>Writing <code>\rsaquo</code>, results in: &rsaquo;</li>
+  <li>Writing <code>\circ</code>, results in: &circ;</li>
+  <li>Writing <code>\vert</code>, results in: &#124;</li>
+  <li>Writing <code>\brvbar</code>, results in: &brvbar;</li>
+  <li>Writing <code>\sect</code>, results in: &sect;</li>
+  <li>Writing <code>\amp</code>, results in: &amp;</li>
+  <li>Writing <code>\lt</code>, results in: &lt;</li>
+  <li>Writing <code>\gt</code>, results in: &gt;</li>
+  <li>Writing <code>\tilde</code>, results in: &tilde;</li>
+  <li>Writing <code>\slash</code>, results in: /</li>
+  <li>Writing <code>\plus</code>, results in: +</li>
+  <li>Writing <code>\under</code>, results in: _</li>
+  <li>Writing <code>\equal</code>, results in: =</li>
+  <li>Writing <code>\asciicirc</code>, results in: ^</li>
+  <li>Writing <code>\dagger</code>, results in: &dagger;</li>
+  <li>Writing <code>\Dagger</code>, results in: &Dagger;</li>
+  <li>Writing <code>\nbsp</code>, results in: &nbsp;</li>
+  <li>Writing <code>\ensp</code>, results in: &ensp;</li>
+  <li>Writing <code>\emsp</code>, results in: &emsp;</li>
+  <li>Writing <code>\thinsp</code>, results in: &thinsp;</li>
+  <li>Writing <code>\curren</code>, results in: &curren;</li>
+  <li>Writing <code>\cent</code>, results in: &cent;</li>
+  <li>Writing <code>\pound</code>, results in: &pound;</li>
+  <li>Writing <code>\yen</code>, results in: &yen;</li>
+  <li>Writing <code>\euro</code>, results in: &euro;</li>
+  <li>Writing <code>\EUR</code>, results in: &euro;</li>
+  <li>Writing <code>\EURdig</code>, results in: &euro;</li>
+  <li>Writing <code>\EURhv</code>, results in: &euro;</li>
+  <li>Writing <code>\EURcr</code>, results in: &euro;</li>
+  <li>Writing <code>\EURtm</code>, results in: &euro;</li>
+  <li>Writing <code>\copy</code>, results in: &copy;</li>
+  <li>Writing <code>\reg</code>, results in: &reg;</li>
+  <li>Writing <code>\trade</code>, results in: &trade;</li>
+  <li>Writing <code>\minus</code>, results in: &minus;</li>
+  <li>Writing <code>\pm</code>, results in: &plusmn;</li>
+  <li>Writing <code>\plusmn</code>, results in: &plusmn;</li>
+  <li>Writing <code>\times</code>, results in: &times;</li>
+  <li>Writing <code>\frasl</code>, results in: &frasl;</li>
+  <li>Writing <code>\div</code>, results in: &divide;</li>
+  <li>Writing <code>\frac12</code>, results in: &frac12;</li>
+  <li>Writing <code>\frac14</code>, results in: &frac14;</li>
+  <li>Writing <code>\frac34</code>, results in: &frac34;</li>
+  <li>Writing <code>\permil</code>, results in: &permil;</li>
+  <li>Writing <code>\sup1</code>, results in: &sup1;</li>
+  <li>Writing <code>\sup2</code>, results in: &sup2;</li>
+  <li>Writing <code>\sup3</code>, results in: &sup3;</li>
+  <li>Writing <code>\radic</code>, results in: &radic;</li>
+  <li>Writing <code>\sum</code>, results in: &sum;</li>
+  <li>Writing <code>\prod</code>, results in: &prod;</li>
+  <li>Writing <code>\micro</code>, results in: &micro;</li>
+  <li>Writing <code>\macr</code>, results in: &macr;</li>
+  <li>Writing <code>\deg</code>, results in: &deg;</li>
+  <li>Writing <code>\prime</code>, results in: &prime;</li>
+  <li>Writing <code>\Prime</code>, results in: &Prime;</li>
+  <li>Writing <code>\infin</code>, results in: &infin;</li>
+  <li>Writing <code>\infty</code>, results in: &infin;</li>
+  <li>Writing <code>\prop</code>, results in: &prop;</li>
+  <li>Writing <code>\proptp</code>, results in: &prop;</li>
+  <li>Writing <code>\not</code>, results in: &not;</li>
+  <li>Writing <code>\neg</code>, results in: &not;</li>
+  <li>Writing <code>\land</code>, results in: &and;</li>
+  <li>Writing <code>\wedge</code>, results in: &and;</li>
+  <li>Writing <code>\lor</code>, results in: &or;</li>
+  <li>Writing <code>\vee</code>, results in: &or;</li>
+  <li>Writing <code>\cap</code>, results in: &cap;</li>
+  <li>Writing <code>\cup</code>, results in: &cup;</li>
+  <li>Writing <code>\int</code>, results in: &int;</li>
+  <li>Writing <code>\there4</code>, results in: &there4;</li>
+  <li>Writing <code>\sim</code>, results in: &sim;</li>
+  <li>Writing <code>\cong</code>, results in: &cong;</li>
+  <li>Writing <code>\simeq</code>, results in: &cong;</li>
+  <li>Writing <code>\asymp</code>, results in: &asymp;</li>
+  <li>Writing <code>\approx</code>, results in: &asymp;</li>
+  <li>Writing <code>\ne</code>, results in: &ne;</li>
+  <li>Writing <code>\neq</code>, results in: &ne;</li>
+  <li>Writing <code>\equiv</code>, results in: &equiv;</li>
+  <li>Writing <code>\le</code>, results in: &le;</li>
+  <li>Writing <code>\ge</code>, results in: &ge;</li>
+  <li>Writing <code>\sub</code>, results in: &sub;</li>
+  <li>Writing <code>\subset</code>, results in: &sub;</li>
+  <li>Writing <code>\sup</code>, results in: &sup;</li>
+  <li>Writing <code>\supset</code>, results in: &sup;</li>
+  <li>Writing <code>\nsub</code>, results in: &nsub;</li>
+  <li>Writing <code>\sube</code>, results in: &sube;</li>
+  <li>Writing <code>\nsup</code>, results in: &nsup;</li>
+  <li>Writing <code>\supe</code>, results in: &supe;</li>
+  <li>Writing <code>\forall</code>, results in: &forall;</li>
+  <li>Writing <code>\exist</code>, results in: &exist;</li>
+  <li>Writing <code>\exists</code>, results in: &exist;</li>
+  <li>Writing <code>\empty</code>, results in: &empty;</li>
+  <li>Writing <code>\emptyset</code>, results in: &empty;</li>
+  <li>Writing <code>\isin</code>, results in: &isin;</li>
+  <li>Writing <code>\in</code>, results in: &isin;</li>
+  <li>Writing <code>\notin</code>, results in: &notin;</li>
+  <li>Writing <code>\ni</code>, results in: &ni;</li>
+  <li>Writing <code>\nabla</code>, results in: &nabla;</li>
+  <li>Writing <code>\ang</code>, results in: &ang;</li>
+  <li>Writing <code>\angle</code>, results in: &ang;</li>
+  <li>Writing <code>\perp</code>, results in: &perp;</li>
+  <li>Writing <code>\sdot</code>, results in: &sdot;</li>
+  <li>Writing <code>\cdot</code>, results in: &sdot;</li>
+  <li>Writing <code>\lceil</code>, results in: &lceil;</li>
+  <li>Writing <code>\rceil</code>, results in: &rceil;</li>
+  <li>Writing <code>\lfloor</code>, results in: &lfloor;</li>
+  <li>Writing <code>\rfloor</code>, results in: &rfloor;</li>
+  <li>Writing <code>\lang</code>, results in: &lang;</li>
+  <li>Writing <code>\rang</code>, results in: &rang;</li>
+  <li>Writing <code>\larr</code>, results in: &larr;</li>
+  <li>Writing <code>\leftarrow</code>, results in: &larr;</li>
+  <li>Writing <code>\gets</code>, results in: &larr;</li>
+  <li>Writing <code>\lArr</code>, results in: &lArr;</li>
+  <li>Writing <code>\Leftarrow</code>, results in: &lArr;</li>
+  <li>Writing <code>\uarr</code>, results in: &uarr;</li>
+  <li>Writing <code>\uparrow</code>, results in: &uarr;</li>
+  <li>Writing <code>\uArr</code>, results in: &uArr;</li>
+  <li>Writing <code>\Uparrow</code>, results in: &uArr;</li>
+  <li>Writing <code>\rarr</code>, results in: &rarr;</li>
+  <li>Writing <code>\to</code>, results in: &rarr;</li>
+  <li>Writing <code>\rightarrow</code>, results in: &rarr;</li>
+  <li>Writing <code>\rArr</code>, results in: &rArr;</li>
+  <li>Writing <code>\Rightarrow</code>, results in: &rArr;</li>
+  <li>Writing <code>\darr</code>, results in: &darr;</li>
+  <li>Writing <code>\downarrow</code>, results in: &darr;</li>
+  <li>Writing <code>\dArr</code>, results in: &dArr;</li>
+  <li>Writing <code>\Downarrow</code>, results in: &dArr;</li>
+  <li>Writing <code>\harr</code>, results in: &harr;</li>
+  <li>Writing <code>\leftrightarrow</code>, results in: &harr;</li>
+  <li>Writing <code>\hArr</code>, results in: &hArr;</li>
+  <li>Writing <code>\Leftrightarrow</code>, results in: &hArr;</li>
+  <li>Writing <code>\crarr</code>, results in: &crarr;</li>
+  <li>Writing <code>\hookleftarrow</code>, results in: &crarr;</li>
+  <li>Writing <code>\arccos</code>, results in: arccos</li>
+  <li>Writing <code>\arcsin</code>, results in: arcsin</li>
+  <li>Writing <code>\arctan</code>, results in: arctan</li>
+  <li>Writing <code>\arg</code>, results in: arg</li>
+  <li>Writing <code>\cos</code>, results in: cos</li>
+  <li>Writing <code>\cosh</code>, results in: cosh</li>
+  <li>Writing <code>\cot</code>, results in: cot</li>
+  <li>Writing <code>\coth</code>, results in: coth</li>
+  <li>Writing <code>\csc</code>, results in: csc</li>
+  <li>Writing <code>\det</code>, results in: det</li>
+  <li>Writing <code>\dim</code>, results in: dim</li>
+  <li>Writing <code>\exp</code>, results in: exp</li>
+  <li>Writing <code>\gcd</code>, results in: gcd</li>
+  <li>Writing <code>\hom</code>, results in: hom</li>
+  <li>Writing <code>\inf</code>, results in: inf</li>
+  <li>Writing <code>\ker</code>, results in: ker</li>
+  <li>Writing <code>\lg</code>, results in: lg</li>
+  <li>Writing <code>\lim</code>, results in: lim</li>
+  <li>Writing <code>\liminf</code>, results in: liminf</li>
+  <li>Writing <code>\limsup</code>, results in: limsup</li>
+  <li>Writing <code>\ln</code>, results in: ln</li>
+  <li>Writing <code>\log</code>, results in: log</li>
+  <li>Writing <code>\max</code>, results in: max</li>
+  <li>Writing <code>\min</code>, results in: min</li>
+  <li>Writing <code>\Pr</code>, results in: Pr</li>
+  <li>Writing <code>\sec</code>, results in: sec</li>
+  <li>Writing <code>\sin</code>, results in: sin</li>
+  <li>Writing <code>\sinh</code>, results in: sinh</li>
+  <li>Writing <code>\tan</code>, results in: tan</li>
+  <li>Writing <code>\tanh</code>, results in: tanh</li>
+  <li>Writing <code>\bull</code>, results in: &bull;</li>
+  <li>Writing <code>\bullet</code>, results in: &bull;</li>
+  <li>Writing <code>\star</code>, results in: *</li>
+  <li>Writing <code>\lowast</code>, results in: &lowast;</li>
+  <li>Writing <code>\ast</code>, results in: &lowast;</li>
+  <li>Writing <code>\odot</code>, results in: o</li>
+  <li>Writing <code>\oplus</code>, results in: &oplus;</li>
+  <li>Writing <code>\otimes</code>, results in: &otimes;</li>
+  <li>Writing <code>\checkmark</code>, results in: &#10003;</li>
+  <li>Writing <code>\para</code>, results in: &para;</li>
+  <li>Writing <code>\ordf</code>, results in: &ordf;</li>
+  <li>Writing <code>\ordm</code>, results in: &ordm;</li>
+  <li>Writing <code>\cedil</code>, results in: &cedil;</li>
+  <li>Writing <code>\oline</code>, results in: &oline;</li>
+  <li>Writing <code>\uml</code>, results in: &uml;</li>
+  <li>Writing <code>\zwnj</code>, results in: &zwnj;</li>
+  <li>Writing <code>\zwj</code>, results in: &zwj;</li>
+  <li>Writing <code>\lrm</code>, results in: &lrm;</li>
+  <li>Writing <code>\rlm</code>, results in: &rlm;</li>
+  <li>Writing <code>\smile</code>, results in: &#9786;</li>
+  <li>Writing <code>\smiley</code>, results in: &#9786;</li>
+  <li>Writing <code>\blacksmile</code>, results in: &#9787;</li>
+  <li>Writing <code>\sad</code>, results in: &#9785;</li>
+  <li>Writing <code>\clubs</code>, results in: &clubs;</li>
+  <li>Writing <code>\clubsuit</code>, results in: &clubs;</li>
+  <li>Writing <code>\spades</code>, results in: &spades;</li>
+  <li>Writing <code>\spadesuit</code>, results in: &spades;</li>
+  <li>Writing <code>\hearts</code>, results in: &hearts;</li>
+  <li>Writing <code>\heartsuit</code>, results in: &heartsuit;</li>
+  <li>Writing <code>\diams</code>, results in: &diams;</li>
+  <li>Writing <code>\diamondsuit</code>, results in: &diams;</li>
+  <li>Writing <code>\Diamond</code>, results in: &diamond;</li>
+  <li>Writing <code>\loz</code>, results in: &loz;</li>
+</ul>
+<h1>Some special cases</h1>
+<p>In case nothing matches, the string is returned as is.</p>
+<p>\for \example \this \wont \break</p>
