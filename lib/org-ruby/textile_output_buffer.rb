@@ -8,7 +8,7 @@ module Orgmode
       super(output)
       @add_paragraph = true
       @support_definition_list = true # TODO this should be an option
-      @footnotes = {}
+      @footnotes = []
     end
 
     def push_mode(mode, indent)
@@ -59,11 +59,20 @@ module Orgmode
         link = link.gsub(/ /, "%%20")
         "\"#{text}\":#{link}"
       end
-      @re_help.rewrite_footnote input do |name, defi|
-        # textile only support numerical names! Use hash as a workarround
-        name = name.hash.to_s unless name.to_i.to_s == name # check if number
-        @footnotes[name] = defi if defi
-        "[#{name}]"
+      @re_help.rewrite_footnote input do |name, definition|
+        # textile only support numerical names, so we need to do some conversion
+        # Try to find the footnote and use its index
+        footnote = @footnotes.select {|f| f[:name] == name }.first
+        if footnote
+          # The latest definition overrides other ones
+          footnote[:definition] = definition if definition and not footnote[:definition]
+        else
+          # There is no footnote with the current name so we add it
+          footnote = { :name => name, :definition => definition } 
+          @footnotes << footnote
+        end
+
+        "[#{@footnotes.index(footnote)}]"
       end
       Orgmode.special_symbols_to_textile(input)
       input = @re_help.restore_code_snippets input
@@ -73,8 +82,9 @@ module Orgmode
     def output_footnotes!
       return false if @footnotes.empty?
 
-      @footnotes.each do |name, defi|
-        @output << "\nfn#{name}. #{defi}\n"
+      @footnotes.each do |footnote|
+        index = @footnotes.index(footnote)
+        @output << "\nfn#{index}. #{footnote[:definition] || 'DEFINITION NOT FOUND' }\n"
       end
 
       return true
