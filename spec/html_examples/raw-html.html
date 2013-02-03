@@ -1,0 +1,12 @@
+<h1>Raw html can be embedded</h1>
+<p>The following will render the tag as is:</p>
+<code> Hello </code>
+<p>And this will render some Javascript:</p>
+<script> alert('hello') </script>
+<h2>HTML blocks</h2>
+<p>Unsupported for now, they behave as follows:</p>#+begin_html
+  <p>&lt;p style=&#8221;color:#cafe12; background-color:#999999&#8221;&gt;
+    &lt;pre&gt;</p>
+  <p>Hello.</p>
+  <p>&lt;/pre&gt;
+    &lt;/p&gt;</p>#+end_html
