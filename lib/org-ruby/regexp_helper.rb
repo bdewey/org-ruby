@@ -50,14 +50,14 @@ module Orgmode
 
     def initialize
       # Set up the emphasis regular expression.
-      @pre_emphasis = " \t\\('\"\\{"
-      @post_emphasis = "- \t\\.,:!\\?;'\"\\)\\}\\\\"
-      @border_forbidden = " \t\r\n,\"'"
-      @body_regexp = ".*?"
+      @pre_emphasis = ' \t\(\'"\{'
+      @post_emphasis = '- \t\.,:!\?;\'"\)\}\\\\'
+      @border_forbidden = '\s,"\''
+      @body_regexp = '.*?'
       @max_newlines = 1
       @body_regexp = "#{@body_regexp}" +
-                     "(?:\n#{@body_regexp}){0,#{@max_newlines}}" if @max_newlines > 0
-      @markers = "\\*\\/_=~\\+"
+                     "(?:\\n#{@body_regexp}){0,#{@max_newlines}}" if @max_newlines > 0
+      @markers = '\*\/_=~\+'
       @code_snippet_stack = []
       @logger = Logger.new(STDERR)
       @logger.level = Logger::WARN

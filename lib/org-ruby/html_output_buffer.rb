@@ -328,8 +328,8 @@ module Orgmode
     end
 
     def strip_code_block!
-      strip_regexp = Regexp.new('\n' + ' ' * @code_block_indent)
-      @buffer.gsub!(strip_regexp, "\n")
+      strip_regexp = Regexp.new("^" + " " * @code_block_indent)
+      @buffer.gsub!(strip_regexp, "")
       @code_block_indent = nil
     end
   end                           # class HtmlOutputBuffer
