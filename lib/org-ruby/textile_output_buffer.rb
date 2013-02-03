@@ -68,7 +68,7 @@ module Orgmode
           footnote[:definition] = definition if definition and not footnote[:definition]
         else
           # There is no footnote with the current name so we add it
-          footnote = { :name => name, :definition => definition } 
+          footnote = { :name => name, :definition => definition }
           @footnotes << footnote
         end
 
@@ -92,6 +92,7 @@ module Orgmode
 
     # Flushes the current buffer
     def flush!
+      return false if @buffer.empty? and @output_type != :blank
       @logger.debug "FLUSH ==========> #{@output_type}"
       @buffer.gsub!(/\A\n*/, "")
 
@@ -99,7 +100,10 @@ module Orgmode
       when preserve_whitespace?
         @output << @buffer << "\n"
 
-      when @buffer.length > 0
+      when @output_type == :blank
+        @output << "\n"
+
+      else
         case current_mode
         when :paragraph
           @output << "p. " if @add_paragraph
@@ -120,9 +124,6 @@ module Orgmode
           end
         end
         @output << inline_formatting(@buffer) << "\n"
-
-      when @output_type == :blank
-        @output << "\n"
       end
       @buffer = ""
     end

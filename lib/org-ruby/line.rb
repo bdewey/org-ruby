@@ -177,10 +177,6 @@ module Orgmode
       block_type =~ /^(EXAMPLE|SRC)$/i
     end
 
-    def code_block_line?
-      @assigned_paragraph_type == :src
-    end
-
     InlineExampleRegexp = /^\s*:\s/
 
     # Test if the line matches the "inline example" case:
@@ -231,8 +227,6 @@ module Orgmode
       case
       when blank?
         :blank
-      when code_block_line? # Do not try to guess the type of this line if it is accumulating source code
-        :src
       when definition_list? # order is important! A definition_list is also an unordered_list!
         :definition_term
       when (ordered_list? or unordered_list?)
@@ -246,13 +240,7 @@ module Orgmode
       when metadata?
         :metadata
       when block_type
-        case block_type.upcase
-        when "QUOTE"   then :quote
-        when "CENTER"  then :center
-        when "EXAMPLE" then :example
-        when "SRC"     then :src
-        when "COMMENT" then :comment
-        end
+        block_type.downcase.to_sym
       when raw_text? # order is important! Raw text can be also a comment
         :raw_text
       when comment?

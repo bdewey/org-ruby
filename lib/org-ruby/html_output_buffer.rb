@@ -104,6 +104,7 @@ module Orgmode
     end
 
     def flush!
+      return false if @buffer.empty?
       case
       when preserve_whitespace?
         strip_code_block! if mode_is_code? current_mode
@@ -133,6 +134,9 @@ module Orgmode
               @buffer = CodeRay.scan(@buffer, 'text').html(:wrap => nil, :css => :style)
             end
           end
+        when (current_mode == :html or current_mode == :raw_text)
+          @buffer.gsub!(/\A\n/, "") if @new_paragraph == :start
+          @new_paragraph = true
         else
           escape_buffer!
         end
@@ -145,12 +149,7 @@ module Orgmode
       when (mode_is_table? current_mode and skip_tables?)
         @logger.debug "SKIP       ==========> #{current_mode}"
 
-      when (current_mode == :raw_text and @buffer.length > 0)
-        @buffer.gsub!(/\A\n/, "") if @new_paragraph == :start
-        @new_paragraph = true
-        @output << @buffer
-
-      when @buffer.length > 0
+      else
         @buffer.lstrip!
         escape_buffer!
         @new_paragraph = nil
