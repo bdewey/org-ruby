@@ -38,12 +38,14 @@ describe Orgmode::RegexpHelper do
     map = {
       "*" => "strong",
       "/" => "i",
-      "~" => "pre"
+      "~" => "code"
     }
     n = e.rewrite_emphasis("This string contains *bold*, /italic/, and ~verbatim~ text.") do |border, str|
       "<#{map[border]}>#{str}</#{map[border]}>"
     end
-    n.should eql("This string contains <strong>bold</strong>, <i>italic</i>, and <pre>verbatim</pre> text.")
+    n = e.restore_code_snippets n
+
+    n.should eql("This string contains <strong>bold</strong>, <i>italic</i>, and <code>verbatim</code> text.")
   end
 
   it "should allow link rewriting" do
@@ -53,5 +55,9 @@ describe Orgmode::RegexpHelper do
       "\"#{text}\":#{link}"
     end
     str.should eql("\"http://www.bing.com\":http://www.bing.com")
+    str = e.rewrite_links("<http://www.google.com>") do |link|
+      "\"#{link}\":#{link}"
+    end
+    str.should eql("\"http://www.google.com\":http://www.google.com")
   end
 end                             # describe Orgmode::RegexpHelper

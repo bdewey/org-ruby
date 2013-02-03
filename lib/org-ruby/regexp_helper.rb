@@ -158,6 +158,8 @@ module Orgmode
       str.gsub! @org_angle_link_text_regexp do |match|
         yield $2, nil
       end
+
+      str # for testing
     end
 
     # Rewrites all of the inline image tags.
