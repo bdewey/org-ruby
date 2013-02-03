@@ -2,7 +2,7 @@ source :rubygems
 
 gemspec
 
-group :development do
+group :development, :test do
   gem 'rake'
   gem 'rspec'
   gem 'tilt'

@@ -8,4 +8,4 @@ end
 
 Dir['tasks/*'].each {|task| import task }
 
-task :default => 'spec'
+task :default => 'test'
