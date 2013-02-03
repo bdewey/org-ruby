@@ -1,9 +1,18 @@
 
-p. Hello[3172870960376162564]
-World[3172870960376162564]
+h1. Footnotes
 
-p. Bfoo[1]
+p. Using numbers [0]
 
-fn3172870960376162564. definition of abc
+p. Using letters and not defined in the footnote [1]
 
-fn1. *blub*
+p. Using letters and defined in the footnote [1]
+
+p. Defined in the footnote itself with markup [2]
+
+p. [0] Definition of first footnote
+
+fn0. DEFINITION NOT FOUND
+
+fn1. definition of abc
+
+fn2. *blub*
