@@ -240,7 +240,12 @@ module Orgmode
       when metadata?
         :metadata
       when block_type
-        block_type.downcase.to_sym
+        case block_type.downcase.to_sym
+        when :center, :comment, :example, :html, :quote, :src
+          block_type.downcase.to_sym
+        else
+          :comment
+        end
       when raw_text? # order is important! Raw text can be also a comment
         :raw_text
       when comment?
