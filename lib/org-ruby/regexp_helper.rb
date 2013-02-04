@@ -156,7 +156,7 @@ module Orgmode
         yield $1, $3
       end
       str.gsub! @org_angle_link_text_regexp do |match|
-        yield $2, nil
+        yield $1, nil
       end
 
       str # for testing
@@ -196,7 +196,7 @@ module Orgmode
       @org_img_regexp = /\[\[
           ([^\]\[]+\.(jpg|jpeg|gif|png)) # Like a normal URL, but must end with a specified extension
         \]\]/xi
-      @org_angle_link_text_regexp = /(<|&lt;)(\w+:[^\]\s<>]+?)(>|&gt;)/
+      @org_angle_link_text_regexp = /<(\w+:[^\]\s<>]+)>/
     end
   end                           # class Emphasis
 end                             # module Orgmode
