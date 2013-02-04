@@ -55,9 +55,22 @@ module Orgmode
         end
       end
       @re_help.rewrite_links input do |link, text|
-        text ||= link
+        # We don't add a description for images in links, because its
+        # empty value forces the image to be inlined.
+        text ||= link unless link =~ @re_help.org_image_file_regexp
         link = link.gsub(/ /, "%%20")
-        "\"#{text}\":#{link}"
+
+        if text =~ @re_help.org_image_file_regexp
+          text = "!#{text}(#{text})!"
+        else
+          text = "\"#{text}\"" if text
+        end
+
+        if text
+          "#{text}:#{link}"
+        else
+          "!#{link}(#{link})!"
+        end
       end
       @re_help.rewrite_footnote input do |name, definition|
         # textile only support numerical names, so we need to do some conversion

@@ -275,11 +275,7 @@ module Orgmode
           end
         end
       end
-      @re_help.rewrite_images str do |link|
-        "@<a href=\"#{link}\">@<img src=\"#{link}\" />@</a>"
-      end
       @re_help.rewrite_links str do |link, text|
-        text ||= link
         link = link.sub(/^file:(.*)::(.*?)$/) do
 
           # We don't support search links right now. Get rid of it.
@@ -292,10 +288,19 @@ module Orgmode
 
         link = link.sub(/^file:/i, "") # will default to HTTP
 
-        text = text.gsub(/([^\]]*\.(jpg|jpeg|gif|png))/xi) do |img_link|
-          "@<img src=\"#{img_link}\" />"
+        # We don't add a description for images in links, because its
+        # empty value forces the image to be inlined.
+        text ||= link unless link =~ @re_help.org_image_file_regexp
+
+        if text =~ @re_help.org_image_file_regexp
+          text = "@<img src=\"#{text}\" alt=\"#{text}\" />"
         end
-        "@<a href=\"#{link}\">#{text}@</a>"
+
+        if text
+          "@<a href=\"#{link}\">#{text}@</a>"
+        else
+          "@<img src=\"#{link}\" alt=\"#{link}\" />"
+        end
       end
       if @output_type == :table_row
         str.gsub!(/^\|\s*/, "@<td>")
