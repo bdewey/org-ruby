@@ -73,11 +73,16 @@ module Orgmode
         @buffer << "\n" << line.output_text if line.raw_text_tag == @buffer_tag
       when preserve_whitespace?
         @buffer << "\n" << line.output_text unless line.block_type
+      when line.assigned_paragraph_type == :code
+        # If the line is contained within a code block but we should
+        # not preserve whitespaces, then we do nothing.
       when (line.kind_of? Headline)
         add_line_attributes line
-        @buffer << "\n" << line.output_text
+        @buffer << "\n" << line.output_text.strip
       when ([:definition_term, :list_item, :table_row, :table_header,
-             :horizontal_rule, :paragraph].include? line.paragraph_type)
+             :horizontal_rule].include? line.paragraph_type)
+        @buffer << "\n" << line.output_text.strip
+      when line.paragraph_type == :paragraph
         @buffer << "\n"
         buffer_indentation
         @buffer << line.output_text.strip
@@ -119,7 +124,7 @@ module Orgmode
 
     # Test if we're in an output mode in which whitespace is significant.
     def preserve_whitespace?
-      [:example, :html, :inline_example, :raw_text, :src].include? current_mode
+      [:example, :inline_example, :raw_text, :src].include? current_mode
     end
 
     ######################################################################

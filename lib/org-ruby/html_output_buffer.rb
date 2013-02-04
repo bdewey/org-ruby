@@ -207,6 +207,10 @@ module Orgmode
       return true
     end
 
+    # Test if we're in an output mode in which whitespace is significant.
+    def preserve_whitespace?
+      super or current_mode == :html
+    end
 
     ######################################################################
     private

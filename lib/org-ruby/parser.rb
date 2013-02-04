@@ -116,10 +116,10 @@ module Orgmode
           end
           table_header_set = false if !line.table?
 
-        when :example, :src, :html
-          # As long as we stay in code mode, force lines to be paragraphs.
+        when :example, :html, :src
+          # As long as we stay in code mode, force lines to be code.
           # Don't try to interpret structural items, like headings and tables.
-          line.assigned_paragraph_type = :paragraph
+          line.assigned_paragraph_type = :code
         end
 
         if mode == :normal
