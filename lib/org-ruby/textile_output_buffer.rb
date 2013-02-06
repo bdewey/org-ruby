@@ -54,10 +54,30 @@ module Orgmode
           "^#{text}^"
         end
       end
-      @re_help.rewrite_links input do |link, text|
-        text ||= link
+      @re_help.rewrite_links input do |link, defi|
+        [link, defi].compact.each do |text|
+          # We don't support search links right now. Get rid of it.
+          text.sub!(/\A(file:[^\s]+)::[^\s]*?\Z/, "\\1")
+          text.sub!(/\A(file:[^\s]+)\.org\Z/i, "\\1.textile")
+          text.sub!(/\Afile:(?=[^\s]+\Z)/, "")
+        end
+
+        # We don't add a description for images in links, because its
+        # empty value forces the image to be inlined.
+        defi ||= link unless link =~ @re_help.org_image_file_regexp
         link = link.gsub(/ /, "%%20")
-        "\"#{text}\":#{link}"
+
+        if defi =~ @re_help.org_image_file_regexp
+          defi = "!#{defi}(#{defi})!"
+        elsif defi
+          defi = "\"#{defi}\""
+        end
+
+        if defi
+          "#{defi}:#{link}"
+        else
+          "!#{link}(#{link})!"
+        end
       end
       @re_help.rewrite_footnote input do |name, definition|
         # textile only support numerical names, so we need to do some conversion
@@ -68,7 +88,7 @@ module Orgmode
           footnote[:definition] = definition if definition and not footnote[:definition]
         else
           # There is no footnote with the current name so we add it
-          footnote = { :name => name, :definition => definition } 
+          footnote = { :name => name, :definition => definition }
           @footnotes << footnote
         end
 
@@ -92,6 +112,7 @@ module Orgmode
 
     # Flushes the current buffer
     def flush!
+      return false if @buffer.empty? and @output_type != :blank
       @logger.debug "FLUSH ==========> #{@output_type}"
       @buffer.gsub!(/\A\n*/, "")
 
@@ -99,7 +120,10 @@ module Orgmode
       when preserve_whitespace?
         @output << @buffer << "\n"
 
-      when @buffer.length > 0
+      when @output_type == :blank
+        @output << "\n"
+
+      else
         case current_mode
         when :paragraph
           @output << "p. " if @add_paragraph
@@ -120,9 +144,6 @@ module Orgmode
           end
         end
         @output << inline_formatting(@buffer) << "\n"
-
-      when @output_type == :blank
-        @output << "\n"
       end
       @buffer = ""
     end
