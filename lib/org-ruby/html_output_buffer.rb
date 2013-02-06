@@ -182,11 +182,11 @@ module Orgmode
       if @options[:export_heading_number] then
         level = headline.level
         heading_number = get_next_headline_number(level)
-        @output << "<span class=\"heading-number heading-number-#{level}\">#{heading_number} </span>"
+        @output << "<span class=\"heading-number heading-number-#{level}\">#{heading_number}</span> "
       end
       if @options[:export_todo] and headline.keyword then
         keyword = headline.keyword
-        @output << "<span class=\"todo-keyword #{keyword}\">#{keyword} </span>"
+        @output << "<span class=\"todo-keyword #{keyword}\">#{keyword}</span> "
       end
     end
 
