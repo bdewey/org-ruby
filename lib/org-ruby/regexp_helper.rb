@@ -39,25 +39,19 @@ module Orgmode
     # body-regexp  A regexp like \".\" to match a body character.  Don't use
     #              non-shy groups here, and don't allow newline here.
     # newline      The maximum number of newlines allowed in an emphasis exp.
-    attr_reader   :pre_emphasis
-    attr_reader   :post_emphasis
-    attr_reader   :border_forbidden
-    attr_reader   :body_regexp
-    attr_reader   :max_newlines
-    attr_reader   :markers
 
-    attr_reader   :org_emphasis_regexp
+    attr_reader :org_image_file_regexp
 
     def initialize
       # Set up the emphasis regular expression.
-      @pre_emphasis = " \t\\('\"\\{"
-      @post_emphasis = "- \t\\.,:!\\?;'\"\\)\\}\\\\"
-      @border_forbidden = " \t\r\n,\"'"
-      @body_regexp = ".*?"
+      @pre_emphasis = ' \t\(\'"\{'
+      @post_emphasis = '- \t\.,:!\?;\'"\)\}\\\\'
+      @border_forbidden = '\s,"\''
+      @body_regexp = '.*?'
       @max_newlines = 1
       @body_regexp = "#{@body_regexp}" +
-                     "(?:\n#{@body_regexp}){0,#{@max_newlines}}" if @max_newlines > 0
-      @markers = "\\*\\/_=~\\+"
+                     "(?:\\n#{@body_regexp}){0,#{@max_newlines}}" if @max_newlines > 0
+      @markers = '\*\/_=~\+'
       @code_snippet_stack = []
       @logger = Logger.new(STDERR)
       @logger.level = Logger::WARN
@@ -156,17 +150,10 @@ module Orgmode
         yield $1, $3
       end
       str.gsub! @org_angle_link_text_regexp do |match|
-        yield $2, nil
+        yield $1, nil
       end
 
       str # for testing
-    end
-
-    # Rewrites all of the inline image tags.
-    def rewrite_images str # :yields: image_link
-      str.gsub! @org_img_regexp do |match|
-        yield $1
-      end
     end
 
     def restore_code_snippets str
@@ -193,10 +180,8 @@ module Orgmode
                           \](\[
                              ([^\]\[]+) # This is the friendly text
                           \])?\]/x
-      @org_img_regexp = /\[\[
-          ([^\]\[]+\.(jpg|jpeg|gif|png)) # Like a normal URL, but must end with a specified extension
-        \]\]/xi
-      @org_angle_link_text_regexp = /(<|&lt;)(\w+:[^\]\s<>]+?)(>|&gt;)/
+      @org_angle_link_text_regexp = /<(\w+:[^\]\s<>]+)>/
+      @org_image_file_regexp = /\.(gif|jpe?g|p(?:bm|gm|n[gm]|pm)|svg|tiff?|x[bp]m)/i
     end
   end                           # class Emphasis
 end                             # module Orgmode

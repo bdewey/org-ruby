@@ -66,31 +66,35 @@ module Orgmode
         flush!
         maintain_mode_stack(line)
       end
-      add_line_attributes(line) if line.kind_of? Headline
 
-      if mode_is_code? current_mode and not line.begin_block?
+      # Adds the current line to the output buffer
+      case
+      when line.raw_text?
+        @buffer << "\n" << line.output_text if line.raw_text_tag == @buffer_tag
+      when preserve_whitespace?
+        @buffer << "\n" << line.output_text unless line.block_type
+      when line.assigned_paragraph_type == :code
+        # If the line is contained within a code block but we should
+        # not preserve whitespaces, then we do nothing.
+      when (line.kind_of? Headline)
+        add_line_attributes line
+        @buffer << "\n" << line.output_text.strip
+      when ([:definition_term, :list_item, :table_row, :table_header,
+             :horizontal_rule].include? line.paragraph_type)
+        @buffer << "\n" << line.output_text.strip
+      when line.paragraph_type == :paragraph
+        @buffer << "\n"
+        buffer_indentation
+        @buffer << line.output_text.strip
+      end
+
+      if mode_is_code? current_mode and not line.block_type
         # Determines the amount of whitespaces to be stripped at the
         # beginning of each line in code block.
         if @code_block_indent
           @code_block_indent = [@code_block_indent, line.indent].min
         else
           @code_block_indent = line.indent
-        end
-      end
-
-      # Adds the current line to the output buffer
-      if preserve_whitespace? and not line.begin_block?
-        @buffer << "\n" << line.output_text
-      else
-        case line.paragraph_type
-        when :metadata, :table_separator, :blank, :comment, :property_drawer_item, :property_drawer_begin_block, :property_drawer_end_block, :quote, :center, :example, :src
-          # Nothing
-        when :raw_text
-          @buffer << "\n" << line.output_text if line.raw_text_tag == @buffer_tag
-        else
-          @buffer << "\n"
-          buffer_indentation
-          @buffer << line.output_text.strip
         end
       end
 
@@ -120,7 +124,7 @@ module Orgmode
 
     # Test if we're in an output mode in which whitespace is significant.
     def preserve_whitespace?
-      mode_is_code? current_mode or current_mode == :inline_example
+      [:example, :inline_example, :raw_text, :src].include? current_mode
     end
 
     ######################################################################

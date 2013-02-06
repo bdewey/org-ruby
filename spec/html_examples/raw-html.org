@@ -10,7 +10,7 @@ And this will render some Javascript:
 
 ** HTML blocks
 
-Unsupported for now, they behave as follows:
+They behave as follows:
 
 #+begin_html
 <p style="color:#cafe12; background-color:#999999">

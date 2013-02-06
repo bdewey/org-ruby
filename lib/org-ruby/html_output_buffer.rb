@@ -104,12 +104,13 @@ module Orgmode
     end
 
     def flush!
+      return false if @buffer.empty?
       case
       when preserve_whitespace?
         strip_code_block! if mode_is_code? current_mode
 
         # NOTE: CodeRay and Pygments already escape the html once, so
-        # no need to escape_buffer!
+        # no need to escape_string!(@buffer)
         case
         when (current_mode == :src and defined? Pygments)
           lang = normalize_lang @block_lang
@@ -133,8 +134,11 @@ module Orgmode
               @buffer = CodeRay.scan(@buffer, 'text').html(:wrap => nil, :css => :style)
             end
           end
+        when (current_mode == :html or current_mode == :raw_text)
+          @buffer.gsub!(/\A\n/, "") if @new_paragraph == :start
+          @new_paragraph = true
         else
-          escape_buffer!
+          escape_string! @buffer
         end
 
         # Whitespace is significant in :code mode. Always output the
@@ -145,14 +149,8 @@ module Orgmode
       when (mode_is_table? current_mode and skip_tables?)
         @logger.debug "SKIP       ==========> #{current_mode}"
 
-      when (current_mode == :raw_text and @buffer.length > 0)
-        @buffer.gsub!(/\A\n/, "") if @new_paragraph == :start
-        @new_paragraph = true
-        @output << @buffer
-
-      when @buffer.length > 0
+      else
         @buffer.lstrip!
-        escape_buffer!
         @new_paragraph = nil
         @logger.debug "FLUSH      ==========> #{current_mode}"
 
@@ -184,11 +182,11 @@ module Orgmode
       if @options[:export_heading_number] then
         level = headline.level
         heading_number = get_next_headline_number(level)
-        @output << "<span class=\"heading-number heading-number-#{level}\">#{heading_number} </span>"
+        @output << "<span class=\"heading-number heading-number-#{level}\">#{heading_number}</span> "
       end
       if @options[:export_todo] and headline.keyword then
         keyword = headline.keyword
-        @output << "<span class=\"todo-keyword #{keyword}\">#{keyword} </span>"
+        @output << "<span class=\"todo-keyword #{keyword}\">#{keyword}</span> "
       end
     end
 
@@ -200,7 +198,7 @@ module Orgmode
       @footnotes.each do |name, defi|
         @output << "<p class=\"footnote\"><sup><a class=\"footnum\" name=\"fn.#{name}\" href=\"#fnr.#{name}\">#{name}</a></sup>" \
                 << inline_formatting(defi) \
-                << "\n</p>\n"
+                << "</p>\n"
       end
 
       @output << "</div>\n</div>"
@@ -208,6 +206,10 @@ module Orgmode
       return true
     end
 
+    # Test if we're in an output mode in which whitespace is significant.
+    def preserve_whitespace?
+      super or current_mode == :html
+    end
 
     ######################################################################
     private
@@ -222,10 +224,21 @@ module Orgmode
     end
 
     # Escapes any HTML content in the output accumulation buffer @buffer.
-    def escape_buffer!
-      @buffer.gsub!(/&/, "&amp;")
-      @buffer.gsub!(/</, "&lt;")
-      @buffer.gsub!(/>/, "&gt;")
+    def escape_string! str
+      str.gsub!(/&/, "&amp;")
+      # Escapes the left and right angular brackets but construction
+      # @<text> which is formatted to <text>
+      str.gsub! /<([^<>\n]*)/ do |match|
+        if $`[-1..-1] == "@" and $'[0..0] == ">" then $&
+        else "&lt;#{$1}"
+        end
+      end
+      str.gsub! /([^<>\n]*)>/ do |match|
+        if $`[-2..-1] == "@<" then $&
+        else "#{$1}&gt;"
+        end
+      end
+      str.gsub!(/@(<[^<>\n]*>)/, "\\1")
     end
 
     def buffer_indentation
@@ -239,71 +252,71 @@ module Orgmode
     end
 
     Tags = {
-      "*" => { :open => "<b>", :close => "</b>" },
-      "/" => { :open => "<i>", :close => "</i>" },
-      "_" => { :open => "<span style=\"text-decoration:underline;\">",
-        :close => "</span>" },
-      "=" => { :open => "<code>", :close => "</code>" },
-      "~" => { :open => "<code>", :close => "</code>" },
-      "+" => { :open => "<del>", :close => "</del>" }
+      "*" => { :open => "b", :close => "b" },
+      "/" => { :open => "i", :close => "i" },
+      "_" => { :open => "span style=\"text-decoration:underline;\"",
+        :close => "span" },
+      "=" => { :open => "code", :close => "code" },
+      "~" => { :open => "code", :close => "code" },
+      "+" => { :open => "del", :close => "del" }
     }
 
     # Applies inline formatting rules to a string.
     def inline_formatting(str)
       @re_help.rewrite_emphasis str do |marker, s|
-        "#{Tags[marker][:open]}#{s}#{Tags[marker][:close]}"
+        "@<#{Tags[marker][:open]}>#{s}@</#{Tags[marker][:close]}>"
       end
       if @options[:use_sub_superscripts] then
         @re_help.rewrite_subp str do |type, text|
           if type == "_" then
-            "<sub>#{text}</sub>"
+            "@<sub>#{text}@</sub>"
           elsif type == "^" then
-            "<sup>#{text}</sup>"
+            "@<sup>#{text}@</sup>"
           end
         end
       end
-      @re_help.rewrite_images str do |link|
-        "<a href=\"#{link}\"><img src=\"#{link}\" /></a>"
-      end
-      @re_help.rewrite_links str do |link, text|
-        text ||= link
-        link = link.sub(/^file:(.*)::(.*?)$/) do
-
+      @re_help.rewrite_links str do |link, defi|
+        [link, defi].compact.each do |text|
           # We don't support search links right now. Get rid of it.
-
-          "file:#{$1}"
-        end
-        if link.match(/^file:.*\.org$/)
-          link = link.sub(/\.org$/i, ".html")
+          text.sub!(/\A(file:[^\s]+)::[^\s]*?\Z/, "\\1")
+          text.sub!(/\A(file:[^\s]+)\.org\Z/i, "\\1.html")
+          text.sub!(/\Afile:(?=[^\s]+\Z)/, "")
         end
 
-        link = link.sub(/^file:/i, "") # will default to HTTP
+        # We don't add a description for images in links, because its
+        # empty value forces the image to be inlined.
+        defi ||= link unless link =~ @re_help.org_image_file_regexp
 
-        text = text.gsub(/([^\]]*\.(jpg|jpeg|gif|png))/xi) do |img_link|
-          "<img src=\"#{img_link}\" />"
+        if defi =~ @re_help.org_image_file_regexp
+          defi = "@<img src=\"#{defi}\" alt=\"#{defi}\" />"
         end
-        "<a href=\"#{link}\">#{text}</a>"
+
+        if defi
+          "@<a href=\"#{link}\">#{defi}@</a>"
+        else
+          "@<img src=\"#{link}\" alt=\"#{link}\" />"
+        end
       end
-      if (@output_type == :table_row) then
-        str.gsub!(/^\|\s*/, "<td>")
-        str.gsub!(/\s*\|$/, "</td>")
-        str.gsub!(/\s*\|\s*/, "</td><td>")
+      if @output_type == :table_row
+        str.gsub!(/^\|\s*/, "@<td>")
+        str.gsub!(/\s*\|$/, "@</td>")
+        str.gsub!(/\s*\|\s*/, "@</td>@<td>")
       end
-      if (@output_type == :table_header) then
-        str.gsub!(/^\|\s*/, "<th>")
-        str.gsub!(/\s*\|$/, "</th>")
-        str.gsub!(/\s*\|\s*/, "</th><th>")
+      if @output_type == :table_header
+        str.gsub!(/^\|\s*/, "@<th>")
+        str.gsub!(/\s*\|$/, "@</th>")
+        str.gsub!(/\s*\|\s*/, "@</th>@<th>")
       end
       if @options[:export_footnotes] then
         @re_help.rewrite_footnote str do |name, defi|
           # TODO escape name for url?
           @footnotes[name] = defi if defi
-          "<sup><a class=\"footref\" name=\"fnr.#{name}\" href=\"#fn.#{name}\">#{name}</a></sup>"
+          "@<sup>@<a class=\"footref\" name=\"fnr.#{name}\" href=\"#fn.#{name}\">#{name}@</a>@</sup>"
         end
       end
-      Orgmode.special_symbols_to_html(str)
+      escape_string! str
+      Orgmode.special_symbols_to_html str
       str = @re_help.restore_code_snippets str
-      str
     end
 
     def normalize_lang(lang)
@@ -328,8 +341,8 @@ module Orgmode
     end
 
     def strip_code_block!
-      strip_regexp = Regexp.new('\n' + ' ' * @code_block_indent)
-      @buffer.gsub!(strip_regexp, "\n")
+      strip_regexp = Regexp.new("^" + " " * @code_block_indent)
+      @buffer.gsub!(strip_regexp, "")
       @code_block_indent = nil
     end
   end                           # class HtmlOutputBuffer
