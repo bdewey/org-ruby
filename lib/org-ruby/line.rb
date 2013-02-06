@@ -96,7 +96,7 @@ module Orgmode
       @line.sub(UnorderedListRegexp, "")
     end
 
-    DefinitionListRegexp = /^\s*(-|\+|\s+[*])\s+(.*?)\s+::($|\s+)/
+    DefinitionListRegexp = /^\s*(-|\+|\s+[*])\s+(.*\s+|)::($|\s+)/
 
     def definition_list?
       check_assignment_or_regexp(:definition_list, DefinitionListRegexp)
