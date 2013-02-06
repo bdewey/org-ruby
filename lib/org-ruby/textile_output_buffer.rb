@@ -54,20 +54,27 @@ module Orgmode
           "^#{text}^"
         end
       end
-      @re_help.rewrite_links input do |link, text|
-        # We don't add a description for images in links, because its
-        # empty value forces the image to be inlined.
-        text ||= link unless link =~ @re_help.org_image_file_regexp
-        link = link.gsub(/ /, "%%20")
-
-        if text =~ @re_help.org_image_file_regexp
-          text = "!#{text}(#{text})!"
-        else
-          text = "\"#{text}\"" if text
+      @re_help.rewrite_links input do |link, defi|
+        [link, defi].compact.each do |text|
+          # We don't support search links right now. Get rid of it.
+          text.sub!(/\A(file:[^\s]+)::[^\s]*?\Z/, "\\1")
+          text.sub!(/\A(file:[^\s]+)\.org\Z/i, "\\1.textile")
+          text.sub!(/\Afile:(?=[^\s]+\Z)/, "")
         end
 
-        if text
-          "#{text}:#{link}"
+        # We don't add a description for images in links, because its
+        # empty value forces the image to be inlined.
+        defi ||= link unless link =~ @re_help.org_image_file_regexp
+        link = link.gsub(/ /, "%%20")
+
+        if defi =~ @re_help.org_image_file_regexp
+          defi = "!#{defi}(#{defi})!"
+        elsif defi
+          defi = "\"#{defi}\""
+        end
+
+        if defi
+          "#{defi}:#{link}"
         else
           "!#{link}(#{link})!"
         end

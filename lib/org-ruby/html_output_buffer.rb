@@ -275,29 +275,24 @@ module Orgmode
           end
         end
       end
-      @re_help.rewrite_links str do |link, text|
-        link = link.sub(/^file:(.*)::(.*?)$/) do
-
+      @re_help.rewrite_links str do |link, defi|
+        [link, defi].compact.each do |text|
           # We don't support search links right now. Get rid of it.
-
-          "file:#{$1}"
+          text.sub!(/\A(file:[^\s]+)::[^\s]*?\Z/, "\\1")
+          text.sub!(/\A(file:[^\s]+)\.org\Z/i, "\\1.html")
+          text.sub!(/\Afile:(?=[^\s]+\Z)/, "")
         end
-        if link.match(/^file:.*\.org$/)
-          link = link.sub(/\.org$/i, ".html")
-        end
-
-        link = link.sub(/^file:/i, "") # will default to HTTP
 
         # We don't add a description for images in links, because its
         # empty value forces the image to be inlined.
-        text ||= link unless link =~ @re_help.org_image_file_regexp
+        defi ||= link unless link =~ @re_help.org_image_file_regexp
 
-        if text =~ @re_help.org_image_file_regexp
-          text = "@<img src=\"#{text}\" alt=\"#{text}\" />"
+        if defi =~ @re_help.org_image_file_regexp
+          defi = "@<img src=\"#{defi}\" alt=\"#{defi}\" />"
         end
 
-        if text
-          "@<a href=\"#{link}\">#{text}@</a>"
+        if defi
+          "@<a href=\"#{link}\">#{defi}@</a>"
         else
           "@<img src=\"#{link}\" alt=\"#{link}\" />"
         end
