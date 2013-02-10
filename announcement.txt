@@ -1,4 +1,4 @@
-org-ruby version 0.7.2
+org-ruby version 0.8.0
     by Brian Dewey
     http://github.com/bdewey/org-ruby
 
@@ -10,7 +10,10 @@ HTML or textile.
 
 == CHANGES
 
-* Many fixes to the regular expressions used for emphasis, contributed by [[http://github.com/vonavi][vonavi]]
-* Bug fix for when a table starts with a headline, thanks to [[http://github/til][til]]
-* Asterisk can be used for definition lists too
-* Use text lexer as default option for Pygments and Coderay when no language is specified
+* A lot of refactoring work and bugfixes contributed by vonavi (many thanks!)
+* Raw HTML is supported with #+html 
+* Code indentation for code blocks is fixed now
+* Support for definition lists is improved
+* Bugfix for when including headlines in center and quote blocks.
+* Indentation of HTML output improved
+* Improvements to entities support for Textile and HTML outputs

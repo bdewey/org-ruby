@@ -1,3 +1,13 @@
+== 0.8.0 / 2013-02-10
+
+* A lot of refactoring work and bugfixes contributed by vonavi (many thanks!)
+* Raw HTML is supported with #+html 
+* Code indentation for code blocks is fixed now
+* Support for definition lists is improved
+* Bugfix for when including headlines in center and quote blocks.
+* Indentation of HTML output improved
+* Improvements to entities support for Textile and HTML outputs
+
 == 0.7.2 / 2012-10-07
 
 * Many fixes to the regular expressions used for emphasis, contributed by [[http://github.com/vonavi][vonavi]]
