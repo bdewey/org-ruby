@@ -156,14 +156,19 @@ module Orgmode
 
         case current_mode
         when :definition_term
-          d = @buffer.rpartition(/\s+::($|\s+)/)
-          @output << inline_formatting(d[0].strip)
+          d = @buffer.split(/\A(.*[ \t]+|)::(|[ \t]+.*?)$/, 4)
+          d[1] = d[1].strip
+          unless d[1].empty?
+            @output << inline_formatting(d[1])
+          else
+            @output << "???"
+          end
           indent = @list_indent_stack.last
           pop_mode
 
           @new_paragraph = :start
           push_mode(:definition_descr, indent)
-          @output << inline_formatting(d[2])
+          @output << inline_formatting(d[2].strip + d[3])
           @new_paragraph = nil
 
         when :horizontal_rule
