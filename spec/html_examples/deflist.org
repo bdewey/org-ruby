@@ -58,3 +58,15 @@ but just regular lists.
    Value (n4)
  - Key
    :: Value (n5)
+
+** Definition List Item without Definition
+
+??? will be shown in this case
+
+- Example list
+ + Key :: Value :: Still value (k1)
+   Paragraph :: with :: no value
+ + Key :: Value :: Still value (k1) ::
+   Paragraph :: with :: no value ::
+ + ::
+   Paragraph :: with :: no value
