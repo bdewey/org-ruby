@@ -3,9 +3,6 @@ module Orgmode
   # Represents a single line of an orgmode file.
   class Line
 
-    # This is the line itself.
-    attr_reader :line
-
     # The indent level of this line. this is important to properly translate
     # nested lists from orgmode to textile.
     # TODO 2009-12-20 bdewey: Handle tabs
@@ -125,7 +122,7 @@ module Orgmode
       return strip_unordered_list_tag if unordered_list?
       return @line.sub(InlineExampleRegexp, "") if inline_example?
       return strip_raw_text_tag if raw_text?
-      return line
+      return @line
     end
 
     def plain_text?
