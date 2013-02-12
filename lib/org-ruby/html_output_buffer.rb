@@ -110,7 +110,7 @@ module Orgmode
         strip_code_block! if mode_is_code? current_mode
 
         # NOTE: CodeRay and Pygments already escape the html once, so
-        # no need to escape_string!(@buffer)
+        # no need to escape_buffer!
         case
         when (current_mode == :src and defined? Pygments)
           lang = normalize_lang @block_lang
@@ -138,7 +138,7 @@ module Orgmode
           @buffer.gsub!(/\A\n/, "") if @new_paragraph == :start
           @new_paragraph = true
         else
-          escape_string! @buffer
+          escape_buffer!
         end
 
         # Whitespace is significant in :code mode. Always output the
@@ -201,8 +201,9 @@ module Orgmode
       @output << "\n<div id=\"footnotes\">\n<h2 class=\"footnotes\">Footnotes:</h2>\n<div id=\"text-footnotes\">\n"
 
       @footnotes.each do |name, defi|
+        @buffer = defi
         @output << "<p class=\"footnote\"><sup><a class=\"footnum\" name=\"fn.#{name}\" href=\"#fnr.#{name}\">#{name}</a></sup>" \
-                << inline_formatting(defi) \
+                << inline_formatting(@buffer) \
                 << "</p>\n"
       end
 
@@ -229,21 +230,28 @@ module Orgmode
     end
 
     # Escapes any HTML content in the output accumulation buffer @buffer.
-    def escape_string! str
-      str.gsub!(/&/, "&amp;")
+    def escape_buffer!
+      @buffer.gsub!(/&/, "&amp;")
       # Escapes the left and right angular brackets but construction
       # @<text> which is formatted to <text>
-      str.gsub! /<([^<>\n]*)/ do |match|
+      @buffer.gsub! /<([^<>\n]*)/ do |match|
         if $`[-1..-1] == "@" and $'[0..0] == ">" then $&
         else "&lt;#{$1}"
         end
       end
-      str.gsub! /([^<>\n]*)>/ do |match|
+      @buffer.gsub! /([^<>\n]*)>/ do |match|
         if $`[-2..-1] == "@<" then $&
         else "#{$1}&gt;"
         end
       end
-      str.gsub!(/@(<[^<>\n]*>)/, "\\1")
+      @buffer.gsub!(/@(<[^<>\n]*>)/, "\\1")
+    end
+
+    # Escapes any HTML content in string beyond @buffer.
+    def escape_string! str
+      str.gsub!(/&/, "&amp;")
+      str.gsub!(/</, "&lt;")
+      str.gsub!(/>/, "&gt;")
     end
 
     def buffer_indentation
@@ -269,7 +277,12 @@ module Orgmode
     # Applies inline formatting rules to a string.
     def inline_formatting(str)
       @re_help.rewrite_emphasis str do |marker, s|
-        "@<#{Tags[marker][:open]}>#{s}@</#{Tags[marker][:close]}>"
+        if marker == "=" or marker == "~"
+          escape_string! s
+          "<#{Tags[marker][:open]}>#{s}</#{Tags[marker][:close]}>"
+        else
+          "@<#{Tags[marker][:open]}>#{s}@</#{Tags[marker][:close]}>"
+        end
       end
       if @options[:use_sub_superscripts] then
         @re_help.rewrite_subp str do |type, text|
@@ -319,7 +332,7 @@ module Orgmode
           "@<sup>@<a class=\"footref\" name=\"fnr.#{name}\" href=\"#fn.#{name}\">#{name}@</a>@</sup>"
         end
       end
-      escape_string! str
+      escape_buffer!
       Orgmode.special_symbols_to_html str
       str = @re_help.restore_code_snippets str
     end
