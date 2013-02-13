@@ -115,6 +115,7 @@ module Orgmode
         when (current_mode == :src and defined? Pygments)
           lang = normalize_lang @block_lang
           @output << "\n" unless @new_paragraph == :start
+          @new_paragraph = true
 
           begin
             @buffer = Pygments.highlight(@buffer, :lexer => lang)
@@ -360,6 +361,7 @@ module Orgmode
     end
 
     def strip_code_block!
+      @code_block_indent ||= 0
       strip_regexp = Regexp.new("^" + " " * @code_block_indent)
       @buffer.gsub!(strip_regexp, "")
       @code_block_indent = nil
