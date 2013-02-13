@@ -95,14 +95,18 @@ module Orgmode
       str.gsub!(/%/, "%%")
       format_str = "%s"
       str.gsub! @org_emphasis_regexp do |match|
+        pre = $1
         # preserve the code snippet from further formatting
-        inner = if $2 == "=" or $2 == "~"
-                  @code_snippet_stack.push $3
-                  yield $2, format_str
-                else
-                  yield $2, $3
-                end
-        "#{$1}#{inner}"
+        if $2 == "=" or $2 == "~"
+          inner = yield $2, $3
+          # code is not formatted, so turn to single percent signs
+          inner.gsub!(/%%/, "%")
+          @code_snippet_stack.push inner
+          "#{pre}#{format_str}"
+        else
+          inner = yield $2, $3
+          "#{pre}#{inner}"
+        end
       end
     end
 

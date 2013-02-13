@@ -91,10 +91,12 @@ module Orgmode
       if mode_is_code? current_mode and not line.block_type
         # Determines the amount of whitespaces to be stripped at the
         # beginning of each line in code block.
-        if @code_block_indent
-          @code_block_indent = [@code_block_indent, line.indent].min
-        else
-          @code_block_indent = line.indent
+        if line.paragraph_type != :blank
+          if @code_block_indent
+            @code_block_indent = [@code_block_indent, line.indent].min
+          else
+            @code_block_indent = line.indent
+          end
         end
       end
 
