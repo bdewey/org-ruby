@@ -110,7 +110,7 @@ module Orgmode
         strip_code_block! if mode_is_code? current_mode
 
         # NOTE: CodeRay and Pygments already escape the html once, so
-        # no need to escape_buffer!
+        # no need to escape_html! @buffer
         case
         when (current_mode == :src and defined? Pygments)
           lang = normalize_lang @block_lang
@@ -138,7 +138,8 @@ module Orgmode
           @buffer.gsub!(/\A\n/, "") if @new_paragraph == :start
           @new_paragraph = true
         else
-          escape_buffer!
+          # *NOTE* Don't use escape_buffer! through its sensitivity to @<text> forms
+          escape_html! @buffer
         end
 
         # Whitespace is significant in :code mode. Always output the
@@ -248,7 +249,7 @@ module Orgmode
     end
 
     # Escapes any HTML content in string beyond @buffer.
-    def escape_string! str
+    def escape_html! str
       str.gsub!(/&/, "&amp;")
       str.gsub!(/</, "&lt;")
       str.gsub!(/>/, "&gt;")
@@ -278,7 +279,7 @@ module Orgmode
     def inline_formatting(str)
       @re_help.rewrite_emphasis str do |marker, s|
         if marker == "=" or marker == "~"
-          escape_string! s
+          escape_html! s
           "<#{Tags[marker][:open]}>#{s}</#{Tags[marker][:close]}>"
         else
           "@<#{Tags[marker][:open]}>#{s}@</#{Tags[marker][:close]}>"
