@@ -18,23 +18,23 @@
 <h2>Within code test</h2>
 <pre class="example">
 emphasis_tests = [
-"*bold*",
-"/italic/",
-"=code=",
-"~verbatim~",
-"_underline_ ",
-"+strikethrough+",
-"[[http://www.bing.com]]",
-"[[http://www.google.com]]",
-"[[http://www.xkcd.com][helpful text link]]",
-"[[http://farm7.static.flickr.com/6078/6084185195_552aa270b2.jpg]]",
-"[[http://www.xkcd.com][http://imgs.xkcd.com/comics/t_cells.png]]",
-"&lt;http://www.google.com&gt;",
+&quot;*bold*&quot;,
+&quot;/italic/&quot;,
+&quot;=code=&quot;,
+&quot;~verbatim~&quot;,
+&quot;_underline_ &quot;,
+&quot;+strikethrough+&quot;,
+&quot;[[http://www.bing.com]]&quot;,
+&quot;[[http://www.google.com]]&quot;,
+&quot;[[http://www.xkcd.com][helpful text link]]&quot;,
+&quot;[[http://farm7.static.flickr.com/6078/6084185195_552aa270b2.jpg]]&quot;,
+&quot;[[http://www.xkcd.com][http://imgs.xkcd.com/comics/t_cells.png]]&quot;,
+&quot;&lt;http://www.google.com&gt;&quot;,
 ]
 
 all = emphasis_tests.map do |a|
   emphasis_tests.map do |b|
-    [b, ' ', a, ' ', b, "\n\n"].join('')
+    [b, ' ', a, ' ', b, &quot;\n\n&quot;].join('')
   end
 end
 
@@ -42,12 +42,12 @@ all.each {|e| puts e}
 </pre>
 <h2>Mixed together test</h2>
 <pre class="example">
-emphasis_tests = ["*","/","=","~","_","+"]
+emphasis_tests = [&quot;*&quot;,&quot;/&quot;,&quot;=&quot;,&quot;~&quot;,&quot;_&quot;,&quot;+&quot;]
 
 all = emphasis_tests.map do |a|
   emphasis_tests.map do |b|
-    [[a, 'Answer: ', b, '42', b, ' ',a, "\n\n"].join(''),
-     [a, 'Answer: ', b, '42', b, '',a, "\n\n"].join('')].flatten
+    [[a, 'Answer: ', b, '42', b, ' ',a, &quot;\n\n&quot;].join(''),
+     [a, 'Answer: ', b, '42', b, '',a, &quot;\n\n&quot;].join('')].flatten
   end
 end
 
@@ -127,11 +127,11 @@ all.each {|e| puts e}
 <p><del>Answer: +42+</del></p>
 <h2>Multiline support test :: one line</h2>
 <pre class="example">
-emphasis_tests = ["*","/","=","~","_","+"]
+emphasis_tests = [&quot;*&quot;,&quot;/&quot;,&quot;=&quot;,&quot;~&quot;,&quot;_&quot;,&quot;+&quot;]
 
 all = emphasis_tests.map do |a|
   emphasis_tests.map do |b|
-    [a, 'Starting the line here ', "\n", b, 'and continuing here to close', b, a, "\n\n"].join('')
+    [a, 'Starting the line here ', &quot;\n&quot;, b, 'and continuing here to close', b, a, &quot;\n\n&quot;].join('')
   end
 end
 
@@ -211,11 +211,11 @@ all.each {|e| puts e}
   +and continuing here to close+</del></p>
 <h2>Multiline support test :: two lines</h2>
 <pre class="example">
-emphasis_tests = ["*","/","=","~","_","+"]
+emphasis_tests = [&quot;*&quot;,&quot;/&quot;,&quot;=&quot;,&quot;~&quot;,&quot;_&quot;,&quot;+&quot;]
 
 all = emphasis_tests.map do |a|
   emphasis_tests.map do |b|
-    [a, 'Starting the line here ', "\n", b, 'and continuing here', "\n", 'to close', b, a, "\n\n"].join('')
+    [a, 'Starting the line here ', &quot;\n&quot;, b, 'and continuing here', &quot;\n&quot;, 'to close', b, a, &quot;\n\n&quot;].join('')
   end
 end
 

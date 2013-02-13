@@ -1,3 +1,4 @@
+require 'cgi'
 begin
   require 'pygments'
 rescue LoadError
@@ -110,7 +111,7 @@ module Orgmode
         strip_code_block! if mode_is_code? current_mode
 
         # NOTE: CodeRay and Pygments already escape the html once, so
-        # no need to escape_html! @buffer
+        # no need to escapeHTML
         case
         when (current_mode == :src and defined? Pygments)
           lang = normalize_lang @block_lang
@@ -140,7 +141,7 @@ module Orgmode
           @new_paragraph = true
         else
           # *NOTE* Don't use escape_buffer! through its sensitivity to @<text> forms
-          escape_html! @buffer
+          @buffer = CGI::escapeHTML @buffer
         end
 
         # Whitespace is significant in :code mode. Always output the
@@ -249,13 +250,6 @@ module Orgmode
       @buffer.gsub!(/@(<[^<>\n]*>)/, "\\1")
     end
 
-    # Escapes any HTML content in string beyond @buffer.
-    def escape_html! str
-      str.gsub!(/&/, "&amp;")
-      str.gsub!(/</, "&lt;")
-      str.gsub!(/>/, "&gt;")
-    end
-
     def buffer_indentation
       indent = "  " * @list_indent_stack.length
       @buffer << indent
@@ -280,7 +274,7 @@ module Orgmode
     def inline_formatting(str)
       @re_help.rewrite_emphasis str do |marker, s|
         if marker == "=" or marker == "~"
-          escape_html! s
+          s = CGI::escapeHTML s
           "<#{Tags[marker][:open]}>#{s}</#{Tags[marker][:close]}>"
         else
           "@<#{Tags[marker][:open]}>#{s}@</#{Tags[marker][:close]}>"
