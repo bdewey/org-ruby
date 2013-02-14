@@ -3,16 +3,16 @@
   like this:</p>
 <pre class="example">
 
-    def initialize(output)
-      @output = output
-      @buffer = ""
-      @output_type = :start
-      @list_indent_stack = []
-      @paragraph_modifier = nil
+def initialize(output)
+  @output = output
+  @buffer = &quot;&quot;
+  @output_type = :start
+  @list_indent_stack = []
+  @paragraph_modifier = nil
 
-      @logger = Logger.new(STDERR)
-      @logger.level = Logger::WARN
-    end
+  @logger = Logger.new(STDERR)
+  @logger.level = Logger::WARN
+end
 
 </pre>
 <p>And now I should be back to normal text.</p>

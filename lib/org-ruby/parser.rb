@@ -106,8 +106,8 @@ module Orgmode
 
         case mode
         when :normal, :quote, :center
-          if Headline.headline? line.line
-            line = Headline.new line.line, self, offset
+          if Headline.headline? line.to_s
+            line = Headline.new line.to_s, self, offset
           elsif line.table_separator?
             if previous_line and previous_line.paragraph_type == :table_row and !table_header_set
               previous_line.assigned_paragraph_type = :table_header
@@ -123,7 +123,7 @@ module Orgmode
         end
 
         if mode == :normal
-          @headlines << @current_headline = line if Headline.headline? line.line
+          @headlines << @current_headline = line if Headline.headline? line.to_s
           # If there is a setting on this line, remember it.
           line.in_buffer_setting? do |key, value|
             store_in_buffer_setting key.upcase, value
