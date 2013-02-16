@@ -21,3 +21,15 @@ Hello.
 </pre>
 </p>
 #+end_html
+
+** Cases on which html should be escaped
+
+This should be escaped: ~<html><script type="text/javascript">(function(){})</script></html>~
+
+# Matches the first =
+This should be escaped: =<html><script type="text/javascript">(function(){})</script></html>=
+
+This should be escaped: ~@<script type="text/javascript">(function(){})@</script>~
+
+# Matches the first =
+This should be escaped: =@<script type="text/javascript">(function(){})@</script>=
