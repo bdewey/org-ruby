@@ -1,4 +1,4 @@
-org-ruby version 0.8.0
+org-ruby version 0.8.1
     by Brian Dewey
     http://github.com/bdewey/org-ruby
 
@@ -10,6 +10,7 @@ HTML or textile.
 
 == CHANGES
 
+* Fix for html escaping when code is inline
 * A lot of refactoring work and bugfixes contributed by vonavi (many thanks!)
 * Raw HTML is supported with #+html 
 * Code indentation for code blocks is fixed now
