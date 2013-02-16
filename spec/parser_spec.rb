@@ -21,7 +21,8 @@ describe Orgmode::Parser do
 
   it "can find a headline by index" do
     parser = Orgmode::Parser.load(RememberFile)
-    parser.headlines[1].line.should eql("** YAML header in Webby\n")
+    line = parser.headlines[1].to_s
+    line.should eql("** YAML header in Webby\n")
   end
 
   it "should determine headline levels" do
