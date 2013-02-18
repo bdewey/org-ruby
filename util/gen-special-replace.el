@@ -6,13 +6,14 @@
 (defvar gen-file-name "replace-entities.rb")
 
 (defun generate-replace-inbuffer (what)
+  (insert "  " (capitalize what) "Entities = {\n")
   (let ((ll (if gen-use-entities-user
                 (append org-entities-user org-entities)
               org-entities))
         (to (if (string= what "html") 3
-              6))) ; use utf8 for textile
-    (insert "  " (capitalize what) "Entities = {\n"
-            (mapconcat
+              6)) ; use utf8 for textile
+        (beg (point)))
+    (insert (mapconcat
              (lambda (entity)
                (let ((symb (nth to entity)))
                  ;; escape backslashes and quotation marks
@@ -22,7 +23,9 @@
                  (concat "    \"" (car entity) "\" => \"" symb "\"")))
              (remove-if-not 'listp ll)
              ",\n")
-            "\n  }\n")))
+            "\n")
+    (align-regexp beg (point) "\\(\\s-+\\)=>" 1 1 t))
+  (insert "  }\n"))
 
 (defun generate-replace-header (what)
   (insert
