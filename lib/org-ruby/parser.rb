@@ -130,7 +130,7 @@ module Orgmode
           end
 
           mode = line.paragraph_type if line.begin_block?
-          mode = :property_drawer if line.property_drawer_begin_block?
+          mode = :property_drawer if previous_line and previous_line.property_drawer_begin_block?
         end
 
         if mode == :property_drawer and @current_headline

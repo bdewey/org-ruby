@@ -22,6 +22,7 @@ the Freeform project.
 * Future ideas						:someday:
   :PROPERTIES:
   :DATE:     2009-11-26
+  :SLUG:     future-ideas
   :END:
 
   - Add *posts*
