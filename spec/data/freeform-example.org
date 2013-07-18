@@ -20,6 +20,10 @@ This is my todo list, research file, and log record from working on
 the Freeform project.
 
 * Future ideas						:someday:
+  :PROPERTIES:
+  :DATE:     2009-11-26
+  :END:
+
   - Add *posts*
   - Enforce uniqueness of url_token
   - Add FeedSync support

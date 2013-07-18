@@ -133,6 +133,10 @@ module Orgmode
           mode = :property_drawer if line.property_drawer_begin_block?
         end
 
+        if mode == :property_drawer and @current_headline
+          @current_headline.property_drawer[line.property_drawer_item.first] = line.property_drawer_item.last
+        end
+
         unless mode == :comment
           if @current_headline
             @current_headline.body_lines << line

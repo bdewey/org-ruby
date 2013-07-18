@@ -31,6 +31,12 @@ describe Orgmode::Parser do
     parser.headlines[1].level.should eql(2)
   end
 
+  it "should include the property drawer items from a headline" do
+    parser = Orgmode::Parser.load(FreeformExampleFile)
+    parser.headlines.first.property_drawer.count.should > 0
+    parser.headlines.first.property_drawer['DATE'].should == '2009-11-26'
+  end
+
   it "should put body lines in headlines" do
     parser = Orgmode::Parser.load(RememberFile)
     parser.headlines[0].should have(1).body_lines

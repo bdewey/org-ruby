@@ -28,6 +28,9 @@ module Orgmode
     # The export state of this headline. See +ValidExportStates+.
     attr_accessor :export_state
 
+    # Include the property drawer items found for the headline
+    attr_accessor :property_drawer
+
     # This is the regex that matches a line
     LineRegexp = /^\*+\s+/
 
@@ -47,6 +50,7 @@ module Orgmode
       @body_lines = []
       @tags = []
       @export_state = :exclude
+      @property_drawer = { }
       if (@line =~ LineRegexp) then
         @level = $&.strip.length + offset
         @headline_text = $'.strip
