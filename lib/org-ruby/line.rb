@@ -66,6 +66,12 @@ module Orgmode
       @line =~ PropertyDrawerItemRegexp
     end
 
+    def property_drawer_item
+      @line =~ PropertyDrawerItemRegexp
+
+      [$1, $2]
+    end
+
     # Tests if a line contains metadata instead of actual content.
     def metadata?
       check_assignment_or_regexp(:metadata, /^\s*(CLOCK|DEADLINE|START|CLOSED|SCHEDULED):/)
