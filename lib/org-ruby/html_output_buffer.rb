@@ -58,8 +58,7 @@ module Orgmode
     # write out one of the block tags in the HtmlBlockTag constant to
     # put this information in the HTML stream.
     def push_mode(mode, indent)
-      super(mode)
-      @list_indent_stack.push(indent)
+      super(mode, indent)
 
       if HtmlBlockTag[mode]
         unless ((mode_is_table?(mode) and skip_tables?) or

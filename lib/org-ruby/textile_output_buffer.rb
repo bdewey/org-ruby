@@ -12,8 +12,7 @@ module Orgmode
     end
 
     def push_mode(mode, indent)
-      @list_indent_stack.push(indent)
-      super(mode)
+      super(mode, indent)
       @output << "bc. " if mode_is_code? mode
       if mode == :center or mode == :quote
         @add_paragraph = false

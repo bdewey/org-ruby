@@ -46,8 +46,9 @@ module Orgmode
       @mode_stack.last
     end
 
-    def push_mode(mode)
+    def push_mode(mode, indent)
       @mode_stack.push(mode)
+      @list_indent_stack.push(indent)
     end
 
     def pop_mode(mode = nil)
@@ -198,6 +199,10 @@ module Orgmode
           push_mode(line.paragraph_type, line.indent) unless line.end_block?
         end
       end
+    end
+
+    def add_line_attributes headline
+      # Implemented by specific output buffers
     end
 
     def output_footnotes!
