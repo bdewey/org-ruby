@@ -109,7 +109,7 @@ module Orgmode
         line = Line.new text, self
 
         if line.include_file? and not line.include_file_path.nil?
-          raise "Included file %s not found" % [line.include_file_path] if not File.exists? line.include_file_path
+          next if not File.exists? line.include_file_path
           include_data = IO.read(line.include_file_path)
           include_lines = Orgmode::Parser.new(include_data).lines
           parse_lines include_lines, offset
