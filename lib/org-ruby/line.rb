@@ -78,7 +78,7 @@ module Orgmode
     end
 
     def nonprinting?
-      comment? || metadata? || begin_block? || end_block?
+      comment? || metadata? || begin_block? || end_block? || include_file?
     end
 
     def blank?
@@ -222,6 +222,16 @@ module Orgmode
       else
         @line =~ InBufferSettingRegexp
       end
+    end
+
+    IncludeFileRegexp = /^\s*#\+INCLUDE:\s*"([^"]+)"/i
+
+    def include_file?
+      @line =~ IncludeFileRegexp
+    end
+
+    def include_file_path
+      File.expand_path $1 if @line =~ IncludeFileRegexp
     end
 
     # Determines the paragraph type of the current line.

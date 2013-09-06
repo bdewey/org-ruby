@@ -96,11 +96,25 @@ module Orgmode
       @header_lines = []
       @in_buffer_settings = { }
       @options = { }
+
+      parse_lines @lines, offset
+    end
+
+    # Parse lines
+    def parse_lines(lines, offset)
       mode = :normal
       previous_line = nil
       table_header_set = false
-      @lines.each do |text|
+      lines.each do |text|
         line = Line.new text, self
+
+        if line.include_file? and not line.include_file_path.nil?
+          raise "Included file %s not found" % [line.include_file_path] if not File.exists? line.include_file_path
+          include_data = IO.read(line.include_file_path)
+          include_lines = Orgmode::Parser.new(include_data).lines
+          parse_lines include_lines, offset
+        end
+
         mode = :normal if line.end_block? and mode == line.paragraph_type
         mode = :normal if line.property_drawer_end_block? and mode == :property_drawer
 
@@ -146,7 +160,7 @@ module Orgmode
         end
 
         previous_line = line
-      end                       # @lines.each
+      end                       # lines.each
     end                         # initialize
 
     # Creates a new parser from the data in a given file

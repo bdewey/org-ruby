@@ -150,4 +150,8 @@ describe Orgmode::Line do
       l.in_buffer_setting?.should be_nil
     end
   end
+
+  it "should recognize an included file" do
+    Orgmode::Line.new("#+INCLUDE: \"~/somefile.org\"").include_file?.should be_true
+  end
 end
