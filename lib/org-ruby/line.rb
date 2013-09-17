@@ -224,7 +224,7 @@ module Orgmode
       end
     end
 
-    IncludeFileRegexp = /^\s*#\+INCLUDE:\s*"([^"]+)"/i
+    IncludeFileRegexp = /^\s*#\+INCLUDE:\s*"([^"]+)"(\s+([^\s]+)\s+(.*))?$/i
 
     def include_file?
       @line =~ IncludeFileRegexp
@@ -232,6 +232,10 @@ module Orgmode
 
     def include_file_path
       File.expand_path $1 if @line =~ IncludeFileRegexp
+    end
+
+    def include_file_options
+      [$3, $4] if @line =~ IncludeFileRegexp and !$2.nil?
     end
 
     # Determines the paragraph type of the current line.
