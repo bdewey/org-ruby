@@ -110,7 +110,7 @@ module Orgmode
 
         if line.include_file? and not line.include_file_path.nil?
           next if not File.exists? line.include_file_path
-          include_data = IO.read(line.include_file_path)
+          include_data = get_include_data line
           include_lines = Orgmode::Parser.new(include_data).lines
           parse_lines include_lines, offset
         end
@@ -162,6 +162,49 @@ module Orgmode
         previous_line = line
       end                       # lines.each
     end                         # initialize
+
+    # Get include data, when #+INCLUDE tag is used
+    # @link http://orgmode.org/manual/Include-files.html
+    def get_include_data(line)
+      return IO.read(line.include_file_path) if line.include_file_options.nil?
+
+      case line.include_file_options[0]
+      when ':lines' then
+        # Get options
+        include_file_lines = line.include_file_options[1].gsub('"', '').split('-')
+        include_file_lines[0] = include_file_lines[0].empty? ? 1 : include_file_lines[0].to_i
+        include_file_lines[1] = include_file_lines[1].to_i if !include_file_lines[1].nil?
+
+        # Extract request lines. Note that the second index is excluded, according to the doc
+        line_index = 1
+        include_data = []
+        File.open(line.include_file_path, "r") do |fd|
+          while line_data = fd.gets
+            if (line_index >= include_file_lines[0] and (include_file_lines[1].nil? or line_index < include_file_lines[1]))
+              include_data << line_data.chomp
+            end
+            line_index += 1
+          end
+        end
+
+      when ('src' or 'example' or 'quote') then
+        # Prepare tags
+        begin_tag = '#+BEGIN_%s' % [line.include_file_options[0].upcase]
+        if line.include_file_options[0] == 'src' and !line.include_file_options[1].nil?
+          begin_tag += ' ' + line.include_file_options[1]
+        end
+        end_tag = '#+END_%s' % [line.include_file_options[0].upcase]
+
+        # Get lines. Will be transformed into an array at processing
+        include_data = "%s\n%s\n%s" % [begin_tag, IO.read(line.include_file_path), end_tag]
+
+      else
+        include_data = []
+      end
+      # @todo: support ":minlevel"
+
+      include_data
+    end
 
     # Creates a new parser from the data in a given file
     def self.load(fname)
