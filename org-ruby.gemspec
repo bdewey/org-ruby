@@ -18,6 +18,7 @@ Gem::Specification.new do |s|
   s.rubyforge_project = "org-ruby"
   s.rubygems_version = "1.8.10"
   s.summary = "This gem contains Ruby routines for parsing org-mode files."
+  s.license = "MIT"
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
