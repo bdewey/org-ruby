@@ -12,5 +12,8 @@ EOF
   end
 end
 #+END_SRC
-
   
+* When including a file as an src code file
+
+#+INCLUDE: "./spec/html_examples/only-list.org" src text
+

@@ -73,3 +73,12 @@ puts included_file
 * COMMENT When the headline is commented, it should not display
 
 #+INCLUDE: "./spec/html_examples/only-list.org"
+
+* DONE When including a file as an example
+
+#+INCLUDE: "./spec/html_examples/only-list.org" example ""
+
+* DONE When including a file as an quote
+
+#+INCLUDE: "./spec/html_examples/only-list.org" quote ""
+

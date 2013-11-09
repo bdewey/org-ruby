@@ -169,7 +169,7 @@ module Orgmode
       return IO.read(line.include_file_path) if line.include_file_options.nil?
 
       case line.include_file_options[0]
-      when ':lines' then
+      when ':lines'
         # Get options
         include_file_lines = line.include_file_options[1].gsub('"', '').split('-')
         include_file_lines[0] = include_file_lines[0].empty? ? 1 : include_file_lines[0].to_i
@@ -187,7 +187,7 @@ module Orgmode
           end
         end
 
-      when ('src' or 'example' or 'quote') then
+      when 'src', 'example', 'quote'
         # Prepare tags
         begin_tag = '#+BEGIN_%s' % [line.include_file_options[0].upcase]
         if line.include_file_options[0] == 'src' and !line.include_file_options[1].nil?

@@ -38,3 +38,8 @@ class Piano
   end
 end
 #+end_src
+
+* When including a file as an src code file
+
+#+INCLUDE: "./spec/html_examples/only-list.org" src text
+
