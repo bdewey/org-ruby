@@ -108,11 +108,14 @@ module Orgmode
       lines.each do |text|
         line = Line.new text, self
 
-        if line.include_file? and not line.include_file_path.nil?
-          next if not File.exists? line.include_file_path
-          include_data = get_include_data line
-          include_lines = Orgmode::Parser.new(include_data).lines
-          parse_lines include_lines, offset
+        # Disable this by default since it would be dangerous in some environments
+        if ENV['ORG_RUBY_ENABLE_INCLUDE_FILES'] == 'true'
+          if line.include_file? and not line.include_file_path.nil?
+            next if not File.exists? line.include_file_path
+            include_data = get_include_data line
+            include_lines = Orgmode::Parser.new(include_data).lines
+            parse_lines include_lines, offset
+          end
         end
 
         mode = :normal if line.end_block? and mode == line.paragraph_type

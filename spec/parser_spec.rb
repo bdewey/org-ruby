@@ -155,19 +155,32 @@ describe Orgmode::Parser do
       textile_name = File.expand_path(textile_name)
 
       it "should convert #{basename}.org to HTML" do
+        ENV['ORG_RUBY_ENABLE_INCLUDE_FILES'] = 'true'
         expected = IO.read(textile_name)
         expected.should be_kind_of(String)
         parser = Orgmode::Parser.new(IO.read(file))
         actual = parser.to_html
         actual.should be_kind_of(String)
         actual.should == expected
+        ENV['ORG_RUBY_ENABLE_INCLUDE_FILES'] = ''
       end
 
       it "should render #{basename}.org to HTML using Tilt templates" do
+        ENV['ORG_RUBY_ENABLE_INCLUDE_FILES'] = 'true'
         expected = IO.read(textile_name)
         template = Tilt.new(file).render
         template.should == expected
+        ENV['ORG_RUBY_ENABLE_INCLUDE_FILES'] = ''
       end
+    end
+
+    it "should not render #+INCLUDE directive unless enabled" do
+      data_directory = File.join(File.dirname(__FILE__), "html_examples")
+      expected = File.read(File.join(data_directory, "include-file-disabled.html"))
+      org_file = File.join(data_directory, "include-file.org")
+      parser = Orgmode::Parser.new(IO.read(org_file))
+      actual = parser.to_html
+      actual.should == expected
     end
   end
 
@@ -193,18 +206,22 @@ describe Orgmode::Parser do
       textile_name = File.expand_path(textile_name)
 
       it "should convert #{basename}.org to HTML" do
+        ENV['ORG_RUBY_ENABLE_INCLUDE_FILES'] = 'true'
         expected = IO.read(textile_name)
         expected.should be_kind_of(String)
         parser = Orgmode::Parser.new(IO.read(file))
         actual = parser.to_html
         actual.should be_kind_of(String)
         actual.should == expected
+        ENV['ORG_RUBY_ENABLE_INCLUDE_FILES'] = ''
       end
 
       it "should render #{basename}.org to HTML using Tilt templates" do
+        ENV['ORG_RUBY_ENABLE_INCLUDE_FILES'] = 'true'
         expected = IO.read(textile_name)
         template = Tilt.new(file).render
         template.should == expected
+        ENV['ORG_RUBY_ENABLE_INCLUDE_FILES'] = ''
       end
     end
   end
