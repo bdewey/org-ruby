@@ -1,0 +1,44 @@
+<h1>Removing the prepended comma from Org mode example blocks</h1>
+<p>As mentioned in <a href="http://orgmode.org/manual/Literal-examples.html">http://orgmode.org/manual/Literal-examples.html</a>,
+  when at the beginning of the line there is either &#8220;,*&#8221; or &#8220;,#+&#8221;
+  this prepended comma should be removed before parsing.</p>
+<p>(Fixes <a href="https://github.com/bdewey/org-ruby/issues/50">https://github.com/bdewey/org-ruby/issues/50</a>)</p>
+<h2>Here the prepended comma will be removed.</h2>
+<pre class="example">* Hello
+** Goodbye
+ *** Not a headline, but prepended comma still removed.
+* I am a headline
+</pre>
+<h2>Here the prepended comma is should not be removed.</h2>
+<pre class="example">
+{
+  &quot;one&quot;:   1
+, &quot;two&quot;:   2
+, &quot;three&quot;: 3
+, &quot;four&quot;:  4
+}
+</pre>
+<h2>Here the prepended comma is also removed</h2>
+<p>Emacs Org mode implementation also removes it.</p>
+<pre class="example">
+text = &lt;&lt;TEXT
+#+TITLE: Prepended comma world
+* Hello world
+More text here
+TEXT
+</pre>
+<h2>Here the prepended comma will be remove for the <code>Hello world</code> headline</h2>
+<pre class="example">
+,  ,* Hi
+,  
+,  ,* This will be appended a comma
+* Hello world  
+,  
+</pre>
+<h2>Here the prepended comma will be removed</h2>
+<pre class="example">#+TITLE: &quot;Hello world&quot;
+</pre>
+<h2>This will be rendered as normal</h2>
+<pre class="example">
+,,,,,,,,,,,,,,,,,*Hello world
+</pre>
