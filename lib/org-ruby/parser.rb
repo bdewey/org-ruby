@@ -100,6 +100,24 @@ module Orgmode
       parse_lines @lines, offset
     end
 
+    # Check include file availability and permissions
+    def check_include_file(file_path)
+      can_be_included = File.exists? file_path
+
+      if not ENV['ORG_RUBY_INCLUDE_ROOT'].nil?
+        # Ensure we have full paths
+        root_path = File.expand_path ENV['ORG_RUBY_INCLUDE_ROOT']
+        file_path = File.expand_path file_path
+
+        # Check if file is in the defined root path and really exists
+        if file_path.slice(0, root_path.length) != root_path
+          can_be_included = false
+        end
+      end
+
+      can_be_included
+    end
+
     # Parse lines
     def parse_lines(lines, offset)
       mode = :normal
@@ -108,10 +126,13 @@ module Orgmode
       lines.each do |text|
         line = Line.new text, self
 
-        # Disable this by default since it would be dangerous in some environments
+        # Disable file include feature by default since it would be dangerous in some environments
+        # It can be activated either by setting a ORG_RUBY_ENABLE_INCLUDE_FILES environment variable
+        #  or by setting a root path for included file via the ORG_RUBY_INCLUDE_ROOT environment variable
+        ENV['ORG_RUBY_ENABLE_INCLUDE_FILES'] = 'true' if not ENV['ORG_RUBY_INCLUDE_ROOT'].nil?
         if ENV['ORG_RUBY_ENABLE_INCLUDE_FILES'] == 'true'
           if line.include_file? and not line.include_file_path.nil?
-            next if not File.exists? line.include_file_path
+            next if not check_include_file line.include_file_path
             include_data = get_include_data line
             include_lines = Orgmode::Parser.new(include_data).lines
             parse_lines include_lines, offset
