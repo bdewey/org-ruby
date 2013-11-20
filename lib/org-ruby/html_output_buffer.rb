@@ -305,6 +305,7 @@ module Orgmode
         end
 
         if defi
+          link = @options[:link_abbrevs][link] if @options[:link_abbrevs].has_key? link
           "@<a href=\"#{link}\">#{defi}@</a>"
         else
           "@<img src=\"#{link}\" alt=\"#{link}\" />"

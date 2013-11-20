@@ -224,6 +224,16 @@ module Orgmode
       end
     end
 
+    LinkAbbrevRegexp = /^\s*#\+LINK:\s*(\w+)\s+(.+)$/i
+
+    def link_abbrev?
+      @line =~ LinkAbbrevRegexp
+    end
+
+    def link_abbrev_data
+      [$1, $2] if @line =~ LinkAbbrevRegexp
+    end
+
     IncludeFileRegexp = /^\s*#\+INCLUDE:\s*"([^"]+)"(\s+([^\s]+)\s+(.*))?$/i
 
     def include_file?
