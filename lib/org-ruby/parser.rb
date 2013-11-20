@@ -96,6 +96,7 @@ module Orgmode
       @header_lines = []
       @in_buffer_settings = { }
       @options = { }
+      @link_abbrevs = { }
 
       parse_lines @lines, offset
     end
@@ -137,6 +138,12 @@ module Orgmode
             include_lines = Orgmode::Parser.new(include_data).lines
             parse_lines include_lines, offset
           end
+        end
+
+        # Store link abbreviations
+        if line.link_abbrev?
+          link_abbrev_data = line.link_abbrev_data
+          @link_abbrevs[link_abbrev_data[0]] = link_abbrev_data[1]
         end
 
         mode = :normal if line.end_block? and mode == line.paragraph_type
@@ -256,7 +263,8 @@ module Orgmode
         :export_heading_number => export_heading_number?,
         :export_todo => export_todo?,
         :use_sub_superscripts =>  use_sub_superscripts?,
-        :export_footnotes => export_footnotes?
+        :export_footnotes => export_footnotes?,
+        :link_abbrevs => @link_abbrevs
       }
       export_options[:skip_tables] = true if not export_tables?
       output = ""
