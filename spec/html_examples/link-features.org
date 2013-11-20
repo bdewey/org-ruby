@@ -33,3 +33,11 @@ sections within documents, etc.
 - [[file:path.org][file:path.org label]]
 
 - [[file:notes/path.org][file:notes/path.org label]]
+
+* Links abbreviations
+
+  URLs can be abbreviated by a LINK definition in the org file
+
+#+LINK: example http://example.com/something
+
+[[example][This is an abbreviated link example]]
