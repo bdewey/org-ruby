@@ -1,0 +1,60 @@
+* Removing the prepended comma from Org mode src blocks
+
+As mentioned in <http://orgmode.org/manual/Literal-examples.html>,
+when at the beginning of the line there is either ",*" or ",#+"
+this prepended comma should be removed before parsing.
+
+(Fixes <https://github.com/bdewey/org-ruby/issues/50>)
+
+** DONE Here the prepended comma will be removed.
+
+#+begin_src org
+  ,* Hello
+  ,** Goodbye
+  , *** Not a headline, but prepended comma still removed.
+  ,* I am a headline
+#+end_src
+
+** DONE Here the prepended comma is should not be removed.
+
+#+begin_src js
+  {
+    "one":   1
+  , "two":   2
+  , "three": 3
+  , "four":  4
+  }
+#+end_src
+
+** DONE Here the prepended comma is also removed
+  Emacs Org mode implementation also removes it.
+
+#+begin_src ruby
+  text = <<TEXT
+  ,#+TITLE: Prepended comma world
+  ,* Hello world
+  More text here
+  TEXT
+#+end_src
+
+** DONE Here the prepended comma will be remove for the =Hello world= headline
+
+#+begin_src org
+  ,  ,* Hi
+  ,  
+  ,  ,* This will be appended a comma
+  ,* Hello world  
+  ,  
+#+end_src
+
+** DONE Here the prepended comma will be removed
+
+#+begin_src org
+  ,#+TITLE: "Hello world"
+#+end_src
+
+** DONE This will be rendered as normal
+
+#+begin_src org
+  ,,,,,,,,,,,,,,,,,*Hello world
+#+end_src
