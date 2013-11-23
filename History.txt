@@ -1,3 +1,11 @@
+== 0.8.2 / 2013-11-09
+
+* Manage the #+INCLUDE tag in org files (contribution by pierre-lecocq)
+* #+INCLUDE is disabled by default. Needs either ORG_RUBY_INCLUDE_ROOT or 
+  ORG_RUBY_ENABLE_INCLUDE_FILES environment variables in order to be enabled.
+* Link abbreviations with #+LINK tag are supported (by pierre-lecocq too, thanks!)
+* Strip prepended commas added by Emacs Org mode to src/example blocks
+
 == 0.8.1 / 2013-02-17
 
 * Fix for html escaping when code is inline

@@ -1,8 +1,10 @@
 # -*- encoding: utf-8 -*-
+$:.push File.expand_path("../lib", __FILE__)
+require "org-ruby"
 
 Gem::Specification.new do |s|
   s.name = "org-ruby"
-  s.version = "0.8.1"
+  s.version = OrgRuby::VERSION
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Brian Dewey"]
