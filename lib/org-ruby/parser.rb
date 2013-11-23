@@ -129,9 +129,9 @@ module Orgmode
 
         # Disable file include feature by default since it would be dangerous in some environments
         # It can be activated either by setting a ORG_RUBY_ENABLE_INCLUDE_FILES environment variable
-        #  or by setting a root path for included file via the ORG_RUBY_INCLUDE_ROOT environment variable
-        ENV['ORG_RUBY_ENABLE_INCLUDE_FILES'] = 'true' if not ENV['ORG_RUBY_INCLUDE_ROOT'].nil?
-        if ENV['ORG_RUBY_ENABLE_INCLUDE_FILES'] == 'true'
+        # or by setting a root path for included file via the ORG_RUBY_INCLUDE_ROOT environment variable
+        if ENV['ORG_RUBY_ENABLE_INCLUDE_FILES'] == 'true' \
+          or not ENV['ORG_RUBY_INCLUDE_ROOT'].nil?
           if line.include_file? and not line.include_file_path.nil?
             next if not check_include_file line.include_file_path
             include_data = get_include_data line

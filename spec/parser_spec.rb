@@ -174,13 +174,24 @@ describe Orgmode::Parser do
       end
     end
 
-    it "should not render #+INCLUDE directive unless enabled" do
+    it "should not render #+INCLUDE directive by default" do
       data_directory = File.join(File.dirname(__FILE__), "html_examples")
       expected = File.read(File.join(data_directory, "include-file-disabled.html"))
       org_file = File.join(data_directory, "include-file.org")
       parser = Orgmode::Parser.new(IO.read(org_file))
       actual = parser.to_html
       actual.should == expected
+    end
+
+    it "should render #+INCLUDE when ORG_RUBY_INCLUDE_ROOT is set" do
+      data_directory = File.expand_path(File.join(File.dirname(__FILE__), "html_examples"))
+      ENV['ORG_RUBY_INCLUDE_ROOT'] = data_directory
+      expected = File.read(File.join(data_directory, "include-file.html"))
+      org_file = File.join(data_directory, "include-file.org")
+      parser = Orgmode::Parser.new(IO.read(org_file))
+      actual = parser.to_html
+      actual.should == expected
+      ENV['ORG_RUBY_INCLUDE_ROOT'] = nil
     end
   end
 
