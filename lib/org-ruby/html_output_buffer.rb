@@ -328,6 +328,10 @@ module Orgmode
           "@<sup>@<a class=\"footref\" name=\"fnr.#{name}\" href=\"#fn.#{name}\">#{name}@</a>@</sup>"
         end
       end
+      # Two backslashes at the end of the line make a line break.
+      if @output_type != :table_row and @output_type != :table_header then
+        str.sub!(/\\\\$/, "@<br>")
+      end
       escape_buffer!
       Orgmode.special_symbols_to_html str
       str = @re_help.restore_code_snippets str
