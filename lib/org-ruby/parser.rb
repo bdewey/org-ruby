@@ -255,6 +255,18 @@ module Orgmode
       output
     end
 
+    # Exports the Org mode content into Markdown format
+    def to_markdown
+      output = ""
+      output_buffer = MarkdownOutputBuffer.new(output)
+
+      translate(@header_lines, output_buffer)
+      @headlines.each do |headline|
+        translate(headline.body_lines, output_buffer)
+      end
+      output
+    end
+
     # Converts the loaded org-mode file to HTML.
     def to_html
       mark_trees_for_export

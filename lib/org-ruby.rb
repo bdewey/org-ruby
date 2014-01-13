@@ -15,6 +15,9 @@ require 'org-ruby/html_symbol_replace'
 require 'org-ruby/textile_output_buffer'
 require 'org-ruby/textile_symbol_replace'
 
+# Markdown exporter
+require 'org-ruby/markdown_output_buffer'
+
 # Tilt support
 require 'org-ruby/tilt'
 
