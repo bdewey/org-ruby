@@ -1,0 +1,21 @@
+# Code Comment
+
+I need to be able to export things that look like org-mode comments
+inside of code blocks, like this:
+
+```
+#+TITLE:     orgmode_parser.org
+#+AUTHOR:    
+#+EMAIL:     brian@BRIAN-DESK
+#+DATE:      2009-12-29 Tue
+#+DESCRIPTION: 
+#+KEYWORDS: 
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:t toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:nil skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+```

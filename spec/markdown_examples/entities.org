@@ -1,0 +1,393 @@
+#+TITLE: ENTITIES
+
+=Org-ruby= supports "smart double quotes," 'smart single quotes,'
+apostrophes for contractions like won't and can't, and other
+things... like elipses. Oh -- and dashes.
+
+- Question: What does org-mode do for ampersands, like R&R? or &lt;?
+- Answer: Those get escaped, too. \smiley
+
+* <Even in headlines! funner & funner!>
+
+\laquo They \alpha should \beta be \gamma
+able \delta to \eta exist \theta in \epsilon
+the same line \radic \raquo.
+
+#+begin_example
+\laquo They won't appear in in example blocks. \raquo
+#+end_example
+
+#+begin_center
+\lceil \mdash \mdash \mdash \mdash \mdash \mdash \rceil
+
+Though they appear in center blocks
+
+\lfloor \mdash \mdash \mdash \mdash \mdash \mdash \rfloor
+#+end_center
+
+To work they have to be separated, like \hearts \hearts, not like \hearts\hearts.
+
+* List of entities supported
+
+#+begin_example :tangle /tmp/print_entities.rb
+# Script to generate the list of currently supported entities
+require 'org-ruby'
+
+Orgmode::HtmlEntities.each_pair do |entity, _|
+  puts "- Writing =\\#{entity}=, results in: \\#{entity}"
+end
+#+end_example
+
+#+begin_example :results output
+bundle exec ruby /tmp/print_entities.rb
+#+end_example
+
+- Writing =\Agrave=, results in: \Agrave
+- Writing =\agrave=, results in: \agrave
+- Writing =\Aacute=, results in: \Aacute
+- Writing =\aacute=, results in: \aacute
+- Writing =\Acirc=, results in: \Acirc
+- Writing =\acirc=, results in: \acirc
+- Writing =\Atilde=, results in: \Atilde
+- Writing =\atilde=, results in: \atilde
+- Writing =\Auml=, results in: \Auml
+- Writing =\auml=, results in: \auml
+- Writing =\Aring=, results in: \Aring
+- Writing =\AA=, results in: \AA
+- Writing =\aring=, results in: \aring
+- Writing =\AElig=, results in: \AElig
+- Writing =\aelig=, results in: \aelig
+- Writing =\Ccedil=, results in: \Ccedil
+- Writing =\ccedil=, results in: \ccedil
+- Writing =\Egrave=, results in: \Egrave
+- Writing =\egrave=, results in: \egrave
+- Writing =\Eacute=, results in: \Eacute
+- Writing =\eacute=, results in: \eacute
+- Writing =\Ecirc=, results in: \Ecirc
+- Writing =\ecirc=, results in: \ecirc
+- Writing =\Euml=, results in: \Euml
+- Writing =\euml=, results in: \euml
+- Writing =\Igrave=, results in: \Igrave
+- Writing =\igrave=, results in: \igrave
+- Writing =\Iacute=, results in: \Iacute
+- Writing =\iacute=, results in: \iacute
+- Writing =\Icirc=, results in: \Icirc
+- Writing =\icirc=, results in: \icirc
+- Writing =\Iuml=, results in: \Iuml
+- Writing =\iuml=, results in: \iuml
+- Writing =\Ntilde=, results in: \Ntilde
+- Writing =\ntilde=, results in: \ntilde
+- Writing =\Ograve=, results in: \Ograve
+- Writing =\ograve=, results in: \ograve
+- Writing =\Oacute=, results in: \Oacute
+- Writing =\oacute=, results in: \oacute
+- Writing =\Ocirc=, results in: \Ocirc
+- Writing =\ocirc=, results in: \ocirc
+- Writing =\Otilde=, results in: \Otilde
+- Writing =\otilde=, results in: \otilde
+- Writing =\Ouml=, results in: \Ouml
+- Writing =\ouml=, results in: \ouml
+- Writing =\Oslash=, results in: \Oslash
+- Writing =\oslash=, results in: \oslash
+- Writing =\OElig=, results in: \OElig
+- Writing =\oelig=, results in: \oelig
+- Writing =\Scaron=, results in: \Scaron
+- Writing =\scaron=, results in: \scaron
+- Writing =\szlig=, results in: \szlig
+- Writing =\Ugrave=, results in: \Ugrave
+- Writing =\ugrave=, results in: \ugrave
+- Writing =\Uacute=, results in: \Uacute
+- Writing =\uacute=, results in: \uacute
+- Writing =\Ucirc=, results in: \Ucirc
+- Writing =\ucirc=, results in: \ucirc
+- Writing =\Uuml=, results in: \Uuml
+- Writing =\uuml=, results in: \uuml
+- Writing =\Yacute=, results in: \Yacute
+- Writing =\yacute=, results in: \yacute
+- Writing =\Yuml=, results in: \Yuml
+- Writing =\yuml=, results in: \yuml
+- Writing =\fnof=, results in: \fnof
+- Writing =\real=, results in: \real
+- Writing =\image=, results in: \image
+- Writing =\weierp=, results in: \weierp
+- Writing =\Alpha=, results in: \Alpha
+- Writing =\alpha=, results in: \alpha
+- Writing =\Beta=, results in: \Beta
+- Writing =\beta=, results in: \beta
+- Writing =\Gamma=, results in: \Gamma
+- Writing =\gamma=, results in: \gamma
+- Writing =\Delta=, results in: \Delta
+- Writing =\delta=, results in: \delta
+- Writing =\Epsilon=, results in: \Epsilon
+- Writing =\epsilon=, results in: \epsilon
+- Writing =\varepsilon=, results in: \varepsilon
+- Writing =\Zeta=, results in: \Zeta
+- Writing =\zeta=, results in: \zeta
+- Writing =\Eta=, results in: \Eta
+- Writing =\eta=, results in: \eta
+- Writing =\Theta=, results in: \Theta
+- Writing =\theta=, results in: \theta
+- Writing =\thetasym=, results in: \thetasym
+- Writing =\vartheta=, results in: \vartheta
+- Writing =\Iota=, results in: \Iota
+- Writing =\iota=, results in: \iota
+- Writing =\Kappa=, results in: \Kappa
+- Writing =\kappa=, results in: \kappa
+- Writing =\Lambda=, results in: \Lambda
+- Writing =\lambda=, results in: \lambda
+- Writing =\Mu=, results in: \Mu
+- Writing =\mu=, results in: \mu
+- Writing =\nu=, results in: \nu
+- Writing =\Nu=, results in: \Nu
+- Writing =\Xi=, results in: \Xi
+- Writing =\xi=, results in: \xi
+- Writing =\Omicron=, results in: \Omicron
+- Writing =\omicron=, results in: \omicron
+- Writing =\Pi=, results in: \Pi
+- Writing =\pi=, results in: \pi
+- Writing =\Rho=, results in: \Rho
+- Writing =\rho=, results in: \rho
+- Writing =\Sigma=, results in: \Sigma
+- Writing =\sigma=, results in: \sigma
+- Writing =\sigmaf=, results in: \sigmaf
+- Writing =\varsigma=, results in: \varsigma
+- Writing =\Tau=, results in: \Tau
+- Writing =\Upsilon=, results in: \Upsilon
+- Writing =\upsih=, results in: \upsih
+- Writing =\upsilon=, results in: \upsilon
+- Writing =\Phi=, results in: \Phi
+- Writing =\phi=, results in: \phi
+- Writing =\Chi=, results in: \Chi
+- Writing =\chi=, results in: \chi
+- Writing =\acutex=, results in: \acutex
+- Writing =\Psi=, results in: \Psi
+- Writing =\psi=, results in: \psi
+- Writing =\tau=, results in: \tau
+- Writing =\Omega=, results in: \Omega
+- Writing =\omega=, results in: \omega
+- Writing =\piv=, results in: \piv
+- Writing =\partial=, results in: \partial
+- Writing =\alefsym=, results in: \alefsym
+- Writing =\ETH=, results in: \ETH
+- Writing =\eth=, results in: \eth
+- Writing =\THORN=, results in: \THORN
+- Writing =\thorn=, results in: \thorn
+- Writing =\dots=, results in: \dots
+- Writing =\hellip=, results in: \hellip
+- Writing =\middot=, results in: \middot
+- Writing =\iexcl=, results in: \iexcl
+- Writing =\iquest=, results in: \iquest
+- Writing =\shy=, results in: \shy
+- Writing =\ndash=, results in: \ndash
+- Writing =\mdash=, results in: \mdash
+- Writing =\quot=, results in: \quot
+- Writing =\acute=, results in: \acute
+- Writing =\ldquo=, results in: \ldquo
+- Writing =\rdquo=, results in: \rdquo
+- Writing =\bdquo=, results in: \bdquo
+- Writing =\lsquo=, results in: \lsquo
+- Writing =\rsquo=, results in: \rsquo
+- Writing =\sbquo=, results in: \sbquo
+- Writing =\laquo=, results in: \laquo
+- Writing =\raquo=, results in: \raquo
+- Writing =\lsaquo=, results in: \lsaquo
+- Writing =\rsaquo=, results in: \rsaquo
+- Writing =\circ=, results in: \circ
+- Writing =\vert=, results in: \vert
+- Writing =\brvbar=, results in: \brvbar
+- Writing =\sect=, results in: \sect
+- Writing =\amp=, results in: \amp
+- Writing =\lt=, results in: \lt
+- Writing =\gt=, results in: \gt
+- Writing =\tilde=, results in: \tilde
+- Writing =\slash=, results in: \slash
+- Writing =\plus=, results in: \plus
+- Writing =\under=, results in: \under
+- Writing =\equal=, results in: \equal
+- Writing =\asciicirc=, results in: \asciicirc
+- Writing =\dagger=, results in: \dagger
+- Writing =\Dagger=, results in: \Dagger
+- Writing =\nbsp=, results in: \nbsp
+- Writing =\ensp=, results in: \ensp
+- Writing =\emsp=, results in: \emsp
+- Writing =\thinsp=, results in: \thinsp
+- Writing =\curren=, results in: \curren
+- Writing =\cent=, results in: \cent
+- Writing =\pound=, results in: \pound
+- Writing =\yen=, results in: \yen
+- Writing =\euro=, results in: \euro
+- Writing =\EUR=, results in: \EUR
+- Writing =\EURdig=, results in: \EURdig
+- Writing =\EURhv=, results in: \EURhv
+- Writing =\EURcr=, results in: \EURcr
+- Writing =\EURtm=, results in: \EURtm
+- Writing =\copy=, results in: \copy
+- Writing =\reg=, results in: \reg
+- Writing =\trade=, results in: \trade
+- Writing =\minus=, results in: \minus
+- Writing =\pm=, results in: \pm
+- Writing =\plusmn=, results in: \plusmn
+- Writing =\times=, results in: \times
+- Writing =\frasl=, results in: \frasl
+- Writing =\div=, results in: \div
+- Writing =\frac12=, results in: \frac12
+- Writing =\frac14=, results in: \frac14
+- Writing =\frac34=, results in: \frac34
+- Writing =\permil=, results in: \permil
+- Writing =\sup1=, results in: \sup1
+- Writing =\sup2=, results in: \sup2
+- Writing =\sup3=, results in: \sup3
+- Writing =\radic=, results in: \radic
+- Writing =\sum=, results in: \sum
+- Writing =\prod=, results in: \prod
+- Writing =\micro=, results in: \micro
+- Writing =\macr=, results in: \macr
+- Writing =\deg=, results in: \deg
+- Writing =\prime=, results in: \prime
+- Writing =\Prime=, results in: \Prime
+- Writing =\infin=, results in: \infin
+- Writing =\infty=, results in: \infty
+- Writing =\prop=, results in: \prop
+- Writing =\proptp=, results in: \proptp
+- Writing =\not=, results in: \not
+- Writing =\neg=, results in: \neg
+- Writing =\land=, results in: \land
+- Writing =\wedge=, results in: \wedge
+- Writing =\lor=, results in: \lor
+- Writing =\vee=, results in: \vee
+- Writing =\cap=, results in: \cap
+- Writing =\cup=, results in: \cup
+- Writing =\int=, results in: \int
+- Writing =\there4=, results in: \there4
+- Writing =\sim=, results in: \sim
+- Writing =\cong=, results in: \cong
+- Writing =\simeq=, results in: \simeq
+- Writing =\asymp=, results in: \asymp
+- Writing =\approx=, results in: \approx
+- Writing =\ne=, results in: \ne
+- Writing =\neq=, results in: \neq
+- Writing =\equiv=, results in: \equiv
+- Writing =\le=, results in: \le
+- Writing =\ge=, results in: \ge
+- Writing =\sub=, results in: \sub
+- Writing =\subset=, results in: \subset
+- Writing =\sup=, results in: \sup
+- Writing =\supset=, results in: \supset
+- Writing =\nsub=, results in: \nsub
+- Writing =\sube=, results in: \sube
+- Writing =\nsup=, results in: \nsup
+- Writing =\supe=, results in: \supe
+- Writing =\forall=, results in: \forall
+- Writing =\exist=, results in: \exist
+- Writing =\exists=, results in: \exists
+- Writing =\empty=, results in: \empty
+- Writing =\emptyset=, results in: \emptyset
+- Writing =\isin=, results in: \isin
+- Writing =\in=, results in: \in
+- Writing =\notin=, results in: \notin
+- Writing =\ni=, results in: \ni
+- Writing =\nabla=, results in: \nabla
+- Writing =\ang=, results in: \ang
+- Writing =\angle=, results in: \angle
+- Writing =\perp=, results in: \perp
+- Writing =\sdot=, results in: \sdot
+- Writing =\cdot=, results in: \cdot
+- Writing =\lceil=, results in: \lceil
+- Writing =\rceil=, results in: \rceil
+- Writing =\lfloor=, results in: \lfloor
+- Writing =\rfloor=, results in: \rfloor
+- Writing =\lang=, results in: \lang
+- Writing =\rang=, results in: \rang
+- Writing =\larr=, results in: \larr
+- Writing =\leftarrow=, results in: \leftarrow
+- Writing =\gets=, results in: \gets
+- Writing =\lArr=, results in: \lArr
+- Writing =\Leftarrow=, results in: \Leftarrow
+- Writing =\uarr=, results in: \uarr
+- Writing =\uparrow=, results in: \uparrow
+- Writing =\uArr=, results in: \uArr
+- Writing =\Uparrow=, results in: \Uparrow
+- Writing =\rarr=, results in: \rarr
+- Writing =\to=, results in: \to
+- Writing =\rightarrow=, results in: \rightarrow
+- Writing =\rArr=, results in: \rArr
+- Writing =\Rightarrow=, results in: \Rightarrow
+- Writing =\darr=, results in: \darr
+- Writing =\downarrow=, results in: \downarrow
+- Writing =\dArr=, results in: \dArr
+- Writing =\Downarrow=, results in: \Downarrow
+- Writing =\harr=, results in: \harr
+- Writing =\leftrightarrow=, results in: \leftrightarrow
+- Writing =\hArr=, results in: \hArr
+- Writing =\Leftrightarrow=, results in: \Leftrightarrow
+- Writing =\crarr=, results in: \crarr
+- Writing =\hookleftarrow=, results in: \hookleftarrow
+- Writing =\arccos=, results in: \arccos
+- Writing =\arcsin=, results in: \arcsin
+- Writing =\arctan=, results in: \arctan
+- Writing =\arg=, results in: \arg
+- Writing =\cos=, results in: \cos
+- Writing =\cosh=, results in: \cosh
+- Writing =\cot=, results in: \cot
+- Writing =\coth=, results in: \coth
+- Writing =\csc=, results in: \csc
+- Writing =\det=, results in: \det
+- Writing =\dim=, results in: \dim
+- Writing =\exp=, results in: \exp
+- Writing =\gcd=, results in: \gcd
+- Writing =\hom=, results in: \hom
+- Writing =\inf=, results in: \inf
+- Writing =\ker=, results in: \ker
+- Writing =\lg=, results in: \lg
+- Writing =\lim=, results in: \lim
+- Writing =\liminf=, results in: \liminf
+- Writing =\limsup=, results in: \limsup
+- Writing =\ln=, results in: \ln
+- Writing =\log=, results in: \log
+- Writing =\max=, results in: \max
+- Writing =\min=, results in: \min
+- Writing =\Pr=, results in: \Pr
+- Writing =\sec=, results in: \sec
+- Writing =\sin=, results in: \sin
+- Writing =\sinh=, results in: \sinh
+- Writing =\tan=, results in: \tan
+- Writing =\tanh=, results in: \tanh
+- Writing =\bull=, results in: \bull
+- Writing =\bullet=, results in: \bullet
+- Writing =\star=, results in: \star
+- Writing =\lowast=, results in: \lowast
+- Writing =\ast=, results in: \ast
+- Writing =\odot=, results in: \odot
+- Writing =\oplus=, results in: \oplus
+- Writing =\otimes=, results in: \otimes
+- Writing =\checkmark=, results in: \checkmark
+- Writing =\para=, results in: \para
+- Writing =\ordf=, results in: \ordf
+- Writing =\ordm=, results in: \ordm
+- Writing =\cedil=, results in: \cedil
+- Writing =\oline=, results in: \oline
+- Writing =\uml=, results in: \uml
+- Writing =\zwnj=, results in: \zwnj
+- Writing =\zwj=, results in: \zwj
+- Writing =\lrm=, results in: \lrm
+- Writing =\rlm=, results in: \rlm
+- Writing =\smile=, results in: \smile
+- Writing =\smiley=, results in: \smiley
+- Writing =\blacksmile=, results in: \blacksmile
+- Writing =\sad=, results in: \sad
+- Writing =\clubs=, results in: \clubs
+- Writing =\clubsuit=, results in: \clubsuit
+- Writing =\spades=, results in: \spades
+- Writing =\spadesuit=, results in: \spadesuit
+- Writing =\hearts=, results in: \hearts
+- Writing =\heartsuit=, results in: \heartsuit
+- Writing =\diams=, results in: \diams
+- Writing =\diamondsuit=, results in: \diamondsuit
+- Writing =\Diamond=, results in: \Diamond
+- Writing =\loz=, results in: \loz
+
+* Some special cases
+
+In case nothing matches, the string is returned as is.
+
+\for \example \this \wont \break
