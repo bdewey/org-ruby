@@ -1,0 +1,84 @@
+#+TITLE: Example of including a file
+#+EXPORT_EXCLUDE_TAGS: noexport
+
+* DONE Basic tests
+
+#+INCLUDE: "./spec/html_examples/advanced-lists.org"
+
+#+INCLUDE: "./spec/html_examples/blockcomment.org"
+
+* DONE Within a commented block
+
+#+BEGIN_COMMENT
+This will be ignored but...
+#+INCLUDE: "./spec/html_examples/escape-pre.org"
+the included file above will be rendered.
+#+END_COMMENT
+
+* DONE Within a center block
+
+#+BEGIN_CENTER
+The following included file will be centered:
+
+#+INCLUDE: "./spec/html_examples/inline-images.org"
+
+#+END_CENTER
+
+* DONE Within a blockquote
+
+This is similar to the center block:
+
+#+begin_quote
+Before
+#+INCLUDE: "./spec/html_examples/inline-images.org"
+After
+#+end_quote
+
+* DONE Within an example block, it should not be possible to include a file.
+
+: #+INCLUDE: "./spec/html_examples/only-list.org"
+
+* TODO Within a source code block				   :noexport:
+
+It should not be possible to include a file within a source code block.
+(Some versions of Emacs Org mode also have this behavior though...)
+
+#+begin_src ruby :results output
+included_file = <<HERE  
+Hello
+#+INCLUDE: "./spec/html_examples/only-list.org"
+World
+HERE
+
+puts included_file
+#+end_src
+
+* DONE Within a list
+
+- A list that has an included file directive
+  + Only go to the first level
+    * when included it always goes to the first level and absorbs next list items
+#+INCLUDE: "./spec/html_examples/only-list.org"
+    * 3rd level
+  + 3rd level, though it should be a different list
+
+* DONE Within a table, cannot be included
+
+  | One                                             | Two   | Three |
+  |-------------------------------------------------+-------+-------|
+  | #+INCLUDE: "./spec/html_examples/only-list.org" | Five  | Six   |
+  | Seven                                           | Eight | Nine  |
+
+
+* COMMENT When the headline is commented, it should not display
+
+#+INCLUDE: "./spec/html_examples/only-list.org"
+
+* DONE When including a file as an example
+
+#+INCLUDE: "./spec/html_examples/only-list.org" example ""
+
+* DONE When including a file as an quote
+
+#+INCLUDE: "./spec/html_examples/only-list.org" quote ""
+

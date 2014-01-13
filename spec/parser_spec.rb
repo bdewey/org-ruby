@@ -236,5 +236,25 @@ describe Orgmode::Parser do
       end
     end
   end
+
+  describe "Export to Markdown test cases" do
+    data_directory = File.join(File.dirname(__FILE__), "markdown_examples")
+    org_files = File.expand_path(File.join(data_directory, "*.org" ))
+    files = Dir.glob(org_files)
+    files.each do |file|
+      basename = File.basename(file, ".org")
+      markdown_name = File.join(data_directory, basename + ".md")
+      markdown_name = File.expand_path(markdown_name)
+
+      it "should convert #{basename}.org to Markdown" do
+        expected = IO.read(markdown_name)
+        expected.should be_kind_of(String)
+        parser = Orgmode::Parser.new(IO.read(file))
+        actual = parser.to_markdown
+        actual.should be_kind_of(String)
+        actual.should == expected
+      end
+    end
+  end
 end
 

@@ -1,0 +1,15 @@
+BLOCKCOMMENT
+
+Testing that the next part is ignored
+
+#+BEGIN_COMMENT
+
+/Foo/
+
+#+BEGIN_SRC c++
+int main() { }
+#+END_SRC
+
+#+END_COMMENT
+
+And now back to normal!

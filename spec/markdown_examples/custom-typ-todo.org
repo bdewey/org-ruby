@@ -1,0 +1,24 @@
+#+TITLE: custom-todo.org
+#+DESCRIPTION: Makes sure I can handle custom todo entries
+#+TYP_TODO:   TODO(t) INPROGRESS(i) WAITING(w@) | DONE(d) CANCELED(c@)
+#+OPTIONS:    todo:t
+
+I copied this todo sequence from Worg. It shows a lot of power of the
+built-in todo functionality. Now, let's make sure all of these are
+recognized (and therefore NOT exported.)
+
+* TODO Sample
+
+  - State "CANCELED"   from "INPROGRESS" [2009-12-29 Tue 22:26] \\
+    I gave up.
+  - State "WAITING"    from ""           [2009-12-29 Tue 22:25] \\
+    huh?
+
+* INPROGRESS this one's in progress
+* WAITING who am I waiting on?
+* DONE Finished this one!
+* CANCELED I gave up here.
+* DONT be fooled by just a random word in all caps.
+* todo <== this word doesn't match because the case doesn't match.
+* TODOX
+  don't be fooled by the initial substring above!

@@ -1,0 +1,35 @@
+* Raw html can be embedded
+
+The following will render the tag as is:
+
+#+html: <code> Hello </code>
+
+And this will render some Javascript:
+
+#+html: <script> alert('hello') </script>
+
+** HTML blocks
+
+They behave as follows:
+
+#+begin_html
+<p style="color:#cafe12; background-color:#999999">
+<pre>
+
+Hello.
+
+</pre>
+</p>
+#+end_html
+
+** Cases on which html should be escaped
+
+This should be escaped: ~<html><script type="text/javascript">(function(){})</script></html>~
+
+# Matches the first =
+This should be escaped: =<html><script type="text/javascript">(function(){})</script></html>=
+
+This should be escaped: ~@<script type="text/javascript">(function(){})@</script>~
+
+# Matches the first =
+This should be escaped: =@<script type="text/javascript">(function(){})@</script>=
