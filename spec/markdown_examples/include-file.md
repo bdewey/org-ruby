@@ -23,21 +23,6 @@ This is similar to the center block:
 
 #+INCLUDE: "./spec/html_examples/only-list.org"
 
-# Within a source code block
-
-It should not be possible to include a file within a source code block.
-(Some versions of Emacs Org mode also have this behavior though...)
-
-```ruby
-included_file = <<HERE  
-Hello
-#+INCLUDE: "./spec/html_examples/only-list.org"
-World
-HERE
-
-puts included_file
-```
-
 # Within a list
 
  * A list that has an included file directive
@@ -51,9 +36,6 @@ puts included_file
 | One                                             | Two   | Three |
 | #+INCLUDE: "./spec/html_examples/only-list.org" | Five  | Six   |
 | Seven                                           | Eight | Nine  |
-
-
-# COMMENT When the headline is commented, it should not display
 
 
 # When including a file as an example

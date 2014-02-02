@@ -257,12 +257,21 @@ module Orgmode
 
     # Exports the Org mode content into Markdown format
     def to_markdown
+      mark_trees_for_export
       output = ""
       output_buffer = MarkdownOutputBuffer.new(output)
 
       translate(@header_lines, output_buffer)
       @headlines.each do |headline|
-        translate(headline.body_lines, output_buffer)
+        next if headline.export_state == :exclude
+        case headline.export_state
+        when :exclude
+          # NOTHING
+        when :headline_only
+          translate(headline.body_lines[0, 1], output_buffer)
+        when :all
+          translate(headline.body_lines, output_buffer)
+        end
       end
       output
     end
