@@ -25,6 +25,10 @@ From Ruby code:
      Orgmode::Parser.new("* Hello world!).to_textile
      # => "h1. Hello world!\n" 
 
+     # Renders Markdown
+     Orgmode::Parser.new("* Hello world!).to_markdown
+     # => "# Hello world!\n" 
+
 It can also be used from the command line:
 
      org-ruby sample.org --translate html
@@ -34,6 +38,10 @@ It can also be used from the command line:
      org-ruby --translate textile sample.org
 
 ...will output a textile version of sample.org.
+
+     org-ruby --translate markdown sample.org
+
+...will output a markdown version of sample.org.
 
 == Features
 
