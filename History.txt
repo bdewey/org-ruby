@@ -1,3 +1,9 @@
+== 0.8.3 / 2014-02-02
+
+* Bugfix: Two backslashes \\ at the end of the line make a line break without breaking paragraph.
+* Bugfix: Fix inline formatting not working for definition lists
+* Add basic markdown exporter
+
 == 0.8.2 / 2013-11-09
 
 * Manage the #+INCLUDE tag in org files (contribution by pierre-lecocq)
