@@ -70,3 +70,14 @@ but just regular lists.
    Paragraph :: with :: no value ::
  + ::
    Paragraph :: with :: no value
+
+** Definition List with markup inline
+
+- Description :: *bold*
+- Description :: /italic/
+- Description :: =code=
+- Description :: ~verbatim~
+- Description :: _underline_
+- Description :: +strikethrough+
+
+- More than 2 cases :: *bold*, /italic/, =code=, ~verbatim~, _underline_, +strikethrough+. 

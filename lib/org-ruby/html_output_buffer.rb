@@ -172,6 +172,8 @@ module Orgmode
           push_mode(:definition_descr, indent)
           @output << inline_formatting(d[2].strip + d[3])
           @new_paragraph = nil
+          # FIXME: Need to restore tags once again (this should be done in escape_buffer!)
+          @output.gsub!(/@(<[^<>\n]*>)/, "\\1")
 
         when :horizontal_rule
           add_paragraph unless @new_paragraph == :start
