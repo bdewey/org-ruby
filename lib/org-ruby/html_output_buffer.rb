@@ -67,7 +67,7 @@ module Orgmode
                       when (mode == :src and @block_lang.empty?)
                         " class=\"src\""
                       when (mode == :src and not @block_lang.empty?)
-                        " class=\"src src-#{@block_lang}\""
+                        " class=\"src\" lang=\"#{@block_lang}\""
                       when (mode == :example || mode == :inline_example)
                         " class=\"example\""
                       when mode == :center
