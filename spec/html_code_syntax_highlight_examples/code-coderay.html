@@ -1,17 +1,20 @@
 <h1>Simple Code Syntax highlighting test</h1>
-<div class="highlight"><pre><span class="k">class</span> <span class="nc">Coderay</span>
-  <span class="k">class</span> <span class="o">&lt;&lt;</span> <span class="nb">self</span>
-    <span class="k">def</span> <span class="nf">colorize</span>
-      <span class="c1"># Do colorizing stuff here</span>
-      <span class="n">heredoc</span> <span class="o">=</span> <span class="o">&lt;&lt;</span><span class="no">EOF</span>
-<span class="sh">    Some text yay!!!</span>
-<span class="no">EOF</span>
-    <span class="k">end</span>
-  <span class="k">end</span>
-<span class="k">end</span>
-</pre></div>
+<pre class="src" lang="ruby">
+<span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Coderay</span>
+  <span style="color:#080;font-weight:bold">class</span> &lt;&lt; <span style="color:#B06;font-weight:bold">self</span>
+    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">colorize</span>
+      <span style="color:#777"># Do colorizing stuff here</span>
+      heredoc = <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&lt;&lt;EOF</span></span><span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#D20">
+    Some text yay!!!</span><span style="color:#710">
+EOF</span></span>
+    <span style="color:#080;font-weight:bold">end</span>
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span>
+</pre>
 <h1>When including a file as an src code file</h1>
-<div class="highlight"><pre>- This file has only a list
+<pre class="src" lang="text">
+- This file has only a list
 - Note it will end with nothing other than a list item.
 - the world wants to know: Will org-ruby write the closing ul tag?
-</pre></div>
+
+</pre>
