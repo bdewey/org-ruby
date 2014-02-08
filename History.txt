@@ -1,3 +1,8 @@
+== 0.9.0 / 2014-02-08
+
+* Add explicit enable or disable of include file feature
+* Add lang attribute to src code block to support syntax highlight in Github
+
 == 0.8.3 / 2014-02-02
 
 * Bugfix: Two backslashes \\ at the end of the line make a line break without breaking paragraph.
