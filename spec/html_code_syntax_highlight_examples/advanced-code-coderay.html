@@ -16,7 +16,7 @@
 <p>Two ASCII blobs.</p>
 <h1><span class="heading-number heading-number-1">2</span> BEGIN_SRC</h1>
 <p>And this:</p>
-<pre class="src src-ruby">
+<pre class="src" lang="ruby">
 <span style="color:#777"># Finds all emphasis matches in a string.</span>
 <span style="color:#777"># Supply a block that will get the marker and body as parameters.</span>
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">match_all</span>(str)
@@ -26,7 +26,7 @@
 <span style="color:#080;font-weight:bold">end</span>
 </pre>
 <p>Now let&#8217;s test case-insensitive code blocks.</p>
-<pre class="src src-ruby">
+<pre class="src" lang="ruby">
 <span style="color:#777"># Finds all emphasis matches in a string.</span>
 <span style="color:#777"># Supply a block that will get the marker and body as parameters.</span>
 <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">match_all</span>(str)
@@ -35,7 +35,7 @@
   <span style="color:#080;font-weight:bold">end</span>
 <span style="color:#080;font-weight:bold">end</span>
 </pre>
-<pre class="src src-clojure">
+<pre class="src" lang="clojure">
 (<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">fib-seq</span>
   (<span style="color:#080;font-weight:bold">concat</span>
    [<span style="color:#00D">0</span> <span style="color:#00D">1</span>]
@@ -55,13 +55,13 @@ echo 'Defaults env_keeps=&quot;http_proxy https_proxy ftp_proxy&quot;' | sudo te
     :symbols. They sure are the
     best things in the world!</p>
 </blockquote>
-<pre class="src src-ruby">
+<pre class="src" lang="ruby">
 {
 <span style="color:#A60">:one</span> =&gt; <span style="color:#00D">1</span>,
 <span style="color:#A60">:two</span> =&gt; <span style="color:#00D">2</span>
 }
 </pre>
-<pre class="src src-clojure">
+<pre class="src" lang="clojure">
 (defproject helloworld <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">0.1</span><span style="color:#710">&quot;</span></span>
 <span style="color:#A60">:dependencies</span> [[org.clojure/clojure
                  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">1.1.0-master-SNAPSHOT</span><span style="color:#710">&quot;</span></span>]
@@ -75,8 +75,8 @@ echo 'Defaults env_keeps=&quot;http_proxy https_proxy ftp_proxy&quot;' | sudo te
 Nothing to see here
 </pre>
 <h2><span class="heading-number heading-number-2">4.2</span> CSS example</h2>
-<pre class="src src-css">
-<span style="color:#339;font-weight:bold">*</span> {
+<pre class="src" lang="css">
+<span style="color:#070;font-weight:bold">*</span> {
  <span style="color:#777">/* apply a natural box layout model to all elements */</span>
  <span style="color:#606">box-sizing</span>: <span style="color:#088">border-box</span>; 
  <span style="color:#606">-moz-box-sizing</span>: <span style="color:#088">border-box</span>; 
@@ -84,18 +84,18 @@ Nothing to see here
 }
 </pre>
 <h2><span class="heading-number heading-number-2">4.3</span> HTML example</h2>
-<pre class="src src-html">
-<span style="color:#070">&lt;html&gt;</span>
-  <span style="color:#070">&lt;head&gt;</span>
-    <span style="color:#070">&lt;title&gt;</span>Hello<span style="color:#070">&lt;/title&gt;</span>
-  <span style="color:#070">&lt;/head&gt;</span>
-  <span style="color:#070">&lt;body&gt;</span>
-    <span style="color:#070">&lt;h1&gt;</span>Hello<span style="color:#070">&lt;/h1&gt;</span>
-  <span style="color:#070">&lt;/body&gt;</span>
-<span style="color:#070">&lt;/html&gt;</span>
+<pre class="src" lang="html">
+<span style="color:#070;font-weight:bold">&lt;html&gt;</span>
+  <span style="color:#070;font-weight:bold">&lt;head&gt;</span>
+    <span style="color:#070;font-weight:bold">&lt;title&gt;</span>Hello<span style="color:#070;font-weight:bold">&lt;/title&gt;</span>
+  <span style="color:#070;font-weight:bold">&lt;/head&gt;</span>
+  <span style="color:#070;font-weight:bold">&lt;body&gt;</span>
+    <span style="color:#070;font-weight:bold">&lt;h1&gt;</span>Hello<span style="color:#070;font-weight:bold">&lt;/h1&gt;</span>
+  <span style="color:#070;font-weight:bold">&lt;/body&gt;</span>
+<span style="color:#070;font-weight:bold">&lt;/html&gt;</span>
 </pre>
 <h2><span class="heading-number heading-number-2">4.4</span> Ruby example</h2>
-<pre class="src src-ruby">
+<pre class="src" lang="ruby">
 <span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Post</span> &lt;&lt; <span style="color:#036;font-weight:bold">ActiveRecord</span>::<span style="color:#036;font-weight:bold">Base</span>
   <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">print_title</span>
     puts <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#069">self</span>.title<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>
@@ -103,15 +103,15 @@ Nothing to see here
 <span style="color:#080;font-weight:bold">end</span>
 </pre>
 <h2><span class="heading-number heading-number-2">4.5</span> Python example</h2>
-<pre class="src src-python">
+<pre class="src" lang="python">
 <span style="color:#080;font-weight:bold">import</span> <span style="color:#B44;font-weight:bold">mapnik</span>
 
 m = mapnik.Map(<span style="color:#00D">600</span>, <span style="color:#00D">800</span>)
 m.background = Map.Color(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">steelblue</span><span style="color:#710">'</span></span>)
 </pre>
 <h2><span class="heading-number heading-number-2">4.6</span> Javascript example</h2>
-<pre class="src src-javascript">
-exports = <span style="color:#963">this</span>;
+<pre class="src" lang="javascript">
+exports = <span style="color:#950">this</span>;
 
 (<span style="color:#080;font-weight:bold">function</span>(<span style="color:#369;font-weight:bold">$</span>){
 
@@ -124,24 +124,24 @@ Posts.<span style="color:#06B;font-weight:bold">index</span> = <span style="colo
 })(jQuery);
 </pre>
 <h2><span class="heading-number heading-number-2">4.7</span> JSON example</h2>
-<pre class="src src-json">
+<pre class="src" lang="json">
 { <span style="color:#F00;background-color:#FAA">n</span><span style="color:#F00;background-color:#FAA">a</span><span style="color:#F00;background-color:#FAA">m</span><span style="color:#F00;background-color:#FAA">e</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Waldemar</span><span style="color:#710">&quot;</span></span>
 , <span style="color:#F00;background-color:#FAA">s</span><span style="color:#F00;background-color:#FAA">u</span><span style="color:#F00;background-color:#FAA">r</span><span style="color:#F00;background-color:#FAA">n</span><span style="color:#F00;background-color:#FAA">a</span><span style="color:#F00;background-color:#FAA">m</span><span style="color:#F00;background-color:#FAA">e</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Quevedo</span><span style="color:#710">&quot;</span></span>
 }
 </pre>
 <h2><span class="heading-number heading-number-2">4.8</span> PHP example</h2>
-<pre class="src src-php">
+<pre class="src" lang="php">
 <span style="color:#369;font-weight:bold">echo</span> <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Hello</span><span style="color:#710">&quot;</span></span>;
 <span style="color:#369;font-weight:bold">phpinfo</span>();
 <span style="color:#369;font-weight:bold">var_dump</span>(some_var);
 </pre>
 <h2><span class="heading-number heading-number-2">4.9</span> Elisp example</h2>
-<pre class="src src-emacs-lisp">
+<pre class="src" lang="emacs-lisp">
 (defun hello()
   (interactive)
   (message &quot;hello&quot;))
 </pre>
 <h2><span class="heading-number heading-number-2">4.10</span> Not supported language example</h2>
-<pre class="src src-notsupported">
+<pre class="src" lang="notsupported">
 !+!+++!++!++!++!+
 </pre>

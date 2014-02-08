@@ -155,14 +155,12 @@ describe Orgmode::Parser do
       textile_name = File.expand_path(textile_name)
 
       it "should convert #{basename}.org to HTML" do
-        ENV['ORG_RUBY_ENABLE_INCLUDE_FILES'] = 'true'
         expected = IO.read(textile_name)
         expected.should be_kind_of(String)
-        parser = Orgmode::Parser.new(IO.read(file))
+        parser = Orgmode::Parser.new(IO.read(file), { :allow_include_files => true })
         actual = parser.to_html
         actual.should be_kind_of(String)
         actual.should == expected
-        ENV['ORG_RUBY_ENABLE_INCLUDE_FILES'] = ''
       end
 
       it "should render #{basename}.org to HTML using Tilt templates" do
@@ -174,11 +172,11 @@ describe Orgmode::Parser do
       end
     end
 
-    it "should not render #+INCLUDE directive by default" do
+    it "should not render #+INCLUDE directive when explicitly indicated" do
       data_directory = File.join(File.dirname(__FILE__), "html_examples")
       expected = File.read(File.join(data_directory, "include-file-disabled.html"))
       org_file = File.join(data_directory, "include-file.org")
-      parser = Orgmode::Parser.new(IO.read(org_file))
+      parser = Orgmode::Parser.new(IO.read(org_file), :allow_include_files => false)
       actual = parser.to_html
       actual.should == expected
     end
@@ -213,23 +211,21 @@ describe Orgmode::Parser do
 
     files.each do |file|
       basename = File.basename(file, ".org")
-      textile_name = File.join(code_syntax_examples_directory, basename + ".html")
-      textile_name = File.expand_path(textile_name)
+      org_filename = File.join(code_syntax_examples_directory, basename + ".html")
+      org_filename = File.expand_path(org_filename)
 
       it "should convert #{basename}.org to HTML" do
-        ENV['ORG_RUBY_ENABLE_INCLUDE_FILES'] = 'true'
-        expected = IO.read(textile_name)
+        expected = IO.read(org_filename)
         expected.should be_kind_of(String)
-        parser = Orgmode::Parser.new(IO.read(file))
+        parser = Orgmode::Parser.new(IO.read(file), :allow_include_files => true)
         actual = parser.to_html
         actual.should be_kind_of(String)
         actual.should == expected
-        ENV['ORG_RUBY_ENABLE_INCLUDE_FILES'] = ''
       end
 
       it "should render #{basename}.org to HTML using Tilt templates" do
         ENV['ORG_RUBY_ENABLE_INCLUDE_FILES'] = 'true'
-        expected = IO.read(textile_name)
+        expected = IO.read(org_filename)
         template = Tilt.new(file).render
         template.should == expected
         ENV['ORG_RUBY_ENABLE_INCLUDE_FILES'] = ''
