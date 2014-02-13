@@ -1,4 +1,3 @@
-require 'cgi'
 begin
   require 'pygments'
 rescue LoadError
@@ -140,7 +139,7 @@ module Orgmode
           @new_paragraph = true
         else
           # *NOTE* Don't use escape_buffer! through its sensitivity to @<text> forms
-          @buffer = CGI::escapeHTML @buffer
+          @buffer = escapeHTML @buffer
         end
 
         # Whitespace is significant in :code mode. Always output the
@@ -275,7 +274,7 @@ module Orgmode
     def inline_formatting(str)
       @re_help.rewrite_emphasis str do |marker, s|
         if marker == "=" or marker == "~"
-          s = CGI::escapeHTML s
+          s = escapeHTML s
           "<#{Tags[marker][:open]}>#{s}</#{Tags[marker][:close]}>"
         else
           "@<#{Tags[marker][:open]}>#{s}@</#{Tags[marker][:close]}>"
@@ -370,6 +369,30 @@ module Orgmode
       @buffer.gsub! /^\s*(,)(\s*)([*]|#\+)/ do |match|
         "#{$2}#{$3}"
       end
+    end
+
+    # The CGI::escapeHTML function backported from the Ruby standard library
+    # as of commit fd2fc885b43283aa3d76820b2dfa9de19a77012f
+    #
+    # Implementation of the cgi module can change among Ruby versions
+    # so stabilizing on a single one here to avoid surprises.
+    #
+    # https://github.com/ruby/ruby/blob/trunk/lib/cgi/util.rb
+    #
+    # The set of special characters and their escaped values
+    TABLE_FOR_ESCAPE_HTML__ = {
+      "'" => '&#39;',
+      '&' => '&amp;',
+      '"' => '&quot;',
+      '<' => '&lt;',
+      '>' => '&gt;',
+    }
+    # Escape special characters in HTML, namely &\"<>
+    #   escapeHTML('Usage: foo "bar" <baz>')
+    #      # => "Usage: foo &quot;bar&quot; &lt;baz&gt;"
+    private
+    def escapeHTML(string)
+      string.gsub(/['&\"<>]/, TABLE_FOR_ESCAPE_HTML__)
     end
   end                           # class HtmlOutputBuffer
 end                             # module Orgmode

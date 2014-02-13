@@ -5,15 +5,15 @@ df \
 </pre>
 <h2>strip the header row</h2>
 <pre class="example">
-|sed '1d' \
+|sed &#39;1d&#39; \
 </pre>
 <h2>sort by the percent full</h2>
 <pre class="example">
-|awk '{print $5 &quot; &quot; $6}'|sort -n |tail -1 \
+|awk &#39;{print $5 &quot; &quot; $6}&#39;|sort -n |tail -1 \
 </pre>
 <h2>extract the mount point</h2>
 <pre class="example">
-|awk '{print $2}'
+|awk &#39;{print $2}&#39;
 </pre>
 <h1>Properties drawer example</h1>
 <p>These properties are metadata so they should not be visible.</p>
