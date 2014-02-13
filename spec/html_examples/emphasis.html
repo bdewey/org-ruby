@@ -34,7 +34,7 @@ emphasis_tests = [
 
 all = emphasis_tests.map do |a|
   emphasis_tests.map do |b|
-    [b, ' ', a, ' ', b, &quot;\n\n&quot;].join('')
+    [b, &#39; &#39;, a, &#39; &#39;, b, &quot;\n\n&quot;].join(&#39;&#39;)
   end
 end
 
@@ -46,8 +46,8 @@ emphasis_tests = [&quot;*&quot;,&quot;/&quot;,&quot;=&quot;,&quot;~&quot;,&quot;
 
 all = emphasis_tests.map do |a|
   emphasis_tests.map do |b|
-    [[a, 'Answer: ', b, '42', b, ' ',a, &quot;\n\n&quot;].join(''),
-     [a, 'Answer: ', b, '42', b, '',a, &quot;\n\n&quot;].join('')].flatten
+    [[a, &#39;Answer: &#39;, b, &#39;42&#39;, b, &#39; &#39;,a, &quot;\n\n&quot;].join(&#39;&#39;),
+     [a, &#39;Answer: &#39;, b, &#39;42&#39;, b, &#39;&#39;,a, &quot;\n\n&quot;].join(&#39;&#39;)].flatten
   end
 end
 
@@ -131,7 +131,7 @@ emphasis_tests = [&quot;*&quot;,&quot;/&quot;,&quot;=&quot;,&quot;~&quot;,&quot;
 
 all = emphasis_tests.map do |a|
   emphasis_tests.map do |b|
-    [a, 'Starting the line here ', &quot;\n&quot;, b, 'and continuing here to close', b, a, &quot;\n\n&quot;].join('')
+    [a, &#39;Starting the line here &#39;, &quot;\n&quot;, b, &#39;and continuing here to close&#39;, b, a, &quot;\n\n&quot;].join(&#39;&#39;)
   end
 end
 
@@ -215,7 +215,7 @@ emphasis_tests = [&quot;*&quot;,&quot;/&quot;,&quot;=&quot;,&quot;~&quot;,&quot;
 
 all = emphasis_tests.map do |a|
   emphasis_tests.map do |b|
-    [a, 'Starting the line here ', &quot;\n&quot;, b, 'and continuing here', &quot;\n&quot;, 'to close', b, a, &quot;\n\n&quot;].join('')
+    [a, &#39;Starting the line here &#39;, &quot;\n&quot;, b, &#39;and continuing here&#39;, &quot;\n&quot;, &#39;to close&#39;, b, a, &quot;\n\n&quot;].join(&#39;&#39;)
   end
 end
 
