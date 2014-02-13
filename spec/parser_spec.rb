@@ -245,7 +245,7 @@ describe Orgmode::Parser do
       it "should convert #{basename}.org to Markdown" do
         expected = IO.read(markdown_name)
         expected.should be_kind_of(String)
-        parser = Orgmode::Parser.new(IO.read(file))
+        parser = Orgmode::Parser.new(IO.read(file), :allow_include_files => false)
         actual = parser.to_markdown
         actual.should be_kind_of(String)
         actual.should == expected
