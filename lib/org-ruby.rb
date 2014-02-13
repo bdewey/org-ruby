@@ -24,7 +24,7 @@ require 'org-ruby/tilt'
 module OrgRuby
 
   # :stopdoc:
-  VERSION = '0.9.0'
+  VERSION = '0.9.1'
   LIBPATH = ::File.expand_path(::File.dirname(__FILE__)) + ::File::SEPARATOR
   PATH = ::File.dirname(LIBPATH) + ::File::SEPARATOR
   # :startdoc:

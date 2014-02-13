@@ -1,3 +1,7 @@
+== 0.9.1 / 2013-02-13
+
+* Backport CGI::escapeHTML function from Ruby to have same output among different Ruby versions
+
 == 0.9.0 / 2014-02-08
 
 * Add explicit enable or disable of include file feature
