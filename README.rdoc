@@ -3,6 +3,11 @@
 
 {<img src="https://secure.travis-ci.org/wallyqs/org-ruby.png?branch=master" alt="Build Status" />}[http://travis-ci.org/wallyqs/org-ruby]
 
+Note: The project has moved. Further development is done at {wallyqs/org-ruby}[https://github.com/wallyqs/org-ruby]
+Thanks Brian!
+
+== Description
+
 An {org-mode}[http://orgmode.org] parser written in Ruby. The most significant thing this library does today is convert org-mode files to HTML or Textile.
 Currently, you cannot do much to customize the conversion. The supplied textile conversion is optimized for extracting 
 “content” from the orgfile as opposed to “metadata.”
