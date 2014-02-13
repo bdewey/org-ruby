@@ -1,6 +1,7 @@
 $:.unshift File.dirname(__FILE__) # For use/testing when no gem is installed
 
 # internal requires
+require 'org-ruby/version'
 require 'org-ruby/parser'
 require 'org-ruby/regexp_helper'
 require 'org-ruby/line'
@@ -24,7 +25,6 @@ require 'org-ruby/tilt'
 module OrgRuby
 
   # :stopdoc:
-  VERSION = '0.9.1'
   LIBPATH = ::File.expand_path(::File.dirname(__FILE__)) + ::File::SEPARATOR
   PATH = ::File.dirname(LIBPATH) + ::File::SEPARATOR
   # :startdoc:
