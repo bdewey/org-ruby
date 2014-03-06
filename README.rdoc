@@ -9,7 +9,7 @@ Thanks Brian!
 == Description
 
 An {org-mode}[http://orgmode.org] parser written in Ruby. The most significant thing this library does today is convert org-mode files to HTML or Textile.
-Currently, you cannot do much to customize the conversion. The supplied textile conversion is optimized for extracting 
+Currently, you cannot do much to customize the conversion. The supplied textile conversion is optimized for extracting
 “content” from the orgfile as opposed to “metadata.”
 
 == Installation
@@ -23,16 +23,16 @@ From Ruby code:
      require 'org-ruby'
 
      # Renders HTML
-     Orgmode::Parser.new("* Hello world!).to_html
+     Orgmode::Parser.new("* Hello world!").to_html
      # => "<h1>Hello world!</h1>\n"
 
      # Renders Textile
-     Orgmode::Parser.new("* Hello world!).to_textile
-     # => "h1. Hello world!\n" 
+     Orgmode::Parser.new("* Hello world!").to_textile
+     # => "h1. Hello world!\n"
 
      # Renders Markdown
-     Orgmode::Parser.new("* Hello world!).to_markdown
-     # => "# Hello world!\n" 
+     Orgmode::Parser.new("* Hello world!").to_markdown
+     # => "# Hello world!\n"
 
 It can also be used from the command line:
 
@@ -72,7 +72,7 @@ It can also be used from the command line:
  distribute, sublicense, and/or sell copies of the Software, and to
  permit persons to whom the Software is furnished to do so, subject to
  the following conditions:
- 
+
  The above copyright notice and this permission notice shall be
  included in all copies or substantial portions of the Software.
 
