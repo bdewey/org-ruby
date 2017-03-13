@@ -16,7 +16,7 @@ describe Orgmode::Parser do
 
   it "should find all headlines" do
     parser = Orgmode::Parser.load(RememberFile)
-    parser.should have(12).headlines
+    expect(parser.headlines.length).to be == 12
   end
 
   it "can find a headline by index" do
@@ -40,18 +40,18 @@ describe Orgmode::Parser do
 
   it "should put body lines in headlines" do
     parser = Orgmode::Parser.load(RememberFile)
-    parser.headlines[0].should have(1).body_lines
-    parser.headlines[1].should have(7).body_lines
+    expect(parser.headlines[0].body_lines.length).to be == 1
+    expect(parser.headlines[1].body_lines.length).to be == 7
   end
 
   it "should understand lines before the first headline" do
     parser = Orgmode::Parser.load(FreeformFile)
-    parser.should have(19).header_lines
+    expect(parser.header_lines.length).to be == 19
   end
 
   it "should load in-buffer settings" do
     parser = Orgmode::Parser.load(FreeformFile)
-    parser.should have(12).in_buffer_settings
+    expect(parser.in_buffer_settings.length).to be == 12
     parser.in_buffer_settings["TITLE"].should eql("Freeform")
     parser.in_buffer_settings["EMAIL"].should eql("bdewey@gmail.com")
     parser.in_buffer_settings["LANGUAGE"].should eql("en")
@@ -59,18 +59,18 @@ describe Orgmode::Parser do
 
   it "should understand OPTIONS" do
     parser = Orgmode::Parser.load(FreeformFile)
-    parser.should have(19).options
+    expect(parser.options.length).to be == 19
     parser.options["TeX"].should eql("t")
     parser.options["todo"].should eql("t")
     parser.options["\\n"].should eql("nil")
-    parser.export_todo?.should be_true
+    parser.export_todo?.should be_truthy
     parser.options.delete("todo")
-    parser.export_todo?.should be_false
+    parser.export_todo?.should be_falsey
   end
 
   it "should skip in-buffer settings inside EXAMPLE blocks" do
     parser = Orgmode::Parser.load(FreeformExampleFile)
-    parser.should have(0).in_buffer_settings
+    expect(parser.in_buffer_settings.length).to be == 0
   end
 
   it "should return a textile string" do
@@ -82,7 +82,7 @@ describe Orgmode::Parser do
     fname = File.join(File.dirname(__FILE__), %w[html_examples skip-table.org])
     data = IO.read(fname)
     p = Orgmode::Parser.new(data)
-    p.export_tables?.should be_false
+    p.export_tables?.should be_falsey
   end
 
   context "with a table that begins with a separator line" do
@@ -101,7 +101,7 @@ describe Orgmode::Parser do
     invalid_keywords = %w[TODOX todo inprogress Waiting done cANCELED NEXT |]
     valid_keywords.each do |kw|
       it "should match custom keyword #{kw}" do
-        (kw =~ p.custom_keyword_regexp).should be_true
+        (kw =~ p.custom_keyword_regexp).should be_truthy
       end
     end
     invalid_keywords.each do |kw|
@@ -118,8 +118,8 @@ describe Orgmode::Parser do
     fname = File.join(File.dirname(__FILE__), %w[html_examples export-tags.org])
     p = Orgmode::Parser.load(fname)
     it "should load tags" do
-      p.should have(2).export_exclude_tags
-      p.should have(1).export_select_tags
+      expect(p.export_exclude_tags.length).to be == 2
+      expect(p.export_select_tags.length).to be == 1
     end
   end
 
@@ -253,4 +253,3 @@ describe Orgmode::Parser do
     end
   end
 end
-

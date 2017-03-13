@@ -38,7 +38,7 @@ describe Orgmode::Headline do
   it "should understand tags" do
     h = Orgmode::Headline.new "*** sample :tag:tag2:\n"
     h.headline_text.should eql("sample")
-    h.should have(2).tags
+    expect(h.tags.length).to be == 2
     h.tags[0].should eql("tag")
     h.tags[1].should eql("tag2")
   end
@@ -46,7 +46,7 @@ describe Orgmode::Headline do
   it "should understand a single tag" do
     h = Orgmode::Headline.new "*** sample :tag:\n"
     h.headline_text.should eql("sample")
-    h.should have(1).tags
+    expect(h.tags.length).to be == 1
     h.tags[0].should eql("tag")
   end
 
@@ -61,4 +61,3 @@ describe Orgmode::Headline do
     h.comment_headline?.should_not be_nil
   end
 end
-
